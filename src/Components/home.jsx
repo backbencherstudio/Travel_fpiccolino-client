@@ -5,7 +5,6 @@ const home = () => {
             <h2> change </h2>
             <h2> change </h2>
             <h2> change </h2>
-            fl;jksdf;ksdajf;ldskfjs
         </div>
     );
 };
