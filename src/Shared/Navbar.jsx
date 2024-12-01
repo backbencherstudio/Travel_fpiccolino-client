@@ -2,6 +2,7 @@ import  { useEffect, useRef, useState } from 'react';
 import logo from '../assets/logo.svg';
 import languageLogo from '../assets/Language.svg';
 import { Link, NavLink } from 'react-router-dom';
+import ParentComponent from '../Components/ParentComponent/ParentComponent';
 
 const Navbar = () => {
     const [contactDropDown, setContactDropDown] = useState(false);
@@ -59,7 +60,8 @@ const Navbar = () => {
 
   return (
     <header className="z-10 fixed w-full nav-style pt-4 banner_style">
-        <div className="mx-auto max-w-[1760px] px-4 xl:px-0 ">
+    <ParentComponent>
+    <div className="">
             <div className="flex lg:gap-6 h-16 items-center justify-between">
                 <div className="md:flex md:items-center md:gap-12">
                     <Link className="block text-teal-600" to="/">
@@ -277,6 +279,7 @@ const Navbar = () => {
             </div>
 
         </div>
+    </ParentComponent>
     </header>
   )
 }
