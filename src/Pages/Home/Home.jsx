@@ -1,25 +1,10 @@
 import React from 'react';
+import BannerSection from '../../Components/Home/BannerSection';
 
 const Home = () => {
     return (
         <div>
-           
-           <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-           
-           <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            <h2>CoooooooooooLLLL</h2>
-            
+           <BannerSection/>
         </div>
     );
 };

@@ -58,7 +58,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="z-10 bg-white nav-style pt-4">
+    <header className="z-10 fixed w-full nav-style pt-4">
         <div className="mx-auto max-w-[1760px] px-4 xl:px-0 ">
             <div className="flex lg:gap-6 h-16 items-center justify-between">
                 <div className="md:flex md:items-center md:gap-12">
@@ -69,57 +69,25 @@ const Navbar = () => {
 
                 <div className="hidden lg:block">
                     <nav aria-label="Global">
-                    <ul className="flex items-center gap-6 text-base">
+                    <ul className="flex items-center gap-6 primary_text">
                         <li>
-                        <NavLink to="/" className={({ isActive }) => isActive ? "active" : "text-[#475467]"}> Home </NavLink>
+                        <NavLink to="/" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> About </NavLink>
                         </li>
 
                         <li>
-                        <NavLink to="/tours" className={({ isActive }) => isActive ? "active" : "text-[#475467]"}> Tours </NavLink>
+                        <NavLink to="/tours" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Tour </NavLink>
+                        </li>
+                        <li>
+                        <NavLink to="/blogs"  className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Blogs </NavLink>
+                        </li>
+                        <li>
+                        <NavLink to="/cruises" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> FAQ </NavLink>
                         </li>
 
                         <li>
-                        <NavLink to="/cruises" className={({ isActive }) => isActive ? "active" : "text-[#475467]"}> Cruises </NavLink>
+                        <NavLink to="/packages"  className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Contact </NavLink>
                         </li>
-
-                        <li>
-                        <NavLink to="/packages"  className={({ isActive }) => isActive ? "active" : "text-[#475467]"}> Packages </NavLink>
-                        </li>
-
-                        <li>
-                        <NavLink to="/reservations"  className={({ isActive }) => isActive ? "active" : "text-[#475467]"}> Reservations </NavLink>
-                        </li>
-
-                        <li>
-                        <NavLink to="/blogs"  className={({ isActive }) => isActive ? "active" : "text-[#475467]"}> Blogs </NavLink>
-                        </li>
-
-                        <li>
-                        <button className="flex justify-between items-center gap-[6px] text-[#475467] transition hover:text-gray-500/75" to="#">
-                            {/* Contacts
-                            <img className='w-5 h-5' src={arrowDown} /> */}
-                            <div className="relative inline-block text-left">
-                                <button
-                                className="inline-flex w-full justify-center gap-x-1.5 text-[#475467] transition"
-                                onClick={handleDropdownToggle('contact')}
-                                >
-                                Contacts
-                                <svg className="-mr-1 size-5 w-6 h-6 text-[#475467]" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z" clipRule="evenodd" />
-                                </svg>
-                                </button>
-                                {contactDropDown && (
-                                <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5">
-                                    <div className="py-1">
-                                    <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100">Account settings</Link>
-                                    <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100">Support</Link>
-                                    <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100">License</Link>
-                                    </div>
-                                </div>
-                                )}
-                            </div>
-                        </button>
-                        </li>
+                    
                     </ul>
                     </nav>
                 </div>
@@ -150,7 +118,7 @@ const Navbar = () => {
                         <div className=' hidden lg:block'>
                             <div className="flex xl:gap-6">
                                 <Link
-                                    className="rounded-xl text-primary bg-transparent border border-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
+                                    className="rounded-xl primary_text bg-transparent border border-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
                                     to="/login"
                                 >
                                     Login
@@ -158,7 +126,7 @@ const Navbar = () => {
 
                                 <div className="hidden lg:flex items-center justify-center">
                                     <Link
-                                    className="rounded-xl text-[white] bg-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
+                                    className="rounded-xl text-[white] primary_bg  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
                                     to="/signup"
                                     >
                                     Sign Up
@@ -201,8 +169,8 @@ const Navbar = () => {
             {/* Menu content */}
             <div
                 ref={menuRef}
-                className={`absolute top-0 left-0 w-4/5 h-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
-                isMenuOpen ? "translate-x-0" : "-translate-x-full"
+                className={`absolute bg-[#d6bbbb] top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
+                isMenuOpen ? "translate-y-0" : "-translate-y-full"
                 }`}
             >
                 <div className="flex items-center justify-between p-4 border-b">

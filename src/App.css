@@ -1,0 +1,6 @@
+.primary_text{
+    @apply text-[#E86731]
+}
+.primary_bg{
+    @apply bg-[#E86731]
+}
