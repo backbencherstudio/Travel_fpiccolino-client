@@ -2,7 +2,7 @@ import  { useEffect, useRef, useState } from 'react';
 import logo from '../assets/logo.svg';
 import languageLogo from '../assets/Language.svg';
 import { Link, NavLink } from 'react-router-dom';
-import ParentComponent from '../Components/ParentComponent/ParentComponent';
+import ParentComponent from './ParentComponent/ParentComponent';
 
 const Navbar = () => {
     const [contactDropDown, setContactDropDown] = useState(false);
