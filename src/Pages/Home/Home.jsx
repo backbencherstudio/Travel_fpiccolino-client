@@ -1,10 +1,14 @@
-import React from 'react';
 
 const Home = () => {
     return (
         <div>
-            This is my home 
-            This is my home 
+            This is home 
+            This is home 
+            This is home 
+            This is home 
+            This is home 
+            This is home 
+            This is home 
         </div>
     );
 };
