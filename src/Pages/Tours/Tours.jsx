@@ -13,7 +13,7 @@ const Tours = () => {
     }
 
     return (
-        <div>
+        <div className="">
 
             <HeroScetion heroContent={heroContent} />
 
