@@ -58,7 +58,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="z-10 bg-white nav-style">
+    <header className="z-10 bg-white nav-style pt-4">
         <div className="mx-auto max-w-[1760px] px-4 xl:px-0 ">
             <div className="flex lg:gap-6 h-16 items-center justify-between">
                 <div className="md:flex md:items-center md:gap-12">
@@ -151,7 +151,7 @@ const Navbar = () => {
                         <div className=' hidden lg:block'>
                             <div className="flex xl:gap-6">
                                 <Link
-                                    className="p-5 xl:px-5 xl:py-2.5 text-sm font-medium text-gray-500"
+                                    className="rounded-xl text-primary bg-transparent border border-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
                                     to="/login"
                                 >
                                     Login
@@ -159,7 +159,7 @@ const Navbar = () => {
 
                                 <div className="hidden lg:flex items-center justify-center">
                                     <Link
-                                    className="rounded-3xl bg-orange-500 px-2 pt-2 pb-3 xl:px-4 xl:pt-2.5 xl:pb-3 text-xs xl:text-sm font-medium text-white"
+                                    className="rounded-xl text-[white] bg-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
                                     to="/signup"
                                     >
                                     Sign Up
