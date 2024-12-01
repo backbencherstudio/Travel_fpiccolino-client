@@ -1,5 +1,5 @@
 import  { useEffect, useRef, useState } from 'react';
-// import logo from '../assets/img/Logo.svg';
+import logo from '../assets/logo.svg';
 import languageLogo from '../assets/Language.svg';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -63,8 +63,7 @@ const Navbar = () => {
             <div className="flex lg:gap-6 h-16 items-center justify-between">
                 <div className="md:flex md:items-center md:gap-12">
                     <Link className="block text-teal-600" to="/">
-                        <span className="text-black">Home</span>
-                        {/* <img src={logo} alt="" className=' w-44' /> */}
+                        <img src={logo} alt="" className=' w-44' />
                     </Link>
                 </div>
 
