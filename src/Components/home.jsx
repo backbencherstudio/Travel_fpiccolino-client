@@ -5,6 +5,9 @@ const home = () => {
             <h2> change </h2>
             <h2> change </h2>
             <h2> change </h2>
+            <h2> change </h2>
+            <h2> change </h2>
+            <h2> change </h2>
         </div>
     );
 };
