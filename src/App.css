@@ -4,3 +4,7 @@
 .primary_bg{
     @apply bg-[#E86731]
 }
+.banner_style{
+    background: linear-gradient(180deg, #003154 0%, rgba(0, 49, 84, 0.00) 100%);
+    backdrop-filter: blur(10px);
+}
