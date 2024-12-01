@@ -58,7 +58,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="z-10 fixed w-full nav-style pt-4">
+    <header className="z-10 fixed w-full nav-style pt-4 banner_style">
         <div className="mx-auto max-w-[1760px] px-4 xl:px-0 ">
             <div className="flex lg:gap-6 h-16 items-center justify-between">
                 <div className="md:flex md:items-center md:gap-12">
