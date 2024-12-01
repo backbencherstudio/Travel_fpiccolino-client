@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import ParentComponent from "../ParentComponent/ParentComponent";
+import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 
 
 const HeroScetion = ({ heroContent }) => {
@@ -27,10 +27,10 @@ const HeroScetion = ({ heroContent }) => {
 
             <div className="text-center p-20 rounded-md bg-[#EFFBFB]  ">
                 <ParentComponent>
-                    <h2 className="font-duera-expanded text-[56px] font-bold leading-[56px] text-center decoration-skip-ink">
+                    <h2 className="font-duera-expanded text-[32px] font-bold leading-[56px] text-center decoration-skip-ink">
                         {titleTwo}
                     </h2>
-                    <p className="leading-[45px] mt-8">{descriptionTwo}</p>
+                    <p className="leading-[45px] mt-8 text-[18px]">{descriptionTwo}</p>
 
                 </ParentComponent>
             </div>
