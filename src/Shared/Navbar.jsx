@@ -99,11 +99,11 @@ const Navbar = () => {
                         {/* Language Dropdown */}
                         <div className="relative inline-block text-left">
                             <button
-                                className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white text-sm font-semibold text-gray-900 mt-2"
+                                className="inline-flex w-full justify-center gap-x-1.5 rounded-md  text-sm font-semibold text-white mt-2"
                                 onClick={handleDropdownToggle('language')}
                             >
                                 <img src={languageLogo} alt="Language" className="w-6 h-6" />
-                                <svg className="-mr-1 size-5 w-6 h-6 text-[#475467]" viewBox="0 0 20 20" fill="currentColor">
+                                <svg className="-mr-1 size-5 w-6 h-6 text-[#ffffff]" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z" clipRule="evenodd" />
                                 </svg>
                             </button>
@@ -138,7 +138,7 @@ const Navbar = () => {
                         </div>
 
                         <div className="block lg:hidden">
-                            <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75" ref={buttonRef} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                            <button className="rounded p-2 text-white transition hover:text-gray-600/75" ref={buttonRef} onClick={() => setIsMenuOpen(!isMenuOpen)}>
                                 <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="size-5"
@@ -171,7 +171,7 @@ const Navbar = () => {
             {/* Menu content */}
             <div
                 ref={menuRef}
-                className={`absolute bg-[#d6bbbb] top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
+                className={`absolute bg-white top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
                 isMenuOpen ? "translate-y-0" : "-translate-y-full"
                 }`}
             >
@@ -197,15 +197,14 @@ const Navbar = () => {
                     </svg>
                 </button>
                 </div>
-                <nav className="flex flex-col p-4 space-y-6">
-                <ul className="text-lg">
+                <nav className="flex bg-white flex-col p-4 space-y-6 absolute w-full z-20">
+                <ul className="text-lg ">
                     {[
-                    { name: "Home", to: "/" },
-                    { name: "Tours", to: "/tours" },
-                    { name: "Cruises", to: "/cruises" },
-                    { name: "Packages", to: "/packages" },
-                    { name: "Reservations", to: "/reservations" },
+                    { name: "about", to: "/about" },
+                    { name: "Tour", to: "/tour" },
                     { name: "Blogs", to: "/blogs" },
+                    { name: "FAQ", to: "/faq" },
+                    { name: "Contact", to: "/contact" },
                     ].map((item, index) => (
                     <li key={index}>
                         <NavLink
@@ -218,52 +217,14 @@ const Navbar = () => {
                     ))}
                     <li>
                     <div className="relative">
-                        <button
-                        className="flex items-center justify-between w-full px-4 py-2 text-gray-800 rounded-md hover:bg-gray-100 hover:text-gray-600"
-                        onClick={handleDropdownToggle("contact")}
-                        >
-                        Contacts
-                        <svg
-                            className="w-5 h-5 text-gray-600"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                        >
-                            <path
-                            fillRule="evenodd"
-                            d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z"
-                            clipRule="evenodd"
-                            />
-                        </svg>
-                        </button>
-                        {contactDropDown && (
-                        <div className="absolute left-0 z-20 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/10">
-                            <Link
-                            to="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                            Account settings
-                            </Link>
-                            <Link
-                            to="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                            Support
-                            </Link>
-                            <Link
-                            to="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                            License
-                            </Link>
-                        </div>
-                        )}
+                      
                     </div>
                     </li>
                 </ul>
                 <div className="flex flex-col gap-4 mt-6">
                     <Link
                     to="login"
-                    className="block px-6 py-3 text-center text-gray-800 bg-gray-200 rounded-md hover:bg-gray-300"
+                    className="block px-6 py-3 text-center text-gray-800 bg-white rounded-md z-30 hover:bg-gray-300 border border-orange-500"
                     >
                     Login
                     </Link>
