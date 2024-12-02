@@ -1,10 +1,10 @@
 import React from "react";
 import logo from "../assets/logo.svg";
 import ParentComponent from "../Shared/ParentComponent/ParentComponent";
-import stripe from "../assets/payment/stripe.png";
-import visa from "../assets/payment/visa.png";
-import paypal from "../assets/payment/paypal.png";
-import epay from "../assets/payment/epay.png";
+import stripe from "../assets/payment/stripe.svg";
+import visa from "../assets/payment/visa.svg";
+import paypal from "../assets/payment/paypal.svg";
+import epay from "../assets/payment/epay.svg";
 
 const Footer = () => {
   return (
@@ -31,21 +31,29 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex lg:justify-end">
+            <div>
             <h1 className="text-[20px] font-medium w-[330px] ">Newsletter </h1>
+           
+           <div className="relative mt-4">
+           <input className="bg-[#1f1f1f] p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg" type="text" placeholder="Your Email address" />
+           <button className="primary_bg text-white absolute right-2 top-2 px-[10px] py-1 rounded-lg text-[14px]">Send</button>
+           </div>
+            </div>
+       
           </div>
         </div>
       </ParentComponent>
       <div className="border-t">
         <ParentComponent>
-          <div className="flex justify-between py-6">
+          <div className="flex flex-col md:flex-row justify-between py-6 md:gap-0 gap-5">
             <p className="text-[16px] ">
               Copyright © 2024 LA TUA FUGA LOWCOST . All rights reserved.
             </p>
             <div className="flex gap-2">
-              <img src={stripe} className="w-9 h-7" alt="" />
-              <img src={visa} alt="" className="w-9 h-7" />
-              <img className="bg-white h-7 w-9 rounded-md" src={paypal} alt="" />
-              <img className="bg-white h-7 w-9 rounded-md" src={epay} alt="" />
+              <img src={stripe} className="bg-white rounded w-9 h-7" alt="" />
+              <img src={visa} alt="" className="bg-white rounded w-9 h-7" />
+              <img className="bg-white h-7 w-9 rounded" src={paypal} alt="" />
+              <img className="bg-white h-7 w-9 rounded" src={epay} alt="" />
             </div>
           </div>
         </ParentComponent>
