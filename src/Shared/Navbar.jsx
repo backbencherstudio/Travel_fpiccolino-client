@@ -65,7 +65,7 @@ const Navbar = () => {
             <div className="flex lg:gap-6 h-16 items-center justify-between">
                 <div className="md:flex md:items-center md:gap-12">
                     <Link className="block text-teal-600" to="/">
-                        <img src={logo} alt="" className=' w-44' />
+                        <img src={logo} alt="" className=' w-36' />
                     </Link>
                 </div>
 

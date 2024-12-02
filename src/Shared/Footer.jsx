@@ -32,14 +32,28 @@ const Footer = () => {
           </div>
           <div className="flex lg:justify-end">
             <div>
-            <h1 className="text-[20px] font-medium w-[330px] ">Newsletter </h1>
-           
-           <div className="relative mt-4">
-           <input className="bg-[#1f1f1f] p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg" type="text" placeholder="Your Email address" />
-           <button className="primary_bg text-white absolute right-2 top-2 px-[10px] py-1 rounded-lg text-[14px]">Send</button>
-           </div>
+              <h1 className="text-[20px] font-medium w-[330px] ">
+                Newsletter{" "}
+              </h1>
+
+              <div className="relative mt-4">
+                <input
+                  className="bg-[#1f1f1f] p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg"
+                  type="text"
+                  placeholder="Your Email address"
+                />
+                <button className="primary_bg text-white absolute right-2 top-2 px-[10px] py-1 rounded-lg text-[14px]">
+                  Send
+                </button>
+                <div className="flex gap-2 mt-3">
+                  <input
+                    className="w-[18px] h-[18px] mt-0.5 bg-transparent"
+                    type="checkbox"
+                  />{" "}
+                  <p>I Agree To All Your Terms & condition</p>
+                </div>
+              </div>
             </div>
-       
           </div>
         </div>
       </ParentComponent>
