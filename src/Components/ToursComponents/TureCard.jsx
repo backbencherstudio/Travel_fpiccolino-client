@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const Locations = ({ item }) => {
+const TureCard = ({ item }) => {
     const { image, title, duratioin, price, isInclusive } = item
 
     return (
@@ -25,4 +25,4 @@ const Locations = ({ item }) => {
     );
 };
 
-export default Locations;
+export default TureCard;

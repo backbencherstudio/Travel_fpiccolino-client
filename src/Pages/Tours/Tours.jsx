@@ -1,4 +1,4 @@
-import Locations from "../../Components/ToursComponents/Locations";
+import TureCard from "../../Components/ToursComponents/TureCard";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
@@ -69,7 +69,7 @@ const Tours = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20" >
                     {
                         cardDetails?.map(item => <div key={item._id} >
-                            <Locations item={item} />
+                            <TureCard item={item} />
                         </div>)
                     }
                 </div>
