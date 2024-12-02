@@ -76,8 +76,6 @@ const Tours = () => {
 
             </ParentComponent>
 
-
-
         </div>
     );
 };
