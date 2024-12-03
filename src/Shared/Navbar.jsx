@@ -59,7 +59,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="z-10 fixed w-full nav-style pt-4 banner_style">
+    <header className="z-30 fixed w-full nav-style pt-4 banner_style">
     <ParentComponent>
     <div className="">
             <div className="flex lg:gap-6 h-16 items-center justify-between">
