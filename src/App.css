@@ -8,3 +8,8 @@
     background: linear-gradient(180deg, #003154 0%, rgba(0, 49, 84, 0.00) 100%);
     backdrop-filter: blur(10px);
 }
+.card_style{
+    background: linear-gradient(180deg, #494a4b 0%, rgba(0, 49, 84, 0.00) 100%);
+    backdrop-filter: blur(3px);
+    border : 1px solid #e9e9ea;
+}

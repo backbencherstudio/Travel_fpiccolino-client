@@ -90,7 +90,7 @@ const AdventureSection = () => {
                 onClick={() => swiperRef.current?.slidePrev()}
                 className={`p-2.5 m-1  ${
                   isBeginning ? "bg-zinc-300 text-zinc-400" : "bg-white text-[#F8D0BF]"
-                } text-white w-9 h-9 rounded-full transition-opacity -left-7 absolute top-[35%] z-20`}
+                } w-9 h-9 rounded-full transition-opacity -left-7 absolute top-[35%] z-20`}
                 disabled={isBeginning}
               >
                 <FaAngleLeft />
@@ -99,7 +99,7 @@ const AdventureSection = () => {
                 onClick={() => swiperRef.current?.slideNext()}
                 className={`p-2.5 m-1 ${
                   isEnd ? "bg-zinc-300 text-zinc-400" : "bg-white text-[#F8D0BF] "
-                } text-white rounded-full transition-opacity absolute top-[35%] -right-7 z-20 `}
+                }  rounded-full transition-opacity absolute top-[35%] -right-7 z-20 `}
                 disabled={isEnd}
               >
                 <FaAngleRight />
