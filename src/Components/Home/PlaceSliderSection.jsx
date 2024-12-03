@@ -110,31 +110,33 @@ const PlaceSliderSection = () => {
   }, []);
 
   const handleSlideChange = (swiper) => {
+    const activeIndex = swiper.activeIndex;
+    const totalSlides = swiper.slides.length;
+  
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
-
+  
+    // For the progress bar
     let progress = 0;
-    const activeIndex = swiper.activeIndex;
-
     if (screenSize === "desktop") {
-     if (activeIndex >= cardDetails.length - 3) {
+      if (activeIndex >= totalSlides - 3) {
         progress = 100;
       } else {
-        progress = ((activeIndex + 1) / (cardDetails.length - 1)) * 100;
+        progress = ((activeIndex + 1) / (totalSlides - 1)) * 100;
       }
-    }else if(screenSize === "tablet"){
-        if (activeIndex >= cardDetails.length - 2) {
-            progress = 100;
-          } else {
-            progress = ((activeIndex + 1) / (cardDetails.length - 1)) * 100;
-          }
+    } else if (screenSize === "tablet") {
+      if (activeIndex >= totalSlides - 2) {
+        progress = 100;
+      } else {
+        progress = ((activeIndex + 1) / (totalSlides - 1)) * 100;
+      }
     } else {
-      // For mobile, the progress bar increases normally based on the active index
-      progress = ((activeIndex + 1) / cardDetails.length) * 100;
+      progress = ((activeIndex + 1) / totalSlides) * 100;
     }
-
+  
     setProgressValue(progress);
   };
+  
 
   return (
     <div
@@ -197,28 +199,28 @@ const PlaceSliderSection = () => {
             ))}
           </Swiper>
         </div>
-
-        <div className="absolute bottom-10 md:right-[20%] xl:right-[20%] z-20 flex items-center p-5 md:p-0">
-          <button
-            onClick={() => swiperRef.current?.slidePrev()}
-            className={`p-2.5 m-1 ${isBeginning ? "bg-white primary_text" : "primary_bg text-white "} w-9 h-9 rounded-full transition-opacity z-20`}
-            disabled={isBeginning}
-          >
-            <FaArrowLeft />
-          </button>
-          <button
-            onClick={() => swiperRef.current?.slideNext()}
-            className={`p-2.5 m-1 ${isEnd ? "bg-white primary_text" : "primary_bg text-white "} rounded-full transition-opacity `}
-            disabled={isEnd}
-          >
-            <FaArrowRight />
-          </button>
-          <div className="lg:w-[650px] md:w-[450px] w-[300px] ml-4">
-            {/* Pass the dynamically calculated progress value */}
-            <ProgressBars value={progressValue} />
-          </div>
-        </div>
       </div>
+      <div className="z-20 flex items-center mt-[30px] mx-3 lg:justify-center w-full">
+  <button
+    onClick={() => swiperRef.current?.slidePrev()}
+    className={`p-2.5 m-1 ${isBeginning ? "bg-white primary_text" : "primary_bg text-white "} w-9 h-9 rounded-full transition-opacity z-20`}
+    disabled={isBeginning}
+  >
+    <FaArrowLeft />
+  </button>
+  <button
+    onClick={() => swiperRef.current?.slideNext()}
+    className={`p-2.5 z-20 m-1 ${isEnd ? "bg-white primary_text" : "primary_bg text-white "} rounded-full transition-opacity`}
+    disabled={isEnd} // Disable button based on isEnd state
+  >
+    <FaArrowRight />
+  </button>
+  <div className="w-[350px] md:w-[450px] ml-4 z-20">
+    {/* Pass the dynamically calculated progress value */}
+    <ProgressBars value={progressValue} />
+  </div>
+</div>
+
     </div>
   );
 };
