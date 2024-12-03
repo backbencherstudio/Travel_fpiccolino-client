@@ -1,4 +1,3 @@
-import React from "react";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import natureImage from "../../assets/natureImage.jpg";
@@ -33,7 +32,7 @@ const WondersSection = () => {
       description: "Explore Every Destination Awaiting",
     },
     {
-      image: natureImage,
+      image: natureImage2,
       title: "Wonders of the Ancient World",
       location: "London",
       description: "Explore Every Destination Awaiting",

@@ -215,7 +215,7 @@ const PlaceSliderSection = () => {
   >
     <FaArrowRight />
   </button>
-  <div className="w-[350px] md:w-[450px] ml-4 z-20">
+  <div className="w-[300px] md:w-[450px] ml-4 z-20">
     {/* Pass the dynamically calculated progress value */}
     <ProgressBars value={progressValue} />
   </div>
