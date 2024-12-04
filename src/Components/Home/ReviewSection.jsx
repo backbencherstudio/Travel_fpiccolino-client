@@ -33,6 +33,33 @@ const ReviewSection = () => {
       review:
         "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
     },
+    {
+      image: natureImage2,
+      name: "Esther Howard",
+      title: "World Traveler, Italy",
+      rating: 4.8,
+      totalReviews:'2,300',
+      review:
+        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
+    },
+    {
+      image: natureImage2,
+      name: "Esther Howard",
+      title: "World Traveler, Italy",
+      rating: 4.8,
+      totalReviews:'2,300',
+      review:
+        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
+    },
+    {
+      image: natureImage2,
+      name: "Esther Howard",
+      title: "World Traveler, Italy",
+      rating: 4.8,
+      totalReviews:'2,300',
+      review:
+        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
+    },
   ];
   return (
     <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">
@@ -65,7 +92,7 @@ const ReviewSection = () => {
               ))}
             </Swiper>
           </div>
-          <div className="relative">
+          <div className="relative mt-5">
           <div className=" md:absolute bottom-0 ">
             <button
               onClick={() => swiperRef.current?.slidePrev()}

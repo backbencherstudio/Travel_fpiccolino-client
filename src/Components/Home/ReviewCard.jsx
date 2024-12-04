@@ -32,7 +32,7 @@ const ReviewCard = ({ item }) => {
         <div className="md:col-span-2 h-[600px]">
           <img className="h-full rounded-[20px]" src={image} alt="" />
         </div>
-        <div className="md:col-span-3 relative mr-10 ">
+        <div className="md:col-span-3 relative md:mr-10 ">
          <div className=" md:absolute bottom-0">
          <div className="flex justify-end items-center ">
             <div className="flex items-center">
@@ -42,7 +42,7 @@ const ReviewCard = ({ item }) => {
             
           </div>
           <p className="text-[18px] text-right mb-10">Trustcore {rating} {" | "}{totalReviews}{" Reviews"}</p>
-          <div className="p-[60px] bg-white rounded-2xl">
+          <div className="md:p-[60px] p-5 bg-white rounded-2xl">
             <img src={comma} alt="" />
             <p className="text-[18px] w-full">{review}</p>
             <div className="mt-5 mb-8">
