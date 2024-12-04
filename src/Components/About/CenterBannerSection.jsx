@@ -26,7 +26,7 @@ const CenterBannerSection = () => {
           backgroundRepeat: "no-repeat",
         }}
       ></div>
-      <ul className="">
+      <ul className="text-[#72777F] text-[18px]">
         {bannerDetails.description.map((text, index) => (
           <li key={index}>{text}</li>
         ))}
