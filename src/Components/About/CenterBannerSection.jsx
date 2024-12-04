@@ -26,9 +26,9 @@ const CenterBannerSection = () => {
           backgroundRepeat: "no-repeat",
         }}
       ></div>
-      <ul className="text-[#72777F] text-[18px]">
+      <ul className="text-[#72777F] text-[18px] text-center mt-8 list-disc list-inside max-w-[1350px] mx-auto">
         {bannerDetails.description.map((text, index) => (
-          <li key={index}>{text}</li>
+          <li className="py-2" key={index}>{text}</li>
         ))}
       </ul>
     </>
