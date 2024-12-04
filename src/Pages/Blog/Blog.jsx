@@ -1,0 +1,57 @@
+
+import BlogSections from '../../Components/Blog/BlogSections';
+import HeroScetion from '../../Shared/HeroComponent/HeroScetion';
+import heroImage from "../../assets/Images/about.jpg"
+
+const Blog = () => {
+    const heroContent = {
+        heroImage,
+        titleOne: "Feel at Home Wherever You Roam",
+        descriptionOne: "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
+    }
+    const blogs =[
+        {
+            image : heroImage,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+       
+        {
+            image : heroImage,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+        {
+            image : heroImage,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+    
+        {
+            image : heroImage,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+       
+    ]
+    return (
+        <div>
+            <HeroScetion heroContent={heroContent} />
+            <BlogSections title="Travel Tips" blogs={blogs}/>
+            <BlogSections title="Travel Vibes" blogs={blogs}/>
+            <BlogSections title="Helpful Travel Information" blogs={blogs}/>
+            <BlogSections title="Unforgettable Experiences You Can’t Miss" blogs={blogs}/>
+            <BlogSections title="Paradise Beaches" blogs={blogs}/>
+        </div>
+    );
+};
+
+export default Blog;

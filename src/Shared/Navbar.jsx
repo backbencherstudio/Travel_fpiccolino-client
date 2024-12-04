@@ -80,7 +80,7 @@ const Navbar = () => {
                         <NavLink to="/tours" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Tour </NavLink>
                         </li>
                         <li>
-                        <NavLink to="/blogs"  className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Blogs </NavLink>
+                        <NavLink to="/blog"  className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Blog </NavLink>
                         </li>
                         <li>
                         <NavLink to="/cruises" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> FAQ </NavLink>
@@ -99,11 +99,11 @@ const Navbar = () => {
                         {/* Language Dropdown */}
                         <div className="relative inline-block text-left">
                             <button
-                                className="inline-flex w-full justify-center gap-x-1.5 rounded-md  text-sm font-semibold text-white mt-2"
+                                className="inline-flex w-full justify-center gap-x-1.5 rounded-md text-[18px] primary_text mt-2"
                                 onClick={handleDropdownToggle('language')}
                             >
-                                <img src={languageLogo} alt="Language" className="w-6 h-6" />
-                                <svg className="-mr-1 size-5 w-6 h-6 text-[#ffffff]" viewBox="0 0 20 20" fill="currentColor">
+                               EN
+                                <svg className="-mr-1 size-5 w-6 h-6 text-[#e86731]" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z" clipRule="evenodd" />
                                 </svg>
                             </button>
@@ -202,7 +202,7 @@ const Navbar = () => {
                     {[
                     { name: "about", to: "/about" },
                     { name: "Tour", to: "/tour" },
-                    { name: "Blogs", to: "/blogs" },
+                    { name: "Blog", to: "/blog" },
                     { name: "FAQ", to: "/faq" },
                     { name: "Contact", to: "/contact" },
                     ].map((item, index) => (
