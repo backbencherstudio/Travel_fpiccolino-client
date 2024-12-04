@@ -30,7 +30,7 @@ const ReviewCard = ({ item }) => {
     <div>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-[74px] mt-14">
         <div className="md:col-span-2 h-[600px]">
-          <img className="h-full rounded-[20px]" src={image} alt="" />
+          <img className="h-full object-cover rounded-[20px]" src={image} alt="" />
         </div>
         <div className="md:col-span-3 relative md:mr-10 ">
          <div className=" md:absolute bottom-0">

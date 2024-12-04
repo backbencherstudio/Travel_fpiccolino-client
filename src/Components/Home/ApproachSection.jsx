@@ -8,7 +8,7 @@ const ApproachSection = () => {
   return (
     <div>
       <ParentComponent>
-        <div className="mt-[100px] mb-[100px] lg:mb-0">
+        <div className="mt-[80px] mb-[100px] lg:mb-0">
           <HeadLine
             title="Our Approach to Meaningful Travel"
             description="Connecting You to Authentic Experiences and Lasting Memories"
