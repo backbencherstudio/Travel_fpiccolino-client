@@ -1,4 +1,6 @@
 import TureCard from "../../Components/ToursComponents/TureCard";
+import Videos from "../../Components/ToursComponents/Videos";
+import BottomBannerSection from "../../Shared/BottomBannerSection";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
@@ -74,7 +76,18 @@ const Tours = () => {
                     }
                 </div>
 
+                <div className="mt-20" >
+                    <Videos />
+                </div>
+
+
             </ParentComponent>
+
+            <div className="mt-20" >
+                <BottomBannerSection />
+            </div>
+
+
 
         </div>
     );
