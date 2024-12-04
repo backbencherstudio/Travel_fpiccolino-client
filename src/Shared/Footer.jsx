@@ -5,6 +5,8 @@ import stripe from "../assets/payment/stripe.svg";
 import visa from "../assets/payment/visa.svg";
 import paypal from "../assets/payment/paypal.svg";
 import epay from "../assets/payment/epay.svg";
+import call from '../assets/icons/call.svg'
+import mail from '../assets/icons/mail.svg'
 
 const Footer = () => {
   return (
@@ -26,8 +28,8 @@ const Footer = () => {
             <div className="text-[16px] font-normal max-w-[218px]">
               <h1 className="text-[20px] font-medium mb-6">Contact Us</h1>
               <p>We're Here to Help with Any Questions or Concerns</p>
-              <p>012-3456-7899</p>
-              <p>latuafuga@gmail.com</p>
+              <p className="flex gap-1 mt-4"><img src={call} alt="" /> 012-3456-7899</p>
+              <p className="flex gap-1 mt-2"><img src={mail} alt="" /> latuafuga@gmail.com</p>
             </div>
           </div>
           <div className="flex lg:justify-end">

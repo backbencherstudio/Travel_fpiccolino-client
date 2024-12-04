@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 
+import CustomButton from "../../Shared/CustomButton";
+
 const ArticleCard = ({ item }) => {
   const { image, title, description, tag } = item;
 
@@ -23,7 +25,11 @@ const ArticleCard = ({ item }) => {
           </p>
           
         </div>
-        <button className="primary_bg text-white text-[18px] font-medium px-6 py-3 rounded-lg shadow-lg absolute bottom-8 right-8 hover:scale-105 transition-all ease-linear">Read More</button>
+        {/* <button className="primary_bg text-white text-[18px] font-medium px-6 py-3 rounded-lg shadow-lg  hover:scale-105 transition-all ease-linear">Read More</button> */}
+        <div className="absolute bottom-8 right-8">
+        <CustomButton content={"Read More"}/>
+        </div>
+       
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ArticleCard from "./ArticleCard";
+import CustomButton from "../../Shared/CustomButton";
 const ArticleAndNewsSection = () => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -39,13 +40,13 @@ const ArticleAndNewsSection = () => {
     },
   ];
   return (
-    <div className="bg-[#fff] lg:p-20 p-5 ">
+    <div className="bg-[#fff] lg:p-20 py-5">
       <ParentComponent>
         <HeadLine
           title="Discover Our  Updated Articles and News"
           description="Stay Updated with the Latest Insights and Trends"
         />
-        <div className="relative">
+        <div className="relative mx-4 lg:mx-0">
           <div className="mb-4">
             <button
               onClick={() => swiperRef.current?.slidePrev()}
@@ -125,7 +126,9 @@ const ArticleAndNewsSection = () => {
             </div>
             <div className="lg:col-span-3">
                 <p className="text-[18px] w-full"><strong>At LA TUA FUGA LOWCOST, we believe travel is more than just visiting new places; it’s about creating unforgettable experiences, discovering hidden gems,</strong> and making memories that last a lifetime. As seasoned experts in the travel industry, we’re dedicated to designing personalized adventures that reflect your unique interests and desires. Whether you're seeking serene beaches, vibrant cities, or thrilling expeditions, our team is here to bring your travel dreams to life. Let us handle the details, so you can simply enjoy the journey.</p>
-                <button className="primary_bg text-white text-[18px] font-medium px-6 py-3 rounded-lg shadow-lg  hover:scale-105 transition-all ease-linear mt-5 mb-8">Read More</button>
+               <div className="mt-5 mb-8">
+               <CustomButton content={"Read More"}/>
+               </div>
               <img
                 className="h-[365px] w-full rounded-[20px]"
                 src={natureImage2}
@@ -133,6 +136,29 @@ const ArticleAndNewsSection = () => {
               />
             </div>
           </div>
+        </div>
+        <div className="mt-14 mb-20 lg:mb-0 flex md:flex-row flex-col justify-center lg:gap-40 gap-10">
+
+          <div className="text-center">
+            <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">10+</h1>
+            <p className="text-[24px] text-[#72777F] mt-2">Years of Experience</p>
+          </div>
+        
+          <div className="text-center">
+            <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">500+</h1>
+            <p className="text-[24px] text-[#72777F] mt-2">Travel Completed</p>
+          </div>
+        
+          <div className="text-center">
+            <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">1.5K</h1>
+            <p className="text-[24px] text-[#72777F] mt-2">Happy Customer Review</p>
+          </div>
+        
+          <div className="text-center">
+            <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">99%</h1>
+            <p className="text-[24px] text-[#72777F] mt-2">Success Rating</p>
+          </div>
+        
         </div>
       </ParentComponent>
     </div>
