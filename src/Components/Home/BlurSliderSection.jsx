@@ -6,9 +6,9 @@ import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import banner from "../../assets/eve.jpg";
-import ProgressBars from "./ProgressBars";
+import ProgressBars from "../../Shared/ProgressBars";
 
-const PlaceSliderSection = () => {
+const BlurSliderSection = () => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -232,4 +232,4 @@ const PlaceSliderSection = () => {
   );
 };
 
-export default PlaceSliderSection;
+export default BlurSliderSection;
