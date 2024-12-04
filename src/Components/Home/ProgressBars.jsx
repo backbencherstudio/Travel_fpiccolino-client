@@ -1,4 +1,4 @@
-
+/* eslint-disable react/prop-types */
 import ProgressBar from "@ramonak/react-progress-bar";
 
 const ProgressBars = ({ value }) => {

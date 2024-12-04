@@ -6,6 +6,7 @@ import WondersSection from '../../Components/Home/WondersSection';
 import ApproachSection from '../../Components/Home/ApproachSection';
 import ArticleAndNewsSection from '../../Components/Home/ArticleAndNewsSection';
 import BottomBannerSection from '../../Components/Home/BottomBannerSection';
+import ReviewSection from '../../Components/Home/ReviewSection';
 
 const Home = () => {
     return (
@@ -16,6 +17,7 @@ const Home = () => {
            <PlaceSliderSection/>
            <WondersSection/>
            <ApproachSection/>
+           <ReviewSection/>
            <ArticleAndNewsSection/>
            <BottomBannerSection/>
         </div>
