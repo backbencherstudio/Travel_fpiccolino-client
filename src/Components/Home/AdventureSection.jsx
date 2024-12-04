@@ -137,6 +137,10 @@ const AdventureSection = () => {
                   spaceBetween: 20,
                 },
                 1024: {
+                  slidesPerView: 4, // Desktop and larger screens (1024px and up)
+                  spaceBetween: 20,
+                },
+                1400: {
                   slidesPerView: 5, // Desktop and larger screens (1024px and up)
                   spaceBetween: 20,
                 },

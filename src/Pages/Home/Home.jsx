@@ -5,8 +5,9 @@ import PlaceSliderSection from '../../Components/Home/PlaceSliderSection';
 import WondersSection from '../../Components/Home/WondersSection';
 import ApproachSection from '../../Components/Home/ApproachSection';
 import ArticleAndNewsSection from '../../Components/Home/ArticleAndNewsSection';
-import BottomBannerSection from '../../Components/Home/BottomBannerSection';
+import BottomBannerSection from '../../Shared/BottomBannerSection';
 import ReviewSection from '../../Components/Home/ReviewSection';
+import JourneySection from '../../Components/Home/JourneySection';
 
 const Home = () => {
     return (
@@ -19,6 +20,7 @@ const Home = () => {
            <ApproachSection/>
            <ReviewSection/>
            <ArticleAndNewsSection/>
+           <JourneySection/>
            <BottomBannerSection/>
         </div>
     );

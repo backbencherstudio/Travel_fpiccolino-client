@@ -73,7 +73,7 @@ const Navbar = () => {
                     <nav aria-label="Global">
                     <ul className="flex items-center gap-6 primary_text">
                         <li>
-                        <NavLink to="/" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> About </NavLink>
+                        <NavLink to="/about" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> About </NavLink>
                         </li>
 
                         <li>
@@ -120,7 +120,7 @@ const Navbar = () => {
                         <div className=' hidden lg:block'>
                             <div className="flex xl:gap-6">
                                 <Link
-                                    className="rounded-xl primary_text bg-transparent border border-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
+                                    className="rounded-xl primary_text bg-transparent border border-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2 border-orange-600"
                                     to="/login"
                                 >
                                     Login

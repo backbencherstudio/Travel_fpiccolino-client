@@ -1,7 +1,7 @@
-import banner from "../../assets/footerBanner.jpg";
-import CustomButton from "../../Shared/CustomButton";
-import HeadLine2 from "../../Shared/HeadLineComponent/HeadLine2";
-import call from '../../assets/icons/call.svg'
+import banner from "../assets/footerBanner.jpg";
+import CustomButton from "./CustomButton";
+import HeadLine2 from "./HeadLineComponent/HeadLine2";
+import call from '../assets/icons/call.svg'
 const BottomBannerSection = () => {
   return (
     <>
