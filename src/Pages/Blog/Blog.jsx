@@ -2,7 +2,9 @@
 import BlogSections from '../../Components/Blog/BlogSections';
 import HeroScetion from '../../Shared/HeroComponent/HeroScetion';
 import heroImage from "../../assets/Images/about.jpg"
-
+import natureImage from "../../assets/natureImage.jpg";
+import natureImage2 from "../../assets/natureImage2.jpg";
+import natureImage3 from "../../assets/benifit.jpg";
 const Blog = () => {
     const heroContent = {
         heroImage,
@@ -19,14 +21,14 @@ const Blog = () => {
         },
        
         {
-            image : heroImage,
+            image : natureImage,
             title:"Expert Travel Tips: Making Every Journey Easier",
             date:"May 12,2023",
             info:"LA TUA FUGA LOWCOST",
             tag:"Adventure Awaits"
         },
         {
-            image : heroImage,
+            image : natureImage2,
             title:"Expert Travel Tips: Making Every Journey Easier",
             date:"May 12,2023",
             info:"LA TUA FUGA LOWCOST",
@@ -34,7 +36,7 @@ const Blog = () => {
         },
     
         {
-            image : heroImage,
+            image : natureImage3,
             title:"Expert Travel Tips: Making Every Journey Easier",
             date:"May 12,2023",
             info:"LA TUA FUGA LOWCOST",
