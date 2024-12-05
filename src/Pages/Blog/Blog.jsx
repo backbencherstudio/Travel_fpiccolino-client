@@ -13,6 +13,7 @@ const Blog = () => {
     }
     const blogs =[
         {
+            type:'Travel Tips',
             image : heroImage,
             title:"Expert Travel Tips: Making Every Journey Easier",
             date:"May 12,2023",
@@ -21,6 +22,7 @@ const Blog = () => {
         },
        
         {
+            type:'Paradise Beaches',
             image : natureImage,
             title:"Expert Travel Tips: Making Every Journey Easier",
             date:"May 12,2023",
@@ -28,6 +30,7 @@ const Blog = () => {
             tag:"Adventure Awaits"
         },
         {
+            type:'Travel Vibes',
             image : natureImage2,
             title:"Expert Travel Tips: Making Every Journey Easier",
             date:"May 12,2023",
@@ -36,7 +39,40 @@ const Blog = () => {
         },
     
         {
+            type:'Helpful Travel Information',
             image : natureImage3,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+        {
+            type:'Helpful Travel Information',
+            image : natureImage3,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+        {
+            type:'Unforgettable Experiences You Can’t Miss',
+            image : natureImage3,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+        {
+            type:'Paradise Beaches',
+            image : natureImage3,
+            title:"Expert Travel Tips: Making Every Journey Easier",
+            date:"May 12,2023",
+            info:"LA TUA FUGA LOWCOST",
+            tag:"Adventure Awaits"
+        },
+        {
+            type:'Paradise Beaches',
+            image : heroImage,
             title:"Expert Travel Tips: Making Every Journey Easier",
             date:"May 12,2023",
             info:"LA TUA FUGA LOWCOST",

@@ -201,7 +201,7 @@ const Navbar = () => {
                 <ul className="text-lg ">
                     {[
                     { name: "about", to: "/about" },
-                    { name: "Tour", to: "/tour" },
+                    { name: "Tour", to: "/tours" },
                     { name: "Blog", to: "/blog" },
                     { name: "FAQ", to: "/faq" },
                     { name: "Contact", to: "/contact" },
