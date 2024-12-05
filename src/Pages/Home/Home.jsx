@@ -1,7 +1,7 @@
 import BannerSection from '../../Components/Home/BannerSection';
 import SearchBar from '../../Components/Home/SearchBar';
 import AdventureSection from '../../Components/Home/AdventureSection';
-import PlaceSliderSection from '../../Components/Home/PlaceSliderSection';
+import BlurSliderSection from '../../Components/Home/BlurSliderSection';
 import WondersSection from '../../Components/Home/WondersSection';
 import ApproachSection from '../../Components/Home/ApproachSection';
 import ArticleAndNewsSection from '../../Components/Home/ArticleAndNewsSection';
@@ -15,7 +15,7 @@ const Home = () => {
            <BannerSection/>
            <SearchBar/>
            <AdventureSection/>
-           <PlaceSliderSection/>
+           <BlurSliderSection/>
            <WondersSection/>
            <ApproachSection/>
            <ReviewSection/>
