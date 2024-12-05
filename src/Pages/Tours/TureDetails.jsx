@@ -48,7 +48,6 @@ const TureDetails = () => {
                                     </div>)
                                 }
 
-
                             </div>
 
                             <div>
