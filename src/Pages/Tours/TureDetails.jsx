@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import blogDetailsImage from "../../assets/Images/blogDetails.jpg"

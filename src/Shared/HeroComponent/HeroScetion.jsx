@@ -4,7 +4,7 @@ import ParentComponent from "../ParentComponent/ParentComponent";
 
 
 const HeroScetion = ({ heroContent }) => {
-    const { heroImage, titleOne, descriptionOne, titleTwo, descriptionTwo } = heroContent
+    const { heroImage, titleOne, descriptionOne, titleTwo, descriptionTwo, blogDetailsTitle } = heroContent
     return (
         <div>
             <div className="h-[600px] w-full relative ">
@@ -13,6 +13,9 @@ const HeroScetion = ({ heroContent }) => {
                 <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full">
                     <ParentComponent>
                         <div className="text-center p-4 rounded-md text-[#FFFFFF]">
+                            {
+                                blogDetailsTitle && <p className="text-18px font-semibold" >{blogDetailsTitle}</p>
+                            }
                             <h2 className="font-duera-expanded  text-[30px] md:text-[40px] xl:text-[56px] font-bold leading-[56px] text-center decoration-skip-ink">
                                 {titleOne}
                             </h2>
@@ -29,11 +32,9 @@ const HeroScetion = ({ heroContent }) => {
                             {titleTwo}
                         </h2>
                         <p className="leading-8 lg:leading-[45px] mt-8 text-[18px]">{descriptionTwo}</p>
-
                     </ParentComponent>
                 </div>
             }
-
 
 
         </div>
