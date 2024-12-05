@@ -4,13 +4,8 @@ import heroImage from "../../assets/Images/about.jpg";
 import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
 import natureImage3 from "../../assets/benifit.jpg";
-const Blog = () => {
-  const heroContent = {
-    heroImage,
-    titleOne: "Feel at Home Wherever You Roam",
-    descriptionOne:
-      "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
-  };
+import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
+const BlogDetails = () => {
   const blogs = [
     {
       id: 1,
@@ -109,20 +104,48 @@ const Blog = () => {
       tag: "Adventure Awaits",
     },
   ];
-  
+  const heroContent = {
+    heroImage: blogs[0].headerImg,
+    titleOne: "Feel at Home Wherever You Roam",
+    descriptionOne:
+      "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
+  };
+
   return (
     <div>
       <HeroScetion heroContent={heroContent} />
-      <BlogSections title="Travel Tips" blogs={blogs} />
-      <BlogSections title="Travel Vibes" blogs={blogs} />
-      <BlogSections title="Helpful Travel Information" blogs={blogs} />
-      <BlogSections
-        title="Unforgettable Experiences You Can’t Miss"
-        blogs={blogs}
-      />
-      <BlogSections title="Paradise Beaches" blogs={blogs} />
+      <ParentComponent>
+        <div className="grid md:grid-cols-5">
+          <div className="col-span-4 max-w-[1300px]">
+            <h1 className="text-[40px] font-bold mt-20">{blogs[0].header}</h1>
+            <p className="text-[18px] mt-4 text-[#5C5C68]">{blogs[0].text}</p>
+            <div className="mt-8">
+              {blogs[0]?.contents?.map((content, index) => (
+                <div key={index} className={`my-6  ${index % 2 === 0 ? 'flex flex-col md:flex-row' : 'flex flex-col md:flex-row-reverse '} gap-10`}>
+                  <div className="max-w-[450px] lg:max-w-[612px]">
+                    {" "}
+                    <h2 className="text-[32px] font-medium">
+                      {content?.subHeader}
+                    </h2>
+                    <p className="text-[18px] mt-4 text-[#5C5C68]">
+                      {content?.subText}
+                    </p>
+                  </div>
+                  <div className="h-[260px] lg:w-[660px]">
+                    <img
+                      className="rounded-2xl h-full w-full object-cover"
+                      src={content?.img}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </ParentComponent>
     </div>
   );
 };
 
-export default Blog;
+export default BlogDetails;

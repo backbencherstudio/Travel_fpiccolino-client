@@ -5,7 +5,7 @@ import BlogCard from "./BlogCard";
 
 const BlogSections = ({ title, blogs }) => {
   const filteredBlogs = blogs.filter((blog) => {
-    return blog.type === title;
+    return blog.category === title;
   });
   return (
     <div className="my-20">

@@ -3,14 +3,14 @@
 import { FaArrowRight } from "react-icons/fa";
 
 const BlogCard = ({ item }) => {
-  const { image, title, info, price, date } = item;
+  const { headerImg, header, info, contents, date } = item;
 
   return (
     <div className="bg-[#effbfb] rounded-2xl">
       <div className="relative group">
         <img
           className="h-[240px] w-full object-cover rounded-t-2xl "
-          src={image}
+          src={headerImg}
           alt=""
         />
         <div className="p-5">
@@ -22,7 +22,7 @@ const BlogCard = ({ item }) => {
             Adventure Awaits{" "}
           </h2>
             <h2 className="font-semibold text-[20px] text-[#141D2A]">
-              {title}
+              {header}
             </h2>
             <div className="mt-10 flex justify-between">
               <div>
