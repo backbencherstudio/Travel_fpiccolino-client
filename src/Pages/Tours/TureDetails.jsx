@@ -13,6 +13,9 @@ import image2 from "../../assets/Image2.jpg"
 import image3 from "../../assets/Image3.jpg"
 import image4 from "../../assets/Image4.jpg"
 import { useState } from "react";
+import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
+import { reviews } from "../../ALLJsonFile/const";
+import TestimonialCard from "../../Components/Cards/TestimonialCard";
 
 const TureDetails = () => {
 
@@ -56,11 +59,14 @@ const TureDetails = () => {
 
     const [imagePath, setImagePath] = useState(image3)
 
+    
+
 
     return (
         <div className="text-black" >
             <HeroScetion heroContent={heroContent} />
             <div className="bg-[#EFFBFB]" >
+
                 <ParentComponent>
                     <div className="grid grid-cols-12 py-20 gap-10 " >
                         <div className="col-span-8" >
@@ -78,6 +84,7 @@ const TureDetails = () => {
                                 }
                             </div>
                             <div>
+                                {/* ================================================  Blog Hero Content ==================================== */}
                                 <div className="mt-16 mb-20 text-[#72777F]" >
 
                                     <p className="mb-4" >Okay, not to brag: we also take some trips every now and then. And we can say that in Fuerteventura, we breathed in a magical atmosphere.
@@ -88,7 +95,7 @@ const TureDetails = () => {
 
                                     <p className="mb-4" >You will also find a local coach ready to advise you on the most local spots and share all the secrets of the destination! They will serve as a link between you and your travel companions.</p>
                                 </div>
-
+                                {/* ==============================================  Accordion ==============================================    */}
                                 <div className="text-[#1C1C1C]" >
 
                                     <div className="collapse collapse-arrow bg-[#FFFFFF] mb-10">
@@ -173,12 +180,13 @@ const TureDetails = () => {
                             </div>
                         </div>
                         <div className="col-span-4 bg-red-200 " >
+                            {/* ==============================================  Hero Section Right Side Bar ===================================== */}
                             <h2>Starting from</h2>
                         </div>
-
                     </div>
                 </ParentComponent>
 
+                {/* ====================================================  Hotail Section ============================= */}
                 <div className="bg-[#FFFFFF]" >
                     <ParentComponent>
                         <div className="grid grid-cols-12 py-20 gap-14" >
@@ -196,9 +204,9 @@ const TureDetails = () => {
                                 </div>
                                 <div className="flex gap-4 flex-end " >
                                     {
-                                        images?.map(item => <img key={item?._id} src={item.image} onClick={()=>{setImagePath(item.image)}}
+                                        images?.map(item => <img key={item?._id} src={item.image} onClick={() => { setImagePath(item.image) }}
 
-                                            className={`size-36 rounded-lg object-cover cursor-pointer  duration-300 ${item?.image === imagePath ? "border-2 border-red-500" : "border-2 border-transparent" } `} alt="" />)
+                                            className={`size-36 rounded-lg object-cover cursor-pointer  duration-300 ${item?.image === imagePath ? "border-2 border-red-500" : "border-2 border-transparent"} `} alt="" />)
                                     }
                                 </div>
                             </div>
@@ -207,10 +215,31 @@ const TureDetails = () => {
                                 <img className="h-full w-full rounded-xl object-cover " src={imagePath} alt="" />
                             </div>
                         </div>
+                    </ParentComponent>
+                </div>
 
+                {/* ==========================================  Testimonial ================================= */}
+
+                <div className="bg-[#EFFBFB] py-20 " >
+
+                    <HeadLine title="WHAT DO PEOPLE WHO HAVE TRAVELED WITH US SAY?" description="Real Reviews from Golfers Who Elevate Their Game in Our Apparel" />
+
+                    <ParentComponent>
+                        <div className="grid grid-cols-4 gap-10" >
+
+                            {
+                                reviews?.map(item => <div key={item._id} >
+                                    <TestimonialCard item={item} />                                    
+                                </div>  )
+                            }
+
+                        </div>
                     </ParentComponent>
 
                 </div>
+
+
+
 
             </div>
 
