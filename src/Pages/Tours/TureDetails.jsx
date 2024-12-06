@@ -225,14 +225,12 @@ const TureDetails = () => {
                     <HeadLine title="WHAT DO PEOPLE WHO HAVE TRAVELED WITH US SAY?" description="Real Reviews from Golfers Who Elevate Their Game in Our Apparel" />
 
                     <ParentComponent>
-                        <div className="grid grid-cols-4 gap-10" >
-
+                        <div className="grid grid-cols-4 gap-10 my-12 " >
                             {
                                 reviews?.map(item => <div key={item._id} >
                                     <TestimonialCard item={item} />                                    
                                 </div>  )
                             }
-
                         </div>
                     </ParentComponent>
 
