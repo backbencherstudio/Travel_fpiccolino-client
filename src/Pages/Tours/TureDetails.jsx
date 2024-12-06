@@ -8,6 +8,8 @@ import iconn3 from "../../assets/icone/icone3.png"
 import iconn4 from "../../assets/icone/icone4.png"
 import yes from "../../assets/icone/yes.png"
 
+import flight from "../../assets/icone/flight.png"
+
 import image1 from "../../assets/Image1.jpg"
 import image2 from "../../assets/Image2.jpg"
 import image3 from "../../assets/Image3.jpg"
@@ -16,6 +18,7 @@ import { useState } from "react";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { reviews } from "../../ALLJsonFile/const";
 import TestimonialCard from "../../Components/Cards/TestimonialCard";
+import { RiMoneyEuroCircleLine } from "react-icons/ri";
 
 const TureDetails = () => {
 
@@ -59,7 +62,7 @@ const TureDetails = () => {
 
     const [imagePath, setImagePath] = useState(image3)
 
-    
+
 
 
     return (
@@ -179,9 +182,39 @@ const TureDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-4 bg-red-200 " >
+                        <div className="col-span-4  " >
                             {/* ==============================================  Hero Section Right Side Bar ===================================== */}
-                            <h2>Starting from</h2>
+
+                            <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 " >
+
+                                <div className="mb-10" >
+                                    <h2 className="text-center text-[#1C1C1C]" >Starting from</h2>
+                                    <span className="flex justify-center gap-10" >
+                                        <h2 className="flex items-center font-semibold text-[18px] text-[#25CE50] " > <RiMoneyEuroCircleLine /> 294</h2>
+                                        <h2 className="flex items-center font-semibold text-[18px] text-[#72777F] line-through " > <RiMoneyEuroCircleLine /> 347</h2>
+                                    </span>
+                                    <p className="text-[14px] text-[#72777F] text-center " >or 3 installments of €83 with no interest.</p>
+                                </div>
+                                <div>
+                                    <h2 className="text-center border rounded-lg px-8 py-4 mb-4 text-[#141D2A]" >November 16 - 23 (7 nights)</h2>
+                                    <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4" >Change dates</h2>
+                                    <button className="text-center border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full" >Continue</button>
+                                </div>
+                            </div>
+
+                            <div className="bg-[#FFFFFF] p-10 rounded-lg " >
+
+                                <div className="mb-10" >
+                                    <h2 className="text-[#E86731] flex items-center" > <img src={flight} alt="" /> Add flight</h2>
+                                    
+                                </div>
+
+                                <div>
+                                    <p>Come From Text Editor</p>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </ParentComponent>
@@ -228,8 +261,8 @@ const TureDetails = () => {
                         <div className="grid grid-cols-4 gap-10 my-12 " >
                             {
                                 reviews?.map(item => <div key={item._id} >
-                                    <TestimonialCard item={item} />                                    
-                                </div>  )
+                                    <TestimonialCard item={item} />
+                                </div>)
                             }
                         </div>
                     </ParentComponent>
