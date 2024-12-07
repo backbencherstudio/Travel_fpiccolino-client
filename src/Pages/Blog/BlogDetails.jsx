@@ -380,8 +380,8 @@ const BlogDetails = () => {
     <div>
       <HeroScetion heroContent={heroContent} />
       <ParentComponent>
-        <div className="grid md:grid-cols-5  mt-20 gap-12">
-          <div className="md:col-span-4 max-w-[1300px]">
+        <div className="grid lg:grid-cols-5  mt-20 gap-12">
+          <div className="lg:col-span-4 max-w-[1300px]">
             <h1 className="text-[40px] font-bold">{blogs[params.id].header}</h1>
             <p className="text-[18px] mt-4 text-[#5C5C68]">
               {blogs[params.id].text}
@@ -459,7 +459,7 @@ const BlogDetails = () => {
            </p>
            </div>
           </div>
-          <div className="md:col-span-1">
+          <div className="lg:col-span-1">
             <div className="relative mt-4">
               <input
                 className="bg-[#fbfbfb] p-3 pr-20 w-full text-[18px] border border-[#f2b8a0] rounded-lg"
