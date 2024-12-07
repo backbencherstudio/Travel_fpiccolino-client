@@ -381,68 +381,115 @@ const BlogDetails = () => {
       <ParentComponent>
         <div className="grid md:grid-cols-5  mt-20 gap-12">
           <div className="md:col-span-4 max-w-[1300px]">
-            <h1 className="text-[40px] font-bold">
-              {blogs[params.id].header}
-            </h1>
+            <h1 className="text-[40px] font-bold">{blogs[params.id].header}</h1>
             <p className="text-[18px] mt-4 text-[#5C5C68]">
               {blogs[params.id].text}
             </p>
             <div className="mt-8">
               {blogs[params.id]?.contents?.map((content, index) => (
-                <div
-                  key={index}
-                  className={`my-6  ${
-                    index % 2 === 0
-                      ? "flex flex-col md:flex-row"
-                      : "flex flex-col md:flex-row-reverse "
-                  } gap-10`}
-                >
-                  <div className="max-w-[450px] lg:max-w-[612px]">
-                    {" "}
-                    <h2 className="text-[32px] font-medium">
-                      {content?.subHeader}
-                    </h2>
-                    <p className="text-[18px] mt-4 text-[#5C5C68]">
-                      {content?.subText}
-                    </p>
+                <div key={index}>
+                  <div
+                    className={`my-6  ${
+                      index % 2 === 0
+                        ? "flex flex-col md:flex-row"
+                        : "flex flex-col md:flex-row-reverse "
+                    } gap-10`}
+                  >
+                    <div className="max-w-[450px] lg:max-w-[612px]">
+                      {" "}
+                      <h2 className="text-[32px] font-medium">
+                        {content?.subHeader}
+                      </h2>
+                      <p className="text-[18px] mt-4 text-[#5C5C68]">
+                        {content?.subText}
+                      </p>
+                    </div>
+                    <div className="h-[260px] lg:w-[660px]">
+                      <img
+                        className="rounded-2xl h-full w-full object-cover"
+                        src={content?.img}
+                        alt=""
+                      />
+                    </div>
                   </div>
-                  <div className="h-[260px] lg:w-[660px]">
-                    <img
-                      className="rounded-2xl h-full w-full object-cover"
-                      src={content?.img}
-                      alt=""
-                    />
-                  </div>
+                  {index === 0 && (
+                    <div>
+                      <h1 className="text-[32px] font-medium my-6">
+                        Learn Basic Local Phrases
+                      </h1>
+                      <p className="text-[18px] mt-4">
+                        A few words in the local language can go a long way.
+                        Learn phrases like “thank you,” “help,” and “where is…”
+                        to make interactions easier and show respect for the
+                        local culture.
+                      </p>
+                      <p className="text-[18px] mt-4">
+                        Download travel apps for navigation, translation, and
+                        currency conversion. Tools like Google Maps offline mode
+                        and TripIt can help you stay organized even without
+                        internet access.
+                      </p>
+                      <p className="text-[18px] mt-4">
+                        Save time by checking in online and keeping your travel
+                        documents handy. Wear slip-on shoes for quick security
+                        checks, and always have an empty reusable water bottle
+                        to fill after passing security.
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
+            <h1 className="text-[32px] font-medium mt-12">Final Thoughts</h1>
+            <p className="text-[18px] mt-4">
+              Traveling doesn’t have to be stressful. With a bit of planning and
+              the right hacks, you can focus on what truly matters—exploring new
+              places, meeting new people, and making memories that last a
+              lifetime.
+            </p>
+            <p className="text-[18px] mt-4">
+              Start implementing these travel hacks on your next trip and
+              experience the joy of hassle-free adventures!
+            </p>
           </div>
           <div className="md:col-span-1">
-          <div className="relative mt-4">
-                <input
-                  className="bg-[#fbfbfb] p-3 pr-20 w-full text-[18px] border border-[#f2b8a0] rounded-lg"
-                  type="text"
-                  placeholder="Search.."
-                />
-                <button className=" primary_text absolute right-1 top-4 px-[10px] py-1 rounded-lg">
-              <FaSearch/>
-                </button>
-              
-              </div>
-              <div className="mt-8 bg-[#fdf0ea] p-4 border border-[#e86731] rounded-lg">
-                <h4 className="text-[20px] font-medium text-[#141D2A] border-b border-[#e86731] pb-2">Categories</h4>
-                <div className="mt-4">
+            <div className="relative mt-4">
+              <input
+                className="bg-[#fbfbfb] p-3 pr-20 w-full text-[18px] border border-[#f2b8a0] rounded-lg"
+                type="text"
+                placeholder="Search.."
+              />
+              <button className=" primary_text absolute right-1 top-4 px-[10px] py-1 rounded-lg">
+                <FaSearch />
+              </button>
+            </div>
+            <div className="mt-8 bg-[#fdf0ea] p-4 border border-[#e86731] rounded-lg overflow-auto">
+              <h4 className="text-[20px] font-medium text-[#141D2A] border-b border-[#e86731] pb-2">
+                Categories
+              </h4>
+              <div className="mt-4">
                 {Object.keys(categoryCount).map((category, index) => (
                   <div
                     key={index}
                     className="text-[18px] text-[#5C5C68] mt-2 flex justify-between"
                   >
-                   <div> {category}</div> <div>
-                   {categoryCount[category]}</div>
+                    <div> {category}</div> <div>{categoryCount[category]}</div>
                   </div>
                 ))}
               </div>
+            </div>
+            <h3 className="text-[24px] font-bold my-8">Popular Articles</h3>
+            {blogs.slice(0,3).map((blog, index) => (
+              <div key={index} className="flex justify-between gap-5 border-b border-[#DFE4EA] py-4">
+                <img className="w-[80px] h-[80px] rounded-full" src={blog?.headerImg} alt="" />
+                <div>
+                  <h5 className="text-[20px] font-semibold text-[#141D2A]">
+                    {blog?.header}
+                  </h5>
+                  <p className="text-[16px] text-[#72777F]">{blog.tag}</p>
+                </div>
               </div>
+            ))}
           </div>
         </div>
         <BlogSections
