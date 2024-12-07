@@ -71,10 +71,11 @@ const TureDetails = () => {
             <div className="bg-[#EFFBFB]" >
 
                 <ParentComponent>
-                    <div className="grid grid-cols-12 py-20 gap-10 " >
-                        <div className="col-span-8" >
-                            <h2 className="text-[40px] font-bold text-[#0C0C1D] uppercase " >FOR THOSE WHO ALWAYS LOOK TO THE HORIZON</h2>
-                            <div className="flex gap-4 mt-4" >
+                    <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 " >
+
+                        <div className="col-span-12 lg:col-span-8" >
+                            <h2 className="lg:text-[40px] font-bold text-[#0C0C1D] uppercase " >FOR THOSE WHO ALWAYS LOOK TO THE HORIZON</h2>
+                            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4 " >
                                 {
                                     tags?.map(item => <div key={item?._id} >
 
@@ -111,7 +112,7 @@ const TureDetails = () => {
                                         </div>
                                         <div className="collapse-content">
 
-                                            <div className="grid grid-cols-2" >
+                                            <div className="grid lg:grid-cols-2" >
                                                 <div>
                                                     {
                                                         includeds.map(item =>
@@ -150,7 +151,7 @@ const TureDetails = () => {
 
                                         <div className="collapse-content">
 
-                                            <div className="grid grid-cols-2" >
+                                            <div className="grid lg:grid-cols-2" >
                                                 <div>
                                                     {
                                                         includeds.map(item =>
@@ -182,7 +183,8 @@ const TureDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-4  " >
+
+                        <div className=" col-span-12 lg:col-span-4 mt-10 md:mt-0  " >
                             {/* ==============================================  Hero Section Right Side Bar ===================================== */}
 
                             <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 " >
@@ -206,7 +208,7 @@ const TureDetails = () => {
 
                                 <div className="mb-10" >
                                     <h2 className="text-[#E86731] flex items-center" > <img src={flight} alt="" /> Add flight</h2>
-                                    
+
                                 </div>
 
                                 <div>
@@ -216,14 +218,15 @@ const TureDetails = () => {
                             </div>
 
                         </div>
+
                     </div>
                 </ParentComponent>
 
                 {/* ====================================================  Hotail Section ============================= */}
                 <div className="bg-[#FFFFFF]" >
                     <ParentComponent>
-                        <div className="grid grid-cols-12 py-20 gap-14" >
-                            <div className=" col-span-7 flex flex-col justify-between" >
+                        <div className="grid grid-cols-12 pt-20 pb-20 lg:gap-4 xl:gap-14 relative " >
+                            <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between" >
                                 <div>
                                     <h2 className="uppercase font-bold text-[32px] " >WHERE WILL YOU STAY</h2>
                                     <h2 className="text-[20px] font-semibold " >MAAR House - or similar</h2>
@@ -235,18 +238,22 @@ const TureDetails = () => {
                                     <p className="mt-5 text-[#72777F]">MAAR House is the villa with a pool that you've always dreamed of: good vibes, new travel companions, a barbecue, and two common areas to fully enjoy the island vibes!</p>
 
                                 </div>
-                                <div className="flex gap-4 flex-end " >
+
+                                <div className="flex flex-wrap justify-center lg:gap-4 py-5 lg:py-0  " >
                                     {
                                         images?.map(item => <img key={item?._id} src={item.image} onClick={() => { setImagePath(item.image) }}
-
-                                            className={`size-36 rounded-lg object-cover cursor-pointer  duration-300 ${item?.image === imagePath ? "border-2 border-red-500" : "border-2 border-transparent"} `} alt="" />)
+                                            className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${item?.image === imagePath ? "border-2 border-red-500" : "border-2 border-transparent"} `} alt="" />)
                                     }
                                 </div>
+
                             </div>
 
-                            <div className="col-span-5 h-[720px] w-full  " >
-                                <img className="h-full w-full rounded-xl object-cover " src={imagePath} alt="" />
+                            <div className=" col-span-12 lg:col-span-5 h-[400px] lg:h-[720px] w-[100%]  " >
+                                <img className="h-full w-[100%] rounded-xl object-cover " src={imagePath} alt="" />
                             </div>
+
+
+
                         </div>
                     </ParentComponent>
                 </div>
@@ -258,7 +265,7 @@ const TureDetails = () => {
                     <HeadLine title="WHAT DO PEOPLE WHO HAVE TRAVELED WITH US SAY?" description="Real Reviews from Golfers Who Elevate Their Game in Our Apparel" />
 
                     <ParentComponent>
-                        <div className="grid grid-cols-4 gap-10 my-12 " >
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12 " >
                             {
                                 reviews?.map(item => <div key={item._id} >
                                     <TestimonialCard item={item} />
