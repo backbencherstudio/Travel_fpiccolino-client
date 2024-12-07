@@ -9,6 +9,7 @@ import TureDetails from "../Pages/Tours/TureDetails";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import Contact from "../Pages/Contact/Contact";
+import Insurence from "../Pages/Insurence/Insurence";
 
 export const router = createBrowserRouter([
     {
@@ -46,7 +47,12 @@ export const router = createBrowserRouter([
             {
                 path: '/contact',
                 element: <Contact />
-            },
+            }
+
         ]
+    },
+    {
+        path: '/Insurence/:dynamicDetails',
+        element: <Insurence />
     },
 ]);
