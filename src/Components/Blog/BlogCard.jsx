@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 
 import { FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const BlogCard = ({ item }) => {
-  const { headerImg, header, info, contents, date } = item;
-
+  const { id,headerImg, header, info, contents, date } = item;
+const navigate = useNavigate()
   return (
-    <div className="bg-[#effbfb] rounded-2xl">
+    <div onClick={()=>navigate(`/blog/${id}`)} className="bg-[#effbfb] rounded-2xl">
       <div className="relative group">
         <img
           className="h-[240px] w-full object-cover rounded-t-2xl "
