@@ -9,6 +9,7 @@ import TureDetails from "../Pages/Tours/TureDetails";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import Contact from "../Pages/Contact/Contact";
+import Login from "../Pages/Auth/Login";
 
 export const router = createBrowserRouter([
     {
@@ -49,4 +50,8 @@ export const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path:'/login',
+        element: <Login/>
+    }
 ]);
