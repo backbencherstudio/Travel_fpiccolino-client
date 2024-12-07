@@ -1,0 +1,166 @@
+import BannerSection from "../../Components/Home/BannerSection";
+import ApproachSection from "../../Components/Home/ApproachSection";
+import call from "../../assets/icons/call2.svg";
+import mail from "../../assets/icons/mail2.svg";
+import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
+import { useState } from "react";
+const Contact = () => {
+  const [selectedOption, setSelectedOption] = useState("phone");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+  return (
+    <div>
+      <BannerSection />
+      <ParentComponent>
+        <div className="mt-20 grid md:grid-cols-2 max-w-[1440px] mx-auto gap-10">
+          <div>
+            <h1 className="text-[32px] font-extrabold">
+              Let's Connect And <br /> Make Plans
+            </h1>
+            <p className="text-[#72777F] text-[18px] mt-6">
+              Contact Us Today for a Customized Solution Tailored to Your Needs!
+            </p>
+
+            <div className="flex gap-3 mt-10">
+              <div className="w-11 h-11 bg-[#fef7f4] rounded-md">
+                <img src={mail} className=" m-2.5" alt="" />
+              </div>
+              <div>
+                <p className="text-[16px]">Mail us at</p>
+                <p className="text-[18px] primary_text font-medium">
+                  medicakitservice@gmail.com
+                </p>
+              </div>{" "}
+            </div>
+            <div className="flex gap-3 mt-5">
+              <div className="w-11 h-11 bg-[#fef7f4] rounded-md">
+                <img src={call} className=" m-2.5" alt="" />
+              </div>
+              <div>
+                <p className="text-[16px]">Phone us at</p>
+                <p className="text-[18px] primary_text font-medium">
+                  012-3456-7899
+                </p>
+              </div>{" "}
+            </div>
+          </div>
+          <div className="p-10 bg-[#effbfb] rounded-xl">
+            <h1 className="text-3xl font-bold">Send us a message</h1>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-[18px] font-medium mt-8 mb-3">First Name</p>
+                <input
+                  type="text"
+                  placeholder="Enter First Name"
+                  className="p-3 text-[16px] rounded-md w-full"
+                />
+              </div>
+              <div>
+                <p className="text-[18px] font-medium mt-8 mb-3">Last Name</p>
+                <input
+                  type="text"
+                  placeholder="Enter Last Name"
+                  className="p-3 text-[16px] rounded-md w-full"
+                />
+              </div>
+              <div>
+                <p className="text-[18px] font-medium mt-5 mb-3">
+                  Email Address
+                </p>
+                <input
+                  type="text"
+                  placeholder="Enter Email Address"
+                  className="p-3 text-[16px] rounded-md w-full"
+                />
+              </div>
+              <div>
+                <p className="text-[18px] font-medium mt-5 mb-3">Phone name</p>
+                <input
+                  type="text"
+                  placeholder="Enter Phone Number"
+                  className="p-3 text-[16px] rounded-md w-full"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="text-[18px] font-medium mt-5 mb-3">Message</p>
+              <textarea
+                placeholder="Enter Message"
+                className="p-3 text-[16px] rounded-md w-full"
+              />
+            </div>
+            <div className="">
+              <div>
+                <p className="text-[18px] font-medium mt-5 mb-3">
+                  Preferred Contact Method
+                </p>
+
+                <div className="grid grid-cols-2 gap-3 bg-white p-3">
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      id="phone"
+                      name="radio-8"
+                      value="phone"
+                      checked={selectedOption === "phone"}
+                      onChange={handleOptionChange}
+                      className={`mr-2 size-5 radio ${
+                        selectedOption === "phone" ? "radio-error" : ""
+                      }`}
+                    />
+                    <label
+                      htmlFor="phone"
+                      className={`text-[16px] ${
+                        selectedOption === "phone"
+                          ? "primary_text"
+                          : "text-zinc-400"
+                      }`}
+                    >
+                      Phone
+                    </label>
+                  </div>
+
+                  {/* Email Radio Button */}
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      id="email"
+                      name="contactMethod"
+                      value="email"
+                      checked={selectedOption === "email"}
+                      onChange={handleOptionChange}
+                      className={`mr-2 size-5 radio ${
+                        selectedOption === "email" ? "radio-error" : ""
+                      }`}
+                    />
+                    <label
+                      htmlFor="email"
+                      className={`text-[16px] ${
+                        selectedOption === "email"
+                          ? "primary_text"
+                          : "text-zinc-400"
+                      }`}
+                    >
+                      Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button className="p-3 w-full primary_bg text-white font-medium text-[16px] mt-6 rounded-md">
+                Send Message
+            </button>
+          </div>
+        </div>
+      </ParentComponent>
+      <div className="bg-[#effbfb] mt-20 pt-1 pb-20">
+      <ApproachSection />
+        </div>
+    
+    </div>
+  );
+};
+
+export default Contact;

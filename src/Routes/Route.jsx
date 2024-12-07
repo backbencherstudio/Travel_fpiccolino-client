@@ -8,6 +8,7 @@ import About from "../Pages/About/About";
 import TureDetails from "../Pages/Tours/TureDetails";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
+import Contact from "../Pages/Contact/Contact";
 
 export const router = createBrowserRouter([
     {
@@ -33,7 +34,19 @@ export const router = createBrowserRouter([
             {
                 path: '/TureDetails/:id',
                 element: <TureDetails />
-            }
+            },
+            {
+                path: '/blog',
+                element: <Blog />
+            },
+            {
+                path: '/blog/:id',
+                element: <BlogDetails />
+            },
+            {
+                path: '/contact',
+                element: <Contact />
+            },
         ]
     },
 ]);
