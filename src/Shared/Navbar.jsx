@@ -87,7 +87,7 @@ const Navbar = () => {
                         </li>
 
                         <li>
-                        <NavLink to="/packages"  className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Contact </NavLink>
+                        <NavLink to="/contact"  className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Contact </NavLink>
                         </li>
                     
                     </ul>
