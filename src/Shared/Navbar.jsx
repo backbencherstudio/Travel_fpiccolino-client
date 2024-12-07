@@ -93,13 +93,6 @@ const Navbar = () => {
                                 </ul>
                             </nav>
                         </div>
-                        <li>
-                        <NavLink to="/contact"  className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Contact </NavLink>
-                        </li>
-                    
-                    </ul>
-                    </nav>
-                </div>
 
                         <div className="flex items-center gap-4">
                             <div className='flex gap-6 xl:gap-[6px] items-center'>
