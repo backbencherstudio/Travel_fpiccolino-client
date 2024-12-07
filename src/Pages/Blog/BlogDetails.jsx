@@ -1,5 +1,6 @@
 import BlogSections from "../../Components/Blog/BlogSections";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
+import calender from '../../assets/icons/calender.svg'
 import heroImage from "../../assets/Images/about.jpg";
 import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
@@ -451,6 +452,12 @@ const BlogDetails = () => {
               Start implementing these travel hacks on your next trip and
               experience the joy of hassle-free adventures!
             </p>
+           <div className="flex mt-12 justify-between">
+           <p className="text-[20px] text-[#72777F]">Tag: <div className="bg-[#FDF0EA] text-[#E86731] border border-[#E86731] rounded-lg inline-block py-3 text-[16px] px-6 ml-3">{blogs[params.id].category}</div></p>
+           <p className="text-18 flex items-center">
+           <img className="h-6 w-6 mr-2" src={calender} alt="" /> {blogs[params.id].date}
+           </p>
+           </div>
           </div>
           <div className="md:col-span-1">
             <div className="relative mt-4">
