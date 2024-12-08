@@ -5,6 +5,8 @@ import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { GoChevronLeft } from "react-icons/go";
 import "react-range-slider-input/dist/style.css";
 import { useState, useEffect } from "react";
+import flightIcon from "../../assets/icone/flightIcon.png"
+import infoIcon from "../../assets/infoIcon.png"
 
 const Insurence = ({
     startTime = { time: "10:40", timeZone: "am" },
@@ -80,40 +82,103 @@ const Insurence = ({
                             Comprehensive Insurance for Worry-Free Travel
                         </p>
 
-                        <div className="border mt-6 p-6 rounded-lg">
-                            <h2 className="text-center text-[14px] text-[#000000]">
-                                1 Stop - 6h 15m
-                            </h2>
+                        <div className="grid grid-cols-12 border rounded-lg mt-5" >
 
-                            <div>
+                            <div className="col-span-8  border-r border-dashed relative " >
+                                <div className="size-10 bg-white border-b rounded-full absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 " ></div>
+                                <div className="size-10 bg-white border-t rounded-full absolute right-0 bottom-0 translate-x-1/2 translate-y-1/2 " ></div>
 
-                                <div className="flex items-center gap-2">
-                                    <h2>{formatTime(value[0])}</h2>
-                                    <div className="bg-gray-200 relative flex justify-between h-[5px] w-full">
-                                        <div className="size-5 absolute left-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center  ">
-                                            <div className="border border-black size-3 rounded-full " ></div>
+                                <div className=" p-6 border-b ">
+                                    <h2 className="text-center text-[14px] text-[#000000]">
+                                        1 Stop - 6h 15m
+                                    </h2>
+                                    <div>
+                                        <div className="flex items-center gap-2">
+                                            <h2 >{formatTime(value[0])}</h2>
+                                            <div className="bg-gray-200 relative flex justify-between h-[5px] w-full">
+                                                <div className="size-5 absolute left-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center  ">
+                                                    <div className="border border-black size-3 rounded-full " ></div>
+                                                </div>
+                                                <div className="size-5 absolute transform -translate-y-1/2 top-1/2 rounded-full bg-[#FDF0EA] flex justify-center items-center " style={{ left: '50%' }}>
+                                                    <div className="bg-[#d45e2d] size-3 rounded-full " ></div>
+                                                </div>
+
+                                                <div className="size-5 absolute right-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center  ">
+                                                    <div className="border border-black size-3 rounded-full " ></div>
+                                                </div>
+                                            </div>
+                                            <h2 className="text-right" >{formatTime(value[1])}</h2>
                                         </div>
-                                        <div className="size-5 absolute transform -translate-y-1/2 top-1/2 rounded-full bg-[#FDF0EA] flex justify-center items-center " style={{ left: '50%' }}>
-                                            <div className="bg-[#d45e2d] size-3 rounded-full " ></div>
+                                        <div className="flex items-start justify-between" >
+                                            <h2>Rome Fiumicino Airport (ECO)</h2>
+                                            <h2>Fuerteventura Airport (FOE)</h2>
                                         </div>
-
-                                        <div className="size-5 absolute right-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center  ">
-                                            <div className="border border-black size-3 rounded-full " ></div>
-                                        </div>
-
                                     </div>
-                                    <h2 className="text-right" >{formatTime(value[1])}</h2>
+                                    <div className="flex justify-center items-center ">
+                                        <span className="flex border items-center px-4 rounded" >
+                                            <img className="size-10 p-1  border-r pr-3 mr-3" src={flightIcon} alt="" />
+                                            <h2 className="uppercase" >IBERIA</h2>
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <div className="flex items-start justify-between" >
-                                    <h2>Rome Fiumicino Airport (ECO)</h2>
-                                    <h2>Fuerteventura Airport (FOE)</h2>
-                                </div>
+                                <div className=" p-6 ">
+                                    <h2 className="text-center text-[14px] text-[#000000]">
+                                        1 Stop - 5h 30m
+                                    </h2>
+                                    <div>
+                                        <div className="flex items-center gap-2">
+                                            <h2>{formatTime(value[0])}</h2>
+                                            <div className="bg-gray-200 relative flex justify-between h-[5px] w-full">
+                                                <div className="size-5 absolute left-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center  ">
+                                                    <div className="border border-black size-3 rounded-full " ></div>
+                                                </div>
+                                                <div className="size-5 absolute transform -translate-y-1/2 top-1/2 rounded-full bg-[#FDF0EA] flex justify-center items-center " style={{ left: '50%' }}>
+                                                    <div className="bg-[#d45e2d] size-3 rounded-full " ></div>
+                                                </div>
 
-                                
+                                                <div className="size-5 absolute right-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center  ">
+                                                    <div className="border border-black size-3 rounded-full " ></div>
+                                                </div>
+
+                                            </div>
+                                            <h2 className="text-right" >{formatTime(value[1])}</h2>
+                                        </div>
+                                        <div className="flex items-start justify-between" >
+                                            <h2>Rome Fiumicino Airport (ECO)</h2>
+                                            <h2>Fuerteventura Airport (FOE)</h2>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-center items-center ">
+                                        <span className="flex border items-center px-4 rounded" >
+                                            <img className="size-10 p-1  border-r pr-3 mr-3" src={flightIcon} alt="" />
+                                            <h2 className="uppercase" >IBERIA</h2>
+                                        </span>
+                                    </div>
+                                </div>
 
                             </div>
+
+
+
+                            <div className="col-span-4 p-4  flex flex-col justify-between items-center " >
+
+                                <div className="flex justify-end w-full " >
+                                    <img src={infoIcon} alt="" />
+                                </div>
+
+                                <div className="w-full  " >
+                                    <h2 className="text-[#000000] text-[18px] font-bold text-center " >€ 953 </h2>
+                                    <h2 className="text-center" >per person</h2>
+                                </div>
+
+                                <button className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded " >Select</button>
+
+                            </div>
+
                         </div>
+
+
                     </div>
 
                     <div className="col-span-3 shadow-lg rounded-lg p-10">
