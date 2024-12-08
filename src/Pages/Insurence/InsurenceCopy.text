@@ -1,0 +1,110 @@
+/* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
+import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
+import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
+import { GoChevronLeft } from "react-icons/go";
+import RangeSlider from "react-range-slider-input";
+import "react-range-slider-input/dist/style.css";
+import { useState, useEffect } from "react";
+
+const Insurence = ({
+  startTime = { time: "1:40", timeZone: "pm" },
+  endTime = { time: "3:45", timeZone: "pm" },
+}) => {
+  const convertToMinutes = (time, timeZone) => {
+    const [hours, minutes] = time.split(":").map(Number);
+    let totalMinutes = hours * 60 + minutes;
+    if (timeZone.toLowerCase() === "pm" && hours !== 12) {
+      totalMinutes += 12 * 60;
+    }
+    if (timeZone.toLowerCase() === "am" && hours === 12) {
+      totalMinutes -= 12 * 60;
+    }
+    return totalMinutes;
+  };
+
+  const formatTime = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    const meridian = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours > 12 ? hours - 12 : hours || 12;
+    return `${formattedHours}:${minutes.toString().padStart(2, "0")} ${meridian}`;
+  };
+
+  const calculateDuration = (start, end) => {
+    let diff = end - start;
+    if (diff < 0) {
+      diff += 24 * 60; 
+    }
+    const hours = Math.floor(diff / 60);
+    const minutes = diff % 60;
+    return `${hours}h ${minutes}m`;
+  };
+
+  const [value, setValue] = useState([
+    convertToMinutes(startTime.time, startTime.timeZone),
+    convertToMinutes(endTime.time, endTime.timeZone),
+  ]);
+
+  const [duration, setDuration] = useState("");
+
+  useEffect(() => {
+    const diff = calculateDuration(value[0], value[1]);
+    setDuration(diff);
+  }, [value]);
+
+  return (
+    <div>
+      <ParentComponent>
+        <div className="mt-20">
+          <Link to="/TureDetails/dd" className="flex items-center">
+            <GoChevronLeft className="text-xl" /> Back to Tour Details
+          </Link>
+        </div>
+        <div className="mt-10">
+          <HeadLine
+            title="Choose Your Perfect Flight"
+            description="Find the Best Options for Your Journey, All in One Place"
+          />
+        </div>
+      </ParentComponent>
+
+      <div className="border border-b-[#A5A5AB] mt-14"></div>
+
+      <ParentComponent>
+        <div className="grid grid-cols-12 mt-20 gap-20">
+          <div className="col-span-9">
+            <h2 className="text-[#141D2A] text-[32px] font-bold">Fuerteventura</h2>
+            <p className="text-[#72777F] font-[18px]">
+              Comprehensive Insurance for Worry-Free Travel
+            </p>
+
+            <div className="border mt-6 p-6 rounded-lg">
+              <h2 className="text-center text-[14px] text-[#000000]">
+                Journey Duration: {duration}
+              </h2>
+              <div className="flex items-center gap-4">
+                <h2>{formatTime(value[0])}</h2>
+                <RangeSlider
+                  min={0}
+                  max={1440}
+                  value={value}
+                  onInput={setValue}
+                  className="w-full"
+                  
+                />
+                <h2>{formatTime(value[1])}</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-span-3 shadow-lg rounded-lg p-10">
+            <h2 className="font-bold text-[24px]">Fuerteventura</h2>
+          </div>
+        </div>
+      </ParentComponent>
+    </div>
+  );
+};
+
+export default Insurence;
