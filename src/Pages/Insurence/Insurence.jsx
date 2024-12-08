@@ -63,11 +63,13 @@ const Insurence = ({
         <div>
             <div className="pb-20" >
                 <ParentComponent>
-                    <div className="mt-20">
+
+                    <div className="mt-20 flex  ">
                         <Link to="/TureDetails/dd" className="flex items-center">
                             <GoChevronLeft className="text-xl" /> Back to Tour Details
                         </Link>
                     </div>
+
                     <div className="mt-10">
                         <HeadLine
                             title="Choose Your Perfect Flight"
@@ -79,8 +81,8 @@ const Insurence = ({
                 <div className="border border-b-[#A5A5AB] mt-14"></div>
 
                 <ParentComponent>
-                    <div className="grid grid-cols-12 mt-20 gap-20">
-                        <div className="col-span-8">
+                    <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20">
+                        <div className=" col-span-12 lg:col-span-8">
                             <h2 className="text-[#141D2A] text-[32px] font-bold">Fuerteventura</h2>
                             <p className="text-[#72777F] font-[18px]">
                                 Comprehensive Insurance for Worry-Free Travel
@@ -88,9 +90,9 @@ const Insurence = ({
 
                             <div className="grid grid-cols-12 border rounded-lg mt-5" >
 
-                                <div className="col-span-8  border-r border-dashed relative " >
-                                    <div className="size-10 bg-white border-b rounded-full absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 " ></div>
-                                    <div className="size-10 bg-white border-t rounded-full absolute right-0 bottom-0 translate-x-1/2 translate-y-1/2 " ></div>
+                                <div className=" col-span-12 md:col-span-8  md:border-r border-dashed relative " >
+                                    <div className="size-10 hidden md:block bg-white border-b rounded-full absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 " ></div>
+                                    <div className="size-10 hidden md:block bg-white border-t rounded-full absolute right-0 bottom-0 translate-x-1/2 translate-y-1/2 " ></div>
 
                                     {/* ========================================= Schedule map section ============================ */}
                                     <div className=" p-6 border-b ">
@@ -164,9 +166,7 @@ const Insurence = ({
 
                                 </div>
 
-
-
-                                <div className="col-span-4 p-4  flex flex-col justify-between items-center " >
+                                <div className="col-span-12 md:col-span-4 p-4  flex flex-col justify-between items-center border-t md:border-t-0 " >
                                     <div className="flex justify-end w-full " >
                                         <img src={infoIcon} alt="" />
                                     </div>
@@ -179,13 +179,14 @@ const Insurence = ({
                                     <button className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded " >Select</button>
 
                                 </div>
+
                             </div>
 
                         </div>
 
                         {/* ======================================  Side bar ========================== */}
 
-                        <div className="col-span-4">
+                        <div className=" col-span-12 lg:col-span-4 mt-5 lg:mt-0">
                             <div className=" shadow-lg rounded-lg p-10">
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
