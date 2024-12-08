@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 const ParentAuthComponent = ({children}) => {
   return (
-    <div className="loginBG">
-      <div className="flex justify-center items-center align-middle">
-        <div className="bg-white mt-[120px]  h-[80vh] w-[80%]">{children}</div>
-      </div>
+    <div className="loginBG min-h-screen p-10 flex flex-col justify-center">
+        <div className="bg-white overflow-hidden rounded-[20px]">{children}</div>
     </div>
   );
 };

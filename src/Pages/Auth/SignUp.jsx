@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import ParentAuthComponent from "../../Shared/ParentComponent/ParentAuthComponent";
-import heroImage from "../../assets/Images/about.jpg";
+import heroImage from "../../assets/Images/beach.jpg";
 import logo from "../../assets/logo.svg";
-const Login = () => {
-  const navigate = useNavigate()
+const SignUp = () => {
+    const navigate = useNavigate()
   return (
     <ParentAuthComponent>
       <div className="grid grid-cols-1 md:grid-cols-5 h-full ">
@@ -13,10 +13,18 @@ const Login = () => {
         <div className="h-full w-full md:col-span-3">
           <div className="lg:m-20 m-5">
             <img src={logo} alt="" />
-            <h1 className="font-extrabold text-[32px] mt-10">Welcome back</h1>
+            <h1 className="font-extrabold text-[32px] mt-10">Create New Account</h1>
             <h5 className="text-[#72777F] text-[16px] mt-3">
-              Welcome back! Please enter your details.
+               Please enter your details.
             </h5>
+            <div>
+              <p className="text-[18px] font-medium mt-5">Name</p>
+              <input
+                type="text"
+                placeholder="Enter Your Name"
+                className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
+              />
+            </div>
             <div>
               <p className="text-[18px] font-medium mt-5">Email</p>
               <input
@@ -33,15 +41,13 @@ const Login = () => {
                 className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
               />
             </div>
-            <div className="mt-6 flex justify-between">
+            <div className="mt-1 flex justify-between">
               <div>
-                <input type="checkbox" className=" mr-2" />
-                <p className="inline text-[14px]">Remember for 30 days</p>
+                <p className="inline text-[14px]">Must be at least 8 characters</p>
               </div>
-              <p onClick={()=> navigate('/forgot-password')}  className="primary_text font-semibold cursor-pointer">Forgot Password</p>{" "}
             </div>
-            <button className="primary_bg p-3 w-full rounded-lg text-white text-[16px] font-semibold mt-6">Log in</button>
-          <div className="text-[#475467] mt-8 text-center">{"Don't"} have an account ? <span onClick={()=> navigate('/signup')} className="primary_text font-semibold cursor-pointer">Sign up</span></div>
+            <button className="primary_bg p-3 w-full rounded-lg text-white text-[16px] font-semibold mt-6">Sign Up</button>
+          <div className="text-[#475467] mt-8 text-center">Already have account ? <span onClick={()=>navigate('/login')} className="primary_text font-semibold cursor-pointer">Log in</span></div>
           </div>
         </div>
       </div>
@@ -49,4 +55,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

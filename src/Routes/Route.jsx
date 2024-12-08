@@ -10,6 +10,9 @@ import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import Contact from "../Pages/Contact/Contact";
 import Login from "../Pages/Auth/Login";
+import SignUp from "../Pages/Auth/SignUp";
+import ForgotPassword from "../Pages/Auth/ForgotPassword";
+import OtpScreen from "../Pages/Auth/OtpScreen";
 
 export const router = createBrowserRouter([
     {
@@ -53,5 +56,17 @@ export const router = createBrowserRouter([
     {
         path:'/login',
         element: <Login/>
-    }
+    },
+    {
+        path:'/signup',
+        element: <SignUp/>
+    },
+    {
+        path:'/forgot-password',
+        element: <ForgotPassword/>
+    },
+    {
+        path:'/otp',
+        element: <OtpScreen/>
+    },
 ]);

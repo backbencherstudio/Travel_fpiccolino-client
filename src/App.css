@@ -14,12 +14,11 @@
   border: 1px solid #e9e9ea;
 }
 .loginBG {
-    width: 100%;
-    height: 100vh;
+    /* width: 100%; */
     background-image: 
       linear-gradient(to right, #e86731 30%, transparent 0%), 
       linear-gradient(to right, #fdf0ea 100%, transparent 0%);
-    background-size: 100% 100%; 
-    background-repeat: no-repeat;
+    /* background-size: 100% 100%;  */
+    /* background-repeat: no-repeat; */
   }
   
