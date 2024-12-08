@@ -13,6 +13,7 @@ import Login from "../Pages/Auth/Login";
 import SignUp from "../Pages/Auth/SignUp";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 import OtpScreen from "../Pages/Auth/OtpScreen";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -69,4 +70,8 @@ export const router = createBrowserRouter([
         path:'/otp',
         element: <OtpScreen/>
     },
+    {
+        path:'/dashboard',
+        element:<Dashboard/>
+    }
 ]);
