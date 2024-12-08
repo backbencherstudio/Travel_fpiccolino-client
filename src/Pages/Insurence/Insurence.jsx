@@ -7,6 +7,7 @@ import "react-range-slider-input/dist/style.css";
 import { useState, useEffect } from "react";
 import flightIcon from "../../assets/icone/flightIcon.png"
 import infoIcon from "../../assets/infoIcon.png"
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Insurence = ({
     startTime = { time: "10:40", timeZone: "am" },
@@ -181,9 +182,47 @@ const Insurence = ({
 
                     </div>
 
-                    <div className="col-span-3 shadow-lg rounded-lg p-10">
-                        <h2 className="font-bold text-[24px]">Fuerteventura</h2>
+                    <div className="col-span-3">
+                        <div className=" shadow-lg rounded-lg p-10">
+
+                            <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
+                            <p>8 Days / 7 Nights</p>
+
+                            <div className="mt-4">
+                                <span className="flex items-start justify-between mb-5 " >
+                                    <h2>April 19 - 26</h2>
+                                    <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ 653 </h2>
+                                </span>
+                                <span className="flex items-start justify-between mb-5 " >
+                                    <h2>Passengers</h2>
+                                    <h2 className="text-[#000000] text-[18px] font-semibold text-center " >X1 </h2>
+                                </span>
+                                <span className="flex items-start justify-between mb-5 " >
+                                    <h2>Room</h2>
+                                    <h2 className="text-[#000000] text-[18px] font-semibold text-center " >Private Double </h2>
+                                </span>
+
+                                <span className="flex items-start justify-between mb-5 border-b pb-5 " >
+                                    <h2>Included services</h2>
+                                    <h2 className="text-[#000000] text-[18px] font-semibold text-center " > <MdKeyboardArrowDown /> </h2>
+                                </span>
+
+                                <span className="flex items-start justify-between mb-5 " >
+                                    <h2>Total</h2>
+                                    <h2 className="text-[20px] font-semibold " >€ 2,345</h2>
+                                </span>
+
+                                <span className="flex items-start justify-between mb-5 " >
+                                    <p className="text-[#72777F] xl:pr-10" >or 3 installments of €232.66 interest-free.</p>
+                                </span>
+
+                            </div>
+
+                            <button className="text-center w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded " >Continue</button>
+
+                        </div>
                     </div>
+
                 </div>
             </ParentComponent>
         </div>
