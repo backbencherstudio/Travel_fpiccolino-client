@@ -1,15 +1,24 @@
-.primary_text{
-    @apply text-[#E86731]
+.primary_text {
+  @apply text-[#E86731];
 }
-.primary_bg{
-    @apply bg-[#E86731]
+.primary_bg {
+  @apply bg-[#E86731];
 }
-.banner_style{
-    background: linear-gradient(180deg, #003154 0%, rgba(0, 49, 84, 0.00) 100%);
-    backdrop-filter: blur(10px);
+.banner_style {
+  background: linear-gradient(180deg, #003154 0%, rgba(0, 49, 84, 0) 100%);
+  backdrop-filter: blur(10px);
 }
-.card_style{
-    background: linear-gradient(180deg, #494a4b 0%, rgba(0, 49, 84, 0.00) 100%);
-    backdrop-filter: blur(3px);
-    border : 1px solid #e9e9ea;
+.card_style {
+  background: linear-gradient(180deg, #494a4b 0%, rgba(0, 49, 84, 0) 100%);
+  backdrop-filter: blur(3px);
+  border: 1px solid #e9e9ea;
 }
+.loginBG {
+    /* width: 100%; */
+    background-image: 
+      linear-gradient(to right, #e86731 30%, transparent 0%), 
+      linear-gradient(to right, #fdf0ea 100%, transparent 0%);
+    /* background-size: 100% 100%;  */
+    /* background-repeat: no-repeat; */
+  }
+  

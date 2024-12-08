@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/logo.svg';
-import languageLogo from '../assets/Language.svg';
 import { Link, NavLink } from 'react-router-dom';
 import ParentComponent from './ParentComponent/ParentComponent';
 
