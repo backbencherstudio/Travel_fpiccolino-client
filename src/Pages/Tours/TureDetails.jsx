@@ -19,6 +19,7 @@ import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { reviews } from "../../ALLJsonFile/const";
 import TestimonialCard from "../../Components/Cards/TestimonialCard";
 import { RiMoneyEuroCircleLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const TureDetails = () => {
 
@@ -200,7 +201,7 @@ const TureDetails = () => {
                                 <div>
                                     <h2 className="text-center border rounded-lg px-8 py-4 mb-4 text-[#141D2A]" >November 16 - 23 (7 nights)</h2>
                                     <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4" >Change dates</h2>
-                                    <button className="text-center border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full" >Continue</button>
+                                    <Link to="/Insurence/dd" className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full" >Continue</Link>
                                 </div>
                             </div>
 

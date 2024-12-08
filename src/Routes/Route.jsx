@@ -9,6 +9,7 @@ import TureDetails from "../Pages/Tours/TureDetails";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import Contact from "../Pages/Contact/Contact";
+import Insurence from "../Pages/Insurence/Insurence";
 import Login from "../Pages/Auth/Login";
 import SignUp from "../Pages/Auth/SignUp";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
@@ -51,8 +52,13 @@ export const router = createBrowserRouter([
             {
                 path: '/contact',
                 element: <Contact />
-            },
+            }
+
         ]
+    },
+    {
+        path: '/Insurence/:dynamicDetails',
+        element: <Insurence />
     },
     {
         path:'/login',
