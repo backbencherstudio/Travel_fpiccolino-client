@@ -1,112 +1,50 @@
 import { useState } from "react";
 import { GiProfit } from "react-icons/gi";
 import { LuBaggageClaim, LuChartNoAxesCombined } from "react-icons/lu";
+import { FaPlaneDeparture } from "react-icons/fa6";
+import { FaPlaneCircleCheck } from "react-icons/fa6";
+import { FaPlaneCircleExclamation } from "react-icons/fa6";
 import revenue from "../../assets/dashboard/revenue.svg";
 import traveler from "../../assets/dashboard/traveler.svg";
 import profit from "../../assets/dashboard/profit.svg";
 import DashboardCard from "./DashboardCard";
-import Chart from "./Chart";
-import RadarChart from "./RadarChart";
 import TourTable from "./TourTable";
 
-const DashboardAnalysis = () => {
-  const [chartType, setChartType] = useState("Revenue");
-  const [timeInterval, setTimeInterval] = useState("monthly"); 
-
-  const radarData = {
-    categories: [
-      "All inclusive", "USA", "Italy", "Japan", "Thailand", "Africa", "Bali"
-    ],
-    completed: [80, 50, 30, 40, 100, 20, 60],
-    pending: [20, 30, 40, 80, 20, 80, 40],
-  }
+const TourAnalysis = () => {
+  const [chartType, setChartType] = useState("Total Tour");
   const dashboardData = [
     {
-      title: "Revenue",
-      amount: "850,930",
+      title: "Total Tours",
+      amount: "730",
       percent: 12,
       bgColor: "bg-teal-50",
       bgColor2: "bg-teal-100",
       txColor: "text-teal-500",
-      icon: LuChartNoAxesCombined,
+      icon: FaPlaneDeparture,
       image: revenue,
-      revenueData: [
-        { x: "Jan", y: 12000 },
-        { x: "Feb", y: 15000 },
-        { x: "Mar", y: 17000 },
-        { x: "Apr", y: 19000 },
-        { x: "May", y: 27000 },
-        { x: "June", y: 17000 },
-        { x: "Week 1", y: 1000 },
-        { x: "Week 2", y: 1200 },
-        { x: "Week 3", y: 1100 },
-        { x: "Week 4", y: 1400 },
-        { x: "Week 5", y: 1100 },
-        { x: "Week 6", y: 1800 },
-        { x: "2021", y: 25000 },
-        { x: "2022", y: 30000 },
-        { x: "2023", y: 35000 },
-        { x: "2024", y: 20000 },
-        { x: "2025", y: 50000 },
-      ],
+    
     },
     {
-      title: "Traveler",
-      amount: "8,930",
+      title: "Complete Tours",
+      amount: "580",
       percent: 4,
       bgColor: "bg-purple-50",
       bgColor2: "bg-purple-100",
       txColor: "text-purple-500",
-      icon: LuBaggageClaim,
+      icon: FaPlaneCircleCheck,
       image: traveler,
-      travelerData: [
-        { x: "Jan", y: 12000 },
-        { x: "Feb", y: 15000 },
-        { x: "Mar", y: 17000 },
-        { x: "Apr", y: 19000 },
-        { x: "May", y: 27000 },
-        { x: "June", y: 17000 },
-        { x: "Week 1", y: 1000 },
-        { x: "Week 2", y: 1200 },
-        { x: "Week 3", y: 1100 },
-        { x: "Week 4", y: 1400 },
-        { x: "Week 5", y: 1100 },
-        { x: "Week 6", y: 1800 },
-        { x: "2021", y: 25000 },
-        { x: "2022", y: 30000 },
-        { x: "2023", y: 35000 },
-        { x: "2024", y: 20000 },
-        { x: "2025", y: 50000 },
-      ],
+     
     },
     {
-      title: "Profit",
-      amount: "80,930",
+      title: "Pending Tours",
+      amount: "150",
       percent: 6,
       bgColor: "bg-red-50",
       bgColor2: "bg-red-100",
       txColor: "text-red-500",
-      icon: GiProfit,
+      icon: FaPlaneCircleExclamation,
       image: profit,
-      profitData: [
-        { x: "Jan", y: 12000 },
-        { x: "Feb", y: 15000 },
-        { x: "Mar", y: 17000 },
-        { x: "Apr", y: 19000 },
-        { x: "May", y: 27000 },
-        { x: "June", y: 17000 },
-        { x: "Week 1", y: 1000 },
-        { x: "Week 2", y: 1200 },
-        { x: "Week 3", y: 1100 },
-        { x: "Week 4", y: 1400 },
-        { x: "Week 5", y: 1100 },
-        { x: "Week 6", y: 1800 },
-        { x: "2021", y: 25000 },
-        { x: "2022", y: 30000 },
-        { x: "2023", y: 35000 },
-        { x: "2024", y: 20000 },
-        { x: "2025", y: 50000 },
-      ],
+    
     },
   ];
   const bookingData = [
@@ -302,7 +240,6 @@ const DashboardAnalysis = () => {
     },
 ];
 
-
   return (
     <div>
       <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
@@ -328,41 +265,10 @@ const DashboardAnalysis = () => {
           />
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="md:col-span-2">
-          {chartType === "Revenue" ? (
-            <Chart
-              title="Revenue"
-              color="teal"
-              data={dashboardData[0].revenueData}
-              timeInterval={timeInterval}
-              setTimeInterval={setTimeInterval}
-            />
-          ) : chartType === "Traveler" ? (
-            <Chart
-              title="Traveler"
-              color="purple"
-              data={dashboardData[1].travelerData}
-              timeInterval={timeInterval}
-              setTimeInterval={setTimeInterval}
-            />
-          ) : (
-            <Chart
-              title="Profit"
-              color="red"
-              data={dashboardData[2].profitData}
-              timeInterval={timeInterval}
-              setTimeInterval={setTimeInterval}
-            />
-          )}
-        </div>
-        <div className="md:col-span-1 border my-4 rounded-xl">
-          <RadarChart data={radarData}/>
-        </div>
-      </div>
-      <TourTable title={"Tour List"} data={bookingData}/>
+      
+      <TourTable title={chartType} data={bookingData}/>
     </div>
   );
 };
 
-export default DashboardAnalysis;
+export default TourAnalysis;

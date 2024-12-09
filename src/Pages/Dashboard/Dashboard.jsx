@@ -10,6 +10,7 @@ import { MdOutlinePayment } from "react-icons/md";
 import { GrArticle } from "react-icons/gr";
 import image from "../../assets/image1.jpg";
 import DashboardAnalysis from "../../Components/Dashboard/DashboardAnalysis";
+import TourAnalysis from "../../Components/Dashboard/TourAnalysis";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -68,9 +69,9 @@ const Dashboard = () => {
             <span>Dashboard</span>
           </button>
           <button
-            onClick={() => handleTabChange("Machines")}
+            onClick={() => handleTabChange("Tour")}
             className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "Machines"
+              selectedTab === "Tour"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
             }`}
@@ -171,8 +172,8 @@ const Dashboard = () => {
 
         <main className="p-5">
          {selectedTab === 'Dashboard' && <DashboardAnalysis />}
-                    {/*  {selectedTab === 'Machines' && <Machines />}
-                    {selectedTab === 'Courses' && <Courses />}
+                    {selectedTab === 'Tour' && <TourAnalysis />}
+                  {/*    {selectedTab === 'Courses' && <Courses />}
                     {selectedTab === 'Task List' && <TaskList />}
                     {selectedTab === 'Tutorials' && <AddTutorial />} */}
         </main>

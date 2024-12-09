@@ -9,7 +9,7 @@ const DashboardCard = ({ title, amount, percent, bgColor, bgColor2,txColor, icon
         <div className={`${bgColor2}  inline-block rounded-lg mr-2`}>
           <Icon className={`font-extrabold text-[24px] ${txColor} m-2`} />
         </div>
-        <span className="text-lg font-semibold">Total {title}</span>
+        <span className="text-lg font-semibold"> {title}</span>
       </div>
       <div className="grid grid-cols-2 gap-2 mt-2">
         <div>
