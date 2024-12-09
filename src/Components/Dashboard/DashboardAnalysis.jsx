@@ -6,11 +6,19 @@ import traveler from "../../assets/dashboard/traveler.svg";
 import profit from "../../assets/dashboard/profit.svg";
 import DashboardCard from "./DashboardCard";
 import Chart from "./Chart";
+import RadarChart from "./RadarChart";
 
 const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Revenue");
-  const [timeInterval, setTimeInterval] = useState("monthly"); // Added state for time interval filter
+  const [timeInterval, setTimeInterval] = useState("monthly"); 
 
+  const radarData = {
+    categories: [
+      "All inclusive", "USA", "Italy", "Japan", "Thailand", "Africa", "Bali"
+    ],
+    completed: [80, 50, 30, 40, 100, 20, 60],
+    pending: [20, 30, 40, 80, 20, 80, 40],
+  }
   const dashboardData = [
     {
       title: "Revenue",
@@ -101,11 +109,12 @@ const DashboardAnalysis = () => {
     },
   ];
 
-
   return (
     <div>
       <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
-      <p className="text-[#72777F]">Manage your travel agency data easily with us</p>
+      <p className="text-[#72777F]">
+        Manage your travel agency data easily with us
+      </p>
       <h2 className="text-[24px] font-semibold mt-8">Overview</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">
@@ -125,33 +134,38 @@ const DashboardAnalysis = () => {
           />
         ))}
       </div>
-
-      {/* Pass filtered data to the Chart component */}
-      {chartType === "Revenue" ? (
-        <Chart
-          title="Revenue"
-          color="teal"
-          data={dashboardData[0].revenueData}
-          timeInterval={timeInterval}
-          setTimeInterval={setTimeInterval}
-        />
-      ) : chartType === "Traveler" ? (
-        <Chart
-          title="Traveler"
-          color="purple"
-          data={dashboardData[1].travelerData}
-          timeInterval={timeInterval}
-          setTimeInterval={setTimeInterval}
-        />
-      ) : (
-        <Chart
-          title="Profit"
-          color="red"
-          data={dashboardData[2].profitData}
-          timeInterval={timeInterval}
-          setTimeInterval={setTimeInterval}
-        />
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="md:col-span-2">
+          {chartType === "Revenue" ? (
+            <Chart
+              title="Revenue"
+              color="teal"
+              data={dashboardData[0].revenueData}
+              timeInterval={timeInterval}
+              setTimeInterval={setTimeInterval}
+            />
+          ) : chartType === "Traveler" ? (
+            <Chart
+              title="Traveler"
+              color="purple"
+              data={dashboardData[1].travelerData}
+              timeInterval={timeInterval}
+              setTimeInterval={setTimeInterval}
+            />
+          ) : (
+            <Chart
+              title="Profit"
+              color="red"
+              data={dashboardData[2].profitData}
+              timeInterval={timeInterval}
+              setTimeInterval={setTimeInterval}
+            />
+          )}
+        </div>
+        <div className="md:col-span-1 border my-4 rounded-xl">
+          <RadarChart data={radarData}/>
+        </div>
+      </div>
     </div>
   );
 };

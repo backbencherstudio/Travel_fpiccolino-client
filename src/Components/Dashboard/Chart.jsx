@@ -1,30 +1,30 @@
 /* eslint-disable react/prop-types */
-import { Select } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 
 const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
   const getFilteredData = () => {
     switch (timeInterval) {
       case "weekly":
-        return data.filter((d) => d.x.startsWith("Week")); // Filter weeks like "Week 1", "Week 2"
+        return data.filter((d) => d.x.startsWith("Week"));
       case "yearly":
-        return data.filter((d) => d.x.length === 4 && !isNaN(d.x)); // Filter years like "2021"
+        return data.filter((d) => d.x.length === 4 && !isNaN(d.x));
       case "monthly":
       default:
         return data.filter((d) => {
           const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-          return months.includes(d.x); // Filter months like "Jan", "Feb", "Mar", etc.
+          return months.includes(d.x);
         });
     }
   };
 
   const filteredData = getFilteredData();
+  console.log(filteredData);  // Debugging to check the filtered data
 
   return (
     <div className="border rounded-xl p-4 my-4">
       {/* Filter buttons */}
       <div className="flex justify-between" style={{ marginBottom: "16px" }}>
-       <h1 className="text-[24px] font-semibold">{title} Statistics</h1>
+        <h1 className="text-[24px] font-semibold">{title} Statistics</h1>
         <select
           value={timeInterval}
           onChange={(e) => setTimeInterval(e.target.value)}
@@ -45,21 +45,23 @@ const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
       </div>
 
       {/* LineChart */}
-      <LineChart
-        xAxis={[
-          {
-            scaleType: "band", // For displaying categorical (month, week, year) values on the x-axis
-            data: filteredData.map((data) => data.x),
-          },
-        ]}
-        series={[
-          {
-            data: filteredData.map((data) => data.y),
-            label: `${title} (in $)`,
-            color: color,
-          },
-        ]}
-      />
+      <div style={{ width: "100%", height: "300px" }}>
+        <LineChart
+          xAxis={[
+            {
+              scaleType: "band",
+              data: filteredData.map((data) => data.x),
+            },
+          ]}
+          series={[
+            {
+              data: filteredData.map((data) => data.y),
+              label: `${title} (in $)`,
+              color: color,
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 };
