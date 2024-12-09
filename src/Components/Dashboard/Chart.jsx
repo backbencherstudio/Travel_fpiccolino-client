@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Select } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
 
 const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
@@ -20,27 +21,27 @@ const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
   const filteredData = getFilteredData();
 
   return (
-    <div style={{ width: "100%", height: "400px", margin: "32px" }}>
+    <div className="border rounded-xl p-4 my-4">
       {/* Filter buttons */}
-      <div style={{ marginBottom: "16px" }}>
-        <button
-          onClick={() => setTimeInterval("weekly")}
-          style={{ margin: "0 8px", padding: "8px 16px", cursor: "pointer", backgroundColor: timeInterval === 'weekly' ? '#ccc' : '#fff' }}
+      <div className="flex justify-between" style={{ marginBottom: "16px" }}>
+       <h1 className="text-[24px] font-semibold">{title} Statistics</h1>
+        <select
+          value={timeInterval}
+          onChange={(e) => setTimeInterval(e.target.value)}
+          style={{
+            padding: "8px 16px",
+            cursor: "pointer",
+            fontSize: "14px",
+            border: "1px solid #e86731",
+            borderRadius: "4px",
+            margin: "0 8px",
+            color:'#e86731',
+          }}
         >
-          Weekly
-        </button>
-        <button
-          onClick={() => setTimeInterval("monthly")}
-          style={{ margin: "0 8px", padding: "8px 16px", cursor: "pointer", backgroundColor: timeInterval === 'monthly' ? '#ccc' : '#fff' }}
-        >
-          Monthly
-        </button>
-        <button
-          onClick={() => setTimeInterval("yearly")}
-          style={{ margin: "0 8px", padding: "8px 16px", cursor: "pointer", backgroundColor: timeInterval === 'yearly' ? '#ccc' : '#fff' }}
-        >
-          Yearly
-        </button>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
       </div>
 
       {/* LineChart */}
