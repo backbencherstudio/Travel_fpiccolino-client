@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { LineChart } from "@mui/x-charts";
 
 const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
