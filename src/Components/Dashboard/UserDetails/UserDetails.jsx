@@ -100,8 +100,8 @@ const UserDetails = () => {
     ],
   };
   return (
-    <div>
-      <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
+    <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
+      <h1 className="text-[32px] font-semibold">Welcome, Wade</h1> 
       <p className="text-[#72777F]">
         Manage your travel agency data easily with us
       </p>
@@ -112,7 +112,7 @@ const UserDetails = () => {
         alt=""
       />
       <h1 className="mt-5 text-[20px] font-medium">Personal Details</h1>
-      <div className="mt-3 max-w-[680px]">
+      <div className="mt-3  max-w-[680px]">
         <div className="grid grid-cols-2">
           <div>
             <h1 className="text-[16px]">Name</h1>
@@ -156,7 +156,7 @@ const UserDetails = () => {
         </div>
       </div>
       <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>
-    <div className="mt-5 max-w-[1112px]">
+    <div className="mt-5">
     <Swiper
             spaceBetween={15}
             slidesPerView={5}
@@ -171,11 +171,11 @@ const UserDetails = () => {
               }}
               breakpoints={{
                 320: {
-                  slidesPerView: 3, // For very small mobile screens (320px)
+                  slidesPerView: 2, // For very small mobile screens (320px)
                   spaceBetween: 10,
                 },
                 480: {
-                  slidesPerView: 3, // Small devices (e.g., iPhone SE, 480px width)
+                  slidesPerView: 4, // Small devices (e.g., iPhone SE, 480px width)
                   spaceBetween: 15,
                 },
                 640: {
@@ -187,10 +187,6 @@ const UserDetails = () => {
                   spaceBetween: 20,
                 },
                 1024: {
-                  slidesPerView: 4, // Desktop and larger screens (1024px and up)
-                  spaceBetween: 20,
-                },
-                1400: {
                   slidesPerView: 5, // Desktop and larger screens (1024px and up)
                   spaceBetween: 20,
                 },
