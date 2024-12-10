@@ -24,7 +24,7 @@ const TourTable = ({ data, title,dateFilter,setDateFilter }) => {
     );
 
   return (
-    <div className="border rounded-xl px-4 mt-10">
+    <div className="border rounded-xl px-4 mt-10 md:max-w-full max-w-[370px]">
       <h2 className="text-[24px] font-semibold my-4">{title}</h2>
       {/* Search */}
       <div className="flex justify-between items-center mb-5">
@@ -59,7 +59,7 @@ const TourTable = ({ data, title,dateFilter,setDateFilter }) => {
       </div>
 
       {/* Bookings Table */}
-      <div className="mt-5 overflow-auto max-w-full h-[80vh] custom-scroll">
+      <div className="mt-5 overflow-auto h-[80vh] custom-scroll">
         <table className="min-w-full bg-white border border-gray-300 rounded-md">
           <thead>
             <tr className="bg-gray-100">

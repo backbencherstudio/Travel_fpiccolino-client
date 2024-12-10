@@ -24,7 +24,7 @@ const PaymentTable = ({ data, title,dateFilter,setDateFilter }) => {
     );
 
   return (
-    <div className="border rounded-xl px-4 mt-10">
+    <div className="border rounded-xl px-4 mt-10 md:max-w-full max-w-[370px]">
       <h2 className="text-[24px] font-semibold my-4">{title}</h2>
       {/* Search */}
       <div className="flex justify-between items-center mb-5">
