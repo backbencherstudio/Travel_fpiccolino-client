@@ -1,6 +1,11 @@
-import React from "react";
-
+import React, { useRef, useState } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 const UserDetails = () => {
+    const swiperRef = useRef(null);
+    const [isBeginning, setIsBeginning] = useState(true);
+    const [isEnd, setIsEnd] = useState(false);
   const userData = {
     name: "John butler",
     customerImg: "https://via.placeholder.com/40?text=RD",
@@ -41,6 +46,46 @@ const UserDetails = () => {
         amount: "$2000",
         status: "Complete",
         date: "June 14, 2024",
+      },
+      {
+        bookingId: 901926,
+        customerName: "John butler",
+        customerImg: "https://via.placeholder.com/40?text=MJ",
+        destination: "Tokyo",
+        destinationImg: "https://via.placeholder.com/40?text=TOK",
+        amount: "$1700",
+        status: "Canceled",
+        date: "June 15, 2024",
+      },
+      {
+        bookingId: 901926,
+        customerName: "John butler",
+        customerImg: "https://via.placeholder.com/40?text=MJ",
+        destination: "Tokyo",
+        destinationImg: "https://via.placeholder.com/40?text=TOK",
+        amount: "$1700",
+        status: "Canceled",
+        date: "June 15, 2024",
+      },
+      {
+        bookingId: 901926,
+        customerName: "John butler",
+        customerImg: "https://via.placeholder.com/40?text=MJ",
+        destination: "Tokyo",
+        destinationImg: "https://via.placeholder.com/40?text=TOK",
+        amount: "$1700",
+        status: "Canceled",
+        date: "June 15, 2024",
+      },
+      {
+        bookingId: 901926,
+        customerName: "John butler",
+        customerImg: "https://via.placeholder.com/40?text=MJ",
+        destination: "Tokyo",
+        destinationImg: "https://via.placeholder.com/40?text=TOK",
+        amount: "$1700",
+        status: "Canceled",
+        date: "June 15, 2024",
       },
       {
         bookingId: 901926,
@@ -111,7 +156,76 @@ const UserDetails = () => {
         </div>
       </div>
       <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>
-      
+    <div className="mt-5 max-w-[1112px]">
+    <Swiper
+            spaceBetween={15}
+            slidesPerView={5}
+            onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              onSlideChange={(swiper) => {
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              breakpoints={{
+                320: {
+                  slidesPerView: 3, // For very small mobile screens (320px)
+                  spaceBetween: 10,
+                },
+                480: {
+                  slidesPerView: 3, // Small devices (e.g., iPhone SE, 480px width)
+                  spaceBetween: 15,
+                },
+                640: {
+                  slidesPerView: 3, // Mobile devices (640px width)
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 4, // Tablets (768px width)
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 4, // Desktop and larger screens (1024px and up)
+                  spaceBetween: 20,
+                },
+                1400: {
+                  slidesPerView: 5, // Desktop and larger screens (1024px and up)
+                  spaceBetween: 20,
+                },
+              }}
+          >
+            {userData?.tourData?.map((item) => (
+              <div key={item._id}>
+                <SwiperSlide>
+                 <img src={item.destinationImg} alt="" className="w-[172px] h-[120px] rounded-lg" />
+                 <p>{item.destination}</p>
+                </SwiperSlide>
+              </div>
+            ))}
+          </Swiper>
+          <div className="m-4 text-end">
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className={`p-3 m-1  ${
+                  isBeginning ? "bg-[#fdf0ea] primary_text" : "border bg-white text-black shadow"
+                } w-10 h-10 rounded-md transition-opacity `}
+                disabled={isBeginning}
+              >
+                <FaAngleLeft />
+              </button>
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className={`p-3 m-1 ${
+                  isEnd ? "bg-[#fdf0ea] primary_text" : "border bg-white text-black shadow"
+                }  rounded-md w-10 h-10`}
+                disabled={isEnd}
+              >
+                <FaAngleRight/>
+              </button>
+            </div>
+    </div>
     </div>
   );
 };
