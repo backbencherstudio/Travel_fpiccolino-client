@@ -11,16 +11,22 @@ import TourTable from "../Tour/TourTable";
 
 const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Revenue");
-  const [timeInterval, setTimeInterval] = useState("monthly"); 
-  const [tourDateFilter, setTourDateFilter] = useState("all"); 
+  const [timeInterval, setTimeInterval] = useState("monthly");
+  const [tourDateFilter, setTourDateFilter] = useState("all");
 
   const radarData = {
     categories: [
-      "All inclusive", "USA", "Italy", "Japan", "Thailand", "Africa", "Bali"
+      "All inclusive",
+      "USA",
+      "Italy",
+      "Japan",
+      "Thailand",
+      "Africa",
+      "Bali",
     ],
     completed: [80, 50, 30, 40, 100, 20, 60],
     pending: [20, 30, 40, 80, 20, 80, 40],
-  }
+  };
   const dashboardData = [
     {
       title: "Revenue",
@@ -119,7 +125,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=LD",
       amount: "$1200",
       status: "Complete",
-      date: "June 12, 2024"
+      date: "June 12, 2024",
     },
     {
       bookingId: 901924,
@@ -129,7 +135,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=NY",
       amount: "$1500",
       status: "Pending",
-      date: "June 13, 2024"
+      date: "June 13, 2024",
     },
     {
       bookingId: 901925,
@@ -139,7 +145,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=PR",
       amount: "$2000",
       status: "Complete",
-      date: "June 14, 2024"
+      date: "June 14, 2024",
     },
     {
       bookingId: 901926,
@@ -149,7 +155,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=TOK",
       amount: "$1700",
       status: "Canceled",
-      date: "June 15, 2024"
+      date: "June 15, 2024",
     },
     {
       bookingId: 901927,
@@ -159,7 +165,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=SYD",
       amount: "$1800",
       status: "Complete",
-      date: "June 16, 2024"
+      date: "June 16, 2024",
     },
     {
       bookingId: 901928,
@@ -169,7 +175,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=BR",
       amount: "$1300",
       status: "Pending",
-      date: "June 17, 2024"
+      date: "June 17, 2024",
     },
     {
       bookingId: 901929,
@@ -179,7 +185,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=RO",
       amount: "$1100",
       status: "Complete",
-      date: "June 18, 2024"
+      date: "June 18, 2024",
     },
     {
       bookingId: 901930,
@@ -189,7 +195,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=AMS",
       amount: "$1400",
       status: "Complete",
-      date: "June 19, 2024"
+      date: "June 19, 2024",
     },
     {
       bookingId: 901931,
@@ -199,7 +205,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=RO",
       amount: "$1600",
       status: "Complete",
-      date: "June 20, 2024"
+      date: "June 20, 2024",
     },
     {
       bookingId: 901932,
@@ -209,7 +215,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=DU",
       amount: "$2500",
       status: "Canceled",
-      date: "June 21, 2024"
+      date: "June 21, 2024",
     },
     {
       bookingId: 901933,
@@ -219,7 +225,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=LD",
       amount: "$1400",
       status: "Complete",
-      date: "June 22, 2024"
+      date: "June 22, 2024",
     },
     {
       bookingId: 901934,
@@ -229,7 +235,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=LV",
       amount: "$2200",
       status: "Complete",
-      date: "June 23, 2024"
+      date: "June 23, 2024",
     },
     {
       bookingId: 901935,
@@ -239,7 +245,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=MA",
       amount: "$1300",
       status: "Pending",
-      date: "June 24, 2024"
+      date: "June 24, 2024",
     },
     {
       bookingId: 901936,
@@ -249,7 +255,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=PR",
       amount: "$1900",
       status: "Complete",
-      date: "June 25, 2024"
+      date: "June 25, 2024",
     },
     {
       bookingId: 901937,
@@ -259,7 +265,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=NY",
       amount: "$1600",
       status: "Pending",
-      date: "June 26, 2024"
+      date: "June 26, 2024",
     },
     {
       bookingId: 901938,
@@ -269,7 +275,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=TOK",
       amount: "$2100",
       status: "Complete",
-      date: "June 27, 2024"
+      date: "June 27, 2024",
     },
     {
       bookingId: 901939,
@@ -279,7 +285,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=DU",
       amount: "$2300",
       status: "Complete",
-      date: "June 28, 2024"
+      date: "June 28, 2024",
     },
     {
       bookingId: 901940,
@@ -289,7 +295,7 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=BCN",
       amount: "$1600",
       status: "Complete",
-      date: "June 29, 2024"
+      date: "June 29, 2024",
     },
     {
       bookingId: 901941,
@@ -299,69 +305,73 @@ const DashboardAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=SYD",
       amount: "$1500",
       status: "Pending",
-      date: "June 30, 2024"
+      date: "June 30, 2024",
     },
-];
-
+  ];
 
   return (
-    <div>
-      <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
-      <p className="text-[#72777F]">
-        Manage your travel agency data easily with us
-      </p>
-      <h2 className="text-[24px] font-semibold mt-8">Overview</h2>
+    <div className="">
+      <div>
+        <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
+        <p className="text-[#72777F]">
+          Manage your travel agency data easily with us
+        </p>
+        <h2 className="text-[24px] font-semibold mt-8">Overview</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">
-        {dashboardData?.map((data, index) => (
-          <DashboardCard
-            key={index}
-            title={data.title}
-            amount={data.amount}
-            percent={data.percent}
-            bgColor={data.bgColor}
-            bgColor2={data.bgColor2}
-            txColor={data.txColor}
-            icon={data.icon}
-            image={data.image}
-            chartType={chartType}
-            setChartType={setChartType}
-          />
-        ))}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="md:col-span-2">
-          {chartType === "Revenue" ? (
-            <Chart
-              title="Revenue"
-              color="teal"
-              data={dashboardData[0].revenueData}
-              timeInterval={timeInterval}
-              setTimeInterval={setTimeInterval}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">
+          {dashboardData?.map((data, index) => (
+            <DashboardCard
+              key={index}
+              title={data.title}
+              amount={data.amount}
+              percent={data.percent}
+              bgColor={data.bgColor}
+              bgColor2={data.bgColor2}
+              txColor={data.txColor}
+              icon={data.icon}
+              image={data.image}
+              chartType={chartType}
+              setChartType={setChartType}
             />
-          ) : chartType === "Traveler" ? (
-            <Chart
-              title="Traveler"
-              color="purple"
-              data={dashboardData[1].travelerData}
-              timeInterval={timeInterval}
-              setTimeInterval={setTimeInterval}
-            />
-          ) : (
-            <Chart
-              title="Profit"
-              color="red"
-              data={dashboardData[2].profitData}
-              timeInterval={timeInterval}
-              setTimeInterval={setTimeInterval}
-            />
-          )}
+          ))}
         </div>
-        <div className="md:col-span-1 border my-4 rounded-xl">
-          <RadarChart data={radarData}/>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="md:col-span-2">
+            {chartType === "Revenue" ? (
+              <Chart
+                title="Revenue"
+                color="teal"
+                data={dashboardData[0].revenueData}
+                timeInterval={timeInterval}
+                setTimeInterval={setTimeInterval}
+              />
+            ) : chartType === "Traveler" ? (
+              <Chart
+                title="Traveler"
+                color="purple"
+                data={dashboardData[1].travelerData}
+                timeInterval={timeInterval}
+                setTimeInterval={setTimeInterval}
+              />
+            ) : (
+              <Chart
+                title="Profit"
+                color="red"
+                data={dashboardData[2].profitData}
+                timeInterval={timeInterval}
+                setTimeInterval={setTimeInterval}
+              />
+            )}
+          </div>
+          <div className="md:col-span-1 border my-4 rounded-xl">
+            <RadarChart data={radarData} />
+          </div>
         </div>
       </div>
-      <TourTable title={"Tour List"} data={bookingData} setDateFilter={setTourDateFilter} dateFilter={tourDateFilter}/>
+
+      <div className=" " >
+        <TourTable title={"Tour List"} data={bookingData} setDateFilter={setTourDateFilter} dateFilter={tourDateFilter}/>
+      </div>
     </div>
   );
 };
