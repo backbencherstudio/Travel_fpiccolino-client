@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
-import { FaBell, FaRegBell, FaRegUser } from "react-icons/fa";
+import { FaRegBell, FaRegUser } from "react-icons/fa";
 import { IoClose, IoGolfOutline, IoMenu } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { VscSignOut } from "react-icons/vsc";
-
 import { LuLayoutDashboard } from "react-icons/lu";
 import { PiTrolleySuitcase } from "react-icons/pi";
 import { MdOutlinePayment } from "react-icons/md";
 import { GrArticle } from "react-icons/gr";
 import image from "../../assets/image1.jpg";
-import DashboardAnalysis from "../../Components/Dashboard/DashboardAnalysis";
-import TourAnalysis from "../../Components/Dashboard/TourAnalysis";
+import DashboardAnalysis from "../../Components/Dashboard/Dashboard/DashboardAnalysis";
+import TourAnalysis from "../../Components/Dashboard/Tour/TourAnalysis";
+import PaymentHistory from "../../Components/Dashboard/Payment/PaymentHistory";
+import UserDetails from "../../Components/Dashboard/UserDetails/UserDetails";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
   // State for selected tab
   const [selectedTab, setSelectedTab] = useState(
     localStorage.getItem("tab") || "Dashboard"
@@ -41,11 +38,11 @@ const Dashboard = () => {
     setSidebarOpen(false);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("tab");
-    navigate("/login");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("tab");
+  //   navigate("/login");
+  // };
 
   return (
     <div className="flex h-screen ">
@@ -80,9 +77,9 @@ const Dashboard = () => {
             <span>Tour</span>
           </button>
           <button
-            onClick={() => handleTabChange("Courses")}
+            onClick={() => handleTabChange("UserDetails")}
             className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "Courses"
+              selectedTab === "UserDetails"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
             }`}
@@ -102,9 +99,9 @@ const Dashboard = () => {
             <span>Package</span>
           </button>
           <button
-            onClick={() => handleTabChange("Tutorials")}
+            onClick={() => handleTabChange("Payment")}
             className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "Tutorials"
+              selectedTab === "Payment"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
             }`}
@@ -113,9 +110,9 @@ const Dashboard = () => {
             <span>Payment History</span>
           </button>
           <button
-            onClick={() => handleTabChange("Tutorials")}
+            onClick={() => handleTabChange("blog")}
             className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "Tutorials"
+              selectedTab === "blog"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
             }`}
@@ -162,20 +159,18 @@ const Dashboard = () => {
                   alt=""
                 />
               </div>
-             <div>
-             <h1 className="font-semibold text-[16px]">Tren bold</h1>
-             <p className="text-[12px] text-[#72777F]">Admin</p>
-             </div>
+              <div>
+                <h1 className="font-semibold text-[16px]">Tren bold</h1>
+                <p className="text-[12px] text-[#72777F]">Admin</p>
+              </div>
             </div>
           </div>
         </header>
-
         <main className="p-5">
-         {selectedTab === 'Dashboard' && <DashboardAnalysis />}
-                    {selectedTab === 'Tour' && <TourAnalysis />}
-                  {/*    {selectedTab === 'Courses' && <Courses />}
-                    {selectedTab === 'Task List' && <TaskList />}
-                    {selectedTab === 'Tutorials' && <AddTutorial />} */}
+          {selectedTab === "Dashboard" && <DashboardAnalysis />}
+          {selectedTab === "Tour" && <TourAnalysis />}
+          {selectedTab === "UserDetails" && <UserDetails />}
+          {selectedTab === "Payment" && <PaymentHistory />}
         </main>
       </div>
     </div>
