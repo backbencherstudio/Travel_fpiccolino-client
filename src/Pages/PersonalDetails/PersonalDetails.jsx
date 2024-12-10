@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
@@ -9,18 +10,26 @@ import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
 import { useState } from "react";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+import { Controller, useForm } from "react-hook-form";
+import { Checkbox } from "@mui/material";
+
+
 
 const PersonalDetails = () => {
-    const [isSelect, setSelectId] = useState("")
+    const inputStyle = "w-full my-3 border border-gray-300 focus:border-[#E86731] focus:ring-[1px] focus:ring-[#E86731] focus:outline-none p-2 rounded-md"
 
-    const InsuranceData = [
-        {
-            id:1,
-            title: "Basic Insurance",
-            discription: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.",
-            details: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases."
-        },
-    ]
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const [formData, setFormData] = useState(null);
+
+    const onSubmit = (data) => {
+        console.log("Form Data Submitted:", data);
+        setFormData(data);
+    };
+
 
     return (
         <div>
@@ -47,23 +56,168 @@ const PersonalDetails = () => {
                         <div className=" col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-10 rounded-lg ">
 
                             <div>
-                                <h2 className="text-[#141D2A] text-[32px] font-bold">Leggi bene prima di procedere</h2>
-                                <p className="text-[#72777F] font-[18px]">
-                                Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
-                                </p>
+
+                                <div className="border  rounded-lg">
+                                    <h2 className="p-5 text-[#141D2A] text-[32px] font-bold">Leggi bene prima di procedere</h2>
+                                    <div className="border border-b-[#c8c8ce] mt-3"></div>
+                                    <p className="p-5 text-[#72777F] font-[18px]">
+                                        Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
+                                    </p>
+                                </div>
+
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <h2 className="text-[#000000] text-[18px] font-[400] mt-5">
+                                        Campi obbligatori *
+                                    </h2>
+                                    <h2 className="text-[#141D2A] text-[24px] font-[600] mt-8 mb-6">
+                                        Traveler 1
+                                    </h2>
+
+                                    {/* Full Name and Last Name */}
+                                    <div className="mt-5">
+                                        <span className="grid grid-cols-2 gap-2 mt-3">
+                                            <div>
+                                                <label htmlFor="fullName" className="text-[18px] text-[#141D2A]">
+                                                    Full Name
+                                                </label>
+                                                <input
+                                                    id="fullName"
+                                                    className={inputStyle}
+                                                    {...register("fullName", { required: "Full Name is required" })}
+                                                    placeholder="Enter First Name"
+                                                />
+                                                {errors.fullName && (
+                                                    <p className="text-red-500">{errors.fullName.message}</p>
+                                                )}
+                                                <p className="text-[#72777F]">
+                                                    As stated on your ID card or passport
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <label htmlFor="lastName" className="text-transparent">
+                                                    1
+                                                </label>
+                                                <input
+                                                    id="lastName"
+                                                    className={inputStyle}
+                                                    {...register("lastName", { required: "Last Name is required" })}
+                                                    placeholder="Enter Last Name"
+                                                />
+                                                {errors.lastName && (
+                                                    <p className="text-red-500">{errors.lastName.message}</p>
+                                                )}
+                                                <p className="text-[#72777F]">
+                                                    As stated on your ID card or passport
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+
+                                    {/* Email and Phone */}
+                                    <div className="mt-5">
+                                        <span className="grid grid-cols-2 gap-2 mt-3">
+                                            <div>
+                                                <label htmlFor="email" className="text-[18px] text-[#141D2A]">
+                                                    Email Address
+                                                </label>
+                                                <input
+                                                    id="email"
+                                                    className={inputStyle}
+                                                    {...register("email", {
+                                                        required: "Email is required",
+                                                        pattern: {
+                                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                                            message: "Invalid email address",
+                                                        },
+                                                    })}
+                                                    placeholder="Enter Email Address"
+                                                />
+                                                {errors.email && (
+                                                    <p className="text-red-500">{errors.email.message}</p>
+                                                )}
+                                            </div>
+
+                                            <div>
+                                                <label htmlFor="phone" className="text-[18px] text-[#141D2A]">
+                                                    Phone Number
+                                                </label>
+                                                <Controller
+                                                    name="phone"
+                                                    control={control}
+                                                    rules={{ required: "Phone number is required" }}
+                                                    render={({ field }) => (
+                                                        <PhoneInput
+                                                            {...field}
+                                                            id="phone"
+                                                            className={inputStyle}
+                                                            international
+                                                            defaultCountry="RU"
+                                                            placeholder="Enter phone number"
+                                                        />
+                                                    )}
+                                                />
+                                                {errors.phone && (
+                                                    <p className="text-red-500">{errors.phone.message}</p>
+                                                )}
+                                            </div>
+
+                                        </span>
+                                    </div>
+
+                                    {/* Date */}
+                                    <div className="mt-5">
+                                        <span className="grid grid-cols-1  gap-2 mt-3">
+                                            <div>
+                                                <label htmlFor="date" className="text-[18px] text-[#141D2A]">
+                                                    Date
+                                                </label>
+
+                                                <input className={inputStyle} type="date" />
+
+                                                {errors.date && (
+                                                    <p className="text-red-500">{errors.date.message}</p>
+                                                )}
+                                            </div>
+
+                                            <div>
+
+                                                <label htmlFor="sex" className="text-[18px] text-[#141D2A]">
+                                                    Sex
+                                                </label>
+
+                                                <select className={inputStyle} name="" id="">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+
+                                                {errors.phone && (
+                                                    <p className="text-red-500">{errors.phone.message}</p>
+                                                )}
+
+                                            </div>
+
+                                        </span>
+                                        <p className="text-[#72777F]" > <Checkbox {...label} /> I Agree To All Your Terms & condition</p>
+                                    </div>
 
 
-                                {
-                                    InsuranceData?.map(item => <div key={item?._id} onClick={()=>setSelectId(item.id)} className="border border-[#E86731] hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer " >
-                                        <div className=" md:w-[90%] " >
-                                            <h2 className="text-[#E86731]  " >{item.title}</h2>
-                                            <p className="text-[#141D2A]" >{item.discription}.</p>
 
-                                            <button className="underline text-[#E86731]" >Read more</button>
+                                    <button
+                                        type="submit"
+                                        className="mt-5 bg-[#E86731] text-white py-2 px-4 rounded-md"
+                                    >
+                                        Submit
+                                    </button>
+
+                                    {formData && (
+                                        <div className="mt-5 p-4 border border-gray-300 rounded-md">
+                                            <h2 className="text-[#141D2A] font-bold">Submitted Data:</h2>
+                                            <pre>{JSON.stringify(formData, null, 2)}</pre>
                                         </div>
-                                        <h2 className=" w-[15%] md:w-[8%] text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded " >+€45</h2>
-                                    </div>)
-                                }
+                                    )}
+                                </form>
+
 
 
 
