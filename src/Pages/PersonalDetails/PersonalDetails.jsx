@@ -166,20 +166,21 @@ const PersonalDetails = () => {
 
                                     {/* Date */}
                                     <div className="mt-5">
-                                        <span className="grid grid-cols-1  gap-2 mt-3">
-                                            <div>
+                                        <span className="grid grid-cols-12  gap-2 mt-3">
+
+                                            <div className="col-span-4" >
                                                 <label htmlFor="date" className="text-[18px] text-[#141D2A]">
                                                     Date
                                                 </label>
 
-                                                <input className={inputStyle} type="date" />
+                                                <input className={`${inputStyle} py-[7px] `} type="date" />
 
                                                 {errors.date && (
                                                     <p className="text-red-500">{errors.date.message}</p>
                                                 )}
                                             </div>
 
-                                            <div>
+                                            <div className="col-span-8" >
 
                                                 <label htmlFor="sex" className="text-[18px] text-[#141D2A]">
                                                     Sex
