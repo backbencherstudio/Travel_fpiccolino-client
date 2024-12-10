@@ -9,25 +9,32 @@ import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
 import { useState } from "react";
-import { InsuranceData } from "../../ALLJsonFile/const";
 
-const Insurance = () => {
+const Transfers = () => {
     const [isSelect, setSelectId] = useState("")
 
-    
+    const InsuranceData = [
+        {
+            id:1,
+            title: "Basic Insurance",
+            discription: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.",
+            details: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases."
+        },
+    ]
+
     return (
         <div>
             <div className="pb-20" >
                 <ParentComponent>
                     <div className="mt-20 flex  ">
-                        <Link to="/flight/dd" className="flex items-center">
-                            <GoChevronLeft className="text-xl" /> Back to flight
+                        <Link to="/insurance/id" className="flex items-center">
+                            <GoChevronLeft className="text-xl" /> Back to  Insurence
                         </Link>
                     </div>
                     <div className="mt-10">
                         <HeadLine
-                            title="Travel with Confidence – Insurance Tailored for You"
-                            description="Comprehensive Coverage for a Worry-Free Journey, Wherever You Go"
+                            title="Effortless Transfers at Your Fingertips"
+                            description="Move your data, files, or funds swiftly and securely with ease."
                         />
                     </div>
                 </ParentComponent>
@@ -35,10 +42,10 @@ const Insurance = () => {
                 <div className="border border-b-[#A5A5AB] mt-14"></div>
 
                 <ParentComponent>
-                    <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20">
+                    <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20 ">
                         <div className=" col-span-12 lg:col-span-8">
 
-                            <div>
+                            <div className="" >
                                 <h2 className="text-[#141D2A] text-[32px] font-bold">Protect Your Adventure</h2>
                                 <p className="text-[#72777F] font-[18px]">
                                     Comprehensive Insurance for Worry-Free Travel
@@ -104,7 +111,7 @@ const Insurance = () => {
 
                                 </div>
 
-                                <Link to={`/transfers/id`} className={`block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 ${isSelect ? "bg-[#E86731]" : "bg-[#D2D2D5]"}`} >Continue</Link>
+                                <Link to="/personalDetails" className={`text-center block w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 ${isSelect ? "bg-[#E86731]" : "bg-[#D2D2D5]"} `} >Continue</Link>
 
                             </div>
                         </div>
@@ -118,4 +125,4 @@ const Insurance = () => {
     );
 };
 
-export default Insurance;
+export default Transfers;

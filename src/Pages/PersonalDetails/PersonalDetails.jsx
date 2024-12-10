@@ -9,25 +9,32 @@ import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
 import { useState } from "react";
-import { InsuranceData } from "../../ALLJsonFile/const";
 
-const Insurance = () => {
+const PersonalDetails = () => {
     const [isSelect, setSelectId] = useState("")
 
-    
+    const InsuranceData = [
+        {
+            id:1,
+            title: "Basic Insurance",
+            discription: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.",
+            details: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases."
+        },
+    ]
+
     return (
         <div>
             <div className="pb-20" >
                 <ParentComponent>
                     <div className="mt-20 flex  ">
-                        <Link to="/flight/dd" className="flex items-center">
-                            <GoChevronLeft className="text-xl" /> Back to flight
+                        <Link to="/transfers/id" className="flex items-center">
+                            <GoChevronLeft className="text-xl" /> Back to  Transfers
                         </Link>
                     </div>
                     <div className="mt-10">
                         <HeadLine
-                            title="Travel with Confidence – Insurance Tailored for You"
-                            description="Comprehensive Coverage for a Worry-Free Journey, Wherever You Go"
+                            title="Your Personal Details"
+                            description="Provide Your Information to Complete Your Booking Securely"
                         />
                     </div>
                 </ParentComponent>
@@ -35,13 +42,14 @@ const Insurance = () => {
                 <div className="border border-b-[#A5A5AB] mt-14"></div>
 
                 <ParentComponent>
-                    <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20">
-                        <div className=" col-span-12 lg:col-span-8">
+                    <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20 grid-cols-reverse ">
+
+                        <div className=" col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-10 rounded-lg ">
 
                             <div>
-                                <h2 className="text-[#141D2A] text-[32px] font-bold">Protect Your Adventure</h2>
+                                <h2 className="text-[#141D2A] text-[32px] font-bold">Leggi bene prima di procedere</h2>
                                 <p className="text-[#72777F] font-[18px]">
-                                    Comprehensive Insurance for Worry-Free Travel
+                                Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
                                 </p>
 
 
@@ -65,7 +73,7 @@ const Insurance = () => {
 
                         {/* ======================================  Side bar ========================== */}
 
-                        <div className=" col-span-12 lg:col-span-4 mt-5 lg:mt-0">
+                        <div className=" col-span-12 lg:col-span-4 mt-5 lg:mt-0 ">
                             <div className=" shadow-lg rounded-lg p-10">
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
@@ -104,7 +112,7 @@ const Insurance = () => {
 
                                 </div>
 
-                                <Link to={`/transfers/id`} className={`block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 ${isSelect ? "bg-[#E86731]" : "bg-[#D2D2D5]"}`} >Continue</Link>
+                                <Link to="/personalDetails" className={` block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#D2D2D5] `} >Continue</Link>
 
                             </div>
                         </div>
@@ -118,4 +126,4 @@ const Insurance = () => {
     );
 };
 
-export default Insurance;
+export default PersonalDetails;
