@@ -195,6 +195,8 @@ const Flight = ({
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
                                 <p>8 Days / 7 Nights</p>
+                                
+                                <div className="border border-b-[#c8c8ce] mt-3"></div>
 
                                 <div className="mt-4">
                                     <span className="flex items-start justify-between mb-3 " >

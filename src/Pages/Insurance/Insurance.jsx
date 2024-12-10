@@ -8,34 +8,13 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
+import { useState } from "react";
+import { InsuranceData } from "../../ALLJsonFile/const";
 
 const Insurance = () => {
+    const [isSelect, setSelectId] = useState("")
 
-    const InsuranceData = [
-        {
-            title: "Basic Insurance",
-            discription: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.",
-            details: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases."
-        },
-        {
-            title: "Medical expenses up to €50,000 ",
-            discription: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.",
-            details: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases."
-        },
-        {
-            title: "Medical expenses up to €100,000",
-            discription: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.",
-            details: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases."
-        },
-        {
-            title: "Basic Insurance 4",
-            discription: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.",
-            details: "This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases.This included insurance will provide you with assistance, medical coverage up to €5,000, and up to €1,000 for luggage, as well as a maximum of €310 for essential purchases."
-        },
-    ]
-
-
-
+    
     return (
         <div>
             <div className="pb-20" >
@@ -67,17 +46,16 @@ const Insurance = () => {
 
 
                                 {
-                                    InsuranceData?.map(item => <div key={item?._id} className="border border-[#E86731] hover:border-transparent rounded-lg mt-5 p-6 flex items-center hover:bg-[#E867311A] duration-300 " >
-                                        <div className=" w-[90%] " >
+                                    InsuranceData?.map(item => <div key={item?._id} onClick={()=>setSelectId(item.id)} className="border border-[#E86731] hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer " >
+                                        <div className=" md:w-[90%] " >
                                             <h2 className="text-[#E86731]  " >{item.title}</h2>
                                             <p className="text-[#141D2A]" >{item.discription}.</p>
 
                                             <button className="underline text-[#E86731]" >Read more</button>
                                         </div>
-                                        <h2 className="w-[8%] text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded " >+€45</h2>
+                                        <h2 className=" w-[15%] md:w-[8%] text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded " >+€45</h2>
                                     </div>)
                                 }
-
 
 
 
@@ -92,6 +70,8 @@ const Insurance = () => {
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
                                 <p>8 Days / 7 Nights</p>
+
+                                <div className="border border-b-[#c8c8ce] mt-3"></div>
 
                                 <div className="mt-4">
                                     <span className="flex items-start justify-between mb-3 " >
@@ -124,7 +104,7 @@ const Insurance = () => {
 
                                 </div>
 
-                                <button className="text-center w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded mt-4 " >Continue</button>
+                                <button className={`text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 ${isSelect ? "bg-[#E86731]" : "bg-[#D2D2D5]"} `} >Continue</button>
 
                             </div>
                         </div>
