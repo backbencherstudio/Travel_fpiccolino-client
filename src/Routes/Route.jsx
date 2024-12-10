@@ -5,16 +5,17 @@ import Layout from "../Layout/Layout";
 import Home from "../Pages/Home/Home";
 import Tours from "../Pages/Tours/Tours";
 import About from "../Pages/About/About";
-import TureDetails from "../Pages/Tours/TureDetails";
+import TureDetails from "../Pages/Tours/TourDetails";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import Contact from "../Pages/Contact/Contact";
-import Insurence from "../Pages/Insurence/Insurence";
 import Login from "../Pages/Auth/Login";
 import SignUp from "../Pages/Auth/SignUp";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 import OtpScreen from "../Pages/Auth/OtpScreen";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import Flight from "../Pages/Flight/Flight";
+import TourDetails from "../Pages/Tours/TourDetails";
 
 export const router = createBrowserRouter([
     {
@@ -38,8 +39,8 @@ export const router = createBrowserRouter([
                 element: <Tours />
             },
             {
-                path: '/TureDetails/:id',
-                element: <TureDetails />
+                path: '/TourDetails/:id',
+                element: <TourDetails />
             },
             {
                 path: '/blog',
@@ -57,8 +58,8 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        path: '/Insurence/:dynamicDetails',
-        element: <Insurence />
+        path: '/flight/:id',
+        element: <Flight />
     },
     {
         path:'/login',

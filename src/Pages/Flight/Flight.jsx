@@ -12,7 +12,7 @@ import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
 
-const Insurence = ({
+const Flight = ({
     startTime = { time: "10:40", timeZone: "am" },
     endTime = { time: "3:45", timeZone: "pm" },
 }) => {
@@ -65,7 +65,7 @@ const Insurence = ({
                 <ParentComponent>
 
                     <div className="mt-20 flex  ">
-                        <Link to="/TureDetails/dd" className="flex items-center">
+                        <Link to="/TourDetails/dd" className="flex items-center">
                             <GoChevronLeft className="text-xl" /> Back to Tour Details
                         </Link>
                     </div>
@@ -98,8 +98,6 @@ const Insurence = ({
                                     <div className=" p-6 border-b ">
                                         <h2 className="text-center text-[14px] text-[#000000]">
                                             1 Stop - 6h 15m
-                                            1 Stop - 6h 15m
-                                            1 Stop - 6h 15m
                                         </h2>
                                         <div>
                                             <div className="flex items-center gap-2">
@@ -118,7 +116,7 @@ const Insurence = ({
                                                 </div>
                                                 <h2 className="text-right" >{formatTime(value[1])}</h2>
                                             </div>
-                                            <div className="flex items-start justify-between" >
+                                            <div className="flex items-start justify-between gap-2 md:gap-0 " >
                                                 <h2>Rome Fiumicino Airport (ECO)</h2>
                                                 <h2>Fuerteventura Airport (FOE)</h2>
                                             </div>
@@ -132,9 +130,11 @@ const Insurence = ({
                                     </div>
 
                                     <div className=" p-6 ">
+
                                         <h2 className="text-center text-[14px] text-[#000000]">
                                             1 Stop - 5h 30m
                                         </h2>
+
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <h2>{formatTime(value[0])}</h2>
@@ -153,17 +153,19 @@ const Insurence = ({
                                                 </div>
                                                 <h2 className="text-right" >{formatTime(value[1])}</h2>
                                             </div>
-                                            <div className="flex items-start justify-between" >
+                                            <div className="flex items-start justify-between gap-2 md:gap-0" >
                                                 <h2>Rome Fiumicino Airport (ECO)</h2>
                                                 <h2>Fuerteventura Airport (FOE)</h2>
                                             </div>
                                         </div>
+
                                         <div className="flex justify-center items-center ">
                                             <span className="flex border items-center px-4 rounded" >
                                                 <img className="size-10 p-1  border-r pr-3 mr-3" src={flightIcon} alt="" />
                                                 <h2 className="uppercase" >IBERIA</h2>
                                             </span>
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -239,4 +241,4 @@ const Insurence = ({
     );
 };
 
-export default Insurence;
+export default Flight;
