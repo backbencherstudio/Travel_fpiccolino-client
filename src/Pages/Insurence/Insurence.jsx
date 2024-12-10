@@ -98,6 +98,8 @@ const Insurence = ({
                                     <div className=" p-6 border-b ">
                                         <h2 className="text-center text-[14px] text-[#000000]">
                                             1 Stop - 6h 15m
+                                            1 Stop - 6h 15m
+                                            1 Stop - 6h 15m
                                         </h2>
                                         <div>
                                             <div className="flex items-center gap-2">
