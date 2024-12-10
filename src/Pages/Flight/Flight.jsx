@@ -227,7 +227,7 @@ const Flight = ({
 
                                 </div>
 
-                                <button className="text-center w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded mt-4 " >Continue</button>
+                                <Link to="/insurance/id" className="text-center block w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded mt-4 " >Continue</Link>
 
                             </div>
                         </div>

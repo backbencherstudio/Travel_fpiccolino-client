@@ -5,7 +5,6 @@ import Layout from "../Layout/Layout";
 import Home from "../Pages/Home/Home";
 import Tours from "../Pages/Tours/Tours";
 import About from "../Pages/About/About";
-import TureDetails from "../Pages/Tours/TourDetails";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import Contact from "../Pages/Contact/Contact";
@@ -16,6 +15,7 @@ import OtpScreen from "../Pages/Auth/OtpScreen";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Flight from "../Pages/Flight/Flight";
 import TourDetails from "../Pages/Tours/TourDetails";
+import Insurance from "../Pages/Insurance/Insurance";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +60,10 @@ export const router = createBrowserRouter([
     {
         path: '/flight/:id',
         element: <Flight />
+    },
+    {
+        path: '/insurance/:id',
+        element: <Insurance />
     },
     {
         path:'/login',
