@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { GiProfit } from "react-icons/gi";
 import { LuBaggageClaim, LuChartNoAxesCombined } from "react-icons/lu";
-import revenue from "../../assets/dashboard/revenue.svg";
-import traveler from "../../assets/dashboard/traveler.svg";
-import profit from "../../assets/dashboard/profit.svg";
+import revenue from "../../../assets/dashboard/revenue.svg";
+import traveler from "../../../assets/dashboard/traveler.svg";
+import profit from "../../../assets/dashboard/profit.svg";
 import DashboardCard from "./DashboardCard";
 import Chart from "./Chart";
 import RadarChart from "./RadarChart";
-import TourTable from "./TourTable";
+import TourTable from "../Tour/TourTable";
 
 const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Revenue");

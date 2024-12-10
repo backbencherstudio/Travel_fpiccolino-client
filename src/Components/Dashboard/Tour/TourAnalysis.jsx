@@ -2,10 +2,10 @@ import { useState } from "react";
 import { FaPlaneDeparture } from "react-icons/fa6";
 import { FaPlaneCircleCheck } from "react-icons/fa6";
 import { FaPlaneCircleExclamation } from "react-icons/fa6";
-import revenue from "../../assets/dashboard/revenue.svg";
-import traveler from "../../assets/dashboard/traveler.svg";
-import profit from "../../assets/dashboard/profit.svg";
-import DashboardCard from "./DashboardCard";
+import revenue from "../../../assets/dashboard/revenue.svg";
+import traveler from "../../../assets/dashboard/traveler.svg";
+import profit from "../../../assets/dashboard/profit.svg";
+import DashboardCard from "../Dashboard/DashboardCard";
 import TourTable from "./TourTable";
 
 const TourAnalysis = () => {
