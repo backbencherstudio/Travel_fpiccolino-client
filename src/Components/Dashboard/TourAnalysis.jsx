@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { GiProfit } from "react-icons/gi";
-import { LuBaggageClaim, LuChartNoAxesCombined } from "react-icons/lu";
 import { FaPlaneDeparture } from "react-icons/fa6";
 import { FaPlaneCircleCheck } from "react-icons/fa6";
 import { FaPlaneCircleExclamation } from "react-icons/fa6";
@@ -12,6 +10,7 @@ import TourTable from "./TourTable";
 
 const TourAnalysis = () => {
   const [chartType, setChartType] = useState("Total Tour");
+  const [tourDateFilter, setTourDateFilter] = useState("all");
   const dashboardData = [
     {
       title: "Total Tours",
@@ -22,7 +21,6 @@ const TourAnalysis = () => {
       txColor: "text-teal-500",
       icon: FaPlaneDeparture,
       image: revenue,
-    
     },
     {
       title: "Complete Tours",
@@ -33,7 +31,6 @@ const TourAnalysis = () => {
       txColor: "text-purple-500",
       icon: FaPlaneCircleCheck,
       image: traveler,
-     
     },
     {
       title: "Pending Tours",
@@ -44,7 +41,6 @@ const TourAnalysis = () => {
       txColor: "text-red-500",
       icon: FaPlaneCircleExclamation,
       image: profit,
-    
     },
   ];
   const bookingData = [
@@ -56,7 +52,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=LD",
       amount: "$1200",
       status: "Complete",
-      date: "June 12, 2024"
+      date: "June 12, 2024",
     },
     {
       bookingId: 901924,
@@ -66,7 +62,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=NY",
       amount: "$1500",
       status: "Pending",
-      date: "June 13, 2024"
+      date: "June 13, 2024",
     },
     {
       bookingId: 901925,
@@ -76,7 +72,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=PR",
       amount: "$2000",
       status: "Complete",
-      date: "June 14, 2024"
+      date: "June 14, 2024",
     },
     {
       bookingId: 901926,
@@ -86,7 +82,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=TOK",
       amount: "$1700",
       status: "Canceled",
-      date: "June 15, 2024"
+      date: "June 15, 2024",
     },
     {
       bookingId: 901927,
@@ -96,7 +92,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=SYD",
       amount: "$1800",
       status: "Complete",
-      date: "June 16, 2024"
+      date: "June 16, 2024",
     },
     {
       bookingId: 901928,
@@ -106,7 +102,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=BR",
       amount: "$1300",
       status: "Pending",
-      date: "June 17, 2024"
+      date: "June 17, 2024",
     },
     {
       bookingId: 901929,
@@ -116,7 +112,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=RO",
       amount: "$1100",
       status: "Complete",
-      date: "June 18, 2024"
+      date: "June 18, 2024",
     },
     {
       bookingId: 901930,
@@ -126,7 +122,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=AMS",
       amount: "$1400",
       status: "Complete",
-      date: "June 19, 2024"
+      date: "June 19, 2024",
     },
     {
       bookingId: 901931,
@@ -136,7 +132,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=RO",
       amount: "$1600",
       status: "Complete",
-      date: "June 20, 2024"
+      date: "June 20, 2024",
     },
     {
       bookingId: 901932,
@@ -146,7 +142,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=DU",
       amount: "$2500",
       status: "Canceled",
-      date: "June 21, 2024"
+      date: "June 21, 2024",
     },
     {
       bookingId: 901933,
@@ -156,7 +152,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=LD",
       amount: "$1400",
       status: "Complete",
-      date: "June 22, 2024"
+      date: "June 22, 2024",
     },
     {
       bookingId: 901934,
@@ -166,7 +162,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=LV",
       amount: "$2200",
       status: "Complete",
-      date: "June 23, 2024"
+      date: "June 23, 2024",
     },
     {
       bookingId: 901935,
@@ -176,7 +172,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=MA",
       amount: "$1300",
       status: "Pending",
-      date: "June 24, 2024"
+      date: "June 24, 2024",
     },
     {
       bookingId: 901936,
@@ -186,7 +182,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=PR",
       amount: "$1900",
       status: "Complete",
-      date: "June 25, 2024"
+      date: "June 25, 2024",
     },
     {
       bookingId: 901937,
@@ -196,7 +192,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=NY",
       amount: "$1600",
       status: "Pending",
-      date: "June 26, 2024"
+      date: "June 26, 2024",
     },
     {
       bookingId: 901938,
@@ -206,7 +202,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=TOK",
       amount: "$2100",
       status: "Complete",
-      date: "June 27, 2024"
+      date: "June 27, 2024",
     },
     {
       bookingId: 901939,
@@ -216,7 +212,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=DU",
       amount: "$2300",
       status: "Complete",
-      date: "June 28, 2024"
+      date: "June 28, 2024",
     },
     {
       bookingId: 901940,
@@ -226,7 +222,7 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=BCN",
       amount: "$1600",
       status: "Complete",
-      date: "June 29, 2024"
+      date: "June 29, 2024",
     },
     {
       bookingId: 901941,
@@ -236,9 +232,9 @@ const TourAnalysis = () => {
       destinationImg: "https://via.placeholder.com/40?text=SYD",
       amount: "$1500",
       status: "Pending",
-      date: "June 30, 2024"
+      date: "June 30, 2024",
     },
-];
+  ];
 
   return (
     <div>
@@ -265,8 +261,13 @@ const TourAnalysis = () => {
           />
         ))}
       </div>
-      
-      <TourTable title={chartType} data={bookingData}/>
+
+      <TourTable
+        title={chartType}
+        data={bookingData}
+        setDateFilter={setTourDateFilter}
+        dateFilter={tourDateFilter}
+      />
     </div>
   );
 };

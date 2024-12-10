@@ -12,6 +12,7 @@ import TourTable from "./TourTable";
 const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Revenue");
   const [timeInterval, setTimeInterval] = useState("monthly"); 
+  const [tourDateFilter, setTourDateFilter] = useState("all"); 
 
   const radarData = {
     categories: [
@@ -360,7 +361,7 @@ const DashboardAnalysis = () => {
           <RadarChart data={radarData}/>
         </div>
       </div>
-      <TourTable title={"Tour List"} data={bookingData}/>
+      <TourTable title={"Tour List"} data={bookingData} setDateFilter={setTourDateFilter} dateFilter={tourDateFilter}/>
     </div>
   );
 };

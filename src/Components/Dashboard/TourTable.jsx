@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { CircularProgress } from "@mui/material";
 
-const TourTable = ({ data, title }) => {
+const TourTable = ({ data, title,dateFilter,setDateFilter }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   // Filtered booking data based on search query and title status
@@ -37,6 +38,24 @@ const TourTable = ({ data, title }) => {
           />
           <FaSearch className="absolute top-3 left-3 text-zinc-400" />
         </div>
+        <select
+          value={dateFilter}
+          onChange={(e) => setDateFilter(e.target.value)}
+          style={{
+            padding: "8px 16px",
+            cursor: "pointer",
+            fontSize: "14px",
+            border: "1px solid #e86731",
+            borderRadius: "4px",
+            margin: "0 8px",
+            color:'#e86731',
+          }}
+        >
+          <option value="all">All</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
       </div>
 
       {/* Bookings Table */}
