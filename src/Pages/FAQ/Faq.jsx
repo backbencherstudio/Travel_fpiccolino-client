@@ -1,4 +1,5 @@
 import { accordionData } from "../../ALLJsonFile/const";
+import BottomBannerSection from "../../Shared/BottomBannerSection";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 
@@ -13,7 +14,7 @@ const Faq = () => {
     };
 
     // Accordion data
-   
+
 
     return (
         <div>
@@ -30,16 +31,16 @@ const Faq = () => {
 
                                 {/* ==============================================  Dynamic Accordion ============================================== */}
 
-                                <div className="text-[#1C1C1C] mt-8">
+                                <div className="text-[#1C1C1C] mt-8 border-b border-[#E86731] pb-2">
                                     {accordionData.map((item, index) => (
                                         <div
                                             key={index}
-                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7"
+                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7  "
                                         >
                                             <input
                                                 type="radio"
                                                 name="my-accordion"
-                                                defaultChecked={index === 0} 
+                                                defaultChecked={index === 0}
                                             />
                                             <div className="collapse-title text-xl font-medium flex items-center">
                                                 <h2 className="text-[20px] font-semibold">
@@ -53,6 +54,69 @@ const Faq = () => {
                                             </div>
                                         </div>
                                     ))}
+
+                                </div>
+
+                                {/* ==============================================  Dynamic Accordion ============================================== */}
+
+                                <h2 className="text-[32px] font-bold my-8 text-[#141D2A]">
+                                    Travel Experience and Itinerary
+                                </h2>
+
+                                <div className="text-[#1C1C1C]  border-b border-[#E86731] pb-2">
+                                    {accordionData.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7  "
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="my-accordion"
+                                            />
+                                            <div className="collapse-title text-xl font-medium flex items-center">
+                                                <h2 className="text-[20px] font-semibold">
+                                                    {item.question}
+                                                </h2>
+                                            </div>
+                                            <div className="collapse-content">
+                                                <div>
+                                                    <p>{item.answer}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                </div>
+
+                                {/* ==============================================  Dynamic Accordion ============================================== */}
+
+                                <h2 className="text-[32px] font-bold my-8 text-[#141D2A]">
+                                    Payment and Pricing
+                                </h2>
+
+                                <div className="text-[#1C1C1C]  border-b border-[#E86731] pb-2">
+                                    {accordionData.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7  "
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="my-accordion"
+                                            />
+                                            <div className="collapse-title text-xl font-medium flex items-center">
+                                                <h2 className="text-[20px] font-semibold">
+                                                    {item.question}
+                                                </h2>
+                                            </div>
+                                            <div className="collapse-content">
+                                                <div>
+                                                    <p>{item.answer}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+
                                 </div>
 
                             </div>
@@ -78,6 +142,7 @@ const Faq = () => {
                     </div>
                 </ParentComponent>
             </div>
+            <BottomBannerSection />
         </div>
     );
 };
