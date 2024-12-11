@@ -82,7 +82,7 @@ const Navbar = () => {
                                         <NavLink to="/blog" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Blog </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/cruises" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> FAQ </NavLink>
+                                        <NavLink to="/faq" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> FAQ </NavLink>
                                     </li>
 
                                     <li>
