@@ -46,7 +46,7 @@ const Dashboard = () => {
       <aside
         className={`fixed inset-y-0 left-0 transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform lg:translate-x-0 lg:relative w-[280px] bg-white border p-5 z-50`}
+        } transition-transform lg:translate-x-0 lg:relative lg:w-64 w-64 bg-white border p-5 z-50`}
       >
         <h1 className="text-2xl font-bold mb-5">Admin</h1>
         <nav className="flex flex-col gap-4">

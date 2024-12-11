@@ -1,9 +1,13 @@
 import { useState } from "react";
-import PaymentTable from "./PaymentTable";
+import CustomTable from "../../../Shared/CustomTable";
 
 const PaymentHistory = () => {
   const [tourDateFilter, setTourDateFilter] = useState("all");
- 
+  const [columns] = useState({
+    tourId: true,
+    traveler: true,
+    amount: true,
+  });
   const bookingData = [
     {
       bookingId: 901923,
@@ -203,12 +207,10 @@ const PaymentHistory = () => {
       <p className="text-[#72777F]">
         Manage your travel agency data easily with us
       </p>
-      <PaymentTable
-        title={"Payment History"}
+      <CustomTable   title={"Payment History"} columns={columns}
         data={bookingData}
         setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}
-      />
+        dateFilter={tourDateFilter}/>
     </div>
   );
 };
