@@ -12,13 +12,18 @@ import Login from "../Pages/Auth/Login";
 import SignUp from "../Pages/Auth/SignUp";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 import OtpScreen from "../Pages/Auth/OtpScreen";
-import Dashboard from "../Pages/Dashboard/Dashboard";
 import Flight from "../Pages/Flight/Flight";
 import TourDetails from "../Pages/Tours/TourDetails";
 import Insurance from "../Pages/Insurance/Insurance";
 import Transfers from "../Pages/Transfers/Transfers";
 import PersonalDetails from "../Pages/PersonalDetails/PersonalDetails";
 import Faq from "../Pages/FAQ/FAQ";
+import DashboardLayout from "../Layout/DashboardLayout";
+import DashboardAnalysis from "../Components/Dashboard/Dashboard/DashboardAnalysis";
+import TourAnalysis from "../Components/Dashboard/Tour/TourAnalysis";
+import UserList from "../Components/Dashboard/Users/UserList";
+import PaymentHistory from "../Components/Dashboard/Payment/PaymentHistory";
+import UserDetails from "../Components/Dashboard/Users/UserDetails";
 
 export const router = createBrowserRouter([
     {
@@ -65,6 +70,36 @@ export const router = createBrowserRouter([
         ]
     },
     {
+        path: "/",
+        element: <DashboardLayout />,
+        children: [
+            {
+                path: '/dashboard',
+                element: <DashboardAnalysis />
+            },
+            {
+                path: '/tour-list',
+                element: <TourAnalysis />
+            },
+            {
+                path: '/user-list',
+                element: <UserList />
+            },
+            {
+                path: '/user-list/:id',
+                element: <UserDetails />
+            },
+            {
+                path: '/package',
+                element: <DashboardAnalysis />
+            },
+            {
+                path: '/payment',
+                element: <PaymentHistory/>
+            },
+        ]
+    },
+    {
         path: '/flight/:id',
         element: <Flight />
     },
@@ -96,8 +131,5 @@ export const router = createBrowserRouter([
         path:'/otp',
         element: <OtpScreen/>
     },
-    {
-        path:'/dashboard',
-        element:<Dashboard/>
-    }
+  
 ]);

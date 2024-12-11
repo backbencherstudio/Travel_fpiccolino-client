@@ -23,9 +23,7 @@ const CustomTable = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-  const [selectedTab, setSelectedTab] = useState(
-    localStorage.getItem("tab") || "Dashboard"
-  );
+
   // Pagination states
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -38,10 +36,9 @@ const CustomTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleRowClick = ()=>{
+  const handleRowClick = (id)=>{
     if(tableType === 'user'){
-        localStorage.setItem('tab','UserDetails')
-        window.location.reload();
+        navigate(`/user-list/${id}`)
     }
   }
 
