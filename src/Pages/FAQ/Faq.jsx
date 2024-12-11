@@ -1,6 +1,8 @@
+import { accordionData } from "../../ALLJsonFile/const";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
+import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 
-import heroImage from "../../assets/eve.jpg"
+import heroImage from "../../assets/eve.jpg";
 
 const Faq = () => {
     const heroContent = {
@@ -10,11 +12,72 @@ const Faq = () => {
             "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
     };
 
+    // Accordion data
+   
+
     return (
         <div>
-
             <HeroScetion heroContent={heroContent} />
 
+            <div className="bg-[#EFFBFB] py-20">
+                <ParentComponent>
+                    <div className="grid grid-cols-12 lg:gap-5 xl:gap-20 grid-cols-reverse">
+                        <div className="col-span-12 lg:col-span-9 lg:order-1 bg-[#EFFBFB] rounded-lg">
+                            <div  >
+                                <h2 className="text-[32px] font-bold text-[#141D2A]">
+                                    Booking and Reservations
+                                </h2>
+
+                                {/* ==============================================  Dynamic Accordion ============================================== */}
+
+                                <div className="text-[#1C1C1C] mt-8">
+                                    {accordionData.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="my-accordion"
+                                                defaultChecked={index === 0} 
+                                            />
+                                            <div className="collapse-title text-xl font-medium flex items-center">
+                                                <h2 className="text-[20px] font-semibold">
+                                                    {item.question}
+                                                </h2>
+                                            </div>
+                                            <div className="collapse-content">
+                                                <div>
+                                                    <p>{item.answer}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {/* ======================================  Side bar ========================== */}
+                        <div className="col-span-12 lg:col-span-3 mt-5 lg:mt-0">
+                            <div className="rounded-lg">
+                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
+                                    Booking and Reservations
+                                </h2>
+                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
+                                    Travel Experience and Itinerary
+                                </h2>
+                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
+                                    Travel Experience and Itinerary
+                                </h2>
+                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
+                                    Travel Insurance and Safety
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </ParentComponent>
+            </div>
         </div>
     );
 };

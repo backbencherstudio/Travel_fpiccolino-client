@@ -441,3 +441,31 @@ export const blogs = [
     "Family Travel",
     "Cultural Exploration"
   ];
+
+
+  export const accordionData = [
+    {
+        question: "How do I make a booking on your website?",
+        answer:
+            "Start by exploring our destinations and experiences on the homepage. You can filter by travel dates, types of trips, and interests to find the perfect option for you.",
+    },
+    {
+        question: "Can I modify or cancel my reservation after booking?",
+        answer:
+            "You can modify or cancel your reservation through your account page. Please note that cancellation policies may vary based on the booking.",
+    },
+    {
+        question: "What happens if I miss my flight or booking date?",
+        answer:
+            "If you miss your flight or booking date, please contact our support team immediately. We'll do our best to assist you based on the circumstances.",
+    },
+    {
+        question: "Do I need to create an account to book a trip?",
+        answer:
+            "Yes, creating an account allows us to securely save your bookings and preferences, making your experience seamless and personalized.",
+    },
+    {
+        question: "Do I need to create an account to book a trip?",
+        answer: " Yes, creating an account allows us to securely save your bookings and preferences, making your experience seamless and personalized  your bookings and preferences, making your experience seamless and personalized  ",
+    },
+];
