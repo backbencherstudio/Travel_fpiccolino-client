@@ -51,13 +51,11 @@ const Policy = () => {
                                     <p className="text-[#72777F] mt-1" >The candidate has the right to exercise a series of rights recognized by the General Data Protection Regulation (GDPR) in Articles 15-22, including.</p>
 
                                     <ul className="" >
-
                                         <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
                                         <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
                                         <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
-
                                     </ul>
-                                    
+
                                 </div>
 
                                 <div className="mt-8">
