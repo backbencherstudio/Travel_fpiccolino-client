@@ -7,14 +7,13 @@ import profit from "../../../assets/dashboard/profit.svg";
 import DashboardCard from "./DashboardCard";
 import Chart from "./Chart";
 import RadarChart from "./RadarChart";
-import TourTable from "../Tour/TourTable";
 import CustomTable from "../../../Shared/CustomTable";
 
 const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Revenue");
   const [timeInterval, setTimeInterval] = useState("monthly");
   const [tourDateFilter, setTourDateFilter] = useState("all");
-  const [columns, setColumns] = useState({
+  const [columns] = useState({
     bookingId: true,
     name: true,
     date: true,

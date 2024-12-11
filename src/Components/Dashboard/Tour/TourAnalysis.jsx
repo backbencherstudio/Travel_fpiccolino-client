@@ -6,9 +6,17 @@ import revenue from "../../../assets/dashboard/revenue.svg";
 import traveler from "../../../assets/dashboard/traveler.svg";
 import profit from "../../../assets/dashboard/profit.svg";
 import DashboardCard from "../Dashboard/DashboardCard";
-import TourTable from "./TourTable";
+import CustomTable from "../../../Shared/CustomTable";
 
 const TourAnalysis = () => {
+  const [columns] = useState({
+    bookingId: true,
+    name: true,
+    date: true,
+    destination: true,
+    amount: true,
+    status: true,
+  });
   const [chartType, setChartType] = useState("Total Tour");
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const dashboardData = [
@@ -261,13 +269,10 @@ const TourAnalysis = () => {
           />
         ))}
       </div>
-
-      <TourTable
-        title={chartType}
+      <CustomTable title={chartType} columns={columns}
         data={bookingData}
         setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}
-      />
+        dateFilter={tourDateFilter}/>
     </div>
   );
 };

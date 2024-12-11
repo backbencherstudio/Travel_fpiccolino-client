@@ -12,11 +12,9 @@ import {
 } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
 
-const CustomTable = ({ title,setDateFilter, dateFilter , data , columns }) => {
-
+const CustomTable = ({ title, setDateFilter, dateFilter, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  
   // Pagination states
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -34,28 +32,29 @@ const CustomTable = ({ title,setDateFilter, dateFilter , data , columns }) => {
     <div className="">
       <Paper>
         <div className="flex mt-8 p-5 justify-between flex-wrap">
-            <h1 className="font-semibold text-[24px] mb-3">{title}</h1>
-          <div className="flex justify-between items-center mb-5">
-            <div className="relative">
+          <h1 className="font-semibold text-[24px] mb-3">{title}</h1>
+          <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5  gap-3">
+            <div className="relative md:col-span-2">
               <input
                 type="text"
-                placeholder="Search Bookings..."
-                className="md:w-96 py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400"
+                placeholder="Search..."
+                className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <FaSearch className="absolute top-3 left-3 text-zinc-400" />
             </div>
             <select
+              className="md:col-span-1"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
               style={{
+                // width:'100%',
                 padding: "8px 16px",
                 cursor: "pointer",
                 fontSize: "14px",
                 border: "1px solid #e86731",
                 borderRadius: "4px",
-                margin: "0 8px",
                 color: "#e86731",
               }}
             >
@@ -65,7 +64,6 @@ const CustomTable = ({ title,setDateFilter, dateFilter , data , columns }) => {
               <option value="yearly">Yearly</option>
             </select>
           </div>
-
         </div>
 
         <TableContainer sx={{ overflow: "scroll" }}>
@@ -78,7 +76,9 @@ const CustomTable = ({ title,setDateFilter, dateFilter , data , columns }) => {
             <TableHead>
               <TableRow>
                 {columns?.bookingId && <TableCell>Booking Id</TableCell>}
+                {columns?.tourId && <TableCell>Tour Id</TableCell>}
                 {columns?.name && <TableCell>Customer Name</TableCell>}
+                {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.date && <TableCell>Date</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
@@ -87,35 +87,66 @@ const CustomTable = ({ title,setDateFilter, dateFilter , data , columns }) => {
             </TableHead>
 
             <TableBody className="text-nowrap">
-  {data
-    ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    ?.map((item) => (
-      <TableRow key={item?.bookingId}>
-        {columns?.bookingId && <TableCell>{item.bookingId}</TableCell>}
-        
-        {columns?.name && (
-          <TableCell style={{ minWidth: "200px" }}>
-            {/* Added minWidth for Name column */}
-            <div className="flex items-center gap-3">
-              <img
-                className="rounded-full"
-                src={item.customerImg}
-                alt={item.customerName}
-                style={{ width: "40px", height: "40px" }} // fixed size for the image
-              />
-              <span className="truncate">{item.customerName}</span> {/* Added truncate to prevent overflow */}
-            </div>
-          </TableCell>
-        )}
+              {data
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.map((item) => (
+                  <TableRow key={item?.bookingId}>
+                    {columns?.bookingId && (
+                      <TableCell>{item.bookingId}</TableCell>
+                    )}
+                    {columns?.tourId && <TableCell>{item.bookingId}</TableCell>}
+                    {columns?.name && (
+                      <TableCell style={{ minWidth: "200px" }}>
+                        {/* Added minWidth for Name column */}
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="rounded-full"
+                            src={item.customerImg}
+                            alt={item.customerName}
+                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                          />
+                          <span className="truncate">{item.customerName}</span>{" "}
+                          {/* Added truncate to prevent overflow */}
+                        </div>
+                      </TableCell>
+                    )}
+                    {columns?.traveler && (
+                      <TableCell style={{ minWidth: "200px" }}>
+                        {/* Added minWidth for Name column */}
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="rounded-full"
+                            src={item.customerImg}
+                            alt={item.customerName}
+                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                          />
+                          <span className="truncate">{item.customerName}</span>{" "}
+                          {/* Added truncate to prevent overflow */}
+                        </div>
+                      </TableCell>
+                    )}
 
-        {columns?.date && <TableCell>{item.date}</TableCell>}
-        {columns?.destination && <TableCell>{item.destination}</TableCell>}
-        {columns?.amount && <TableCell>{item.amount}</TableCell>}
-        {columns?.status && <TableCell>{item.status}</TableCell>}
-      </TableRow>
-    ))}
-</TableBody>
-
+                    {columns?.date && <TableCell>{item.date}</TableCell>}
+                    {columns?.destination && (
+                      <TableCell style={{ minWidth: "200px" }}>
+                        {/* Added minWidth for Name column */}
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="rounded-full"
+                            src={item.destinationImg}
+                            alt={item.destination}
+                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                          />
+                          <span className="truncate">{item.destination}</span>{" "}
+                          {/* Added truncate to prevent overflow */}
+                        </div>
+                      </TableCell>
+                    )}
+                    {columns?.amount && <TableCell>{item.amount}</TableCell>}
+                    {columns?.status && <TableCell>{item.status}</TableCell>}
+                  </TableRow>
+                ))}
+            </TableBody>
           </Table>
         </TableContainer>
 
@@ -132,6 +163,5 @@ const CustomTable = ({ title,setDateFilter, dateFilter , data , columns }) => {
     </div>
   );
 };
-
 
 export default CustomTable;

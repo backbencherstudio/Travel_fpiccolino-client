@@ -7,7 +7,6 @@ import natureImage from "../../assets/natureImage.jpg";
 import TureCard from "../ToursComponents/TureCard";
 import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaAngleLeft,  FaAngleRight } from "react-icons/fa";
-import CustomTable from "../../Shared/CustomTable";
 const AdventureSection = () => {
     const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -158,7 +157,6 @@ const AdventureSection = () => {
         </div>
       </div>
       </ParentComponent>
-      <CustomTable/>
     </div>
   );
 };
