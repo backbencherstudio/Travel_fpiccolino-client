@@ -19,6 +19,7 @@ import Insurance from "../Pages/Insurance/Insurance";
 import Transfers from "../Pages/Transfers/Transfers";
 import PersonalDetails from "../Pages/PersonalDetails/PersonalDetails";
 import Faq from "../Pages/FAQ/FAQ";
+import Policy from "../Pages/Policy/Policy";
 
 export const router = createBrowserRouter([
     {
@@ -58,9 +59,13 @@ export const router = createBrowserRouter([
                 element: <BlogDetails />
             },
             {
+                path: '/policy',
+                element: <Policy />
+            },
+            {
                 path: '/contact',
                 element: <Contact />
-            }
+            },
 
         ]
     },
