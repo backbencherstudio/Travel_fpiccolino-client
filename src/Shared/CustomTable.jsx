@@ -11,10 +11,21 @@ import {
   TablePagination,
 } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-const CustomTable = ({ title, setDateFilter, dateFilter, data, columns }) => {
+const CustomTable = ({
+  tableType = "",
+  title,
+  setDateFilter,
+  dateFilter,
+  data,
+  columns,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const navigate = useNavigate();
+  const [selectedTab, setSelectedTab] = useState(
+    localStorage.getItem("tab") || "Dashboard"
+  );
   // Pagination states
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -27,6 +38,12 @@ const CustomTable = ({ title, setDateFilter, dateFilter, data, columns }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleRowClick = ()=>{
+    if(tableType === 'user'){
+        localStorage.setItem('tab','UserDetails')
+        window.location.reload();
+    }
+  }
 
   return (
     <div className="">
@@ -78,6 +95,10 @@ const CustomTable = ({ title, setDateFilter, dateFilter, data, columns }) => {
                 {columns?.bookingId && <TableCell>Booking Id</TableCell>}
                 {columns?.tourId && <TableCell>Tour Id</TableCell>}
                 {columns?.name && <TableCell>Customer Name</TableCell>}
+                {columns?.username && <TableCell>User Name</TableCell>}
+                {columns?.email && <TableCell> Email</TableCell>}
+                {columns?.phone && <TableCell>Phone</TableCell>}
+                {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.date && <TableCell>Date</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
@@ -90,7 +111,14 @@ const CustomTable = ({ title, setDateFilter, dateFilter, data, columns }) => {
               {data
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((item) => (
-                  <TableRow key={item?.bookingId}>
+                  <TableRow
+                    className={`${
+                      tableType === "user" &&
+                      "cursor-pointer hover:bg-[#fdf0ea]"
+                    }`}
+                    key={item?.bookingId}
+                    onClick={() => handleRowClick(item.bookingId)} 
+                  >
                     {columns?.bookingId && (
                       <TableCell>{item.bookingId}</TableCell>
                     )}
@@ -110,6 +138,24 @@ const CustomTable = ({ title, setDateFilter, dateFilter, data, columns }) => {
                         </div>
                       </TableCell>
                     )}
+                    {columns?.username && (
+                      <TableCell style={{ minWidth: "200px" }}>
+                        {/* Added minWidth for Name column */}
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="rounded-full"
+                            src={item.customerImg}
+                            alt={item.customerName}
+                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                          />
+                          <span className="truncate">{item.name}</span>{" "}
+                          {/* Added truncate to prevent overflow */}
+                        </div>
+                      </TableCell>
+                    )}
+                    {columns?.phone && <TableCell>{item.phone}</TableCell>}
+                    {columns?.email && <TableCell>{item.email}</TableCell>}
+                    {columns?.country && <TableCell>{item.country}</TableCell>}
                     {columns?.traveler && (
                       <TableCell style={{ minWidth: "200px" }}>
                         {/* Added minWidth for Name column */}

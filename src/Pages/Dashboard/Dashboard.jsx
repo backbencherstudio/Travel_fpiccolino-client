@@ -9,7 +9,8 @@ import image from "../../assets/image1.jpg";
 import DashboardAnalysis from "../../Components/Dashboard/Dashboard/DashboardAnalysis";
 import TourAnalysis from "../../Components/Dashboard/Tour/TourAnalysis";
 import PaymentHistory from "../../Components/Dashboard/Payment/PaymentHistory";
-import UserDetails from "../../Components/Dashboard/UserDetails/UserDetails";
+import UserList from "../../Components/Dashboard/Users/UserList";
+import UserDetails from "../../Components/Dashboard/Users/UserDetails";
 
 const Dashboard = () => {
   // State for selected tab
@@ -77,15 +78,15 @@ const Dashboard = () => {
             <span>Tour</span>
           </button>
           <button
-            onClick={() => handleTabChange("UserDetails")}
+            onClick={() => handleTabChange("UserList")}
             className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "UserDetails"
+              selectedTab === "UserList"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
             }`}
           >
             <FaRegUser />
-            <span>User Details</span>
+            <span>Users</span>
           </button>
           <button
             onClick={() => handleTabChange("Task List")}
@@ -169,6 +170,7 @@ const Dashboard = () => {
         <main className="p-5">
           {selectedTab === "Dashboard" && <DashboardAnalysis />}
           {selectedTab === "Tour" && <TourAnalysis />}
+          {selectedTab === "UserList" && <UserList />}
           {selectedTab === "UserDetails" && <UserDetails />}
           {selectedTab === "Payment" && <PaymentHistory />}
         </main>
