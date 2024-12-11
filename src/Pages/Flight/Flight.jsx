@@ -195,6 +195,8 @@ const Flight = ({
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
                                 <p>8 Days / 7 Nights</p>
+                                
+                                <div className="border border-b-[#c8c8ce] mt-3"></div>
 
                                 <div className="mt-4">
                                     <span className="flex items-start justify-between mb-3 " >
@@ -227,7 +229,7 @@ const Flight = ({
 
                                 </div>
 
-                                <button className="text-center w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded mt-4 " >Continue</button>
+                                <Link to="/insurance/id" className="text-center block w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded mt-4 " >Continue</Link>
 
                             </div>
                         </div>

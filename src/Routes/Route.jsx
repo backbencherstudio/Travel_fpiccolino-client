@@ -15,6 +15,9 @@ import OtpScreen from "../Pages/Auth/OtpScreen";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Flight from "../Pages/Flight/Flight";
 import TourDetails from "../Pages/Tours/TourDetails";
+import Insurance from "../Pages/Insurance/Insurance";
+import Transfers from "../Pages/Transfers/Transfers";
+import PersonalDetails from "../Pages/PersonalDetails/PersonalDetails";
 
 export const router = createBrowserRouter([
     {
@@ -59,6 +62,18 @@ export const router = createBrowserRouter([
     {
         path: '/flight/:id',
         element: <Flight />
+    },
+    {
+        path: '/insurance/:id',
+        element: <Insurance />
+    },
+    {
+        path: '/transfers/:id',
+        element: <Transfers />
+    },
+    {
+        path: '/personalDetails',
+        element: <PersonalDetails />
     },
     {
         path:'/login',
