@@ -1,18 +1,16 @@
-import  { useRef, useState } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { Swiper, SwiperSlide } from "swiper/react";
+
 import "swiper/css";
 import { useParams } from "react-router-dom";
 import { userData } from "../../../ALLJsonFile/const";
+import TourSlider from "./TourSlider";
+import { useState } from "react";
 const UserDetails = () => {
+  const [tourDateFilter, setTourDateFilter] = useState("all");
   const {id} =useParams()
-    const swiperRef = useRef(null);
-    const [isBeginning, setIsBeginning] = useState(true);
-    const [isEnd, setIsEnd] = useState(false);
 
-    
   return (
-    <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
+   <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
+     <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
       <h1 className="text-[32px] font-semibold">Welcome, Wade</h1> 
       <p className="text-[#72777F]">
         Manage your travel agency data easily with us
@@ -67,74 +65,12 @@ const UserDetails = () => {
           </div>
         </div>
       </div>
-      <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>
-    <div className="mt-5">
-    <Swiper
-            spaceBetween={15}
-            slidesPerView={5}
-            onSwiper={(swiper) => {
-                swiperRef.current = swiper;
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
-              }}
-              onSlideChange={(swiper) => {
-                setIsBeginning(swiper.isBeginning);
-                setIsEnd(swiper.isEnd);
-              }}
-              breakpoints={{
-                320: {
-                  slidesPerView: 2, // For very small mobile screens (320px)
-                  spaceBetween: 10,
-                },
-                480: {
-                  slidesPerView: 4, // Small devices (e.g., iPhone SE, 480px width)
-                  spaceBetween: 15,
-                },
-                640: {
-                  slidesPerView: 3, // Mobile devices (640px width)
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 4, // Tablets (768px width)
-                  spaceBetween: 20,
-                },
-                1024: {
-                  slidesPerView: 5, // Desktop and larger screens (1024px and up)
-                  spaceBetween: 20,
-                },
-              }}
-          >
-            {userData[id-1]?.tourData?.map((item) => (
-              <div key={item._id}>
-                <SwiperSlide>
-                 <img src={item.destinationImg} alt="" className="w-[172px] h-[120px] rounded-lg" />
-                 <p>{item.destination}</p>
-                </SwiperSlide>
-              </div>
-            ))}
-          </Swiper>
-          <div className="m-4 text-end">
-              <button
-                onClick={() => swiperRef.current?.slidePrev()}
-                className={`p-3 m-1  ${
-                  isBeginning ? "bg-[#fdf0ea] primary_text" : "border bg-white text-black shadow"
-                } w-10 h-10 rounded-md transition-opacity `}
-                disabled={isBeginning}
-              >
-                <FaAngleLeft />
-              </button>
-              <button
-                onClick={() => swiperRef.current?.slideNext()}
-                className={`p-3 m-1 ${
-                  isEnd ? "bg-[#fdf0ea] primary_text" : "border bg-white text-black shadow"
-                }  rounded-md w-10 h-10`}
-                disabled={isEnd}
-              >
-                <FaAngleRight/>
-              </button>
-            </div>
     </div>
-    </div>
+    <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>
+   <TourSlider title={'Total Tours'} userData={userData} id={id} dateFilter={tourDateFilter}  setDateFilter={setTourDateFilter}/>
+   <TourSlider title={'Completed Tours'} userData={userData} id={id}/>
+   <TourSlider title={'Pending Tours'} userData={userData} id={id}/>
+   </div>
   );
 };
 
