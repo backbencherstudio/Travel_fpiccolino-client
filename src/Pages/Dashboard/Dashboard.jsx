@@ -45,7 +45,7 @@ const Dashboard = () => {
   // };
 
   return (
-    <div className="flex h-screen ">
+    <div className="lg:flex h-screen ">
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 transform ${

@@ -8,12 +8,20 @@ import DashboardCard from "./DashboardCard";
 import Chart from "./Chart";
 import RadarChart from "./RadarChart";
 import TourTable from "../Tour/TourTable";
+import CustomTable from "../../../Shared/CustomTable";
 
 const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Revenue");
   const [timeInterval, setTimeInterval] = useState("monthly");
   const [tourDateFilter, setTourDateFilter] = useState("all");
-
+  const [columns, setColumns] = useState({
+    bookingId: true,
+    name: true,
+    date: true,
+    destination: true,
+    amount: true,
+    status: true,
+  });
   const radarData = {
     categories: [
       "All inclusive",
@@ -369,9 +377,8 @@ const DashboardAnalysis = () => {
         </div>
       </div>
 
-      <div className=" " >
-        <TourTable title={"Tour List"} data={bookingData} setDateFilter={setTourDateFilter} dateFilter={tourDateFilter}/>
-      </div>
+      <CustomTable title={"Tour List"} data={bookingData} setDateFilter={setTourDateFilter} dateFilter={tourDateFilter} columns={columns}/>
+    
     </div>
   );
 };
