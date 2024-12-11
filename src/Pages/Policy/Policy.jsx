@@ -51,15 +51,19 @@ const Policy = () => {
                                     <p className="text-[#72777F] mt-1" >The candidate has the right to exercise a series of rights recognized by the General Data Protection Regulation (GDPR) in Articles 15-22, including.</p>
 
                                     <ul className="" >
+
                                         <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
+                                        <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
+                                        <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
+
                                     </ul>
+                                    
                                 </div>
+
                                 <div className="mt-8">
                                     <h2 className="text-[#141D2A] font-bold " >7. Changes to This Privacy Notice</h2>
                                     <p className="text-[#72777F] mt-1" >This privacy notice may be updated periodically to reflect any changes in regulations, our data processing processes, or our business practices. Any changes made will be communicated through publication on the "Work with Us" portal so that candidates can always be informed of the most recent aspects related to the protection of their personal data. We encourage all candidates to regularly check this section to stay informed of updates and ensure full awareness of their rights and the processing methods.</p>
                                 </div>
-
-                                sk_test_51HwWHRCeMjBQYGyCJoqZ0VMflLoGGxaFrxqbmIBo2XreSB7MohnauPYcAq9IXvp9HFGfylCpiRs3z8Tomapeqnl400MmBLKOhp
 
                             </div>
                         </div>
@@ -81,6 +85,7 @@ const Policy = () => {
                                 </h2>
                             </div>
                         </div>
+
                     </div>
                 </ParentComponent>
             </div>
