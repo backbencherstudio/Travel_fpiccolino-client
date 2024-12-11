@@ -18,6 +18,7 @@ import TourDetails from "../Pages/Tours/TourDetails";
 import Insurance from "../Pages/Insurance/Insurance";
 import Transfers from "../Pages/Transfers/Transfers";
 import PersonalDetails from "../Pages/PersonalDetails/PersonalDetails";
+import Faq from "../Pages/FAQ/FAQ";
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path: '/tours',
                 element: <Tours />
+            },
+            {
+                path: '/faq',
+                element: <Faq />
             },
             {
                 path: '/TourDetails/:id',
