@@ -68,12 +68,12 @@ const PersonalDetails = () => {
                 <ParentComponent>
                     <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20 grid-cols-reverse ">
 
-                        <div className=" col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-10 rounded-lg ">
+                        <div className=" col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-2 lg:p-10 rounded-lg ">
 
                             <div>
 
                                 <div className="border  rounded-lg">
-                                    <h2 className="p-5 text-[#141D2A] text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
+                                    <h2 className=" p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
                                     <div className="border border-b-[#c8c8ce] mt-3"></div>
                                     <p className="p-5 text-[#72777F] font-[18px]">
                                         Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
@@ -88,7 +88,7 @@ const PersonalDetails = () => {
                                             <h3 className="text-[#141D2A] text-[20px] font-[600] mb-4">Traveler {index + 1}</h3>
 
                                             {/* Full Name and Last Name */}
-                                            <div className="grid grid-cols-2 gap-2">
+                                            <div className="grid md:grid-cols-2 gap-2">
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.fullName`}>Full Name *</label>
                                                     <input
@@ -113,7 +113,7 @@ const PersonalDetails = () => {
                                             </div>
 
                                             {/* Email and Phone Number */}
-                                            <div className="grid grid-cols-2 gap-2 mt-4">
+                                            <div className="grid md:grid-cols-2 gap-2 mt-4">
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.email`}>Email *</label>
                                                     <input
@@ -153,7 +153,7 @@ const PersonalDetails = () => {
                                             </div>
 
                                             {/* Date and Date */}
-                                            <div className="grid grid-cols-2 gap-2 mt-4">
+                                            <div className="grid md:grid-cols-2 gap-2 mt-4">
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.date`}>Date *</label>
                                                     <input
@@ -209,7 +209,7 @@ const PersonalDetails = () => {
                                         </div>
 
                                         <div className="border  rounded-lg">
-                                            <h2 className="p-5 text-[#141D2A] text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
+                                            <h2 className=" p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
                                             <div className="border border-b-[#c8c8ce] mt-3"></div>
                                             <p className="p-5 text-[#72777F] font-[18px]">
                                                 Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
@@ -217,11 +217,12 @@ const PersonalDetails = () => {
                                         </div>
 
                                         <h2 className="mt-6" >Terms and Conditions and Privacy Policy</h2>
-                                        <span className="flex items-center" >
+
+                                        <span className="flex items-center my-2" >
                                             <Checkbox {...label} />
                                             <p>I declare that I have read the <span className="text-[#E86731] font-semibold " >Privacy Policy</span> and accept the <span className="text-[#E86731] font-semibold " >Terms and Conditions</span> for using LA TUA FUGA LOWCOST services.</p>
-
                                         </span>
+
                                         <p>I consent to receive commercial information related to WeRoad and other travel proposals via email, phone, SMS, and instant message.</p>
 
                                         <div className="h-[50px]" >
@@ -265,8 +266,9 @@ const PersonalDetails = () => {
                                         Submit
                                     </button>
 
-                                </form>
+                                    <p className="mt-6 text-[#72777F]">Write to privacy@latuafuga.it if you wish to revoke the consent previously given for the processing of your Personal Data, to obtain more information about privacy, or to exercise your rights.</p>
 
+                                </form>
 
                             </div>
 
@@ -275,7 +277,7 @@ const PersonalDetails = () => {
                         {/* ======================================  Side bar ========================== */}
 
                         <div className=" col-span-12 lg:col-span-4 mt-5 lg:mt-0 ">
-                            <div className=" shadow-lg rounded-lg p-10">
+                            <div className=" shadow-lg rounded-lg p-2 md:p-10">
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
                                 <p>8 Days / 7 Nights</p>

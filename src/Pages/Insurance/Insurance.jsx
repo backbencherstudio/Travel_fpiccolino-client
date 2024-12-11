@@ -66,7 +66,7 @@ const Insurance = () => {
                         {/* ======================================  Side bar ========================== */}
 
                         <div className=" col-span-12 lg:col-span-4 mt-5 lg:mt-0">
-                            <div className=" shadow-lg rounded-lg p-10">
+                            <div className=" shadow-lg rounded-lg p-2 md:p-10">
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
                                 <p>8 Days / 7 Nights</p>
