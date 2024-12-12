@@ -25,6 +25,7 @@ import UserList from "../Components/Dashboard/Users/UserList";
 import PaymentHistory from "../Components/Dashboard/Payment/PaymentHistory";
 import UserDetails from "../Components/Dashboard/Users/UserDetails";
 import BlogList from "../Components/Dashboard/blog/BlogList";
+import Policy from "../Pages/Policy/Policy";
 
 export const router = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
             {
                 path: '/blog/:id',
                 element: <BlogDetails />
+            },
+            {
+                path: '/policy',
+                element: <Policy />
             },
             {
                 path: '/contact',
