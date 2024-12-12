@@ -51,7 +51,7 @@ const Dashboard = () => {
         <h1 className="text-2xl font-bold mb-5">Admin</h1>
         <nav className="flex flex-col gap-4">
           <button
-            onClick={() => handleNavigation("Dashboard", "dashboard")}
+            onClick={() => handleNavigation("Dashboard", "")}
             className={`flex items-center space-x-2 p-2 rounded ${
               selectedTab === "Dashboard"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
@@ -84,7 +84,7 @@ const Dashboard = () => {
             <span>Users</span>
           </button>
           <button
-            onClick={() => handleNavigation("Package", "task-list")}
+            onClick={() => handleNavigation("Package", "package")}
             className={`flex items-center space-x-2 p-2 rounded ${
               selectedTab === "Package"
                 ? "bg-[#fdf0ea] primary_text font-semibold"

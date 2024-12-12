@@ -71,35 +71,35 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        path: "/",
+        path: "/dashboard",
         element: <DashboardLayout />,
         children: [
             {
-                path: '/dashboard',
+                index:true,
                 element: <DashboardAnalysis />
             },
             {
-                path: '/tour-list',
+                path: 'tour-list',
                 element: <TourAnalysis />
             },
             {
-                path: '/user-list',
+                path: 'user-list',
                 element: <UserList />
             },
             {
-                path: '/user-list/:id',
+                path: 'user-list/:id',
                 element: <UserDetails />
             },
             {
-                path: '/package',
+                path: 'package',
                 element: <DashboardAnalysis />
             },
             {
-                path: '/payment',
+                path: 'payment',
                 element: <PaymentHistory/>
             },
             {
-                path: '/blog-list',
+                path: 'blog-list',
                 element: <BlogList />
             },
         ]

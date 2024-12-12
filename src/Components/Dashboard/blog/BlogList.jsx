@@ -18,6 +18,7 @@ const BlogList = () => {
         Manage your travel agency data easily with us
       </p>
       <CustomTable
+       tableType={"blog"}
         title={"Blog List"}
         columns={columns}
         data={blogs}

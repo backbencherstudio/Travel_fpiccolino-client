@@ -40,7 +40,7 @@ const CustomTable = ({
   };
   const handleRowClick = (id) => {
     if (tableType === "user") {
-      navigate(`/user-list/${id}`);
+      navigate(`${id}`);
     }
   };
 
@@ -116,7 +116,7 @@ const CustomTable = ({
                 ?.map((item) => (
                   <TableRow
                     className={`${
-                      tableType === "user" &&
+                      (tableType === "user" || tableType === "blog") &&
                       "cursor-pointer hover:bg-[#fdf0ea]"
                     }`}
                     key={item?.bookingId}
