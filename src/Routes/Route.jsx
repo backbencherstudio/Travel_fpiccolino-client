@@ -26,6 +26,7 @@ import PaymentHistory from "../Components/Dashboard/Payment/PaymentHistory";
 import UserDetails from "../Components/Dashboard/Users/UserDetails";
 import BlogList from "../Components/Dashboard/blog/BlogList";
 import Policy from "../Pages/Policy/Policy";
+import UpdateBlog from "../Components/Dashboard/blog/UpdateBlog";
 
 export const router = createBrowserRouter([
     {
@@ -64,6 +65,7 @@ export const router = createBrowserRouter([
                 path: '/blog/:id',
                 element: <BlogDetails />
             },
+           
             {
                 path: '/policy',
                 element: <Policy />
@@ -106,6 +108,10 @@ export const router = createBrowserRouter([
             {
                 path: 'blog-list',
                 element: <BlogList />
+            },
+            {
+                path: 'blog-list/update/:id',
+                element: <UpdateBlog />
             },
         ]
     },

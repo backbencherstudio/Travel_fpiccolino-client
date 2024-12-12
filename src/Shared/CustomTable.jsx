@@ -40,8 +40,13 @@ const CustomTable = ({
   };
   const handleRowClick = (id) => {
     if (tableType === "user") {
-      navigate(`${id}`);
+      navigate(`${id}`); 
+    } else if (tableType === "blog") {
+      navigate(`${id}`); 
+    } else {
+      // navigate(`/other-list/${id}`);
     }
+    
   };
 
   return (
@@ -224,7 +229,10 @@ const CustomTable = ({
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 ">
-                          <div className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]">
+                          <div  onClick={(e) => {
+                  e.stopPropagation(); // Prevent row click navigation
+                  navigate(`update/${item.id}`); // Navigate to the update page
+                }}className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]">
                             <FiEdit3 />
                           </div>
                           <div className="text-[#eb3d4d] border border-[#eb3d4d] hover:bg-[#eb3d4f1e] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center">
