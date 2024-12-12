@@ -107,6 +107,7 @@ const CustomTable = ({
                 {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.date && <TableCell>Date</TableCell>}
+                {columns?.duration && <TableCell>Duration</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
@@ -208,6 +209,7 @@ const CustomTable = ({
                     )}
 
                     {columns?.date && <TableCell>{item.date}</TableCell>}
+                    {columns?.duration && <TableCell>{item.duration}</TableCell>}
                     {columns?.destination && (
                       <TableCell style={{ minWidth: "200px" }}>
                         {/* Added minWidth for Name column */}

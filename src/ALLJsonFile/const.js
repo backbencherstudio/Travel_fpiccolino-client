@@ -948,3 +948,87 @@ export const userData = [
     ],
   },
 ];
+export const packages = [
+  {
+    id: 0,
+    destination: "Bali, Indonesia",
+    date: "March 20, 2024",
+    duration: "7 Days",
+    amount: "$1,200",
+    destinationImg: "https://via.placeholder.com/600x400?text=Bali"
+  },
+  {
+    id: 1,
+    destination: "Maldives",
+    date: "April 15, 2024",
+    duration: "5 Days",
+    amount: "$3,500",
+    destinationImg: "https://via.placeholder.com/600x400?text=Maldives"
+  },
+  {
+    id: 2,
+    destination: "Kyoto, Japan",
+    date: "May 1, 2024",
+    duration: "6 Days",
+    amount: "$1,800",
+    destinationImg: "https://via.placeholder.com/600x400?text=Kyoto"
+  },
+  {
+    id: 3,
+    destination: "Paris, France",
+    date: "June 10, 2024",
+    duration: "5 Days",
+    amount: "$2,200",
+    image: "https://via.placeholder.com/600x400?text=Paris"
+  },
+  {
+    id: 4,
+    destination: "Rome, Italy",
+    date: "July 1, 2024",
+    duration: "8 Days",
+    amount: "$2,500",
+    destinationImg: "https://via.placeholder.com/600x400?text=Rome"
+  },
+  {
+    id: 5,
+    destination: "New York City, USA",
+    date: "August 10, 2024",
+    duration: "4 Days",
+    amount: "$1,500",
+    destinationImg: "https://via.placeholder.com/600x400?text=New+York"
+  },
+  {
+    id: 6,
+    destination: "Cape Town, South Africa",
+    date: "September 5, 2024",
+    duration: "7 Days",
+    amount: "$2,000",
+    destinationImg: "https://via.placeholder.com/600x400?text=Cape+Town"
+  },
+  {
+    id: 7,
+    destination: "Santorini, Greece",
+    date: "October 1, 2024",
+    duration: "6 Days",
+    amount: "$2,300",
+    destinationImg: "https://via.placeholder.com/600x400?text=Santorini"
+  },
+  {
+    id: 8,
+    destination: "Iceland",
+    date: "November 15, 2024",
+    duration: "5 Days",
+    amount: "$2,000",
+    destinationImg: "https://via.placeholder.com/600x400?text=Iceland"
+  },
+  {
+    id: 9,
+    destination: "Machu Picchu, Peru",
+    date: "December 20, 2024",
+    duration: "6 Days",
+    amount: "$2,700",
+    destinationImg: "https://via.placeholder.com/600x400?text=Machu+Picchu"
+  }
+];
+
+
