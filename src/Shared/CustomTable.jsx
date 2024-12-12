@@ -10,8 +10,10 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { FiEdit3 } from "react-icons/fi";
+import { MdDeleteOutline } from "react-icons/md";
 
 const CustomTable = ({
   tableType = "",
@@ -36,11 +38,11 @@ const CustomTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleRowClick = (id)=>{
-    if(tableType === 'user'){
-        navigate(`/user-list/${id}`)
+  const handleRowClick = (id) => {
+    if (tableType === "user") {
+      navigate(`/user-list/${id}`);
     }
-  }
+  };
 
   return (
     <div className="">
@@ -83,8 +85,9 @@ const CustomTable = ({
         <TableContainer sx={{ overflow: "scroll" }}>
           <Table
             sx={{
-              border: "1px solid gray",
-              "& th, & td": { border: "1px solid #E0E5E5", color: "gray" },
+              border: "1px solid #e0e0e0",
+              
+              // "& th, & td": { border: "1px solid #E0E5E5", color: "gray" },
             }}
           >
             <TableHead>
@@ -93,6 +96,8 @@ const CustomTable = ({
                 {columns?.tourId && <TableCell>Tour Id</TableCell>}
                 {columns?.name && <TableCell>Customer Name</TableCell>}
                 {columns?.username && <TableCell>User Name</TableCell>}
+                {columns?.blogName && <TableCell>Blog Name</TableCell>}
+                {columns?.category && <TableCell>Category</TableCell>}
                 {columns?.email && <TableCell> Email</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
@@ -101,6 +106,7 @@ const CustomTable = ({
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
+                {columns?.action && <TableCell>Action</TableCell>}
               </TableRow>
             </TableHead>
 
@@ -114,7 +120,7 @@ const CustomTable = ({
                       "cursor-pointer hover:bg-[#fdf0ea]"
                     }`}
                     key={item?.bookingId}
-                    onClick={() => handleRowClick(item.id)} 
+                    onClick={() => handleRowClick(item.id)}
                   >
                     {columns?.bookingId && (
                       <TableCell>{item.bookingId}</TableCell>
@@ -149,6 +155,34 @@ const CustomTable = ({
                           {/* Added truncate to prevent overflow */}
                         </div>
                       </TableCell>
+                    )}
+                    {columns?.blogName && (
+                      <TableCell
+                        style={{ width: "400px", textWrap: "break-word" }}
+                      >
+                        {/* Added minWidth for Name column */}
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="rounded-full"
+                            src={item.headerImg}
+                            alt={item.header}
+                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                          />
+                          <span
+                            className="truncate"
+                            style={{
+                              whiteSpace: "normal",
+                              wordWrap: "break-word",
+                            }}
+                          >
+                            {item.header}
+                          </span>
+                          {/* Added truncate to prevent overflow */}
+                        </div>
+                      </TableCell>
+                    )}
+                    {columns?.category && (
+                      <TableCell>{item.category}</TableCell>
                     )}
                     {columns?.phone && <TableCell>{item.phone}</TableCell>}
                     {columns?.email && <TableCell>{item.email}</TableCell>}
@@ -187,6 +221,18 @@ const CustomTable = ({
                     )}
                     {columns?.amount && <TableCell>{item.amount}</TableCell>}
                     {columns?.status && <TableCell>{item.status}</TableCell>}
+                    {columns?.action && (
+                      <TableCell>
+                        <div className="flex gap-5 ">
+                          <div className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]">
+                            <FiEdit3 />
+                          </div>
+                          <div className="text-[#eb3d4d] border border-[#eb3d4d] hover:bg-[#eb3d4f1e] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center">
+                          <MdDeleteOutline />
+                          </div>
+                        </div>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
             </TableBody>
