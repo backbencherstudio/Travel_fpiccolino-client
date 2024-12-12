@@ -106,7 +106,7 @@ const Dashboard = () => {
             <span>Payment History</span>
           </button>
           <button
-            onClick={() => handleNavigation("Blog", "blog")}
+            onClick={() => handleNavigation("Blog", "blog-list")}
             className={`flex items-center space-x-2 p-2 rounded ${
               selectedTab === "Blog"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
