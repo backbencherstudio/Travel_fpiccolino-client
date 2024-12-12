@@ -948,3 +948,76 @@ export const userData = [
     ],
   },
 ];
+export const packages = [
+  {
+    id: 0,
+    destination: "Bali, Indonesia",
+    date: "March 20, 2024",
+    duration: "7 Days",
+    amount: "$1,200"
+  },
+  {
+    id: 1,
+    destination: "Maldives",
+    date: "April 15, 2024",
+    duration: "5 Days",
+    amount: "$3,500"
+  },
+  {
+    id: 2,
+    destination: "Kyoto, Japan",
+    date: "May 1, 2024",
+    duration: "6 Days",
+    amount: "$1,800"
+  },
+  {
+    id: 3,
+    destination: "Paris, France",
+    date: "June 10, 2024",
+    duration: "5 Days",
+    amount: "$2,200"
+  },
+  {
+    id: 4,
+    destination: "Rome, Italy",
+    date: "July 1, 2024",
+    duration: "8 Days",
+    amount: "$2,500"
+  },
+  {
+    id: 5,
+    destination: "New York City, USA",
+    date: "August 10, 2024",
+    duration: "4 Days",
+    amount: "$1,500"
+  },
+  {
+    id: 6,
+    destination: "Cape Town, South Africa",
+    date: "September 5, 2024",
+    duration: "7 Days",
+    amount: "$2,000"
+  },
+  {
+    id: 7,
+    destination: "Santorini, Greece",
+    date: "October 1, 2024",
+    duration: "6 Days",
+    amount: "$2,300"
+  },
+  {
+    id: 8,
+    destination: "Iceland",
+    date: "November 15, 2024",
+    duration: "5 Days",
+    amount: "$2,000"
+  },
+  {
+    id: 9,
+    destination: "Machu Picchu, Peru",
+    date: "December 20, 2024",
+    duration: "6 Days",
+    amount: "$2,700"
+  }
+];
+

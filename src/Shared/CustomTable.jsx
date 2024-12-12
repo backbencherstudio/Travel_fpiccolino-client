@@ -107,6 +107,7 @@ const CustomTable = ({
                 {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.date && <TableCell>Date</TableCell>}
+                {columns?.duration && <TableCell>Duration</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
