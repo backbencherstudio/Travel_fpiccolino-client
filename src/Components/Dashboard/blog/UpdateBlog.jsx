@@ -4,6 +4,7 @@ import heroImage2 from "../../../assets/Images/HeroSection/heroImage2.jpg"
 import { RiAddBoxLine, RiDeleteBin5Line } from "react-icons/ri";
 
 const UpdateBlog = () => {
+    const inputStyle = "w-full my-3 border border-[#E86731] border-[#E86731] ring-[1px] ring-[#E86731] text-[#E86731] outline-none p-2 rounded-md"
     return (
         <div>
             <CustomHeadingDashboard />
@@ -14,7 +15,7 @@ const UpdateBlog = () => {
             </div>
 
             <div className="grid grid-cols-12 gap-5 mt-5 " >
-                <div className="col-span-8  " >
+                <div className=" col-span-12 xl:col-span-8  " >
 
                     <div className="border rounded-lg p-4 mb-5">
                         <div>
@@ -44,7 +45,7 @@ const UpdateBlog = () => {
                                     <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
                                 </span>
                             </span>
-                             {/* ========================= need condition in image follow the figma ========================= */}
+                            {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
                         </div>
 
@@ -73,7 +74,7 @@ const UpdateBlog = () => {
                                     <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
                                 </span>
                             </span>
-                             {/* ========================= need condition in image follow the figma ========================= */}
+                            {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
                         </div>
 
@@ -97,16 +98,25 @@ const UpdateBlog = () => {
 
 
 
-                <div className="col-span-4 " >
-
+                <div className=" col-span-12 xl:col-span-4 " >
                     <div className="border rounded-lg p-4 mb-4">
                         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6 " >Upload Img</h2>
-                        <img className="h-[400px] object-cover rounded-lg "  src={heroImage2} alt="" />
+                        <img className="h-[400px] object-cover rounded-lg " src={heroImage2} alt="" />
                     </div>
-
                     <div className="border rounded-lg p-4 mb-4">
                         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6 " >Category</h2>
-                        <img className="h-[400px] object-cover rounded-lg "  src={heroImage2} alt="" />
+                        <h2 className="text-[#141D2A]  mb-6 " >Blog Category</h2>
+                        <select
+                            className={inputStyle}
+                        >
+                            <option value="">All inclusive</option>
+                            <option value="option">Option</option>
+                        </select>
+
+                        <div className="flex justify-end" >
+                            <button className="text-[#FFFFFF] bg-[#E86731] font-semibold  flex items-center gap-2 px-4 py-2 rounded-lg " > <RiAddBoxLine /> Add Content</button>
+                        </div>
+
                     </div>
 
                 </div>
