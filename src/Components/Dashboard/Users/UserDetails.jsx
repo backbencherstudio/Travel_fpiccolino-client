@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { userData } from "../../../ALLJsonFile/const";
 import TourSlider from "./TourSlider";
 import { useState } from "react";
+import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 const UserDetails = () => {
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const {id} =useParams()
@@ -11,10 +12,7 @@ const UserDetails = () => {
   return (
    <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
      <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
-      <h1 className="text-[32px] font-semibold">Welcome, Wade</h1> 
-      <p className="text-[#72777F]">
-        Manage your travel agency data easily with us
-      </p>
+     <CustomHeadingDashboard/>
       <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
       <img
         src={userData[0].customerImg}

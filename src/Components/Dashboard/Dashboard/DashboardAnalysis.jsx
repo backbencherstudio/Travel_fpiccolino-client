@@ -8,6 +8,7 @@ import DashboardCard from "./DashboardCard";
 import Chart from "./Chart";
 import RadarChart from "./RadarChart";
 import CustomTable from "../../../Shared/CustomTable";
+import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 
 const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Revenue");
@@ -319,10 +320,7 @@ const DashboardAnalysis = () => {
   return (
     <div className="">
       <div>
-        <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
-        <p className="text-[#72777F]">
-          Manage your travel agency data easily with us
-        </p>
+      <CustomHeadingDashboard/>
         <h2 className="text-[24px] font-semibold mt-8">Overview</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">

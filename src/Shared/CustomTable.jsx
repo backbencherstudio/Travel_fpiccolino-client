@@ -10,7 +10,7 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import { FaSearch, FaTrash } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FiEdit3 } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
@@ -40,13 +40,12 @@ const CustomTable = ({
   };
   const handleRowClick = (id) => {
     if (tableType === "user") {
-      navigate(`${id}`); 
+      navigate(`${id}`);
     } else if (tableType === "blog") {
-      navigate(`${id}`); 
+      navigate(`${id}`);
     } else {
       // navigate(`/other-list/${id}`);
     }
-    
   };
 
   return (
@@ -91,7 +90,7 @@ const CustomTable = ({
           <Table
             sx={{
               border: "1px solid #e0e0e0",
-              
+
               // "& th, & td": { border: "1px solid #E0E5E5", color: "gray" },
             }}
           >
@@ -229,14 +228,17 @@ const CustomTable = ({
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 ">
-                          <div  onClick={(e) => {
-                  e.stopPropagation(); // Prevent row click navigation
-                  navigate(`update/${item.id}`); // Navigate to the update page
-                }}className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]">
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`update/${item.id}`);
+                            }}
+                            className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
+                          >
                             <FiEdit3 />
                           </div>
                           <div className="text-[#eb3d4d] border border-[#eb3d4d] hover:bg-[#eb3d4f1e] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center">
-                          <MdDeleteOutline />
+                            <MdDeleteOutline />
                           </div>
                         </div>
                       </TableCell>

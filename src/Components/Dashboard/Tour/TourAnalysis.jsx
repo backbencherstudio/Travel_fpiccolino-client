@@ -7,6 +7,7 @@ import traveler from "../../../assets/dashboard/traveler.svg";
 import profit from "../../../assets/dashboard/profit.svg";
 import DashboardCard from "../Dashboard/DashboardCard";
 import CustomTable from "../../../Shared/CustomTable";
+import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 
 const TourAnalysis = () => {
   const [columns] = useState({
@@ -246,10 +247,7 @@ const TourAnalysis = () => {
 
   return (
     <div>
-      <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
-      <p className="text-[#72777F]">
-        Manage your travel agency data easily with us
-      </p>
+      <CustomHeadingDashboard />
       <h2 className="text-[24px] font-semibold mt-8">Overview</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">
@@ -269,10 +267,13 @@ const TourAnalysis = () => {
           />
         ))}
       </div>
-      <CustomTable title={chartType} columns={columns}
+      <CustomTable
+        title={chartType}
+        columns={columns}
         data={bookingData}
         setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}/>
+        dateFilter={tourDateFilter}
+      />
     </div>
   );
 };

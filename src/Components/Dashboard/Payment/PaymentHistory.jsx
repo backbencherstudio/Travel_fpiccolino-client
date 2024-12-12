@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
+import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 
 const PaymentHistory = () => {
   const [tourDateFilter, setTourDateFilter] = useState("all");
@@ -203,14 +204,14 @@ const PaymentHistory = () => {
 
   return (
     <div>
-      <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
-      <p className="text-[#72777F]">
-        Manage your travel agency data easily with us
-      </p>
-      <CustomTable   title={"Payment History"} columns={columns}
+      <CustomHeadingDashboard />
+      <CustomTable
+        title={"Payment History"}
+        columns={columns}
         data={bookingData}
         setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}/>
+        dateFilter={tourDateFilter}
+      />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
 import { blogs } from "../../../ALLJsonFile/const";
+import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 
 const BlogList = () => {
   const [tourDateFilter, setTourDateFilter] = useState("all");
@@ -13,10 +14,7 @@ const BlogList = () => {
 
   return (
     <div>
-      <h1 className="text-[32px] font-semibold">Welcome, Wade</h1>
-      <p className="text-[#72777F]">
-        Manage your travel agency data easily with us
-      </p>
+     <CustomHeadingDashboard/>
       <CustomTable
        tableType={"blog"}
         title={"Blog List"}
