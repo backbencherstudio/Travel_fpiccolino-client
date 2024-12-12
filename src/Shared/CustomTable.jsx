@@ -14,6 +14,7 @@ import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FiEdit3 } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
+import { FaRegSquarePlus } from "react-icons/fa6";
 
 const CustomTable = ({
   tableType = "",
@@ -39,9 +40,7 @@ const CustomTable = ({
     setPage(0);
   };
   const handleRowClick = (id) => {
-    if (tableType === "user") {
-      navigate(`${id}`);
-    } else if (tableType === "blog") {
+    if (tableType === "user" || tableType === "blog") {
       navigate(`${id}`);
     } else {
       // navigate(`/other-list/${id}`);
@@ -52,41 +51,46 @@ const CustomTable = ({
     <div className="">
       <Paper>
         <div className="flex mt-8 p-5 justify-between flex-wrap">
-          <h1 className="font-semibold text-[24px] mb-3">{title}</h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5  gap-3">
-            <div className="relative md:col-span-2">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <FaSearch className="absolute top-3 left-3 text-zinc-400" />
-            </div>
-            <select
-              className="md:col-span-1"
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-              style={{
-                // width:'100%',
-                padding: "8px 16px",
-                cursor: "pointer",
-                fontSize: "14px",
-                border: "1px solid #e86731",
-                borderRadius: "4px",
-                color: "#e86731",
-              }}
-            >
-              <option value="all">All</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-              <option value="yearly">Yearly</option>
-            </select>
-          </div>
+          <h1 className="font-semibold text-[24px]">{title}</h1>{" "}
+          {(tableType === "blog" || tableType === "package")  && (
+            <button onClick={()=>navigate('create/new')} className="text-[16px] font-medium px-4 py-2 primary_bg  text-white rounded-md flex  items-center gap-1.5 hover:bg-opacity-90">
+              <FaRegSquarePlus className="text-xl" /> Add{" "}
+              {tableType.charAt(0).toUpperCase() + tableType.slice(1)}
+            </button>
+          )}
         </div>
-
-        <TableContainer sx={{ overflow: "scroll" }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5  gap-3 px-4">
+          <div className="relative md:col-span-2">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400 w-full lg:w-[80%]"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <FaSearch className="absolute top-3 left-3 text-zinc-400" />
+          </div>
+          <select
+            className="md:col-span-1"
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            style={{
+              // width:'100%',
+              padding: "8px 16px",
+              cursor: "pointer",
+              fontSize: "14px",
+              border: "1px solid #e86731",
+              borderRadius: "4px",
+              color: "#e86731",
+            }}
+          >
+            <option value="all">All</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+        <TableContainer sx={{ padding: "16px" }}>
           <Table
             sx={{
               border: "1px solid #e0e0e0",
@@ -176,7 +180,6 @@ const CustomTable = ({
                           <span
                             className="truncate"
                             style={{
-                              whiteSpace: "normal",
                               wordWrap: "break-word",
                             }}
                           >
@@ -209,7 +212,9 @@ const CustomTable = ({
                     )}
 
                     {columns?.date && <TableCell>{item.date}</TableCell>}
-                    {columns?.duration && <TableCell>{item.duration}</TableCell>}
+                    {columns?.duration && (
+                      <TableCell>{item.duration}</TableCell>
+                    )}
                     {columns?.destination && (
                       <TableCell style={{ minWidth: "200px" }}>
                         {/* Added minWidth for Name column */}

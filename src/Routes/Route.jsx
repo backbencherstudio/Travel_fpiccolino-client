@@ -28,6 +28,8 @@ import Policy from "../Pages/Policy/Policy";
 import BlogList from "../Components/Dashboard/blog/BlogList";
 import UpdateBlog from "../Components/Dashboard/blog/UpdateBlog";
 import PackageList from "../Components/Dashboard/Package/PackageList";
+import CreatePackage from "../Components/Dashboard/Package/CreatePackage";
+import CreateBlog from "../Components/Dashboard/Blog/CreateBlog";
 
 
 export const router = createBrowserRouter([
@@ -104,6 +106,14 @@ export const router = createBrowserRouter([
                 element: <PackageList />
             },
             {
+                path: 'package/update/:id',
+                element: <UpdateBlog />
+            },
+            {
+                path: 'package/create/new',
+                element: <CreatePackage />
+            },
+            {
                 path: 'payment',
                 element: <PaymentHistory/>
             },
@@ -114,6 +124,10 @@ export const router = createBrowserRouter([
             {
                 path: 'blog-list/:id',
                 element: <BlogDetails />
+            },
+            {
+                path: 'blog-list/create/new',
+                element: <CreateBlog />
             },
             {
                 path: 'blog-list/update/:id',

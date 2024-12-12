@@ -1,6 +1,5 @@
 
-
-const BlogDetails = () => {
+const CreateBlog = () => {
     return (
         <div>
             
@@ -8,4 +7,4 @@ const BlogDetails = () => {
     );
 };
 
-export default BlogDetails;
+export default CreateBlog;
