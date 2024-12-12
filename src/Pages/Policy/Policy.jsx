@@ -13,19 +13,15 @@ const Policy = () => {
     return (
         <div>
             <HeroScetion heroContent={heroContent} />
-
             <div className="bg-[#FFFFFF] py-20">
                 <ParentComponent>
                     <div className="grid grid-cols-12 lg:gap-5 xl:gap-20 grid-cols-reverse">
                         <div className="col-span-12 lg:col-span-9 lg:order-1 lg:pl-16 border-[#62D3D4] lg:border-l ">
                             <div >
-
                                 <h2 className=" text-[24px] md:text-[32px] font-bold text-[#141D2A] mb-8 ">
                                     Information on the Processing of Personal Data for Candidates pursuant to Art. 13 of EU Regulation 2016/679
                                 </h2>
-
                                 <p className="text-[#72777F]" >We protect your personal data during the selection process: here’s how we handle the information you provide through the "Work with Us" portal.</p>
-
                                 <div className="mt-8">
                                     <h2 className="text-[#141D2A] font-bold " >1. Data Controller</h2>
                                     <p className="text-[#72777F] mt-1" >[Company Name], located at [Company Address], is the Data Controller of the personal data provided by candidates through the "Work with Us" portal for the purposes of selection and evaluation of applications.</p>
@@ -49,23 +45,19 @@ const Policy = () => {
                                 <div className="mt-8">
                                     <h2 className="text-[#141D2A] font-bold " >6. Rights of the Data Subject</h2>
                                     <p className="text-[#72777F] mt-1" >The candidate has the right to exercise a series of rights recognized by the General Data Protection Regulation (GDPR) in Articles 15-22, including.</p>
-
-                                    <ul className="" >
-                                        <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
-                                        <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
-                                        <li> <span className="text-[#141D2A]  " >Right of Access:</span> to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </li>
+                                    <ul className=" p-2 list-disc pl-10 " >
+                                        <li className="py-1" > <span className="text-[#141D2A] font-semibold  " >Right of Access:</span> <span className="text-[#72777F]">to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </span> </li>
+                                        <li className="py-1" > <span className="text-[#141D2A] font-semibold  " >Right to Rectification:</span> <span className="text-[#72777F]">to obtain confirmation as to whether or not personal data concerning them is being processed and, if so, to access such data. </span> </li>
+                                        <li className="py-1" > <span className="text-[#141D2A] font-semibold  " >Right to Erasure (or "Right to be Forgotten"):</span> <span className="text-[#72777F]"> to request the deletion of their personal data when the conditions set out in the GDPR are met. </span> </li>
+                                        <li className="py-1" > <span className="text-[#141D2A] font-semibold  " >Right to Data Portability:</span> <span className="text-[#72777F]">to receive personal data provided in a structured, commonly used, and machine-readable format, and to transmit it to another controller without hindrance, when technically feasible.</span> </li>
                                     </ul>
-
                                 </div>
-
                                 <div className="mt-8">
                                     <h2 className="text-[#141D2A] font-bold " >7. Changes to This Privacy Notice</h2>
                                     <p className="text-[#72777F] mt-1" >This privacy notice may be updated periodically to reflect any changes in regulations, our data processing processes, or our business practices. Any changes made will be communicated through publication on the "Work with Us" portal so that candidates can always be informed of the most recent aspects related to the protection of their personal data. We encourage all candidates to regularly check this section to stay informed of updates and ensure full awareness of their rights and the processing methods.</p>
                                 </div>
-
                             </div>
                         </div>
-
                         {/* ======================================  Side bar ========================== */}
                         <div className="col-span-12 lg:col-span-3 mt-5 lg:mt-0">
                             <div className="rounded-lg">
@@ -83,11 +75,9 @@ const Policy = () => {
                                 </h2>
                             </div>
                         </div>
-
                     </div>
                 </ParentComponent>
             </div>
-
         </div>
     );
 };
