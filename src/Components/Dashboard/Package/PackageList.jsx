@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
-import { blogs } from "../../../ALLJsonFile/const";
+import {  packages } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 
 const PackageList = () => {
@@ -20,7 +20,7 @@ const PackageList = () => {
        tableType={"package"}
         title={"Package List"}
         columns={columns}
-        data={blogs}
+        data={packages}
         setDateFilter={setTourDateFilter}
         dateFilter={tourDateFilter}
       />

@@ -209,6 +209,7 @@ const CustomTable = ({
                     )}
 
                     {columns?.date && <TableCell>{item.date}</TableCell>}
+                    {columns?.duration && <TableCell>{item.duration}</TableCell>}
                     {columns?.destination && (
                       <TableCell style={{ minWidth: "200px" }}>
                         {/* Added minWidth for Name column */}
