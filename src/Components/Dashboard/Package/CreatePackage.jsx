@@ -7,9 +7,12 @@ import { TimePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 import CustomIcons from "./CustomIcons";
 import { TextField } from "@mui/material";
+import { FaRegSquarePlus } from "react-icons/fa6";
+import FlightBookingForm from "./FlightForm";
 const CreatePackage = () => {
   const [selectedInclueItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotInclueItems, setSelectedNotIncludeItems] = useState([]);
+  const [openFlightModal, setOpenFlightModal] = useState(false);
   return (
     <div>
       <CustomHeadingDashboard />
@@ -73,13 +76,16 @@ const CreatePackage = () => {
             />
           </div>
           <div className="border p-4 rounded-2xl mt-5">
-            <div>
+            <div className="flex justify-between items-center">
               <h2 className="text-[20px] font-medium ">Flight</h2>
+              <FaRegSquarePlus
+                onClick={() => setOpenFlightModal(true)}
+                className="text-xl primary_text cursor-pointer"
+              />
             </div>
-            <CustomIcons
-              title="not include"
-              selectedIcons={selectedNotInclueItems}
-              setSelectedIcons={setSelectedNotIncludeItems}
+            <FlightBookingForm
+              openModal={openFlightModal}
+              setOpenModal={setOpenFlightModal}
             />
           </div>
         </div>
