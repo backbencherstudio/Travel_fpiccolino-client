@@ -366,6 +366,7 @@ const BlogDetails = () => {
     descriptionOne:
       "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
   };
+  
   const getCategoryCount = () => {
     const categoryCount = {};
     blogs.forEach((blog) => {
@@ -378,7 +379,9 @@ const BlogDetails = () => {
   const categoryCount = getCategoryCount();
   return (
     <div>
+
       <HeroScetion heroContent={heroContent} />
+
       <ParentComponent>
         <div className="grid lg:grid-cols-5  mt-20 gap-12">
           <div className="lg:col-span-4 max-w-[1300px]">
