@@ -26,6 +26,7 @@ const CreateBlog = () => {
 
     const {
         register,
+        setValue,
         control,
         handleSubmit,
         formState: { errors },
@@ -43,6 +44,24 @@ const CreateBlog = () => {
         control,
         name: "paragraphs",
     });
+    const [preview, setPreview] = useState(null);
+
+    // Handle file selection and preview
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreview(reader.result); // Generate preview URL
+            };
+            reader.readAsDataURL(file);
+
+            // Update form data with the selected file
+            setValue("image", file, { shouldValidate: true });
+        } else {
+            setPreview(null); // Clear preview if no file is selected
+        }
+    };
 
     const onSubmit = (data) => {
         const mainHeading = data.mainHeading
@@ -211,14 +230,26 @@ const CreateBlog = () => {
 
                                 {/* Image */}
                                 <div>
-                                    <h3 className="text-md font-semibold mb-2">Image</h3>
+                                    <h3 className="text-md font-semibold mb-2">Upload Image</h3>
                                     <input
                                         type="file"
-                                        {...register("image")}
                                         accept="image/*"
                                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        onChange={handleImageChange} // Handle image file and preview
                                     />
-                                    {errors.image && <p className="text-sm text-red-500 mt-1">{errors.image.message}</p>}
+                                    {errors.image && (
+                                        <p className="text-sm text-red-500 mt-1">{errors.image.message}</p>
+                                    )}
+                                    {preview && (
+                                        <div className="mt-4">
+                                            <h4 className="text-sm font-medium mb-2">Image Preview:</h4>
+                                            <img
+                                                src={preview}
+                                                alt="Preview"
+                                                className="w-32 h-32 object-cover rounded-md border"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Sub Heading */}
