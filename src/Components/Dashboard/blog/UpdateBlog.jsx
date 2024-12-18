@@ -91,11 +91,8 @@ const UpdateBlog = () => {
                     <div className="flex justify-end" >
                         <button className="text-[#FFFFFF] bg-[#E86731] font-semibold  flex items-center gap-2 px-4 py-2 rounded-lg " > <RiAddBoxLine /> Add Content</button>
                     </div>
-
-
+                    
                 </div>
-
-
 
 
                 <div className=" col-span-12 xl:col-span-4 " >
