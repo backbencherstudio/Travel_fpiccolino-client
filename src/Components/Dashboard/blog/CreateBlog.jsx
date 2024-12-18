@@ -46,20 +46,17 @@ const CreateBlog = () => {
     });
     const [preview, setPreview] = useState(null);
 
-    // Handle file selection and preview
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setPreview(reader.result); // Generate preview URL
+                setPreview(reader.result); 
             };
             reader.readAsDataURL(file);
-
-            // Update form data with the selected file
             setValue("image", file, { shouldValidate: true });
         } else {
-            setPreview(null); // Clear preview if no file is selected
+            setPreview(null); 
         }
     };
 
@@ -235,7 +232,7 @@ const CreateBlog = () => {
                                         type="file"
                                         accept="image/*"
                                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        onChange={handleImageChange} // Handle image file and preview
+                                        onChange={handleImageChange}
                                     />
                                     {errors.image && (
                                         <p className="text-sm text-red-500 mt-1">{errors.image.message}</p>
