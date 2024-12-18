@@ -16,7 +16,6 @@ const UpdateBlog = () => {
 
             <div className="grid grid-cols-12 gap-5 mt-5 " >
                 <div className=" col-span-12 xl:col-span-8  " >
-
                     <div className="border rounded-lg p-4 mb-5">
                         <div>
                             <span className="flex justify-between items-center mb-5" >
