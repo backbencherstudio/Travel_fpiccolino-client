@@ -33,7 +33,7 @@ const CreateBlog = () => {
         reset
     } = useForm({
         defaultValues: {
-            headings: [""],
+            headings: "",
             image: "",
             paragraphs: [{ paragraph: "" }],
         },
@@ -50,12 +50,12 @@ const CreateBlog = () => {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setPreview(reader.result); 
+                setPreview(reader.result);
             };
             reader.readAsDataURL(file);
             setValue("image", file, { shouldValidate: true });
         } else {
-            setPreview(null); 
+            setPreview(null);
         }
     };
 
@@ -81,26 +81,26 @@ const CreateBlog = () => {
 
                     <div className="border rounded-lg p-4 mb-5">
                         <div>
-                           
+
                             {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
 
                         </div>
-                        <div className="mt-4" >                           
+                        <div className="mt-4" >
                             <p className="text-[#141D2A]  " >Essential Travel Hacks for Stress-Free Adventures</p>
                         </div>
                     </div>
 
                     <div className="border rounded-lg p-4 mb-5">
                         <div>
-                                <span className="flex items-end justify-end gap-5 mb-5" >
-                                    <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
-                                </span>
+                            <span className="flex items-end justify-end gap-5 mb-5" >
+                                <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
+                            </span>
                             {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
                         </div>
 
-                        <div className="mt-4" >                           
+                        <div className="mt-4" >
                             <p className="text-[#141D2A]  " >Traveling is one of life’s greatest joys, but the logistics can sometimes be overwhelming. From packing to navigating new places, small inconveniences can add up. That’s why we’ve compiled this guide of essential travel hacks to ensure your journey is smooth, stress-free, and full of unforgettable memories.</p>
                         </div>
                     </div>
@@ -113,14 +113,14 @@ const CreateBlog = () => {
                         <h2 className="font-semibold text-[#141D2A] mb-2 " >Pack Smart, Pack Light</h2>
 
                         <div>
-                                <span className="flex items-center justify-end gap-5 mb-5" >
-                                    <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
-                                </span>
+                            <span className="flex items-center justify-end gap-5 mb-5" >
+                                <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
+                            </span>
                             {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
                         </div>
 
-                        <div className="mt-4" >                           
+                        <div className="mt-4" >
                             <p className="text-[#141D2A]  " >Traveling is one of life’s greatest joys, but the logistics can sometimes be overwhelming. From packing to navigating new places, small inconveniences can add up. That’s why we’ve compiled this guide of essential travel hacks to ensure your journey is smooth, stress-free, and full of unforgettable memories.</p>
                         </div>
                     </div>
@@ -192,19 +192,17 @@ const CreateBlog = () => {
                                 {/* Headings */}
                                 <div>
                                     <h3 className="text-md font-semibold mb-2">Headings</h3>
-                                    {Array.from({ length: 1 }).map((_, index) => (
-                                        <div key={`heading-${index}`} className="mb-3">
-                                            <input
-                                                type="text"
-                                                placeholder={`Heading ${index + 1}`}
-                                                {...register(`headings.${index}`)}
-                                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                            />
-                                            {errors.headings?.[index] && (
-                                                <p className="text-sm text-red-500 mt-1">{errors.headings[index].message}</p>
-                                            )}
-                                        </div>
-                                    ))}
+                                    <div key={`heading`} className="mb-3">
+                                        <input
+                                            type="text"
+                                            placeholder={`Heading `}
+                                            {...register(`headings`)}
+                                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                        {errors.headings && (
+                                            <p className="text-sm text-red-500 mt-1">{errors.headings.message}</p>
+                                        )}
+                                    </div>
                                 </div>
 
                                 {/* Image */}
