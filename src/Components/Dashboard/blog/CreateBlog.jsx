@@ -45,7 +45,10 @@ const CreateBlog = () => {
     });
 
     const onSubmit = (data) => {
+        const mainHeading = data.mainHeading
+        console.log("Main Heading:", mainHeading);
         console.log("Collected Data:", data);
+
         reset()
     };
 
@@ -55,6 +58,7 @@ const CreateBlog = () => {
 
             <div className="mt-10 flex justify-between items-center "  >
                 <h2 className="text-[#141D2A] font-semibold text-[24px] " >Add Blog</h2>
+                <button className="bg-[#E86731] text-[#FFFFFF] px-4 py-2 rounded-md " >Upload Blog</button>
             </div>
 
             <div className="grid grid-cols-12 gap-5 mt-5 " >
@@ -177,6 +181,16 @@ const CreateBlog = () => {
 
                         <Typography id="transition-modal-description">
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                <div>
+                                    <h3 className="text-md font-semibold mb-2">Main Heading</h3>
+                                    <input
+                                        type="text"
+                                        placeholder="Main Heading"
+                                        {...register("mainHeading")}
+                                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    {errors.mainHeading && <p className="text-sm text-red-500 mt-1">{errors.mainHeading.message}</p>}
+                                </div>
                                 {/* Headings */}
                                 <div>
                                     <h3 className="text-md font-semibold mb-2">Headings</h3>
@@ -185,7 +199,7 @@ const CreateBlog = () => {
                                             <input
                                                 type="text"
                                                 placeholder={`Heading ${index + 1}`}
-                                                {...register(`headings.${index}`, { required: `Heading ${index + 1} is required` })}
+                                                {...register(`headings.${index}`)}
                                                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                             />
                                             {errors.headings?.[index] && (
@@ -200,7 +214,7 @@ const CreateBlog = () => {
                                     <h3 className="text-md font-semibold mb-2">Image</h3>
                                     <input
                                         type="file"
-                                        {...register("image", { required: "Image is required" })}
+                                        {...register("image")}
                                         accept="image/*"
                                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
@@ -213,7 +227,7 @@ const CreateBlog = () => {
                                     <input
                                         type="text"
                                         placeholder="Sub Heading"
-                                        {...register("subHeading", { required: "Sub Heading is required" })}
+                                        {...register("subHeading")}
                                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {errors.subHeading && <p className="text-sm text-red-500 mt-1">{errors.subHeading.message}</p>}
@@ -227,9 +241,7 @@ const CreateBlog = () => {
                                             <input
                                                 type="text"
                                                 placeholder={`Paragraph ${index + 1}`}
-                                                {...register(`paragraphs.${index}.paragraph`, {
-                                                    required: `Paragraph ${index + 1} is required`,
-                                                })}
+                                                {...register(`paragraphs.${index}.paragraph`)}
                                                 className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                             />
                                             {errors.paragraphs?.[index]?.paragraph && (
