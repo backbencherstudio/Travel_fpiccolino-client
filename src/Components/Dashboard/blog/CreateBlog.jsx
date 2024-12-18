@@ -196,7 +196,7 @@ const CreateBlog = () => {
                         </Typography>
 
                         <Typography id="transition-modal-description">
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pr-2 h-[80vh] overflow-y-auto ">
                                 <div>
                                     <h3 className="text-md font-semibold mb-2">Main Heading</h3>
                                     <input
