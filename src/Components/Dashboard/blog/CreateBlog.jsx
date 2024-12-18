@@ -1,4 +1,3 @@
-import { CiEdit } from "react-icons/ci";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import heroImage2 from "../../../assets/Images/HeroSection/heroImage2.jpg"
 import { RiAddBoxLine, RiDeleteBin5Line } from "react-icons/ri";
@@ -13,7 +12,7 @@ const CreateBlog = () => {
                 <h2 className="text-[#141D2A] font-semibold text-[24px] " >Add Blog</h2>
                 <button className="bg-[#E86731] text-[#FFFFFF] px-4 py-2 rounded-md " >Add Blog</button>
             </div>
-
+            
             <div className="grid grid-cols-12 gap-5 mt-5 " >
                 <div className=" col-span-12 xl:col-span-8  " >
 
