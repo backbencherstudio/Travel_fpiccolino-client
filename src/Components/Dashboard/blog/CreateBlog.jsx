@@ -33,9 +33,8 @@ const CreateBlog = () => {
         reset
     } = useForm({
         defaultValues: {
-            headings: ["", "", ""],
+            headings: [""],
             image: "",
-            subHeading: "",
             paragraphs: [{ paragraph: "" }],
         },
     });
@@ -82,37 +81,26 @@ const CreateBlog = () => {
 
                     <div className="border rounded-lg p-4 mb-5">
                         <div>
-                            <span className="flex justify-between items-center mb-5" >
-                                <h2 className="font-semibold text-[24px] " >Header Image</h2>
-                            </span>
+                           
                             {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
 
                         </div>
-                        <div className="mt-4" >
-                            <span className="flex justify-between items-center mb-5" >
-                                <h2 className="font-semibold text-[24px] " >Header Text</h2>
-                            </span>
+                        <div className="mt-4" >                           
                             <p className="text-[#141D2A]  " >Essential Travel Hacks for Stress-Free Adventures</p>
                         </div>
                     </div>
 
                     <div className="border rounded-lg p-4 mb-5">
                         <div>
-                            <span className="flex justify-between items-center mb-5" >
-                                <h2 className="font-semibold text-[24px] " >Body Image</h2>
-                                <span className="flex items-center gap-5" >
+                                <span className="flex items-end justify-end gap-5 mb-5" >
                                     <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
                                 </span>
-                            </span>
                             {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
                         </div>
 
-                        <div className="mt-4" >
-                            <span className="flex justify-between items-center mb-5" >
-                                <h2 className="font-semibold text-[24px] " >Body text</h2>
-                            </span>
+                        <div className="mt-4" >                           
                             <p className="text-[#141D2A]  " >Traveling is one of life’s greatest joys, but the logistics can sometimes be overwhelming. From packing to navigating new places, small inconveniences can add up. That’s why we’ve compiled this guide of essential travel hacks to ensure your journey is smooth, stress-free, and full of unforgettable memories.</p>
                         </div>
                     </div>
@@ -125,20 +113,14 @@ const CreateBlog = () => {
                         <h2 className="font-semibold text-[#141D2A] mb-2 " >Pack Smart, Pack Light</h2>
 
                         <div>
-                            <span className="flex justify-between items-center mb-5" >
-                                <h2 className="font-semibold text-[24px] " >Body Image</h2>
-                                <span className="flex items-center gap-5" >
+                                <span className="flex items-center justify-end gap-5 mb-5" >
                                     <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
                                 </span>
-                            </span>
                             {/* ========================= need condition in image follow the figma ========================= */}
                             <img className="rounded-lg" src={heroImage2} alt="" />
                         </div>
 
-                        <div className="mt-4" >
-                            <span className="flex justify-between items-center mb-5" >
-                                <h2 className="font-semibold text-[24px] " >Body text</h2>
-                            </span>
+                        <div className="mt-4" >                           
                             <p className="text-[#141D2A]  " >Traveling is one of life’s greatest joys, but the logistics can sometimes be overwhelming. From packing to navigating new places, small inconveniences can add up. That’s why we’ve compiled this guide of essential travel hacks to ensure your journey is smooth, stress-free, and full of unforgettable memories.</p>
                         </div>
                     </div>
@@ -196,7 +178,7 @@ const CreateBlog = () => {
                         </Typography>
 
                         <Typography id="transition-modal-description">
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pr-2 h-[80vh] overflow-y-auto ">
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 px-2 max-h-[65vh] overflow-y-auto ">
                                 <div>
                                     <h3 className="text-md font-semibold mb-2">Main Heading</h3>
                                     <input
@@ -210,7 +192,7 @@ const CreateBlog = () => {
                                 {/* Headings */}
                                 <div>
                                     <h3 className="text-md font-semibold mb-2">Headings</h3>
-                                    {Array.from({ length: 3 }).map((_, index) => (
+                                    {Array.from({ length: 1 }).map((_, index) => (
                                         <div key={`heading-${index}`} className="mb-3">
                                             <input
                                                 type="text"
@@ -249,21 +231,10 @@ const CreateBlog = () => {
                                     )}
                                 </div>
 
-                                {/* Sub Heading */}
-                                <div>
-                                    <h3 className="text-md font-semibold mb-2">Sub Heading</h3>
-                                    <input
-                                        type="text"
-                                        placeholder="Sub Heading"
-                                        {...register("subHeading")}
-                                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    {errors.subHeading && <p className="text-sm text-red-500 mt-1">{errors.subHeading.message}</p>}
-                                </div>
 
                                 {/* Paragraphs */}
                                 <div>
-                                    <h3 className="text-md font-semibold mb-2">Paragraphs (To-Do List)</h3>
+                                    <h3 className="text-md font-semibold mb-2">Paragraphs</h3>
                                     {fields.map((item, index) => (
                                         <div key={item.id} className="flex items-center gap-4 mb-3">
                                             <input
