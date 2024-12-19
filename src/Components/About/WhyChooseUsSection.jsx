@@ -59,21 +59,29 @@ const WhyChooseUsSection = () => {
                 </p>
               </div>
             </div>
-          
+
           </div>
         </div>
       </ParentComponent>
-      <div className="mt-20 py-[60px] px-20 text-start bg-[#469697] grid grid-cols-2">
-      <p className="text-start font-extrabold text-[40px] text-white">Our Trusted Partner <br /> in Travel</p>
-      <div className="grid grid-cols-3 text-white ">
-        <p className="font-semibold text-[52px] italic text-center">Maven</p>
-        <p className="font-semibold text-[52px] text-center">intuit</p>
-        <p className="text-[52px] text-center">memSQL</p>
-        <p className="text-[52px] text-center">maze</p>
-        <p className="text-[52px] font-extrabold italic text-center">venmo</p>
-        <p className="text-[32px] font-[300] text-center">tapcart</p>
+
+      <div className="mt-20 py-[60px] px-20 text-start bg-[#469697] grid lg:grid-cols-2">
+
+        <div>
+          <p className="font-extrabold text-[20px] md:text-[40px] text-white text-center lg:text-start ">Our Trusted Partner <br /> in Travel</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 text-white ">
+          <p className="font-semibold text-[30px] md:text-[52px] italic text-center">Maven</p>
+          <p className="font-semibold text-[30px] md:text-[52px] text-center">intuit</p>
+          <p className="text-[30px] md:text-[52px] text-center">memSQL</p>
+          <p className="text-[30px] md:text-[52px] text-center">maze</p>
+          <p className="text-[30px] md:text-[52px] font-extrabold italic text-center">venmo</p>
+          <p className="text-[32px] font-[300] text-center">tapcart</p>
+        </div>
+
       </div>
-      </div>
+
+
     </div>
   );
 };
