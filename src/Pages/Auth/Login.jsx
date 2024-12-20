@@ -4,6 +4,7 @@ import heroImage from "../../assets/Images/about.jpg";
 import logo from "../../assets/logo.svg";
 import { useForm } from "react-hook-form";
 const Login = () => {
+
   const navigate = useNavigate()
   const {
     register,
@@ -14,7 +15,6 @@ const Login = () => {
   const onSubmit = (data) => {
     console.log("Login Data:", data);
   };
-
   
   return (
     <ParentAuthComponent>
