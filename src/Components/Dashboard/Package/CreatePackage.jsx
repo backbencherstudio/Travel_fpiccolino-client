@@ -30,7 +30,8 @@ const CreatePackage = () => {
     <div>
       <CustomHeadingDashboard />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="" >
+
         <div className="flex justify-between mt-20">
           <h1 className="text-[24px] font-semibold">Create Package</h1>
           <button
@@ -40,6 +41,7 @@ const CreatePackage = () => {
             Upload Package
           </button>
         </div>
+
         <div className="grid grid-cols-5 gap-5 mt-5">
           <div className="col-span-3">
             <div className="border p-4 rounded-2xl">
@@ -136,7 +138,9 @@ const CreatePackage = () => {
               />
             </div>
           </div>
-          <div className="col-span-2"></div>
+          <div className="col-span-2">
+            <h2>cooooooooollll</h2>
+          </div>
         </div>
       </form>
 
