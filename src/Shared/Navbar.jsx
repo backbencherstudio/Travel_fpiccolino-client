@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/logo.svg';
 import { Link, NavLink } from 'react-router-dom';
 import ParentComponent from './ParentComponent/ParentComponent';
+import { Avatar } from '@mui/material';
 
 const Navbar = () => {
     const [contactDropDown, setContactDropDown] = useState(false);
@@ -57,6 +58,8 @@ const Navbar = () => {
         }
     };
 
+    const isLogin = true
+
     return (
         <header className="z-30 fixed w-full nav-style py-2 banner_style">
             <ParentComponent>
@@ -86,7 +89,7 @@ const Navbar = () => {
                                         <NavLink to="/faq" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> FAQ </NavLink>
                                     </li>
 
-                                    <li>                                        
+                                    <li>
                                         <NavLink to="/policy" className={({ isActive }) => isActive ? "active" : "text-[#ffffff]"}> Policy </NavLink>
                                     </li>
 
@@ -139,7 +142,16 @@ const Navbar = () => {
                                             </Link>
                                         </div>
                                     </div>
+
                                 </div>
+
+                                {
+                                    isLogin ?
+
+                                        <Avatar sx={{ width: 56, height: 56 }} alt="Travis Howard" src="https://img.freepik.com/premium-photo/funny-photos-monkeys-taking-selfies_601415-453.jpg?w=360" />
+                                        :
+                                        <Avatar sx={{ width: 56, height: 56 }} src="/broken-image.jpg" />
+                                }
 
                                 <div className="block lg:hidden">
                                     <button className="rounded p-2 text-white transition hover:text-gray-600/75" ref={buttonRef} onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -155,6 +167,7 @@ const Navbar = () => {
                                         </svg>
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
