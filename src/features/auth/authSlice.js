@@ -42,6 +42,7 @@ export const conformRegisterOtp = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "users/login",
   async (userData, { rejectWithValue }) => {
+    console.log(userData)
     try {
       const response = await axios.post(`${base_url}/users/login`, userData, {
         withCredentials: true,
