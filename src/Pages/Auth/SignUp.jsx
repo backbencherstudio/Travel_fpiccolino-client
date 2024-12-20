@@ -24,7 +24,9 @@ const SignUp = () => {
         <div className="h-full w-full md:col-span-3">
           <div className="lg:m-20 m-5">
             <img src={logo} alt="" />
-            <h1 className="font-extrabold text-[32px] mt-10">Create New Account</h1>
+            <h1 className="font-extrabold text-[32px] mt-10">
+              Create New Account
+            </h1>
             <h5 className="text-[#72777F] text-[16px] mt-3">
               Please enter your details.
             </h5>
