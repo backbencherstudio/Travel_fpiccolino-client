@@ -4,12 +4,26 @@ import call from "../../assets/icons/call2.svg";
 import mail from "../../assets/icons/mail2.svg";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 const Contact = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm();
   const [selectedOption, setSelectedOption] = useState("phone");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  const onSubmit = (data) => {
+    console.log("Submitted Data:", { ...data, contactMethod: selectedOption });
+    reset()
+  };
+
   return (
     <div>
       <BannerSection />
@@ -46,83 +60,106 @@ const Contact = () => {
               </div>{" "}
             </div>
           </div>
+
+
           <div className="p-10 bg-[#effbfb] rounded-xl">
             <h1 className="text-3xl font-bold">Send us a message</h1>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <p className="text-[18px] font-medium mt-8 mb-3">First Name</p>
-                <input
-                  type="text"
-                  placeholder="Enter First Name"
-                  className="p-3 text-[16px] rounded-md w-full"
-                />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-[18px] font-medium mt-8 mb-3">First Name</p>
+                  <input
+                    type="text"
+                    placeholder="Enter First Name"
+                    className="p-3 text-[16px] rounded-md w-full"
+                    {...register("firstName", { required: "First name is required" })}
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+                  )}
+                </div>
+                <div>
+                  <p className="text-[18px] font-medium mt-8 mb-3">Last Name</p>
+                  <input
+                    type="text"
+                    placeholder="Enter Last Name"
+                    className="p-3 text-[16px] rounded-md w-full"
+                    {...register("lastName", { required: "Last name is required" })}
+                  />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+                  )}
+                </div>
+                <div>
+                  <p className="text-[18px] font-medium mt-5 mb-3">Email Address</p>
+                  <input
+                    type="text"
+                    placeholder="Enter Email Address"
+                    className="p-3 text-[16px] rounded-md w-full"
+                    {...register("email", {
+                      required: "Email address is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Enter a valid email",
+                      },
+                    })}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">{errors.email.message}</p>
+                  )}
+                </div>
+                <div>
+                  <p className="text-[18px] font-medium mt-5 mb-3">Phone Number</p>
+                  <input
+                    type="text"
+                    placeholder="Enter Phone Number"
+                    className="p-3 text-[16px] rounded-md w-full"
+                    {...register("phone", {
+                      required: "Phone number is required",
+                      pattern: {
+                        message: "Phone number must be numeric",
+                      },
+                    })}
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm">{errors.phone.message}</p>
+                  )}
+                </div>
               </div>
               <div>
-                <p className="text-[18px] font-medium mt-8 mb-3">Last Name</p>
-                <input
-                  type="text"
-                  placeholder="Enter Last Name"
+                <p className="text-[18px] font-medium mt-5 mb-3">Message</p>
+                <textarea
+                  placeholder="Enter Message"
                   className="p-3 text-[16px] rounded-md w-full"
+                  {...register("message", { required: "Message is required" })}
                 />
+                {errors.message && (
+                  <p className="text-red-500 text-sm">{errors.message.message}</p>
+                )}
               </div>
-              <div>
-                <p className="text-[18px] font-medium mt-5 mb-3">
-                  Email Address
-                </p>
-                <input
-                  type="text"
-                  placeholder="Enter Email Address"
-                  className="p-3 text-[16px] rounded-md w-full"
-                />
-              </div>
-              <div>
-                <p className="text-[18px] font-medium mt-5 mb-3">Phone name</p>
-                <input
-                  type="text"
-                  placeholder="Enter Phone Number"
-                  className="p-3 text-[16px] rounded-md w-full"
-                />
-              </div>
-            </div>
-            <div>
-              <p className="text-[18px] font-medium mt-5 mb-3">Message</p>
-              <textarea
-                placeholder="Enter Message"
-                className="p-3 text-[16px] rounded-md w-full"
-              />
-            </div>
-            <div className="">
               <div>
                 <p className="text-[18px] font-medium mt-5 mb-3">
                   Preferred Contact Method
                 </p>
-
                 <div className="grid grid-cols-2 gap-3 bg-white p-3">
                   <div className="flex items-center">
                     <input
                       type="radio"
                       id="phone"
-                      name="radio-8"
+                      name="contactMethod"
                       value="phone"
                       checked={selectedOption === "phone"}
                       onChange={handleOptionChange}
-                      className={`mr-2 size-5 radio ${
-                        selectedOption === "phone" ? "radio-error" : ""
-                      }`}
+                      className="mr-2 size-5"
                     />
                     <label
                       htmlFor="phone"
-                      className={`text-[16px] ${
-                        selectedOption === "phone"
-                          ? "primary_text"
-                          : "text-zinc-400"
-                      }`}
+                      className={`text-[16px] ${selectedOption === "phone" ? "primary_text" : "text-zinc-400"
+                        }`}
                     >
                       Phone
                     </label>
                   </div>
-
-                  {/* Email Radio Button */}
                   <div className="flex items-center">
                     <input
                       type="radio"
@@ -131,34 +168,34 @@ const Contact = () => {
                       value="email"
                       checked={selectedOption === "email"}
                       onChange={handleOptionChange}
-                      className={`mr-2 size-5 radio ${
-                        selectedOption === "email" ? "radio-error" : ""
-                      }`}
+                      className="mr-2 size-5"
                     />
                     <label
                       htmlFor="email"
-                      className={`text-[16px] ${
-                        selectedOption === "email"
-                          ? "primary_text"
-                          : "text-zinc-400"
-                      }`}
+                      className={`text-[16px] ${selectedOption === "email" ? "primary_text" : "text-zinc-400"
+                        }`}
                     >
                       Email
                     </label>
                   </div>
                 </div>
               </div>
-            </div>
-            <button className="p-3 w-full primary_bg text-white font-medium text-[16px] mt-6 rounded-md">
+              <button
+                type="submit"
+                className="p-3 w-full primary_bg text-white font-medium text-[16px] mt-6 rounded-md"
+              >
                 Send Message
-            </button>
+              </button>
+            </form>
           </div>
+
+
         </div>
       </ParentComponent>
       <div className="bg-[#effbfb] mt-20 pt-1 pb-20">
-      <ApproachSection />
-        </div>
-    
+        <ApproachSection />
+      </div>
+
     </div>
   );
 };

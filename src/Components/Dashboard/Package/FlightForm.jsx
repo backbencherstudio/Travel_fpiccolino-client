@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import {
   TextField,
-  Button,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
   Grid,
   Typography,
   Slider,
   Box,
-  Divider,
   Modal,
 } from "@mui/material";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
@@ -18,7 +13,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 
-const FlightBookingForm = ({ openModal, setOpenModal }) => {
+const FlightBookingForm = ({ openModal, setOpenModal, setBookedFlights, bookedFlights }) => {
   const [formData, setFormData] = useState({
     flyingFrom: "",
     flyingTo: "",
@@ -26,10 +21,9 @@ const FlightBookingForm = ({ openModal, setOpenModal }) => {
     arrivalTime: null,
     breakTime: null,
     flightClass: "",
-    price: 500, // Default price
+    price: 500, 
   });
 
-  const [bookedFlights, setBookedFlights] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
