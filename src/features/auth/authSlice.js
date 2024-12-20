@@ -4,9 +4,8 @@ import { base_url } from "../../utils/base_path";
 
 axios.defaults.withCredentials = true;
 
-
 export const registerUser = createAsyncThunk(
-  'users/register',
+  "users/register",
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}/users/register`, userData);
@@ -20,13 +19,17 @@ export const registerUser = createAsyncThunk(
 );
 
 export const conformRegisterOtp = createAsyncThunk(
-  'users/conformRegisterOtp',
+  "users/conformRegisterOtp",
   async (otp, { rejectWithValue }) => {
-    console.log('otp:: ', typeof(otp))
+    console.log("otp:: ", typeof otp);
     try {
-      const response = await axios.post(`${base_url}/users/verify-otp`, { otp: otp }, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        `${base_url}/users/verify-otp`,
+        { otp: otp },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
       return response.data.user;
     } catch (error) {
@@ -98,7 +101,7 @@ export const updateUser = createAsyncThunk(
 );
 
 export const logOut = createAsyncThunk(
-  'users/logout',
+  "users/logout",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}/users/logout`);
@@ -111,13 +114,28 @@ export const logOut = createAsyncThunk(
   }
 );
 
+export const recentOtp = createAsyncThunk(
+  "users/resendotp",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}/users/resendotp`);
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   loginLoading: false,
   signupLoading: false,
   otpLoading: false,
   appLoading: true,
   userUpdateLoading: false,
-  
+  recentOtpLoading: false,
+  conformOtpLoading: false,
+
   isAuthenticated: false,
 
   appLoadingError: null,
@@ -126,6 +144,8 @@ const initialState = {
   signupError: null,
   otpError: null,
   userUpddateError: null,
+  recentOtpError: false,
+  conformOtpError: null,
 
   callCount: 0,
 };
@@ -133,7 +153,12 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearRecent: (state) => {
+      state.recentOtpError = null; 
+      state.recentOtpLoading = false
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
@@ -170,18 +195,18 @@ const authSlice = createSlice({
 
     builder
       .addCase(conformRegisterOtp.pending, (state) => {
-        state.signupLoading = true;
-        state.signupError = null;
+        state.conformOtpLoading = true;
+        state.conformOtpError = null;
       })
       .addCase(conformRegisterOtp.fulfilled, (state, action) => {
-        state.signupLoading = false;
-        state.signupError = null;
+        state.conformOtpLoading = false;
+        state.conformOtpError = null;
         state.user = action.payload.user;
         state.isAuthenticated = true;
       })
       .addCase(conformRegisterOtp.rejected, (state, action) => {
-        state.signupLoading = false;
-        state.signupError = action.payload?.message ?? null;
+        state.conformOtpLoading = false;
+        state.conformOtpError = action.payload?.message ?? null;
         state.isAuthenticated = false;
       });
 
@@ -207,7 +232,38 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       })
       .addCase(logOut.rejected, (state) => {});
+
+    builder
+      .addCase(recentOtp.pending, (state) => {
+        state.recentOtpLoading = true;
+        state.recentOtpError = null;
+      })
+      .addCase(recentOtp.fulfilled, (state, action) => {
+        state.recentOtpLoading = false;
+        state.recentOtpError = null;
+      })
+      .addCase(recentOtp.rejected, (state, action) => {
+        state.recentOtpLoading = false;
+        state.recentOtpError = action.payload?.message ?? null;
+      });
+
+
+
+      // builder
+      // .addCase(recentOtp.pending, (state) => {
+      //   state.recentOtpLoading = true;
+      //   state.recentOtpError = null;
+      // })
+      // .addCase(recentOtp.fulfilled, (state, action) => {
+      //   state.recentOtpLoading = false;
+      //   state.recentOtpError = null;
+      // })
+      // .addCase(recentOtp.rejected, (state, action) => {
+      //   state.recentOtpLoading = false;
+      //   state.recentOtpError = action.payload?.message ?? null;
+      // });
   },
 });
 
+export const { clearRecent } = authSlice.actions;
 export default authSlice.reducer;

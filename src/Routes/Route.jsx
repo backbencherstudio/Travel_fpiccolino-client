@@ -30,6 +30,7 @@ import UpdateBlog from "../Components/Dashboard/blog/UpdateBlog";
 import PackageList from "../Components/Dashboard/Package/PackageList";
 import CreatePackage from "../Components/Dashboard/Package/CreatePackage";
 import CreateBlog from "../Components/Dashboard/Blog/CreateBlog";
+import SignupOtp from "../Pages/Auth/SignupOtp";
 
 
 export const router = createBrowserRouter([
@@ -166,6 +167,10 @@ export const router = createBrowserRouter([
     {
         path:'/otp',
         element: <OtpScreen/>
+    },
+    {
+        path:'/signotp',
+        element: <SignupOtp />
     },
   
 ]);

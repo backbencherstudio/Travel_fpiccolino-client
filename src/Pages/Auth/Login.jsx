@@ -12,7 +12,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Login Data:", data);
+    console.log("Login Data:", data); 
   };
 
   

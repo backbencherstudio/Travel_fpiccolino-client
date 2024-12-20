@@ -41,6 +41,16 @@ const OtpScreen = () => {
             >
               <FaAngleLeft style={{ fontSize: "20px" }} /> Back
             </p>
+
+
+     
+
+
+
+
+
+
+
             <h1 className="font-extrabold text-[32px] mt-8">Enter OTP</h1>
             <h5 className="text-[#72777F] text-[16px] mt-3">
               We have share a code of your registered email address
