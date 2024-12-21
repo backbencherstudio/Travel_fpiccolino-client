@@ -3,23 +3,20 @@ import logo from "../assets/logo.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import ParentComponent from "./ParentComponent/ParentComponent";
 import { Avatar } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginOut, logOut } from "../features/auth/authSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
- 
- 
-
+  const dispatch = useDispatch();
   const [contactDropDown, setContactDropDown] = useState(false);
   const [languageDropDown, setLanguageDropDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isloginOpen, setLoginOpen] = useState(false)
-  
-  const toggloginOpen = () => {
-    setLoginOpen(!isloginOpen)
-}
+  const [isloginOpen, setLoginOpen] = useState(false);
 
+  const toggloginOpen = () => {
+    setLoginOpen(!isloginOpen);
+  };
 
   const { user, appLoading, isAuthenticated } = useSelector(
     (state) => state.authorization
@@ -74,35 +71,35 @@ const Navbar = () => {
       setContactDropDown(false); // Close other dropdown
     }
   };
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-        if (
-            menuRef.current &&
-            !menuRef.current.contains(event.target) &&
-            buttonRef.current &&
-            !buttonRef.current.contains(event.target) &&
-            ProfileRef.current &&
-            !ProfileRef.current.contains(event.target)
-        ) {
-            setIsMenuOpen(false);
-            setLoginOpen(false);
-        }
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target) &&
+        ProfileRef.current &&
+        !ProfileRef.current.contains(event.target)
+      ) {
+        setIsMenuOpen(false);
+        setLoginOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
-        document.body.style.overflowY = 'hidden';
+      document.body.style.overflowY = "hidden";
     } else {
-        document.body.style.overflowY = 'auto';
+      document.body.style.overflowY = "auto";
     }
-}, [isMenuOpen]);
-
-
-
+  }, [isMenuOpen]);
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
   return (
     <header className="z-30 fixed w-full nav-style py-2 banner_style">
       <ParentComponent>
@@ -258,13 +255,11 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-
                 {/* <div
                   className="cursor-pointer"
                   onClick={() => navigate(`/profile/${1}`)}
-                > */}
-                  {" "}
-                  {/* {isAuthenticated ? (
+                > */}{" "}
+                {/* {isAuthenticated ? (
                     <Avatar
                       sx={{ width: 56, height: 56 }}
                       alt="Travis Howard"
@@ -276,7 +271,7 @@ const Navbar = () => {
                       src="/broken-image.jpg"
                     />
                   )} */}
-                  {/* {isAuthenticated &&
+                {/* {isAuthenticated &&
                     <button
                       onClick={toggloginOpen}
                       className="w-10 h-10 text-lg bg-[#EB5B2A] flex justify-center items-center rounded-full"
@@ -294,71 +289,62 @@ const Navbar = () => {
                       )}
                     </button>
                   } */}
-
-
-
-                  
                 {/* </div> */}
-
-
                 {isAuthenticated && (
-  <div className="relative">
-    <div className="flex items-center">
-      <button
-        onClick={toggloginOpen}
-        className="w-10 h-10 text-lg bg-[#EB5B2A] flex justify-center items-center rounded-full"
-      >
-        {user?.avatar ? (
-          <img
-            src={user?.avatar}
-            alt="Avatar"
-            className="w-full h-full object-cover rounded-full"
-          />
-        ) : (
-          <span className="text-white font-bold">
-            {`${user?.name?.slice(0,2)}`}
-          </span>
-        )}
-      </button>
-      <div>
-        <svg
-          className="-mr-1 size-5 w-6 h-6 text-[#475467]"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </div>
-    </div>
-    {isloginOpen && (
-      <div
-        className={`bg-white p-6 absolute flex flex-col top-full -right-12 mt-2 space-y-1 border rounded shadow popup w-60`}
-        ref={ProfileRef}
-      >
-        <div className="w-4 h-4 bg-white border-t border-l rotate-45 absolute -top-[7px] right-[54px] hidden xl:block"></div>
-        <Link
-          to="/account"
-          className="text-base xl:text-xl text-zinc-600 hover:text-[#b24b7d] duration-300"
-        >
-          My Account
-        </Link>
-        <button
-          onClick={handleLogout}
-          className="text-base xl:text-xl text-red-400 hover:text-[#b24b7d] duration-300"
-        >
-          Logout
-        </button>
-      </div>
-    )}
-  </div>
-)}
-
-
-
+                  <div className="relative">
+                    <div className="flex items-center">
+                      <button
+                        onClick={toggloginOpen}
+                        className="w-10 h-10 text-lg bg-[#EB5B2A] flex justify-center items-center rounded-full"
+                      >
+                        {user?.avatar ? (
+                          <img
+                            src={user?.avatar}
+                            alt="Avatar"
+                            className="w-full h-full object-cover rounded-full"
+                          />
+                        ) : (
+                          <span className="text-white font-bold">
+                            {`${user?.name?.slice(0, 2)}`}
+                          </span>
+                        )}
+                      </button>
+                      <div>
+                        <svg
+                          className="-mr-1 size-5 w-6 h-6 text-[#475467]"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    {isloginOpen && (
+                      <div
+                        className={`bg-white p-6 absolute flex flex-col top-full -right-12 mt-2 space-y-1 border rounded shadow popup w-60`}
+                        ref={ProfileRef}
+                      >
+                        <div className="w-4 h-4 bg-white border-t border-l rotate-45 absolute -top-[7px] right-[54px] hidden xl:block"></div>
+                        <Link
+                          to={`/profile/${user?._id}`}
+                          className="text-base xl:text-xl text-zinc-600 hover:text-[#b24b7d] duration-300"
+                        >
+                          My Account
+                        </Link>
+                        <button
+                          onClick={handleLogOut}
+                          className="text-base xl:text-xl text-red-400 hover:text-[#b24b7d] duration-300"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <div className="block lg:hidden">
                   <button
                     className="rounded p-2 text-white transition hover:text-gray-600/75"
