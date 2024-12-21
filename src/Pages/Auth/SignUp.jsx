@@ -3,16 +3,21 @@ import ParentAuthComponent from "../../Shared/ParentComponent/ParentAuthComponen
 import heroImage from "../../assets/Images/beach.jpg";
 import logo from "../../assets/logo.svg";
 import { useForm } from "react-hook-form";
+
+
+import { BsExclamationCircle } from "react-icons/bs";
+
 const SignUp = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+
+  const onSubmit = async (data) => {
+    console.log(data);
   };
 
   return (
@@ -27,11 +32,11 @@ const SignUp = () => {
             <h1 className="font-extrabold text-[32px] mt-10">
               Create New Account
             </h1>
-            <h5 className="text-[#72777F] text-[16px] mt-3">
-              Please enter your details.
-            </h5>
 
-
+              <h5 className="text-[#72777F] text-[16px] mt-3">
+                Please enter your details.
+              </h5>
+         
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div>
@@ -80,13 +85,13 @@ const SignUp = () => {
                     },
                   })}
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password.message}</p>
-                )}
+              
               </div>
 
               <div className="mt-1 flex justify-between">
-                <p className="inline text-[14px]">Must be at least 8 characters</p>
+                <p className="inline text-[14px]">
+                  Must be at least 8 characters
+                </p>
               </div>
 
               <button
@@ -106,9 +111,7 @@ const SignUp = () => {
                 </span>
               </div>
             </form>
-
           </div>
-
         </div>
       </div>
     </ParentAuthComponent>
