@@ -24,16 +24,27 @@ const CreateBlog = () => {
     const [open, setOpen] = useState(false);
     const [contentList, setContentList] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [openMainContent, setOpenMainContent] = useState(false);
     const [images, setImages] = useState([])
+    const [mainImage, SetMainImage] = useState([]);
     const [imagepath, setImagePath] = useState([]);
-
+    const [mainimagepath, setMainimagepath] = useState([]);
+    const [mainContentList, setMainContentList] = useState([]);
+    var deepCopy =[];
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleMainContentOpen = () => setOpenMainContent(true);
+    const handleMainContentClose = () => setOpenMainContent(false);
 
     const [content, setContent] = useState({
         headings: [""],
         image: null,
         paragraphs: [""]
+    });
+    const [mainContent, setMainContent] = useState({
+        heading: "",
+        subHeading: "",
+        image: null,
     });
     useEffect(() => {
         console.log("Updated images:", images);
@@ -54,6 +65,17 @@ const CreateBlog = () => {
             updatedParagraphs[index] = event.target.value;
             setContent({ ...content, paragraphs: updatedParagraphs });
         }
+        else if (field === "mainHeading") {
+            setMainContent({ ...mainContent, heading: event.target.value });
+            deepCopy.push({heading: event.target.value}) 
+        } else if (field === "mainSubHeading") {
+            setMainContent({ ...mainContent, subHeading: event.target.value });
+            deepCopy.push({subHeading: event.target.value})
+        } else if (field === "mainImage") {
+            setMainContent({ ...mainContent, image: event.target.files[0] });
+            const file = event.target.files[0];
+            SetMainImage([...mainImage, file]);
+        }
     };
 
     const handleAddParagraph = () => {
@@ -69,6 +91,14 @@ const CreateBlog = () => {
         setContentList((prevContent) => [...prevContent, content]);
         setContent({ headings: [""], image: null, paragraphs: [""] });
         handleClose();
+    };
+    const handleSubmitMainContent = () => {
+        setMainContentList((prevContent) => [...prevContent, mainContent]);
+        setMainContent({ heading: "", subHeading: "", image: null });
+        console.log(mainContent, "here")
+        deepCopy = JSON.parse(JSON.stringify(mainContent));
+        console.log(deepCopy)
+        handleMainContentClose();
     };
 
     // const UploadimagePath = async() =>{
@@ -145,11 +175,32 @@ const CreateBlog = () => {
             });
             console.log("Image uploaded successfully", response.data);
             setImagePath(response?.data?.images);
-            return response.data.images; // Return the image path data to be used in handleUploadBlog
+            return response.data.images; 
         } catch (error) {
             console.error("Error uploading files:", error);
             alert("Error uploading images. Please try again.");
-            return null; // Return null in case of failure
+            return null; 
+        }
+    };
+    const uploadmainimage = async () => {
+        const formData = new FormData();
+        Array.from(mainImage).forEach((image) => {
+            formData.append("images", image);
+        });
+    
+        try {
+            const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            console.log("Image uploaded successfully", response.data);
+            setMainimagepath(response?.data?.images);
+            return response.data.images; 
+        } catch (error) {
+            console.error("Error uploading files:", error);
+            alert("Error uploading images. Please try again.");
+            return null; 
         }
     };
     
@@ -158,18 +209,27 @@ const CreateBlog = () => {
             alert("Please select a category!");
             return;
         }
-    
+        const uploadMainImage =  await uploadmainimage()
         const uploadedImages = await UploadimagePath();
         if (!uploadedImages) {
-            return; // If image upload fails, stop the blog upload process
+            return;
         }
-    
+        if (!uploadMainImage) {
+            return;
+        }
+        console.log(deepCopy, "last")
         const body = {
+            heroSection: [
+                {
+                  headerImg:mainContent ? uploadedImages[0].path : null,
+                  header: deepCopy[0]?.subHeading,
+                  text: deepCopy[0]?.subHeading,
+                }],
             category: selectedCategory,
             contentList: contentList.map((content, index) => ({
                 headings: content.headings,
                 paragraphs: content.paragraphs,
-                image: uploadedImages[index] ? uploadedImages[index].path : null, // Make sure image exists for the current index
+                image: uploadedImages[index] ? uploadedImages[index].path : null, 
             })),
         };
     
@@ -214,6 +274,19 @@ const CreateBlog = () => {
 
             <div className="grid grid-cols-12 gap-5 mt-5">
                 <div className="col-span-12 xl:col-span-8">
+                {mainContentList.map((content, index) => (
+                        <div className="border rounded-lg p-4 mb-5" key={index}>
+                            {content.image && (
+                                <img
+                                    className="rounded-lg"
+                                    src={URL.createObjectURL(content.image)}
+                                    alt="Main Content Preview"
+                                />
+                            )}
+                            <h3 className="text-[#141D2A] font-semibold mb-2">{content.heading}</h3>
+                            <h4 className="text-[#141D2A] mb-2">{content.subHeading}</h4>
+                        </div>
+                    ))}
                     {contentList.map((content, index) => (
                         <div className="border rounded-lg p-4 mb-5" key={index}>
                             <div>
@@ -244,12 +317,19 @@ const CreateBlog = () => {
                     ))}
 
                     <div className="flex justify-end">
+                    <button
+                            onClick={handleMainContentOpen}
+                            className="text-[#FFFFFF] bg-[#4CAF50] font-semibold flex items-center gap-2 px-4 py-2 rounded-lg"
+                        >
+                            <RiAddBoxLine /> Add Main Content
+                        </button>
                         <button
                             onClick={handleOpen}
                             className="text-[#FFFFFF] bg-[#E86731] font-semibold flex items-center gap-2 px-4 py-2 rounded-lg"
                         >
                             <RiAddBoxLine /> Add Content
                         </button>
+
                     </div>
                 </div>
 
@@ -367,6 +447,62 @@ const CreateBlog = () => {
 
                             <button
                                 onClick={handleSubmitContent}
+                                className="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </Box>
+                </Fade>
+            </Modal>
+            <Modal
+                open={openMainContent}
+                onClose={handleMainContentClose}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{ backdrop: { timeout: 500 } }}
+            >
+                <Fade in={openMainContent}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h2" className="text-lg font-bold text-center mb-4">
+                            Add Main Content
+                        </Typography>
+
+                        <div className="space-y-4 px-2 max-h-[65vh] overflow-y-auto">
+                            <div>
+                                <h3 className="text-md font-semibold mb-2">Heading</h3>
+                                <input
+                                    type="text"
+                                    placeholder="Main Content Heading"
+                                    value={mainContent.heading}
+                                    onChange={(e) => handleInputChange(e, "mainHeading")}
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            <div>
+                                <h3 className="text-md font-semibold mb-2">Sub Heading</h3>
+                                <input
+                                    type="text"
+                                    placeholder="Main Content Sub Heading"
+                                    value={mainContent.subHeading}
+                                    onChange={(e) => handleInputChange(e, "mainSubHeading")}
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            <div>
+                                <h3 className="text-md font-semibold mb-2">Upload Image</h3>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    onChange={(e) => handleInputChange(e, "mainImage")}
+                                />
+                            </div>
+
+                            <button
+                                onClick={handleSubmitMainContent}
                                 className="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
                             >
                                 Submit
