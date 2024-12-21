@@ -2,8 +2,8 @@ import { Backdrop, Box, Fade, Modal, Typography } from "@mui/material";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import heroImage2 from "../../../assets/Images/HeroSection/heroImage2.jpg";
 import { RiAddBoxLine } from "react-icons/ri";
-import { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const CreateBlog = () => {
     const style = {
@@ -23,88 +23,171 @@ const CreateBlog = () => {
 
     const [open, setOpen] = useState(false);
     const [contentList, setContentList] = useState([]);
-    const [preview, setPreview] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [images, setImages] = useState([])
+    const [imagepath, setImagePath] = useState([]);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const {
-        register,
-        setValue,
-        control,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm({
-        defaultValues: {
-            headings: [""],
-            image: "",
-            paragraphs: [{ paragraph: "" }],
-        },
+    const [content, setContent] = useState({
+        headings: [""],
+        image: null,
+        paragraphs: [""]
     });
+    useEffect(() => {
+        console.log("Updated images:", images);
+    }, [images]);
 
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: "paragraphs",
-    });
-
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setPreview(reader.result);
-            };
-            reader.readAsDataURL(file);
-            setValue("image", file, { shouldValidate: true });
-        } else {
-            setPreview(null);
+    const handleInputChange = (event, field, index = null) => {
+        if (field === "headings") {
+            const updatedHeadings = [...content.headings];
+            updatedHeadings[0] = event.target.value;
+            setContent({ ...content, headings: updatedHeadings });
+        } else if (field === "image") {
+            setContent({ ...content, image: event.target.files[0] });
+            const file = event.target.files[0];
+            setImages([...images, file]);
+            //console.log(images)
+        } else if (field === "paragraphs") {
+            const updatedParagraphs = [...content.paragraphs];
+            updatedParagraphs[index] = event.target.value;
+            setContent({ ...content, paragraphs: updatedParagraphs });
         }
     };
 
-    const onSubmit = (data) => {
-        const newContent = {
-            headings: data.headings,
-            image: preview,
-            paragraphs: data.paragraphs.map((p) => p.paragraph),
-        };
+    const handleAddParagraph = () => {
+        setContent({ ...content, paragraphs: [...content.paragraphs, ""] });
+    };
 
-        setContentList((prevContent) => [...prevContent, newContent]);
-        setPreview(null);
-        reset();
+    const handleRemoveParagraph = (index) => {
+        const updatedParagraphs = content.paragraphs.filter((_, i) => i !== index);
+        setContent({ ...content, paragraphs: updatedParagraphs });
+    };
+
+    const handleSubmitContent = () => {
+        setContentList((prevContent) => [...prevContent, content]);
+        setContent({ headings: [""], image: null, paragraphs: [""] });
         handleClose();
     };
 
+    // const UploadimagePath = async() =>{
+    //     const formData = new FormData();
+    //     Array.from(images).forEach((image) => {
+    //     formData.append("images", image);
+    // });
+    //  console.log("yaaap")
+    // try {
+    //   const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
+    //   console.log(response.data);
+    //   setImagePath(response?.data?.images);
+    // } catch (error) {
+    //   console.log("Error uploading files.");
+    // }
+    // }
+
+    // const handleUploadBlog = async () => {
+    //     if (!selectedCategory) {
+    //         alert("Please select a category!");
+    //         return;
+    //     }
+       
+    //     await UploadimagePath();
+    //     const body = {
+    //         category: selectedCategory,
+    //         contentList: contentList.map((content, index) => ({
+    //             headings: content.headings,
+    //             paragraphs: content.paragraphs,
+    //             image: imagepath[index] ? imagepath[index].path : null, // Make sure imagepath exists for the current index
+    //         }))
+    //     };
+        
+
+    //     console.log(body)
+        
+    //     try {
+            
+    //         const response = await fetch("http://localhost:3000/api/blogs/createblog", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(body),
+    //         });
+
+    //         if (response.ok) {
+    //             alert("Blog uploaded successfully!");
+    //             setContentList([]);
+    //             setSelectedCategory("");
+    //         } else {
+    //             alert("Failed to upload the blog.");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error uploading blog:", error);
+    //         alert("An error occurred while uploading the blog.");
+    //     }
+    // };
+    const UploadimagePath = async () => {
+        const formData = new FormData();
+        Array.from(images).forEach((image) => {
+            formData.append("images", image);
+        });
+    
+        try {
+            const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            console.log("Image uploaded successfully", response.data);
+            setImagePath(response?.data?.images);
+            return response.data.images; // Return the image path data to be used in handleUploadBlog
+        } catch (error) {
+            console.error("Error uploading files:", error);
+            alert("Error uploading images. Please try again.");
+            return null; // Return null in case of failure
+        }
+    };
+    
     const handleUploadBlog = async () => {
         if (!selectedCategory) {
             alert("Please select a category!");
             return;
         }
-
-        const blogData = {
-            contentList,
+    
+        const uploadedImages = await UploadimagePath();
+        if (!uploadedImages) {
+            return; // If image upload fails, stop the blog upload process
+        }
+    
+        const body = {
             category: selectedCategory,
+            contentList: contentList.map((content, index) => ({
+                headings: content.headings,
+                paragraphs: content.paragraphs,
+                image: uploadedImages[index] ? uploadedImages[index].path : null, // Make sure image exists for the current index
+            })),
         };
-
-        console.log(blogData)
-
+    
+        console.log("Blog Data:", body);
+    
         try {
             const response = await fetch("http://localhost:3000/api/blogs/createblog", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    withCredentials: true,
                 },
-                body: JSON.stringify(blogData),
+                body: JSON.stringify(body),
             });
-
-           
-
+    
             if (response.ok) {
                 alert("Blog uploaded successfully!");
-                setContentList([]);
-                setSelectedCategory("");
+                setContentList([]); // Clear content list after successful upload
+                setSelectedCategory(""); // Reset category selection
             } else {
                 alert("Failed to upload the blog.");
             }
@@ -113,6 +196,7 @@ const CreateBlog = () => {
             alert("An error occurred while uploading the blog.");
         }
     };
+    
 
     return (
         <div>
@@ -136,7 +220,7 @@ const CreateBlog = () => {
                                 {content.image && (
                                     <img
                                         className="rounded-lg"
-                                        src={content.image}
+                                        src={URL.createObjectURL(content.image)}
                                         alt="Content Preview"
                                     />
                                 )}
@@ -219,10 +303,7 @@ const CreateBlog = () => {
                             Add Your Data
                         </Typography>
 
-                        <form
-                            onSubmit={handleSubmit(onSubmit)}
-                            className="space-y-4 px-2 max-h-[65vh] overflow-y-auto"
-                        >
+                        <div className="space-y-4 px-2 max-h-[65vh] overflow-y-auto">
                             <div>
                                 <h3 className="text-md font-semibold mb-2">
                                     Headings
@@ -231,7 +312,8 @@ const CreateBlog = () => {
                                     <input
                                         type="text"
                                         placeholder="Heading"
-                                        {...register(`headings.0`)}
+                                        value={content.headings[0]}
+                                        onChange={(e) => handleInputChange(e, "headings")}
                                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
@@ -245,37 +327,29 @@ const CreateBlog = () => {
                                     type="file"
                                     accept="image/*"
                                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    onChange={handleImageChange}
+                                    onChange={(e) =>handleInputChange(e, "image")}
                                 />
-                                {preview && (
-                                    <img
-                                        src={preview}
-                                        alt="Preview"
-                                        className="mt-4 w-32 h-32 object-cover rounded-md border"
-                                    />
-                                )}
                             </div>
 
                             <div>
                                 <h3 className="text-md font-semibold mb-2">
                                     Paragraphs
                                 </h3>
-                                {fields.map((item, index) => (
+                                {content.paragraphs.map((paragraph, index) => (
                                     <div
-                                        key={item.id}
+                                        key={index}
                                         className="flex items-center gap-4 mb-3"
                                     >
                                         <input
                                             type="text"
                                             placeholder={`Paragraph ${index + 1}`}
-                                            {...register(
-                                                `paragraphs.${index}.paragraph`
-                                            )}
+                                            value={paragraph}
+                                            onChange={(e) => handleInputChange(e, "paragraphs", index)}
                                             className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                         <button
                                             type="button"
-                                            onClick={() => remove(index)}
+                                            onClick={() => handleRemoveParagraph(index)}
                                             className="text-red-500 bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
                                         >
                                             Remove
@@ -284,7 +358,7 @@ const CreateBlog = () => {
                                 ))}
                                 <button
                                     type="button"
-                                    onClick={() => append({ paragraph: "" })}
+                                    onClick={handleAddParagraph}
                                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
                                 >
                                     Add Paragraph
@@ -292,12 +366,12 @@ const CreateBlog = () => {
                             </div>
 
                             <button
-                                type="submit"
+                                onClick={handleSubmitContent}
                                 className="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
                             >
                                 Submit
                             </button>
-                        </form>
+                        </div>
                     </Box>
                 </Fade>
             </Modal>
