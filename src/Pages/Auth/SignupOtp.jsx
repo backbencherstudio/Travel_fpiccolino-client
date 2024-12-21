@@ -10,6 +10,15 @@ import { BsExclamationCircle } from "react-icons/bs";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearRecent,
+  conformRegisterOtp,
+  recentOtp,
+  registerUser,
+} from "../../features/auth/authSlice";
+
+
 
 
 const SignupOtp = () => {
@@ -34,7 +43,44 @@ const SignupOtp = () => {
     }
   };
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const {
+    recentOtpLoading,
+    recentOtpError,
+    conformOtpError,
+    conformOtpLoading,
+  } = useSelector((state) => state.authorization);
+    const [showError, setShowError] = useState(!!conformOtpError);
+    useEffect(() => {
+      if (conformOtpError) {
+        setShowError(true);
+        const timer = setTimeout(() => {
+          setShowError(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+      }
+    }, [conformOtpError]);
+  const handleRecentOtp = async () => {
+    let responce = await dispatch(recentOtp());
+    if (responce.payload.otp) {
+      const modal = document.getElementById("success_modal");
+      if (modal) modal.close();
+    }
+  };
+  const handleReFillData = async () => {
+    dispatch(clearRecent());
+    navigate(-1);
+  };
+
+
+  const handleRegisterUser = async () => {
+    const responce = await dispatch(conformRegisterOtp(otp.join("")));
+    if(responce.type === 'users/conformRegisterOtp/fulfilled'){
+      navigate("/")
+    }
+  };
 
   return (
     <ParentAuthComponent>
@@ -52,7 +98,15 @@ const SignupOtp = () => {
               <FaAngleLeft style={{ fontSize: "20px" }} /> Back
             </p>
 
- 
+      {showError && (
+              <div className="errorMessage mt-5">
+                <BsExclamationCircle className="exclamationMark text-red-500 " />
+                {/* <p className="error-message">{signupError}</p> */}
+                <p className="error-message">{conformOtpError}</p>
+              </div>
+            )}
+
+
 
             <h1 className="font-extrabold text-[32px] mt-8">Enter OTP</h1>
             <h5 className="text-[#72777F] text-[16px] mt-3">
@@ -77,10 +131,10 @@ const SignupOtp = () => {
 
             <button
               //   onClick={() => document.getElementById("password_modal").showModal()}
-         
+         onClick={handleRegisterUser}
               className="primary_bg p-3 w-full rounded-lg text-white text-[16px] font-semibold mt-6 active:opacity-60"
             >
-             Submit OTP
+            {conformOtpLoading ? "Loading" : " Submit OTP"} 
             </button>
             <h5 className="text-[#72777F] text-[16px] mt-5">
               If you didn't receive a code!{" "}
@@ -130,12 +184,50 @@ const SignupOtp = () => {
               </div>
             </div>
           </div>
-          <h1 className="font-extrabold text-[32px] mt-8">
+          {/* <h1 className="font-extrabold text-[32px] mt-8">
             {" "}
             Successfully Password Changed
           </h1>
-          <p className="py-4">Your otp has been updated successfully</p>
+          <p className="py-4">Your otp has been updated successfully</p> */}
 
+
+{recentOtpError ? (
+            recentOtpError === "User data not found!" ? (
+              <p className="py-4">
+                {recentOtpError}{" "}
+                <span
+                  className="text-orange-600 font-medium cursor-pointer hover:underline hover:text-orange-600"
+                  onClick={handleReFillData}
+                >
+                  {" "}
+                  refill data
+                </span>
+              </p>
+            ) : (
+              <p className="py-4">{recentOtpError}</p>
+            )
+          ) : (
+            <p className="py-4">Would you like to resend your OTP?</p>
+          )}
+          {recentOtpError === "User data not found!" ? (
+            ""
+          ) : (
+            <button
+              onClick={handleRecentOtp}
+              className="primary_bg p-3 w-full rounded-lg text-white text-[18px] font-semibold mt-6 active:opacity-60"
+            >
+              {recentOtpLoading ? (
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <CircularProgress size={30} color="#fff" />
+                </Box>
+              ) : (
+                "recent"
+              )}
+              {/* Back to Login */}
+              {/* recent  */}
+            </button>
+          )}
+          
 
         </div>
         <form method="dialog" className="modal-backdrop">

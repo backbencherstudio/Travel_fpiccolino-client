@@ -42,7 +42,7 @@ export const conformRegisterOtp = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "users/login",
   async (userData, { rejectWithValue }) => {
-    console.log(userData)
+    console.log(userData);
     try {
       const response = await axios.post(`${base_url}/users/login`, userData, {
         withCredentials: true,
@@ -156,11 +156,26 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearRecent: (state) => {
-      state.recentOtpError = null; 
-      state.recentOtpLoading = false
+      state.recentOtpError = null;
+      state.recentOtpLoading = false;
     },
   },
   extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.signupLoading = true;
+        state.signupError = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.signupLoading = false;
+        state.signupError = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.signupLoading = false;
+        state.signupError = action.payload?.message ?? null;
+  
+      });
+
     builder
       .addCase(loginUser.pending, (state) => {
         state.loginLoading = true;
@@ -248,21 +263,19 @@ const authSlice = createSlice({
         state.recentOtpError = action.payload?.message ?? null;
       });
 
-
-
-      // builder
-      // .addCase(recentOtp.pending, (state) => {
-      //   state.recentOtpLoading = true;
-      //   state.recentOtpError = null;
-      // })
-      // .addCase(recentOtp.fulfilled, (state, action) => {
-      //   state.recentOtpLoading = false;
-      //   state.recentOtpError = null;
-      // })
-      // .addCase(recentOtp.rejected, (state, action) => {
-      //   state.recentOtpLoading = false;
-      //   state.recentOtpError = action.payload?.message ?? null;
-      // });
+    // builder
+    // .addCase(recentOtp.pending, (state) => {
+    //   state.recentOtpLoading = true;
+    //   state.recentOtpError = null;
+    // })
+    // .addCase(recentOtp.fulfilled, (state, action) => {
+    //   state.recentOtpLoading = false;
+    //   state.recentOtpError = null;
+    // })
+    // .addCase(recentOtp.rejected, (state, action) => {
+    //   state.recentOtpLoading = false;
+    //   state.recentOtpError = action.payload?.message ?? null;
+    // });
   },
 });
 
