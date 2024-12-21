@@ -1,6 +1,4 @@
-import {
-    createBrowserRouter,
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import Home from "../Pages/Home/Home";
 import Tours from "../Pages/Tours/Tours";
@@ -30,142 +28,144 @@ import UpdateBlog from "../Components/Dashboard/blog/UpdateBlog";
 import PackageList from "../Components/Dashboard/Package/PackageList";
 import CreatePackage from "../Components/Dashboard/Package/CreatePackage";
 import CreateBlog from "../Components/Dashboard/Blog/CreateBlog";
-
+import UserProfile from "../Pages/Profile/UserProfile";
 
 export const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
         path: "/",
-        element: <Layout />,
-        children: [
-            {
-                path: '/',
-                element: <Home />
-            },
-            {
-                path: '/tours',
-                element: <Tours />
-            },
-            {
-                path: '/about',
-                element: <About />
-            },
-            {
-                path: '/tours',
-                element: <Tours />
-            },
-            {
-                path: '/faq',
-                element: <Faq />
-            },
-            {
-                path: '/TourDetails/:id',
-                element: <TourDetails />
-            },
-            {
-                path: '/blog',
-                element: <Blog />
-            },
-            {
-                path: '/blog/:id',
-                element: <BlogDetails />
-            },
-           
-            {
-                path: '/policy',
-                element: <Policy />
-            },
-            {
-                path: '/contact',
-                element: <Contact />
-            }
+        element: <Home />,
+      },
+      {
+        path: "/tours",
+        element: <Tours />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/tours",
+        element: <Tours />,
+      },
+      {
+        path: "/faq",
+        element: <Faq />,
+      },
+      {
+        path: "/TourDetails/:id",
+        element: <TourDetails />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogDetails />,
+      },
 
-        ]
-    },
-    {
-        path: "/dashboard",
-        element: <DashboardLayout />,
-        children: [
-            {
-                index:true,
-                element: <DashboardAnalysis />
-            },
-            {
-                path: 'tour-list',
-                element: <TourAnalysis />
-            },
-            {
-                path: 'user-list',
-                element: <UserList />
-            },
-            {
-                path: 'user-list/:id',
-                element: <UserDetails />
-            },
-            {
-                path: 'package',
-                element: <PackageList />
-            },
-            {
-                path: 'package/update/:id',
-                element: <UpdateBlog />
-            },
-            {
-                path: 'package/create/new',
-                element: <CreatePackage />
-            },
-            {
-                path: 'payment',
-                element: <PaymentHistory/>
-            },
-            {
-                path: 'blog-list',
-                element: <BlogList />
-            },
-            {
-                path: 'blog-list/:id',
-                element: <BlogDetails />
-            },
-            {
-                path: 'blog-list/create/new',
-                element: <CreateBlog />
-            },
-            {
-                path: 'blog-list/update/:id',
-                element: <UpdateBlog />
-            },
-        ]
-    },
-    {
-        path: '/flight/:id',
-        element: <Flight />
-    },
-    {
-        path: '/insurance/:id',
-        element: <Insurance />
-    },
-    {
-        path: '/transfers/:id',
-        element: <Transfers />
-    },
-    {
-        path: '/personalDetails',
-        element: <PersonalDetails />
-    },
-    {
-        path:'/login',
-        element: <Login/>
-    },
-    {
-        path:'/signup',
-        element: <SignUp/>
-    },
-    {
-        path:'/forgot-password',
-        element: <ForgotPassword/>
-    },
-    {
-        path:'/otp',
-        element: <OtpScreen/>
-    },
-  
+      {
+        path: "/policy",
+        element: <Policy />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/profile/:id",
+        element: <UserProfile />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <DashboardAnalysis />,
+      },
+      {
+        path: "tour-list",
+        element: <TourAnalysis />,
+      },
+      {
+        path: "user-list",
+        element: <UserList />,
+      },
+      {
+        path: "user-list/:id",
+        element: <UserDetails />,
+      },
+      {
+        path: "package",
+        element: <PackageList />,
+      },
+      {
+        path: "package/update/:id",
+        element: <UpdateBlog />,
+      },
+      {
+        path: "package/create/new",
+        element: <CreatePackage />,
+      },
+      {
+        path: "payment",
+        element: <PaymentHistory />,
+      },
+      {
+        path: "blog-list",
+        element: <BlogList />,
+      },
+      {
+        path: "blog-list/:id",
+        element: <BlogDetails />,
+      },
+      {
+        path: "blog-list/create/new",
+        element: <CreateBlog />,
+      },
+      {
+        path: "blog-list/update/:id",
+        element: <UpdateBlog />,
+      },
+    ],
+  },
+  {
+    path: "/flight/:id",
+    element: <Flight />,
+  },
+  {
+    path: "/insurance/:id",
+    element: <Insurance />,
+  },
+  {
+    path: "/transfers/:id",
+    element: <Transfers />,
+  },
+  {
+    path: "/personalDetails",
+    element: <PersonalDetails />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/otp",
+    element: <OtpScreen />,
+  },
 ]);
