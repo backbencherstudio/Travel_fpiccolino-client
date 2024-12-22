@@ -7,6 +7,7 @@ import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import UpdateUserModal from "../../Components/Profile/UpdateUserModal";
 import { useSelector } from "react-redux";
+import { RxAvatar } from "react-icons/rx";
 
 const UserProfile = () => {
   const [tourDateFilter, setTourDateFilter] = useState("all");
@@ -41,11 +42,15 @@ const UserProfile = () => {
       <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
         <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
           <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
-          <img
-            src={user?.customerImg}
-            className="rounded-full w-[120px] h-[120px] mt-5"
-            alt="User"
-          />
+          {user?.photoUrl ? (
+            <img
+              src={user?.customerImg}
+              className="rounded-full w-[120px] h-[120px] mt-5"
+              alt="User"
+            />
+          ) : (
+            <RxAvatar className=" w-[120px] h-[120px] mt-5" />
+          )}
           <h1 className="mt-5 text-[20px] font-medium">Personal Details</h1>
           <div className="mt-3 max-w-[680px]">
             <div className="grid grid-cols-2">
