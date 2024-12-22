@@ -45,6 +45,9 @@ const CreateBlog = () => {
         const [mainContent, setMainContent] = useState({
             heading: "",
             subHeading: "",
+            Heroheading: "",
+            HerosubHeading: "",
+
             image: null,
         });
     
@@ -65,7 +68,14 @@ const CreateBlog = () => {
                 setMainContent({ ...mainContent, heading: event.target.value });
             } else if (field === "mainSubHeading") {
                 setMainContent({ ...mainContent, subHeading: event.target.value });
-            } else if (field === "mainImage") {
+            }  else if (field === "HeroHeading") {
+                setMainContent({ ...mainContent, Heroheading: event.target.value });
+            }  else if (field === "HeroSubHeading") {
+                setMainContent({ ...mainContent, HerosubHeading: event.target.value });
+            } 
+            
+            
+            else if (field === "mainImage") {
                 setMainContent({ ...mainContent, image: event.target.files[0] });
                 const file = event.target.files[0];
                 setMainImage([...mainImage, file]);
@@ -165,8 +175,10 @@ const CreateBlog = () => {
                 heroSection: [
                     {
                         headerImg: mainContent ? uploadMainImage[0].path : null,
-                        header: deepCopy[0]?.heading,
-                        text: deepCopy[0]?.subHeading,
+                        header: deepCopy[0]?.Heroheading,
+                        text: deepCopy[0]?.HerosubHeading,
+                        mainHeading : deepCopy[0]?.heading,
+                        mainSubHeading :  deepCopy[0]?.subHeading
                     }
                 ],
                 category: selectedCategory,
@@ -414,23 +426,23 @@ const CreateBlog = () => {
 
                         <div className="space-y-4 px-2 max-h-[65vh] overflow-y-auto">
                             <div>
-                                <h3 className="text-md font-semibold mb-2">Heading</h3>
+                                <h3 className="text-md font-semibold mb-2">Hero Heading</h3>
                                 <input
                                     type="text"
-                                    placeholder="Main Content Heading"
-                                    value={mainContent.heading}
-                                    onChange={(e) => handleInputChange(e, "mainHeading")}
+                                    placeholder="Hero Content Heading"
+                                    value={mainContent.Heroheading}
+                                    onChange={(e) => handleInputChange(e, "HeroHeading")}
                                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
 
                             <div>
-                                <h3 className="text-md font-semibold mb-2">Sub Heading</h3>
+                                <h3 className="text-md font-semibold mb-2">Hero Sub Heading</h3>
                                 <input
                                     type="text"
-                                    placeholder="Main Content Sub Heading"
-                                    value={mainContent.subHeading}
-                                    onChange={(e) => handleInputChange(e, "mainSubHeading")}
+                                    placeholder="Hero Content Sub Heading"
+                                    value={mainContent.HerosubHeading}
+                                    onChange={(e) => handleInputChange(e, "HeroSubHeading")}
                                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
@@ -442,6 +454,26 @@ const CreateBlog = () => {
                                     accept="image/*"
                                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     onChange={(e) => handleInputChange(e, "mainImage")}
+                                />
+                            </div>
+                            <div>
+                                <h3 className="text-md font-semibold mb-2">Main Heading</h3>
+                                <input
+                                    type="text"
+                                    placeholder="Main Content Heading"
+                                    value={mainContent.heading}
+                                    onChange={(e) => handleInputChange(e, "mainHeading")}
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <h3 className="text-md font-semibold mb-2">Main Sub Heading</h3>
+                                <input
+                                    type="text"
+                                    placeholder="Main Content Sub Heading"
+                                    value={mainContent.subHeading}
+                                    onChange={(e) => handleInputChange(e, "mainSubHeading")}
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
 
