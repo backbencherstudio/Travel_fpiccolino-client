@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +8,10 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
     city: user?.city || "",
     country: user?.country || "",
   });
+
+  
+ 
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +36,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="name">
-              Name
+              Name  
             </label>
             <input
               type="text"

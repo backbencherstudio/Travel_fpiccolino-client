@@ -91,6 +91,7 @@ export const updateUser = createAsyncThunk(
     try {
       const response = await axios.put(`${base_url}/users/update`, userData, {
         withCredentials: true,
+        "Content-Type": "multipart/form-data",
       });
       console.log("API response:", response);
       return response.data;

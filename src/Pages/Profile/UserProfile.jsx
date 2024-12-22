@@ -24,12 +24,10 @@ const UserProfile = () => {
   };
 
   const handleSubmit = (updatedDetails) => {
-    // Update user details with the new data (for now, we'll just update the local state)
     const updatedUserData = { ...user, ...updatedDetails };
-    setuser(updatedUserData);
 
-    // Optionally, here you could also send this updated data to your API to save changes in a database.
-    console.log("Updated User Details:", updatedUserData);
+    console.log(updatedUserData); 
+    
   };
 
   return (
