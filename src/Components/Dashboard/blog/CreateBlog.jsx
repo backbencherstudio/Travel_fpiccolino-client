@@ -21,241 +21,185 @@ const CreateBlog = () => {
     const inputStyle =
         "w-full my-3 border border-[#E86731] ring-[1px] ring-[#E86731] text-[#E86731] outline-none p-2 rounded-md";
 
-    const [open, setOpen] = useState(false);
-    const [contentList, setContentList] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [openMainContent, setOpenMainContent] = useState(false);
-    const [images, setImages] = useState([])
-    const [mainImage, SetMainImage] = useState([]);
-    const [imagepath, setImagePath] = useState([]);
-    const [mainimagepath, setMainimagepath] = useState([]);
-    const [mainContentList, setMainContentList] = useState([]);
-    var deepCopy =[];
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const handleMainContentOpen = () => setOpenMainContent(true);
-    const handleMainContentClose = () => setOpenMainContent(false);
-
-    const [content, setContent] = useState({
-        headings: [""],
-        image: null,
-        paragraphs: [""]
-    });
-    const [mainContent, setMainContent] = useState({
-        heading: "",
-        subHeading: "",
-        image: null,
-    });
-    useEffect(() => {
-        console.log("Updated images:", images);
-    }, [images]);
-
-    const handleInputChange = (event, field, index = null) => {
-        if (field === "headings") {
-            const updatedHeadings = [...content.headings];
-            updatedHeadings[0] = event.target.value;
-            setContent({ ...content, headings: updatedHeadings });
-        } else if (field === "image") {
-            setContent({ ...content, image: event.target.files[0] });
-            const file = event.target.files[0];
-            setImages([...images, file]);
-            //console.log(images)
-        } else if (field === "paragraphs") {
-            const updatedParagraphs = [...content.paragraphs];
-            updatedParagraphs[index] = event.target.value;
-            setContent({ ...content, paragraphs: updatedParagraphs });
-        }
-        else if (field === "mainHeading") {
-            setMainContent({ ...mainContent, heading: event.target.value });
-            deepCopy.push({heading: event.target.value}) 
-        } else if (field === "mainSubHeading") {
-            setMainContent({ ...mainContent, subHeading: event.target.value });
-            deepCopy.push({subHeading: event.target.value})
-        } else if (field === "mainImage") {
-            setMainContent({ ...mainContent, image: event.target.files[0] });
-            const file = event.target.files[0];
-            SetMainImage([...mainImage, file]);
-        }
-    };
-
-    const handleAddParagraph = () => {
-        setContent({ ...content, paragraphs: [...content.paragraphs, ""] });
-    };
-
-    const handleRemoveParagraph = (index) => {
-        const updatedParagraphs = content.paragraphs.filter((_, i) => i !== index);
-        setContent({ ...content, paragraphs: updatedParagraphs });
-    };
-
-    const handleSubmitContent = () => {
-        setContentList((prevContent) => [...prevContent, content]);
-        setContent({ headings: [""], image: null, paragraphs: [""] });
-        handleClose();
-    };
-    const handleSubmitMainContent = () => {
-        setMainContentList((prevContent) => [...prevContent, mainContent]);
-        setMainContent({ heading: "", subHeading: "", image: null });
-        console.log(mainContent, "here")
-        deepCopy = JSON.parse(JSON.stringify(mainContent));
-        console.log(deepCopy)
-        handleMainContentClose();
-    };
-
-    // const UploadimagePath = async() =>{
-    //     const formData = new FormData();
-    //     Array.from(images).forEach((image) => {
-    //     formData.append("images", image);
-    // });
-    //  console.log("yaaap")
-    // try {
-    //   const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   });
-    //   console.log(response.data);
-    //   setImagePath(response?.data?.images);
-    // } catch (error) {
-    //   console.log("Error uploading files.");
-    // }
-    // }
-
-    // const handleUploadBlog = async () => {
-    //     if (!selectedCategory) {
-    //         alert("Please select a category!");
-    //         return;
-    //     }
-       
-    //     await UploadimagePath();
-    //     const body = {
-    //         category: selectedCategory,
-    //         contentList: contentList.map((content, index) => ({
-    //             headings: content.headings,
-    //             paragraphs: content.paragraphs,
-    //             image: imagepath[index] ? imagepath[index].path : null, // Make sure imagepath exists for the current index
-    //         }))
-    //     };
-        
-
-    //     console.log(body)
-        
-    //     try {
-            
-    //         const response = await fetch("http://localhost:3000/api/blogs/createblog", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(body),
-    //         });
-
-    //         if (response.ok) {
-    //             alert("Blog uploaded successfully!");
-    //             setContentList([]);
-    //             setSelectedCategory("");
-    //         } else {
-    //             alert("Failed to upload the blog.");
-    //         }
-    //     } catch (error) {
-    //         console.error("Error uploading blog:", error);
-    //         alert("An error occurred while uploading the blog.");
-    //     }
-    // };
-    const UploadimagePath = async () => {
-        const formData = new FormData();
-        Array.from(images).forEach((image) => {
-            formData.append("images", image);
+        const [open, setOpen] = useState(false);
+        const [contentList, setContentList] = useState([]);
+        const [selectedCategory, setSelectedCategory] = useState("");
+        const [openMainContent, setOpenMainContent] = useState(false);
+        const [images, setImages] = useState([]);
+        const [mainImage, setMainImage] = useState([]);
+        const [imagepath, setImagePath] = useState([]);
+        const [mainimagepath, setMainimagepath] = useState([]);
+        const [mainContentList, setMainContentList] = useState([]);
+        const [deepCopy, setDeepCopy] = useState([]); // Use state for deepCopy
+    
+        const handleOpen = () => setOpen(true);
+        const handleClose = () => setOpen(false);
+        const handleMainContentOpen = () => setOpenMainContent(true);
+        const handleMainContentClose = () => setOpenMainContent(false);
+    
+        const [content, setContent] = useState({
+            headings: [""],
+            image: null,
+            paragraphs: [""]
+        });
+        const [mainContent, setMainContent] = useState({
+            heading: "",
+            subHeading: "",
+            image: null,
         });
     
-        try {
-            const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            console.log("Image uploaded successfully", response.data);
-            setImagePath(response?.data?.images);
-            return response.data.images; 
-        } catch (error) {
-            console.error("Error uploading files:", error);
-            alert("Error uploading images. Please try again.");
-            return null; 
-        }
-    };
-    const uploadmainimage = async () => {
-        const formData = new FormData();
-        Array.from(mainImage).forEach((image) => {
-            formData.append("images", image);
-        });
-    
-        try {
-            const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            console.log("Image uploaded successfully", response.data);
-            setMainimagepath(response?.data?.images);
-            return response.data.images; 
-        } catch (error) {
-            console.error("Error uploading files:", error);
-            alert("Error uploading images. Please try again.");
-            return null; 
-        }
-    };
-    
-    const handleUploadBlog = async () => {
-        if (!selectedCategory) {
-            alert("Please select a category!");
-            return;
-        }
-        const uploadMainImage =  await uploadmainimage()
-        const uploadedImages = await UploadimagePath();
-        if (!uploadedImages) {
-            return;
-        }
-        if (!uploadMainImage) {
-            return;
-        }
-        console.log(deepCopy, "last")
-        const body = {
-            heroSection: [
-                {
-                  headerImg:mainContent ? uploadedImages[0].path : null,
-                  header: deepCopy[0]?.subHeading,
-                  text: deepCopy[0]?.subHeading,
-                }],
-            category: selectedCategory,
-            contentList: contentList.map((content, index) => ({
-                headings: content.headings,
-                paragraphs: content.paragraphs,
-                image: uploadedImages[index] ? uploadedImages[index].path : null, 
-            })),
+        const handleInputChange = (event, field, index = null) => {
+            if (field === "headings") {
+                const updatedHeadings = [...content.headings];
+                updatedHeadings[0] = event.target.value;
+                setContent({ ...content, headings: updatedHeadings });
+            } else if (field === "image") {
+                setContent({ ...content, image: event.target.files[0] });
+                const file = event.target.files[0];
+                setImages([...images, file]);
+            } else if (field === "paragraphs") {
+                const updatedParagraphs = [...content.paragraphs];
+                updatedParagraphs[index] = event.target.value;
+                setContent({ ...content, paragraphs: updatedParagraphs });
+            } else if (field === "mainHeading") {
+                setMainContent({ ...mainContent, heading: event.target.value });
+            } else if (field === "mainSubHeading") {
+                setMainContent({ ...mainContent, subHeading: event.target.value });
+            } else if (field === "mainImage") {
+                setMainContent({ ...mainContent, image: event.target.files[0] });
+                const file = event.target.files[0];
+                setMainImage([...mainImage, file]);
+            }
         };
     
-        console.log("Blog Data:", body);
+        const handleAddParagraph = () => {
+            setContent({ ...content, paragraphs: [...content.paragraphs, ""] });
+        };
     
-        try {
-            const response = await fetch("http://localhost:3000/api/blogs/createblog", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(body),
+        const handleRemoveParagraph = (index) => {
+            const updatedParagraphs = content.paragraphs.filter((_, i) => i !== index);
+            setContent({ ...content, paragraphs: updatedParagraphs });
+        };
+    
+        const handleSubmitContent = () => {
+            setContentList((prevContent) => [...prevContent, content]);
+            setContent({ headings: [""], image: null, paragraphs: [""] });
+            handleClose();
+        };
+    
+        const handleSubmitMainContent = () => {
+            setMainContentList((prevContent) => [...prevContent, mainContent]);
+    
+            // Create a deep copy of mainContent
+            const newEntry = JSON.parse(JSON.stringify(mainContent));
+    
+            // Update deepCopy using state updater
+            setDeepCopy((prevDeepCopy) => [...prevDeepCopy, newEntry]);
+    
+            console.log(mainContent, "here");
+            console.log(deepCopy, "deepCopy after push");
+    
+            setMainContent({ heading: "", subHeading: "", image: null });
+            handleMainContentClose();
+        };
+    
+        const UploadimagePath = async () => {
+            const formData = new FormData();
+            Array.from(images).forEach((image) => {
+                formData.append("images", image);
             });
     
-            if (response.ok) {
-                alert("Blog uploaded successfully!");
-                setContentList([]); // Clear content list after successful upload
-                setSelectedCategory(""); // Reset category selection
-            } else {
-                alert("Failed to upload the blog.");
+            try {
+                const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+                console.log("Image uploaded successfully", response.data);
+                setImagePath(response?.data?.images);
+                return response.data.images;
+            } catch (error) {
+                console.error("Error uploading files:", error);
+                alert("Error uploading images. Please try again.");
+                return null;
             }
-        } catch (error) {
-            console.error("Error uploading blog:", error);
-            alert("An error occurred while uploading the blog.");
-        }
-    };
+        };
+    
+        const uploadmainimage = async () => {
+            const formData = new FormData();
+            Array.from(mainImage).forEach((image) => {
+                formData.append("images", image);
+            });
+    
+            try {
+                const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+                console.log("Image uploaded successfully", response.data);
+                setMainimagepath(response?.data?.images);
+                return response.data.images;
+            } catch (error) {
+                console.error("Error uploading files:", error);
+                alert("Error uploading images. Please try again.");
+                return null;
+            }
+        };
+    
+        const handleUploadBlog = async () => {
+            if (!selectedCategory) {
+                alert("Please select a category!");
+                return;
+            }
+            const uploadMainImage = await uploadmainimage();
+            const uploadedImages = await UploadimagePath();
+            if (!uploadedImages) {
+                return;
+            }
+            if (!uploadMainImage) {
+                return;
+            }
+            console.log(deepCopy, "last");
+            const body = {
+                heroSection: [
+                    {
+                        headerImg: mainContent ? uploadMainImage[0].path : null,
+                        header: deepCopy[0]?.heading,
+                        text: deepCopy[0]?.subHeading,
+                    }
+                ],
+                category: selectedCategory,
+                contentList: contentList.map((content, index) => ({
+                    headings: content.headings,
+                    paragraphs: content.paragraphs,
+                    image: uploadedImages[index] ? uploadedImages[index].path : null,
+                })),
+            };
+    
+            console.log("Blog Data:", body);
+    
+            try {
+                const response = await fetch("http://localhost:3000/api/blogs/createblog", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(body),
+                });
+    
+                if (response.ok) {
+                    alert("Blog uploaded successfully!");
+                    setContentList([]);
+                    setSelectedCategory("");
+                } else {
+                    alert("Failed to upload the blog.");
+                }
+            } catch (error) {
+                console.error("Error uploading blog:", error);
+                alert("An error occurred while uploading the blog.");
+            }
+        };
     
 
     return (
