@@ -7,6 +7,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
     address: user?.address || "",
     city: user?.city || "",
     country: user?.country || "",
+    image: null, // Added for image upload
   });
 
   const handleChange = (e) => {
@@ -17,19 +18,58 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        image: file,
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
+    console.log(formData);
     onClose();
   };
 
   if (!isOpen) return null;
 
+  // For image preview
+  const imagePreview = formData.image
+    ? URL.createObjectURL(formData.image)
+    : null;
+
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg w-[400px]">
         <h2 className="text-xl font-semibold mb-4">Edit Your Details</h2>
         <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium" htmlFor="image">
+              Image
+            </label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-full border p-2 mt-1 rounded"
+            />
+            {imagePreview && (
+              <div className="mt-2">
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="w-32 h-32 object-cover rounded"
+                />
+              </div>
+            )}
+          </div>
+
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="name">
               Name
@@ -43,6 +83,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
               className="w-full border p-2 mt-1 rounded"
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="phone">
               Phone
@@ -56,6 +97,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
               className="w-full border p-2 mt-1 rounded"
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="address">
               Address
@@ -69,6 +111,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
               className="w-full border p-2 mt-1 rounded"
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="city">
               City
@@ -82,6 +125,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
               className="w-full border p-2 mt-1 rounded"
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="country">
               Country
@@ -95,6 +139,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
               className="w-full border p-2 mt-1 rounded"
             />
           </div>
+
           <div className="flex justify-end mt-6">
             <button
               type="button"
