@@ -104,8 +104,12 @@ const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
       <div style={{ marginTop: "10px" }}>{renderSelectedIcons()}</div>
       <button
         color="primary"
-        onClick={handleOpenModal}
-        className="absolute bottom-[13px] right-2 rounded border p-1 px-2 z-40 primary_text text-sm"
+        onClick={iconText.length > 0 && handleOpenModal}
+        className={`absolute bottom-[13px] right-2 rounded border p-1 px-2 z-40 ${
+          iconText.length > 0
+            ? "primary_text border-[#ea7645] hover:bg-[#fdf0ea]"
+            : "text-gray-300"
+        } text-sm`}
       >
         Add Icon
       </button>
