@@ -22,7 +22,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    console.log(file)
+    console.log('image file', file)
     if (file) {
       setFormData({
         ...formData,

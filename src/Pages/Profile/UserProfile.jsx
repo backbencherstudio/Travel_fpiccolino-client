@@ -17,7 +17,7 @@ const UserProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useSelector((state) => state.authorization);
-  console.log(41584854, user);
+  // console.log(41584854, user);
 
   const handleEditClick = () => {
     setIsModalOpen(true);
@@ -29,9 +29,10 @@ const UserProfile = () => {
   const handleSubmit = (updatedDetails) => {
     const updatedUserData = { ...user, ...updatedDetails };
     // const updatedUserData = { ...updatedDetails };
-    // console.log(updatedUserData); 
+    // console.log(updatedDetails); 
+    console.log(555, updatedUserData)
     const responce = dispatch(updateUser(updatedUserData))
-    console.log("responce", responce)
+    // console.log("responce", responce)
     
   };
 

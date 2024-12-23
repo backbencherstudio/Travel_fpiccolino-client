@@ -88,10 +88,14 @@ export const loginOut = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   "users/update",
   async (userData, { rejectWithValue }) => {
+    console.log('slice', userData)
     try {
       const response = await axios.put(`${base_url}/users/update-profile`, userData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         withCredentials: true,
-        "Content-Type": "multipart/form-data",
+       
       });
       console.log("API response:", response);
       return response.data;
