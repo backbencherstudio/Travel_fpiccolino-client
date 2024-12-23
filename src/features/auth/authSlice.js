@@ -88,9 +88,14 @@ export const loginOut = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   "users/update",
   async (userData, { rejectWithValue }) => {
+    console.log('slice', userData)
     try {
-      const response = await axios.put(`${base_url}/users/update`, userData, {
+      const response = await axios.put(`${base_url}/users/update-profile`, userData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         withCredentials: true,
+       
       });
       console.log("API response:", response);
       return response.data;
@@ -214,9 +219,10 @@ const authSlice = createSlice({
         state.conformOtpError = null;
       })
       .addCase(conformRegisterOtp.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.conformOtpLoading = false;
         state.conformOtpError = null;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isAuthenticated = true;
       })
       .addCase(conformRegisterOtp.rejected, (state, action) => {

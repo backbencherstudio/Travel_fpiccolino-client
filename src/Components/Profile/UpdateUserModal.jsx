@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
@@ -21,6 +22,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    console.log("image file", file);
     if (file) {
       setFormData({
         ...formData,

@@ -10,7 +10,6 @@ function App() {
   const { user, appLoading, isAuthenticated } = useSelector(
     (state) => state.authorization
   );
-  console.log(user);
 
   useEffect(() => {
     if (!isAuthenticated) {
