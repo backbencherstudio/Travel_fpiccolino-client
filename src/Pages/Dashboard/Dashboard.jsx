@@ -100,6 +100,7 @@ const Dashboard = () => {
             <MdOutlinePayment />
             <span>Payment History</span>
           </button>
+
           <button
             onClick={() => handleNavigation("Blog", "blog-list")}
             className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Blog"
@@ -110,6 +111,18 @@ const Dashboard = () => {
             <GrArticle />
             <span>Blog</span>
           </button>
+
+          <button
+            onClick={() => handleNavigation("Header", "header")}
+            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Header"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+              }`}
+          >
+            <GrArticle />
+            <span>Add Header</span>
+          </button>
+
         </nav>
         <button className="absolute bottom-5 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"><CiLogout className="mt-1" /> Logout</button>
       </aside>
