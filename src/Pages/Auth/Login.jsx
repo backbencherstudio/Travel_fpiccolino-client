@@ -3,19 +3,52 @@ import ParentAuthComponent from "../../Shared/ParentComponent/ParentAuthComponen
 import heroImage from "../../assets/Images/about.jpg";
 import logo from "../../assets/logo.svg";
 import { useForm } from "react-hook-form";
+import { loginUser } from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import "./style.css";
+import { BsExclamationCircle } from "react-icons/bs";
+import { useEffect, useState } from "react";
+
 const Login = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Login Data:", data);
-  };
+
   
+  const { loginLoading, loginError } = useSelector(
+    (state) => state.authorization
+  );
+
+  const onSubmit = async (data) => {
+    // console.log(514541, data)
+    const responce = await dispatch(loginUser(data));
+    console.log(responce);
+    if (responce.type === "users/login/fulfilled") {
+      navigate("/");
+    }
+  };
+
+
+      const [showError, setShowError] = useState(!!loginError);
+      useEffect(() => {
+        if (loginError) {
+          setShowError(true);
+          const timer = setTimeout(() => {
+            setShowError(false);
+          }, 5000);
+          return () => clearTimeout(timer);
+        }
+      }, [loginError]);
+
   return (
     <ParentAuthComponent>
       <div className="grid grid-cols-1 md:grid-cols-5 h-full ">
@@ -27,9 +60,17 @@ const Login = () => {
           <div className="lg:m-20 m-5">
             <img src={logo} alt="" />
             <h1 className="font-extrabold text-[32px] mt-10">Welcome back</h1>
-            <h5 className="text-[#72777F] text-[16px] mt-3">
-              Welcome back! Please enter your details.
-            </h5>
+            {showError ? (
+              <div className="errorMessage mt-5">
+                <BsExclamationCircle className="exclamationMark text-red-500 " />
+                {/* <p className="error-message">{signupError}</p> */}
+                <p className="error-message">{loginError}</p>
+              </div>
+            ) : (
+              <h5 className="text-[#72777F] text-[16px] mt-3">
+                Welcome back! Please enter your details.
+              </h5>
+            )}
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div>
@@ -66,7 +107,9 @@ const Login = () => {
                   })}
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password.message}</p>
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
@@ -89,9 +132,17 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="primary_bg p-3 w-full rounded-lg text-white text-[16px] font-semibold mt-6"
+                className={`primary_bg ${
+                  loginLoading ? "p-1" : "p-3"
+                }   w-full rounded-lg text-white text-[16px] font-semibold mt-6`}
               >
-                Log in
+                {loginLoading ? (
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <CircularProgress size={30} color="#fff" />
+                  </Box>
+                ) : (
+                  "Log in"
+                )}
               </button>
 
               <div className="text-[#475467] mt-8 text-center">
@@ -104,12 +155,9 @@ const Login = () => {
                 </span>
               </div>
             </form>
-
-
           </div>
         </div>
       </div>
-
     </ParentAuthComponent>
   );
 };

@@ -3,18 +3,54 @@ import ParentAuthComponent from "../../Shared/ParentComponent/ParentAuthComponen
 import heroImage from "../../assets/Images/beach.jpg";
 import logo from "../../assets/logo.svg";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../features/auth/authSlice";
+import { useEffect, useState } from "react";
+import { BsExclamationCircle } from "react-icons/bs";
+
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const { signupLoading, signupError } = useSelector(
+    (state) => state.authorization
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const responce = await dispatch(registerUser(data));
+      console.log(responce);
+      if (responce?.payload?.otp === "success") {
+        navigate("/signotp");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+
+
+  const [showError, setShowError] = useState(!!signupError);
+  useEffect(() => {
+    if (signupError) {
+      setShowError(true);
+      const timer = setTimeout(() => {
+        setShowError(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [signupError]);
+
+console.log(signupLoading, signupError )
   return (
     <ParentAuthComponent>
       <div className="grid grid-cols-1 md:grid-cols-5 h-full ">
@@ -27,11 +63,18 @@ const SignUp = () => {
             <h1 className="font-extrabold text-[32px] mt-10">
               Create New Account
             </h1>
-            <h5 className="text-[#72777F] text-[16px] mt-3">
-              Please enter your details.
-            </h5>
 
-
+            {showError ? (
+              <div className="errorMessage mt-5">
+                <BsExclamationCircle className="exclamationMark text-red-500 " />
+                {/* <p className="error-message">{signupError}</p> */}
+                <p className="error-message">{signupError}</p>
+              </div>
+            ) : (
+              <h5 className="text-[#72777F] text-[16px] mt-3">
+                Please enter your details.
+              </h5>
+            )}
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div>
@@ -80,13 +123,12 @@ const SignUp = () => {
                     },
                   })}
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password.message}</p>
-                )}
               </div>
 
               <div className="mt-1 flex justify-between">
-                <p className="inline text-[14px]">Must be at least 8 characters</p>
+                <p className="inline text-[14px]">
+                  Must be at least 8 characters
+                </p>
               </div>
 
               <button
@@ -102,13 +144,11 @@ const SignUp = () => {
                   onClick={() => navigate("/login")}
                   className="primary_text font-semibold cursor-pointer"
                 >
-                  Log in
+                  {signupLoading ? "Loading ... " : "Sign Up"} {/*  later on */}
                 </span>
               </div>
             </form>
-
           </div>
-
         </div>
       </div>
     </ParentAuthComponent>

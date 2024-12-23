@@ -8,30 +8,31 @@ import { TextField } from "@mui/material";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import FlightBookingForm from "./FlightForm";
 import { Controller, useForm } from "react-hook-form";
+import InsuranceForm from "./InsuranceForm";
 const CreatePackage = () => {
   const { register, handleSubmit, control } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
   const [openFlightModal, setOpenFlightModal] = useState(false);
   const [bookedFlights, setBookedFlights] = useState([]);
+  const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
+  const [insurance, setInsurance] = useState([]);
 
   const onSubmit = (data) => {
     const packageData = {
       includeItems: selectedIncludeItems,
       notIncludeItems: selectedNotIncludeItems,
       bookedFlights,
-      ...data
-    }
+      ...data,
+    };
     console.log("Form Data:", packageData);
   };
-
 
   return (
     <div>
       <CustomHeadingDashboard />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="" >
-
+      <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="flex justify-between mt-20">
           <h1 className="text-[24px] font-semibold">Create Package</h1>
           <button
@@ -88,14 +89,24 @@ const CreatePackage = () => {
                       name="tourDuration.nights"
                       control={control}
                       render={({ field }) => (
-                        <TextField {...field} size="small" placeholder="Night" type="number" />
+                        <TextField
+                          {...field}
+                          size="small"
+                          placeholder="Night"
+                          type="number"
+                        />
                       )}
                     />
                     <Controller
                       name="tourDuration.days"
                       control={control}
                       render={({ field }) => (
-                        <TextField {...field} size="small" placeholder="Day" type="number" />
+                        <TextField
+                          {...field}
+                          size="small"
+                          placeholder="Day"
+                          type="number"
+                        />
                       )}
                     />
                   </div>
@@ -129,12 +140,26 @@ const CreatePackage = () => {
                   className="text-xl primary_text cursor-pointer"
                 />
               </div>
-
               <FlightBookingForm
                 openModal={openFlightModal}
                 setOpenModal={setOpenFlightModal}
                 setBookedFlights={setBookedFlights}
                 bookedFlights={bookedFlights}
+              />
+            </div>
+            <div className="border p-4 rounded-2xl mt-5">
+              <div className="flex justify-between items-center">
+                <h2 className="text-[20px] font-medium ">Insurance</h2>
+                <FaRegSquarePlus
+                  onClick={() => setOpenInsuranceModal(true)}
+                  className="text-xl primary_text cursor-pointer"
+                />
+              </div>
+              <InsuranceForm
+                openModal={openInsuranceModal}
+                setOpenModal={setOpenInsuranceModal}
+                setInsurance={setInsurance}
+                insurance={insurance}
               />
             </div>
           </div>
@@ -143,8 +168,6 @@ const CreatePackage = () => {
           </div>
         </div>
       </form>
-
-
     </div>
   );
 };

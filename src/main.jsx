@@ -5,6 +5,8 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store from "./app/store.js";
 
+// console.log(getUserFromToken())
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
