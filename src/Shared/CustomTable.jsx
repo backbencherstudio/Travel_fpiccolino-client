@@ -46,6 +46,7 @@ const CustomTable = ({
       // navigate(`/other-list/${id}`);
     }
   };
+console.log("data",data);
 
   return (
     <div className="">
@@ -173,8 +174,8 @@ const CustomTable = ({
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
-                            src={item.headerImg}
-                            alt={item.header}
+                            src={item?.heroSection[0]?.headerImg}
+                            alt=''
                             style={{ width: "40px", height: "40px" }} // fixed size for the image
                           />
                           <span
@@ -183,7 +184,7 @@ const CustomTable = ({
                               wordWrap: "break-word",
                             }}
                           >
-                            {item.header}
+                            {item?.heroSection[0]?.mainHeading}
                           </span>
                           {/* Added truncate to prevent overflow */}
                         </div>
@@ -211,7 +212,7 @@ const CustomTable = ({
                       </TableCell>
                     )}
 
-                    {columns?.date && <TableCell>{item.date}</TableCell>}
+                    {columns?.date && <TableCell>{item.createdAt}</TableCell>}
                     {columns?.duration && (
                       <TableCell>{item.duration}</TableCell>
                     )}
