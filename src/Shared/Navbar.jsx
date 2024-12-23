@@ -5,6 +5,7 @@ import ParentComponent from "./ParentComponent/ParentComponent";
 import { Avatar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { loginOut, logOut } from "../features/auth/authSlice";
+import { base_url } from "../utils/base_path";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
+// console.log(first)
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflowY = "hidden";
@@ -298,9 +299,9 @@ const Navbar = () => {
                         onClick={toggloginOpen}
                         className="w-10 h-10 text-lg bg-[#EB5B2A] flex justify-center items-center rounded-full"
                       >
-                        {user?.avatar ? (
+                        {user?.image ? (
                           <img
-                            src={user?.avatar}
+                            src= {user?.image_url}  
                             alt="Avatar"
                             className="w-full h-full object-cover rounded-full"
                           />

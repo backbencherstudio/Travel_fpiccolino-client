@@ -30,9 +30,9 @@ const UserProfile = () => {
     const updatedUserData = { ...user, ...updatedDetails };
     // const updatedUserData = { ...updatedDetails };
     // console.log(updatedDetails); 
-    console.log(555, updatedUserData)
+    console.log(555,updatedUserData)
     const responce = dispatch(updateUser(updatedUserData))
-    // console.log("responce", responce)
+    console.log("responce", responce)
     
   };
 
@@ -47,9 +47,9 @@ const UserProfile = () => {
       <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
         <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
           <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
-          {user?.avatar ? (
+          {user?.image ? (
             <img
-              src={user?.customerImg}
+              src={user?.image_url}
               className="rounded-full w-[120px] h-[120px] mt-5"
               alt="User"
             />
