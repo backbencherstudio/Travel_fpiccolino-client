@@ -11,6 +11,8 @@ import { Controller, useForm } from "react-hook-form";
 import InsuranceForm from "./InsuranceForm";
 import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import SelectCategory from "./SelectCategory";
+import { DeleteOutlined } from "@mui/icons-material";
+import { FaPlusSquare } from "react-icons/fa";
 const CreatePackage = () => {
   const { register, handleSubmit, control } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
@@ -20,14 +22,39 @@ const CreatePackage = () => {
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [insurance, setInsurance] = useState([]);
   const [category, setCategory] = useState("All inclusive");
+  const [images, setImages] = useState([]);
+  const [updateImageIndex, setUpdateImageIndex] = useState(null);
   const onSubmit = (data) => {
     const packageData = {
       includeItems: selectedIncludeItems,
       notIncludeItems: selectedNotIncludeItems,
       bookedFlights,
+      category,
+      images,
       ...data,
     };
     console.log("Form Data:", packageData);
+  };
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (updateImageIndex !== null) {
+      setImages((prevImages) =>
+        prevImages.map((img, i) => (i === updateImageIndex ? files[0] : img))
+      );
+      setUpdateImageIndex(null);
+    } else {
+      setImages((prevImages) => [...prevImages, ...files]);
+    }
+  };
+
+  const handleDeleteImage = (index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
+  const handleUpdateImage = (index) => {
+    setUpdateImageIndex(index);
+    document.getElementById("imageUpdateInput").click();
   };
 
   return (
@@ -65,7 +92,7 @@ const CreatePackage = () => {
 
               <div className="grid grid-cols-2 gap-10 mt-3">
                 <div>
-                  <p className="text-[16px]">Tour Date</p>
+                  <p className="text-[16px] mb-2">Tour Date</p>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Controller
                       name="tourDate"
@@ -166,12 +193,66 @@ const CreatePackage = () => {
             <div className="">
               <div className="border rounded-lg p-4 mb-4">
                 <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
-                  Upload Img
+                  Upload Images
                 </h2>
-                <img
-                  className="h-[400px] object-cover rounded-lg"
-                  src=""
-                  alt="Placeholder"
+
+                {/* Big Image */}
+                {images.length > 0 && (
+                  <div className="relative mb-4">
+                    <img
+                      className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
+                      src={URL.createObjectURL(images[0])}
+                      alt={`Preview 0`}
+                      onClick={() => handleUpdateImage(0)}
+                    />
+                    <button
+                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                      onClick={() => handleDeleteImage(0)}
+                    >
+                      <DeleteOutlined />
+                    </button>
+                  </div>
+                )}
+
+                {/* Small Images */}
+                <div className="grid grid-cols-4 gap-4">
+                  {images.slice(1).map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
+                        src={URL.createObjectURL(img)}
+                        alt={`Preview ${index + 1}`}
+                        onClick={() => handleUpdateImage(index + 1)}
+                      />
+                      <button
+                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                        onClick={() => handleDeleteImage(index + 1)}
+                      >
+                        <DeleteOutlined />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="relative inline-block">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageUpload}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                    <div className="flex items-center justify-center bg-[#fdf0ea] text-white rounded-lg cursor-pointer h-[100px] w-full">
+                      <FaPlusSquare className="primary_text h-6 w-6" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Hidden Update Input */}
+                <input
+                  id="imageUpdateInput"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
                 />
               </div>
               <SelectCategory category={category} setCategory={setCategory} />

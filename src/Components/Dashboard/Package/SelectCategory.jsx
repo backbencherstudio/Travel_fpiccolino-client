@@ -1,19 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { Box, Grid, Modal, TextField, Typography } from "@mui/material";
+import { packageCategory } from "../../../ALLJsonFile/const";
 const SelectCategory = ({ category, setCategory }) => {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
-    InsuranceName: "",
-    description: "",
-    departureTime: null,
-    arrivalTime: null,
-    breakTime: null,
-    flightClass: "",
-    price: 30,
+    category: "",
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -34,7 +29,7 @@ const SelectCategory = ({ category, setCategory }) => {
         <select
           style={{
             width: "100%",
-            padding: "8px 16px",
+            padding: "8px",
             cursor: "pointer",
             fontSize: "14px",
             border: "1px solid #e86731",
@@ -44,7 +39,11 @@ const SelectCategory = ({ category, setCategory }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option value="All inclusive">All inclusive</option>
+          {packageCategory.map((element, index) => (
+            <option key={index} value={`${element}`}>
+              {element}
+            </option>
+          ))}
         </select>
         <div className="mt-3 flex justify-end">
           <CustomDashboardButton
@@ -86,8 +85,8 @@ const SelectCategory = ({ category, setCategory }) => {
               <TextField
                 fullWidth
                 label="Category"
-                name="InsuranceName"
-                value={formData.InsuranceName}
+                name="category"
+                value={formData.category}
                 onChange={handleChange}
                 variant="outlined"
               />
