@@ -13,7 +13,7 @@ const UpdateBlog = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/blogGet/676926e51aa8d9fea72ef099"
+          "http://localhost:3000/api/blogs/blogGet/6769469982aadab0dafc814f"
         );
         const responseData = response.data;
 
@@ -59,12 +59,15 @@ const UpdateBlog = () => {
   };
 
   const addParagraph = (index) => {
+    console.log("Clicked add paragraph button");
+    // e.stopPropagation();
     setContentList((prevContentList) => {
       const updatedContent = [...prevContentList];
       updatedContent[index].paragraphs.push("New paragraph");
       return updatedContent;
     });
   };
+  
 
   const deleteParagraph = (contentIndex, paragraphIndex) => {
     setContentList((prevContentList) => {
@@ -141,11 +144,11 @@ const updateHeroSection = async () => {
 
   try {
     const response = await axios.patch(
-      "http://localhost:3000/api/blogs/updateHeroSection/676926e51aa8d9fea72ef099",
-      body, // Replacing formData with body
+      "http://localhost:3000/api/blogs/updateHeroSection/6769469982aadab0dafc814f",
+      body, 
       {
         headers: {
-          "Content-Type": "application/json", // Update content type to JSON
+          "Content-Type": "application/json", 
         },
       }
     );
@@ -170,21 +173,24 @@ const updateHeroSection = async () => {
     console.log(uploadedImages[0]?.path);
       formData.append("file", content.file);
     }
+    const body = {
+      UpdatedImage: uploadedImages[0]?.path || "",
+      oldImage : content?.image,
+      headings: content?.headings[0] || "",
+      paragraphs: content?.paragraphs.map((paragraph, pIndex) => paragraph) || [],
+    };
 
 
-
-    formData.append("headings", content.headings[0]);
-    content.paragraphs.forEach((paragraph, pIndex) => {
-      formData.append(`paragraphs[${pIndex}]`, paragraph);
-    });
-
+    console.log("this is body", body)
+    
+    console.log(index, "jhljervhbrejvcrewufhe")
     try {
-      const response = await axios.put(
-        `http://localhost:3000/api/blogs/updateContent/${index}`,
-        formData,
+      const response = await axios.patch(
+        `http://localhost:3000/api/blogs/updateContent/6769469982aadab0dafc814f/${index}`,
+        body,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+           "Content-Type": "application/json", 
           },
         }
       );
