@@ -9,6 +9,8 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import FlightBookingForm from "./FlightForm";
 import { Controller, useForm } from "react-hook-form";
 import InsuranceForm from "./InsuranceForm";
+import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
+import SelectCategory from "./SelectCategory";
 const CreatePackage = () => {
   const { register, handleSubmit, control } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
@@ -17,7 +19,7 @@ const CreatePackage = () => {
   const [bookedFlights, setBookedFlights] = useState([]);
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [insurance, setInsurance] = useState([]);
-
+  const [category, setCategory] = useState("All inclusive");
   const onSubmit = (data) => {
     const packageData = {
       includeItems: selectedIncludeItems,
@@ -35,16 +37,13 @@ const CreatePackage = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="flex justify-between mt-20">
           <h1 className="text-[24px] font-semibold">Create Package</h1>
-          <button
-            type="submit"
-            className="text-[16px] primary_bg text-white font-medium rounded-md px-4 py-2"
-          >
-            Upload Package
-          </button>
+          <div className=" flex justify-end">
+            <CustomDashboardButton content={<p> Create Package</p>} />
+          </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-5 mt-5">
-          <div className="col-span-3">
+        <div className="grid md:grid-cols-5 gap-5 mt-5">
+          <div className="md:col-span-3">
             <div className="border p-4 rounded-2xl">
               <h2 className="text-[20px] font-medium ">General Information</h2>
 
@@ -163,8 +162,20 @@ const CreatePackage = () => {
               />
             </div>
           </div>
-          <div className="col-span-2">
-            <h2>cooooooooollll</h2>
+          <div className="md:col-span-2">
+            <div className="">
+              <div className="border rounded-lg p-4 mb-4">
+                <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
+                  Upload Img
+                </h2>
+                <img
+                  className="h-[400px] object-cover rounded-lg"
+                  src=""
+                  alt="Placeholder"
+                />
+              </div>
+              <SelectCategory category={category} setCategory={setCategory} />
+            </div>
           </div>
         </div>
       </form>

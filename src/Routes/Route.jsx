@@ -30,6 +30,7 @@ import CreatePackage from "../Components/Dashboard/Package/CreatePackage";
 import CreateBlog from "../Components/Dashboard/Blog/CreateBlog";
 import SignupOtp from "../Pages/Auth/SignupOtp";
 import UserProfile from "../Pages/Profile/UserProfile";
+import Header from "../Components/Dashboard/Header/Header";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -134,6 +135,11 @@ export const router = createBrowserRouter([
         path: "blog-list/update/:id",
         element: <UpdateBlog />,
       },
+      {
+        path: "header",
+        element: <Header />,
+      },
+
     ],
   },
   {
