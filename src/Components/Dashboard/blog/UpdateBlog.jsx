@@ -1,113 +1,259 @@
-import { CiEdit } from "react-icons/ci";
-import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
-import heroImage2 from "../../../assets/Images/HeroSection/heroImage2.jpg"
 import { RiAddBoxLine, RiDeleteBin5Line } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const UpdateBlog = () => {
-    const inputStyle = "w-full my-3 border border-[#E86731] border-[#E86731] ring-[1px] ring-[#E86731] text-[#E86731] outline-none p-2 rounded-md"
-    return (
-        <div>
-            <CustomHeadingDashboard />
+  const [heroSection, setHeroSection] = useState({});
+  const [contentList, setContentList] = useState([]);
+  const [category, setCategory] = useState("");
+  const [data, setData] = useState(null);
 
-            <div className="mt-10 flex justify-between items-center "  >
-                <h2 className="text-[#141D2A] font-semibold text-[24px] " >Edit Blog</h2>
-                <button className="bg-[#E86731] text-[#FFFFFF] px-4 py-2 rounded-md " >Update Blog</button>
-            </div>
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/blogs/blogGet/6767e5072150596bdf5dc89c"
+        );
+        const responseData = response.data;
 
-            <div className="grid grid-cols-12 gap-5 mt-5 " >
-                <div className=" col-span-12 xl:col-span-8  " >
-                    <div className="border rounded-lg p-4 mb-5">
-                        <div>
-                            <span className="flex justify-end items-center mb-5" >
-                                <button className="border border-[#1A9835] text-[30px] rounded " > <CiEdit className="text-[#1A9835]   " /> </button>
-                            </span>
-                            {/* ========================= need condition in image follow the figma ========================= */}
-                            <img className="rounded-lg" src={heroImage2} alt="" />
+        setData(responseData);
+        console.log(data);
+        setHeroSection(responseData?.heroSection?.[0] || {});
+        setContentList(responseData?.contentList || []);
+        setCategory(responseData?.category || "");
+      } catch (err) {
+        console.error(
+          err.message || "Something went wrong while fetching blogs."
+        );
+      }
+    };
 
-                        </div>
-                        <div className="mt-4" >
-                            <span className="flex justify-end items-center mb-5" >
-                                <button className="border border-[#1A9835] text-[30px] rounded " > <CiEdit className="text-[#1A9835]   " /> </button>
-                            </span>
-                            <p className="text-[#141D2A]  " >Essential Travel Hacks for Stress-Free Adventures</p>
-                        </div>
-                    </div>
+    fetchBlogs();
+  }, []);
 
-                    <div className="border rounded-lg p-4 mb-5">
-                        <div>
-                            <span className="flex justify-end items-center mb-5" >
-                                <span className="flex items-center gap-5" >
-                                    <button className="border border-[#1A9835] text-[30px] rounded " > <CiEdit className="text-[#1A9835]   " /> </button>
-                                    <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
-                                </span>
-                            </span>
-                            {/* ========================= need condition in image follow the figma ========================= */}
-                            <img className="rounded-lg" src={heroImage2} alt="" />
-                        </div>
+  const handleHeroEdit = (field, value) => {
+    setHeroSection((prevHeroSection) => ({
+      ...prevHeroSection,
+      [field]: value,
+    }));
+  };
 
-                        <div className="mt-4" >
-                            <span className="flex justify-end items-center mb-5" >
-                                <button className="border border-[#1A9835] text-[30px] rounded " > <CiEdit className="text-[#1A9835]   " /> </button>
-                            </span>
-                            <p className="text-[#141D2A]  " >Traveling is one of life’s greatest joys, but the logistics can sometimes be overwhelming. From packing to navigating new places, small inconveniences can add up. That’s why we’ve compiled this guide of essential travel hacks to ensure your journey is smooth, stress-free, and full of unforgettable memories.</p>
-                        </div>
-                    </div>
+  const handleContentEdit = (index, field, value) => {
+    setContentList((prevContentList) => {
+      const updatedContent = [...prevContentList];
+      if (field === "headings" || field === "paragraphs") {
+        updatedContent[index][field][0] = value;
+      } else {
+        updatedContent[index][field] = value;
+      }
+      return updatedContent;
+    });
+  };
 
-                    <div className="border rounded-lg p-4 mb-5">
-                        <span className="flex justify-between items-center mb-5" >
-                            <h2 className="font-semibold text-[24px] " >Sub-Header</h2>
-                            <button className="border border-[#1A9835] text-[30px] rounded " > <CiEdit className="text-[#1A9835]   " /> </button>
-                        </span>
-                        <h2 className="font-semibold text-[#141D2A] mb-2 " >Pack Smart, Pack Light</h2>
-                        <div>
-                            <span className="flex justify-end items-center mb-5" >
-                                <span className="flex items-center gap-5" >
-                                    <button className="border border-[#1A9835] text-[30px] rounded " > <CiEdit className="text-[#1A9835]   " /> </button>
-                                    <button className="border border-[#EB3D4D] text-[30px] rounded " > <RiDeleteBin5Line className="text-[#EB3D4D]   " /> </button>
-                                </span>
-                            </span>
-                            {/* ========================= need condition in image follow the figma ========================= */}
-                            <img className="rounded-lg" src={heroImage2} alt="" />
-                        </div>
-                        <div className="mt-4" >
-                            <span className="flex justify-between items-center mb-5" >
-                                <h2 className="font-semibold text-[24px] " >Body text</h2>
-                                <button className="border border-[#1A9835] text-[30px] rounded " > <CiEdit className="text-[#1A9835]   " /> </button>
-                            </span>
-                            <p className="text-[#141D2A]  " >Traveling is one of life’s greatest joys, but the logistics can sometimes be overwhelming. From packing to navigating new places, small inconveniences can add up. That’s why we’ve compiled this guide of essential travel hacks to ensure your journey is smooth, stress-free, and full of unforgettable memories.</p>
-                        </div>
-                    </div>
-                    <div className="flex justify-end" >
-                        <button className="text-[#FFFFFF] bg-[#E86731] font-semibold  flex items-center gap-2 px-4 py-2 rounded-lg " > <RiAddBoxLine /> Add Content</button>
-                    </div>                    
-                </div>
+  const addNewContent = () => {
+    setContentList((prevContentList) => [
+      ...prevContentList,
+      { headings: ["New Heading"], image: "", paragraphs: ["New paragraph"] },
+    ]);
+  };
 
-                <div className=" col-span-12 xl:col-span-4 " >
-                    <div className="border rounded-lg p-4 mb-4">
-                        <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6 " >Upload Img</h2>
-                        <img className="h-[400px] object-cover rounded-lg " src={heroImage2} alt="" />
-                    </div>
-                    <div className="border rounded-lg p-4 mb-4">
-                        <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6 " >Category</h2>
-                        <h2 className="text-[#141D2A]  mb-6 " >Blog Category</h2>
-                        <select
-                            className={inputStyle}
-                        >
-                            <option value="">All inclusive</option>
-                            <option value="option">Option</option>
-                        </select>
-
-                        <div className="flex justify-end" >
-                            <button className="text-[#FFFFFF] bg-[#E86731] font-semibold  flex items-center gap-2 px-4 py-2 rounded-lg " > <RiAddBoxLine /> Add Content</button>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+  const deleteContent = (index) => {
+    setContentList((prevContentList) =>
+      prevContentList.filter((_, i) => i !== index)
     );
+  };
+
+  const addParagraph = (index) => {
+    setContentList((prevContentList) => {
+      const updatedContent = [...prevContentList];
+      updatedContent[index].paragraphs.push("New paragraph");
+      return updatedContent;
+    });
+  };
+
+  const deleteParagraph = (contentIndex, paragraphIndex) => {
+    setContentList((prevContentList) => {
+      const updatedContent = [...prevContentList];
+      updatedContent[contentIndex].paragraphs.splice(paragraphIndex, 1);
+      return updatedContent;
+    });
+  };
+  console.log(heroSection);
+  const handleImageChange = (e, isHero = false, index = null) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (isHero) {
+          setHeroSection((prevHeroSection) => ({
+            ...prevHeroSection,
+            headerImg: reader.result,
+          }));
+        } else {
+          setContentList((prevContentList) => {
+            const updatedContent = [...prevContentList];
+            updatedContent[index].image = reader.result;
+            return updatedContent;
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUpdate = () => {
+    const payload = {
+      category,
+      heroSection: [heroSection],
+      contentList,
+    };
+    console.log("Updated Data:", payload);
+    // Replace the below with an API call to update the blog
+    // Example: axios.post('/api/update-blog', payload);
+  };
+
+  return (
+    <div className="p-6 space-y-6">
+      {/* Header Section */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-semibold">Edit Blog</h1>
+        <button
+          onClick={handleUpdate}
+          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
+        >
+          Update Blog
+        </button>
+      </div>
+
+      {/* Hero Section */}
+      <div className="border rounded-lg p-6 space-y-6 shadow-lg">
+        <h2 className="text-xl font-semibold">Hero Section</h2>
+        <div className="space-y-4">
+          <div className="flex flex-col items-center">
+            <img
+              src={`http://localhost:3000/${heroSection.headerImg}`}
+              alt="Hero"
+              className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
+            />
+            <input
+              type="file"
+              onChange={(e) => handleImageChange(e, true)}
+              className="mt-2"
+            />
+          </div>
+          <div>
+            <label className="block mb-2 font-medium">Header Text</label>
+            <textarea
+              value={heroSection.text || ""}
+              onChange={(e) => handleHeroEdit("text", e.target.value)}
+              className="w-full border rounded p-2"
+            ></textarea>
+          </div>
+          <div>
+            <label className="block mb-2 font-medium">Main Heading</label>
+            <textarea
+              value={heroSection.mainHeading || ""}
+              onChange={(e) => handleHeroEdit("mainHeading", e.target.value)}
+              className="w-full border rounded p-2"
+            ></textarea>
+          </div>
+          <div>
+            <label className="block mb-2 font-medium">Main Subheading</label>
+            <textarea
+              value={heroSection.mainSubHeading || ""}
+              onChange={(e) => handleHeroEdit("mainSubHeading", e.target.value)}
+              className="w-full border rounded p-2"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      {/* Content List */}
+      {contentList.map((content, index) => (
+        <div key={index} className="border rounded-lg p-6 space-y-6 shadow-lg">
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold">Content {index + 1}</h2>
+            <button
+              onClick={() => deleteContent(index)}
+              className="text-red-500 border border-red-500 px-2 py-1 rounded-md flex items-center gap-1 hover:bg-red-100"
+            >
+              <RiDeleteBin5Line /> Delete
+            </button>
+          </div>
+          <div className="flex flex-col items-center">
+            <img
+              src={`http://localhost:3000/${content.image}`}
+              alt={`Content ${index + 1}`}
+              className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
+            />
+            <input
+              type="file"
+              onChange={(e) => handleImageChange(e, false, index)}
+              className="mt-2"
+            />
+          </div>
+          <div>
+            <label className="block mb-2 font-medium">Heading</label>
+            <input
+              type="text"
+              value={content.headings[0] || ""}
+              onChange={(e) =>
+                handleContentEdit(index, "headings", e.target.value)
+              }
+              className="w-full border rounded p-2"
+            />
+          </div>
+          <div>
+            <label className="block mb-2 font-medium">Paragraphs</label>
+            {content.paragraphs.map((paragraph, paragraphIndex) => (
+              <div key={paragraphIndex} className="space-y-2">
+                <textarea
+                  value={paragraph || ""}
+                  onChange={(e) =>
+                    handleContentEdit(index, "paragraphs", e.target.value)
+                  }
+                  className="w-full border rounded p-2"
+                ></textarea>
+                <button
+                  onClick={() => deleteParagraph(index, paragraphIndex)}
+                  className="text-red-500 px-2 py-1 rounded-md hover:bg-red-100"
+                >
+                  Delete Paragraph
+                </button>
+              </div>
+            ))}
+            <button
+              onClick={() => addParagraph(index)}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            >
+              Add Paragraph
+            </button>
+          </div>
+        </div>
+      ))}
+
+      <button
+        onClick={addNewContent}
+        className="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-orange-600"
+      >
+        <RiAddBoxLine /> Add Content
+      </button>
+
+      {/* Category Section */}
+      <div className="border rounded-lg p-6 shadow-lg">
+        <h2 className="text-lg font-semibold">Category</h2>
+        <select
+          value={category || ""}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full border rounded p-2"
+        >
+          <option value="travel">Travel</option>
+          <option value="lifestyle">Lifestyle</option>
+          <option value="tech">Tech</option>
+        </select>
+      </div>
+    </div>
+  );
 };
 
 export default UpdateBlog;

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
 import { blogs } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
+import axios from "axios";
 
 const BlogList = () => {
   const [tourDateFilter, setTourDateFilter] = useState("all");
@@ -12,6 +13,23 @@ const BlogList = () => {
     action: true,
   });
 
+  const [blogss, setBlogss] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/blogs/allblogs"); 
+        setBlogss(response.data.blogs);
+      } catch (err) {
+        setError(err.message || "Something went wrong while fetching blogs.");
+      }
+    };
+
+    fetchBlogs();
+  }, []); 
+  console.log(blogss)
+
   return (
     <div>
      <CustomHeadingDashboard/>
@@ -19,7 +37,7 @@ const BlogList = () => {
        tableType={"blog"}
         title={"Blog List"}
         columns={columns}
-        data={blogs}
+        data={blogss}
         setDateFilter={setTourDateFilter}
         dateFilter={tourDateFilter}
       />
