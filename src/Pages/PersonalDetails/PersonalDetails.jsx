@@ -21,16 +21,11 @@ import { useState } from "react";
 const PersonalDetails = () => {
     const inputStyle = "w-full my-3 border border-gray-300 focus:border-[#E86731] focus:ring-[1px] focus:ring-[#E86731] focus:outline-none p-2 rounded-md"
     const [value, setValue] = useState('female');
-
     const handleChange = (event) => {
         setValue(event.target.value);
     };
-
     const label = { inputProps: { 'consent': 'not consent' } };
-
-    const travelers = 2
-    
-
+    const travelers = 2  
     const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             travelers: Array(travelers).fill({ fullName: "", lastName: "", email: "", phone: "", date: "", gender: "" })
