@@ -13,7 +13,7 @@ const UpdateBlog = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/blogGet/6768fca0ea3300e7bc5c7ca8"
+          "http://localhost:3000/api/blogs/blogGet/676926e51aa8d9fea72ef099"
         );
         const responseData = response.data;
 
@@ -84,6 +84,7 @@ const UpdateBlog = () => {
         setContentList((prevContentList) => {
           const updatedContent = [...prevContentList];
           updatedContent[index].file = file;
+          setImages([...images, file]);
           return updatedContent;
         });
       }
@@ -120,8 +121,9 @@ const updateHeroSection = async () => {
 
   if (heroSection?.file) {
     const file = heroSection.file;
-    console.log(heroSection);
+    console.log(heroSection, "lalala");
     uploadedImages = await UploadimagePath();
+
     setImages([]);
     console.log(uploadedImages);
     console.log(uploadedImages[0]?.path);
@@ -139,7 +141,7 @@ const updateHeroSection = async () => {
 
   try {
     const response = await axios.patch(
-      "http://localhost:3000/api/blogs/updateHeroSection/6768fca0ea3300e7bc5c7ca8",
+      "http://localhost:3000/api/blogs/updateHeroSection/676926e51aa8d9fea72ef099",
       body, // Replacing formData with body
       {
         headers: {
@@ -148,17 +150,29 @@ const updateHeroSection = async () => {
       }
     );
     console.log("Hero Section Updated", response.data);
+    setHeroSection({})
   } catch (error) {
     console.error("Error updating Hero Section", error);
   }
 };
 
-  const updateIndividualContent = async (index) => {
+  const updateIndividualContent = async (index, id) => {
+    let uploadedImages = {};
     const content = contentList[index];
     const formData = new FormData();
-    if (content.file) {
+    if (content?.file) {
+      const file = content?.file;
+      console.log(content)
+      uploadedImages = await UploadimagePath();
+
+    setImages([]);
+    console.log(uploadedImages);
+    console.log(uploadedImages[0]?.path);
       formData.append("file", content.file);
     }
+
+
+
     formData.append("headings", content.headings[0]);
     content.paragraphs.forEach((paragraph, pIndex) => {
       formData.append(`paragraphs[${pIndex}]`, paragraph);
@@ -260,6 +274,7 @@ const updateHeroSection = async () => {
       {/* Content List */}
       {contentList.map((content, index) => (
         <div key={index} className="border rounded-lg p-6 space-y-6 shadow-lg">
+          <div>{content._id}</div>
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Content {index + 1}</h2>
             <button
@@ -325,7 +340,7 @@ const updateHeroSection = async () => {
             </button>
           </div>
           <button
-            onClick={() => updateIndividualContent(index)}
+            onClick={() => updateIndividualContent(index, content._id)}
             className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
           >
             Update Content {index + 1}
