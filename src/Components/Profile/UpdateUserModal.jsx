@@ -12,8 +12,6 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
   
  
-  
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -24,6 +22,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    console.log(file)
     if (file) {
       setFormData({
         ...formData,

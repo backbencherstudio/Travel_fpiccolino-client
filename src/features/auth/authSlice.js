@@ -89,7 +89,7 @@ export const updateUser = createAsyncThunk(
   "users/update",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${base_url}/users/update`, userData, {
+      const response = await axios.put(`${base_url}/users/update-profile`, userData, {
         withCredentials: true,
         "Content-Type": "multipart/form-data",
       });

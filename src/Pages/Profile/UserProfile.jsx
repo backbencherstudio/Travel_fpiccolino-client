@@ -6,10 +6,12 @@ import TourSlider from "../../Components/Dashboard/Users/TourSlider";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import UpdateUserModal from "../../Components/Profile/UpdateUserModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RxAvatar } from "react-icons/rx";
+import { updateUser } from "../../features/auth/authSlice";
 
 const UserProfile = () => {
+  const dispatch = useDispatch()
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,8 +28,10 @@ const UserProfile = () => {
 
   const handleSubmit = (updatedDetails) => {
     const updatedUserData = { ...user, ...updatedDetails };
-
-    console.log(updatedUserData); 
+    // const updatedUserData = { ...updatedDetails };
+    // console.log(updatedUserData); 
+    const responce = dispatch(updateUser(updatedUserData))
+    console.log("responce", responce)
     
   };
 
@@ -42,7 +46,7 @@ const UserProfile = () => {
       <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
         <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
           <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
-          {user?.photoUrl ? (
+          {user?.avatar ? (
             <img
               src={user?.customerImg}
               className="rounded-full w-[120px] h-[120px] mt-5"

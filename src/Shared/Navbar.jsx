@@ -21,6 +21,7 @@ const Navbar = () => {
   const { user, appLoading, isAuthenticated } = useSelector(
     (state) => state.authorization
   );
+ 
   const ProfileRef = useRef();
   const menuRef = useRef();
   const buttonRef = useRef();
