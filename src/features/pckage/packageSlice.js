@@ -8,10 +8,7 @@ export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${base_url}/users/register`,
-        packageData
-      );
+      const response = await axios.post(`${base_url}/package`, packageData);
       console.log("slice", response.data);
       return response.data;
     } catch (error) {
@@ -33,15 +30,15 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
+      .addCase(createPackage.pending, (state) => {
         state.signupLoading = true;
         state.signupError = null;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(createPackage.fulfilled, (state, action) => {
         state.signupLoading = false;
         state.signupError = null;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(createPackage.rejected, (state, action) => {
         state.signupLoading = false;
         state.signupError = action.payload?.message ?? null;
       });

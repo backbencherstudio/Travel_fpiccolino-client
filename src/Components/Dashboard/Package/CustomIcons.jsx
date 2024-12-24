@@ -23,7 +23,13 @@ import {
 } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 
-const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
+const CustomIcons = ({
+  selectedIcons,
+  setSelectedIcons,
+  title,
+  iconName,
+  setIconName,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [iconText, setIconText] = useState("");
 
@@ -56,7 +62,7 @@ const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
       return;
     }
 
-    setSelectedIcons([...selectedIcons, { icon: icon?.type?.name, text: iconText }]);
+    setSelectedIcons([...selectedIcons, { icon: icon, text: iconText }]);
     setIconText("");
     setIsModalOpen(false);
   };
