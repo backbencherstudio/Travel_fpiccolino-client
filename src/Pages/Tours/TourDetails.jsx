@@ -177,19 +177,14 @@ const TourDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
 
                         <div className=" col-span-12 lg:col-span-4 mt-10 md:mt-0  " >
                             {/* ==============================================  Hero Section Right Side Bar ===================================== */}
-
                             <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 " >
-
                                 <div className="mb-10" >
                                     <h2 className="text-center text-[#1C1C1C]" >Starting from</h2>
                                     <span className="flex justify-center gap-10" >
@@ -204,22 +199,15 @@ const TourDetails = () => {
                                     <Link to="/flight/dd" className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full" >Continue</Link>
                                 </div>
                             </div>
-
                             <div className="bg-[#FFFFFF] p-10 rounded-lg " >
-
                                 <div className="mb-10" >
                                     <h2 className="text-[#E86731] flex items-center" > <img src={flight} alt="" /> Add flight</h2>
-
                                 </div>
-
                                 <div>
                                     <p>Come From Text Editor</p>
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
                 </ParentComponent>
 

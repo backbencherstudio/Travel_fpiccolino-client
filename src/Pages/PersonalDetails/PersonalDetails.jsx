@@ -21,14 +21,11 @@ import { useState } from "react";
 const PersonalDetails = () => {
     const inputStyle = "w-full my-3 border border-gray-300 focus:border-[#E86731] focus:ring-[1px] focus:ring-[#E86731] focus:outline-none p-2 rounded-md"
     const [value, setValue] = useState('female');
-
     const handleChange = (event) => {
         setValue(event.target.value);
     };
-
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-    const travelers = 2
-
+    const label = { inputProps: { 'consent': 'not consent' } };
+    const travelers = 2  
     const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             travelers: Array(travelers).fill({ fullName: "", lastName: "", email: "", phone: "", date: "", gender: "" })
@@ -67,11 +64,8 @@ const PersonalDetails = () => {
 
                 <ParentComponent>
                     <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20 grid-cols-reverse ">
-
                         <div className=" col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-2 lg:p-10 rounded-lg ">
-
                             <div>
-
                                 <div className="border  rounded-lg">
                                     <h2 className=" p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
                                     <div className="border border-b-[#c8c8ce] mt-3"></div>
@@ -79,14 +73,11 @@ const PersonalDetails = () => {
                                         Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
                                     </p>
                                 </div>
-
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <h2 className="text-[#000000] text-[18px] font-[400] mt-5">Dynamic Traveler Form</h2>
-
                                     {fields.map((field, index) => (
                                         <div key={field.id} className="border-b border-gray-300 pb-4 mt-8">
                                             <h3 className="text-[#141D2A] text-[20px] font-[600] mb-4">Traveler {index + 1}</h3>
-
                                             {/* Full Name and Last Name */}
                                             <div className="grid md:grid-cols-2 gap-2">
                                                 <div>
@@ -99,7 +90,6 @@ const PersonalDetails = () => {
                                                     />
                                                     {errors.travelers?.[index]?.fullName && <p className="text-red-500">{errors.travelers[index].fullName.message}</p>}
                                                 </div>
-
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.lastName`}>Last Name *</label>
                                                     <input
@@ -111,7 +101,6 @@ const PersonalDetails = () => {
                                                     {errors.travelers?.[index]?.lastName && <p className="text-red-500">{errors.travelers[index].lastName.message}</p>}
                                                 </div>
                                             </div>
-
                                             {/* Email and Phone Number */}
                                             <div className="grid md:grid-cols-2 gap-2 mt-4">
                                                 <div>
@@ -130,7 +119,6 @@ const PersonalDetails = () => {
                                                     />
                                                     {errors.travelers?.[index]?.email && <p className="text-red-500">{errors.travelers[index].email.message}</p>}
                                                 </div>
-
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.phone`}>Phone *</label>
                                                     <Controller
@@ -151,7 +139,6 @@ const PersonalDetails = () => {
                                                     {errors.travelers?.[index]?.phone && <p className="text-red-500">{errors.travelers[index].phone.message}</p>}
                                                 </div>
                                             </div>
-
                                             {/* Date and Date */}
                                             <div className="grid md:grid-cols-2 gap-2 mt-4">
                                                 <div>
@@ -164,7 +151,6 @@ const PersonalDetails = () => {
                                                     />
                                                     {errors.travelers?.[index]?.date && <p className="text-red-500">{errors.travelers[index].date.message}</p>}
                                                 </div>
-
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.gender`}>Gender *</label>
                                                     <select
@@ -183,13 +169,10 @@ const PersonalDetails = () => {
                                         </div>
                                     ))}
 
-
                                     <div className="my-6" >
                                         <h2>Special requirements</h2>
                                         <p>For each person included in this booking, please let us know about allergies, medical conditions, dietary needs, physical issues, and medication intake. If you have any other specific requests, please write them here: this is the place to do it!</p>
-
                                         <div className="border rounded-lg my-6" >
-
                                             {Array.from({ length: travelers }).map((_, index) => (
                                                 <div
                                                     key={index}
@@ -205,9 +188,7 @@ const PersonalDetails = () => {
                                                     </span>
                                                 </div>
                                             ))}
-
                                         </div>
-
                                         <div className="border  rounded-lg">
                                             <h2 className=" p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
                                             <div className="border border-b-[#c8c8ce] mt-3"></div>
@@ -215,14 +196,11 @@ const PersonalDetails = () => {
                                                 Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
                                             </p>
                                         </div>
-
                                         <h2 className="mt-6" >Terms and Conditions and Privacy Policy</h2>
-
                                         <span className="flex items-center my-2" >
                                             <Checkbox {...label} />
                                             <p>I declare that I have read the <span className="text-[#E86731] font-semibold " >Privacy Policy</span> and accept the <span className="text-[#E86731] font-semibold " >Terms and Conditions</span> for using LA TUA FUGA LOWCOST services.</p>
                                         </span>
-
                                         <p>I consent to receive commercial information related to WeRoad and other travel proposals via email, phone, SMS, and instant message.</p>
 
                                         <div className="h-[50px]" >
@@ -255,19 +233,12 @@ const PersonalDetails = () => {
                                                 <li className="flex text-[#72777F] mt-3 items-center" > <span className="size-2 mr-2  bg-green-500 text-transparent block rounded-full " >0</span> Preferences for commercial communications completed</li>
                                             </ul>
                                         </div>
-
-
-
                                     </div>
-
                                     <p className="text-[#72777F] mt-10" > <Checkbox {...label} /> I Agree To All Your Terms & condition</p>
-
                                     <button type="submit" className="block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#D2D2D5]">
                                         Submit
                                     </button>
-
                                     <p className="mt-6 text-[#72777F]">Write to privacy@latuafuga.it if you wish to revoke the consent previously given for the processing of your Personal Data, to obtain more information about privacy, or to exercise your rights.</p>
-
                                 </form>
 
                             </div>

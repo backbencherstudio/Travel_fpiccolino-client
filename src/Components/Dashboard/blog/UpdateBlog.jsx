@@ -22,7 +22,9 @@ const UpdateBlog = () => {
         setContentList(responseData?.contentList || []);
         setCategory(responseData?.category || "");
       } catch (err) {
-        console.error(err.message || "Something went wrong while fetching blogs.");
+        console.error(
+          err.message || "Something went wrong while fetching blogs."
+        );
       }
     };
 
@@ -30,7 +32,10 @@ const UpdateBlog = () => {
   }, []);
 
   const handleHeroEdit = (field, value) => {
-    setHeroSection((prevHeroSection) => ({ ...prevHeroSection, [field]: value }));
+    setHeroSection((prevHeroSection) => ({
+      ...prevHeroSection,
+      [field]: value,
+    }));
   };
 
   const handleContentEdit = (index, field, value) => {
@@ -346,7 +351,9 @@ const updateHeroSection = async () => {
             <input
               type="text"
               value={content.headings[0] || ""}
-              onChange={(e) => handleContentEdit(index, "headings", e.target.value)}
+              onChange={(e) =>
+                handleContentEdit(index, "headings", e.target.value)
+              }
               className="w-full border rounded p-2"
             />
           </div>

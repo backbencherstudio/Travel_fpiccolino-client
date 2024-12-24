@@ -1,24 +1,17 @@
-import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
-  Grid,
-  Typography,
-  Slider,
-  Box,
-  Divider,
-  Modal,
-} from "@mui/material";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import { TextField, Grid, Typography, Slider, Box, Modal } from "@mui/material";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 
-const FlightBookingForm = ({ openModal, setOpenModal }) => {
+const FlightBookingForm = ({
+  openModal,
+  setOpenModal,
+  setBookedFlights,
+  bookedFlights,
+}) => {
   const [formData, setFormData] = useState({
     flyingFrom: "",
     flyingTo: "",
@@ -26,10 +19,8 @@ const FlightBookingForm = ({ openModal, setOpenModal }) => {
     arrivalTime: null,
     breakTime: null,
     flightClass: "",
-    price: 500, // Default price
+    price: 500,
   });
-
-  const [bookedFlights, setBookedFlights] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,11 +46,23 @@ const FlightBookingForm = ({ openModal, setOpenModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    // Add the current flight data to the bookedFlights state
+    const formattedFormData = {
+      ...formData,
+      departureTime: formData.departureTime
+        ? formData.departureTime.format("HH:mm")
+        : null,
+      arrivalTime: formData.arrivalTime
+        ? formData.arrivalTime.format("HH:mm")
+        : null,
+      breakTime: formData.breakTime ? formData.breakTime.format("HH:mm") : null,
+    };
 
     // Add the current flight data to the bookedFlights state
     setBookedFlights([
       ...bookedFlights,
-      { ...formData, id: bookedFlights.length + 1 },
+      { ...formattedFormData, id: bookedFlights.length + 1 },
     ]);
 
     // Reset form after submission
@@ -80,25 +83,19 @@ const FlightBookingForm = ({ openModal, setOpenModal }) => {
     setBookedFlights(bookedFlights.filter((flight) => flight.id !== id));
   };
 
-  const formatTime = (time) => {
-    return time?.format("HH:mm") || "N/A";
-  };
-
   const getSliderMarks = (flight) => {
     const marks = [
       {
         value: 0,
-        label: `${formatTime(flight.departureTime)}`,
+        label: `${flight.departureTime}`,
       },
       {
         value: 50,
-        label: flight.breakTime
-          ? `Break: ${formatTime(flight.breakTime)}`
-          : "No Break",
+        label: flight.breakTime ? `Break: ${flight.breakTime}` : "No Break",
       },
       {
         value: 100,
-        label: `${formatTime(flight.arrivalTime)}`,
+        label: `${flight.arrivalTime}`,
       },
     ];
     return marks;
