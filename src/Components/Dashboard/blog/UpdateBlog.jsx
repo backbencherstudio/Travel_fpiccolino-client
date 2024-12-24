@@ -7,17 +7,17 @@ const UpdateBlog = () => {
   const [contentList, setContentList] = useState([]);
   const [category, setCategory] = useState("");
   const [data, setData] = useState(null);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/blogGet/6767e5072150596bdf5dc89c"
+          "http://localhost:3000/api/blogs/blogGet/676a52407856362ce9bd9526"
         );
         const responseData = response.data;
 
         setData(responseData);
-        console.log(data);
         setHeroSection(responseData?.heroSection?.[0] || {});
         setContentList(responseData?.contentList || []);
         setCategory(responseData?.category || "");
@@ -55,21 +55,44 @@ const UpdateBlog = () => {
       ...prevContentList,
       { headings: ["New Heading"], image: "", paragraphs: ["New paragraph"] },
     ]);
+    console.log(contentList)
   };
 
-  const deleteContent = (index) => {
-    setContentList((prevContentList) =>
-      prevContentList.filter((_, i) => i !== index)
-    );
+  const deleteContent = async(index) => {
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/blogs/deleteContent/676a52407856362ce9bd9526/${index}`, 
+        {
+          headers: {
+            "Content-Type": "application/json", 
+          },
+        }
+      );
+      console.log("Hero Section Deleted", response.data);
+      setContentList((prevContentList) =>
+        prevContentList.filter((_, i) => i !== index)
+      );
+    } catch (error) {
+      console.error("Error deleting Hero Section", error);
+    }
+    
+
   };
 
-  const addParagraph = (index) => {
+  const addParagraph = (event, index) => {
+    event.stopPropagation();
+    console.log(index);
+    console.log("Clicked add paragraph button");
     setContentList((prevContentList) => {
-      const updatedContent = [...prevContentList];
-      updatedContent[index].paragraphs.push("New paragraph");
-      return updatedContent;
+        const updatedContent = [...prevContentList];
+        updatedContent[index].paragraphs.push("New paragraph");
+        console.log(updatedContent[index].paragraphs);
+        return updatedContent;
     });
-  };
+};
+
+  
 
   const deleteParagraph = (contentIndex, paragraphIndex) => {
     setContentList((prevContentList) => {
@@ -78,38 +101,144 @@ const UpdateBlog = () => {
       return updatedContent;
     });
   };
-  console.log(heroSection);
+
   const handleImageChange = (e, isHero = false, index = null) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (isHero) {
-          setHeroSection((prevHeroSection) => ({
-            ...prevHeroSection,
-            headerImg: reader.result,
-          }));
-        } else {
-          setContentList((prevContentList) => {
-            const updatedContent = [...prevContentList];
-            updatedContent[index].image = reader.result;
-            return updatedContent;
-          });
-        }
-      };
-      reader.readAsDataURL(file);
+      if (isHero) {
+        setImages([...images, file]);
+        setHeroSection((prevHeroSection) => ({ ...prevHeroSection, file }));
+      } else {
+        setContentList((prevContentList) => {
+          const updatedContent = [...prevContentList];
+          updatedContent[index].file = file;
+          setImages([...images, file]);
+          return updatedContent;
+        });
+      }
     }
   };
 
-  const handleUpdate = () => {
-    const payload = {
-      category,
-      heroSection: [heroSection],
-      contentList,
+  
+  const UploadimagePath = async () => {
+    const formData = new FormData();
+    Array.from(images).forEach((image) => {
+        formData.append("images", image);
+    });
+
+    try {
+        const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        console.log("Image uploaded successfully", response.data);
+        setImages([])
+        return response.data.images;
+    } catch (error) {
+        console.error("Error uploading files:", error);
+        alert("Error uploading images. Please try again.");
+        return null;
+    }
+};
+
+
+
+const updateHeroSection = async () => {
+  let uploadedImages = {};
+
+  if (heroSection?.file) {
+    const file = heroSection.file;
+    // console.log(heroSection, "lalala");
+    uploadedImages = await UploadimagePath();
+
+    setImages([]);
+    // console.log(uploadedImages);
+    // console.log(uploadedImages[0]?.path);
+  }
+
+  console.log(heroSection);
+
+  const body = {
+    UpdatedImage: uploadedImages[0]?.path || "",
+    header: heroSection.header || "",
+    text: heroSection.text || "",
+    mainHeading: heroSection.mainHeading || "",
+    mainSubHeading: heroSection.mainSubHeading || "",
+    oldImage : heroSection?.headerImg
+  };
+
+  try {
+    const response = await axios.patch(
+      "http://localhost:3000/api/blogs/updateHeroSection/676a52407856362ce9bd9526",
+      body, 
+      {
+        headers: {
+          "Content-Type": "application/json", 
+        },
+      }
+    );
+    console.log("Hero Section Updated", response.data);
+    setHeroSection({})
+  } catch (error) {
+    console.error("Error updating Hero Section", error);
+  }
+};
+
+  const updateIndividualContent = async (index, id) => {
+    let uploadedImages = {};
+    const content = contentList[index];
+    const formData = new FormData();
+    if (content?.file) {
+      const file = content?.file;
+      console.log(content)
+      uploadedImages = await UploadimagePath();
+
+    setImages([]);
+    console.log(uploadedImages);
+    console.log(uploadedImages[0]?.path);
+      formData.append("file", content.file);
+    }
+    const body = {
+      UpdatedImage: uploadedImages[0]?.path || "",
+      oldImage : content?.image,
+      headings: content?.headings[0] || "",
+      paragraphs: content?.paragraphs.map((paragraph, pIndex) => paragraph) || [],
     };
-    console.log("Updated Data:", payload);
-    // Replace the below with an API call to update the blog
-    // Example: axios.post('/api/update-blog', payload);
+
+
+    console.log("this is body", body)
+    
+    console.log(index, "jhljervhbrejvcrewufhe")
+    try {
+      const response = await axios.patch(
+        `http://localhost:3000/api/blogs/updateContent/676a52407856362ce9bd9526/${index}`,
+        body,
+        {
+          headers: {
+           "Content-Type": "application/json", 
+          },
+        }
+      );
+      console.log(`Content ${index + 1} Updated`, response.data);
+      setContentList([]);
+    } catch (error) {
+      console.error(`Error updating Content ${index + 1}`, error);
+    }
+  };
+
+  const updateCategory = async () => {
+    const payload = { category };
+    console.log(payload)
+    try {
+      const response = await axios.patch(
+        "http://localhost:3000/api/blogs/updatecatagory/676a52407856362ce9bd9526",
+        payload
+      );
+      console.log("Category Updated", response.data);
+    } catch (error) {
+      console.error("Error updating Category", error);
+    }
   };
 
   return (
@@ -117,12 +246,6 @@ const UpdateBlog = () => {
       {/* Header Section */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Edit Blog</h1>
-        <button
-          onClick={handleUpdate}
-          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
-        >
-          Update Blog
-        </button>
       </div>
 
       {/* Hero Section */}
@@ -130,16 +253,32 @@ const UpdateBlog = () => {
         <h2 className="text-xl font-semibold">Hero Section</h2>
         <div className="space-y-4">
           <div className="flex flex-col items-center">
-            <img
-              src={`http://localhost:3000/${heroSection.headerImg}`}
-              alt="Hero"
-              className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
-            />
+            {heroSection.file ? (
+              <img
+                src={URL.createObjectURL(heroSection.file)}
+                alt="Hero"
+                className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
+              />
+            ) : (
+              <img
+                src={`http://localhost:3000/uploads/${heroSection.headerImg}`}
+                alt="Hero"
+                className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
+              />
+            )}
             <input
               type="file"
               onChange={(e) => handleImageChange(e, true)}
               className="mt-2"
             />
+          </div>
+          <div>
+            <label className="block mb-2 font-medium">Header Main Text</label>
+            <textarea
+              value={heroSection.header || ""}
+              onChange={(e) => handleHeroEdit("header", e.target.value)}
+              className="w-full border rounded p-2"
+            ></textarea>
           </div>
           <div>
             <label className="block mb-2 font-medium">Header Text</label>
@@ -166,11 +305,18 @@ const UpdateBlog = () => {
             ></textarea>
           </div>
         </div>
+        <button
+          onClick={updateHeroSection}
+          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
+        >
+          Update Hero Section
+        </button>
       </div>
 
       {/* Content List */}
       {contentList.map((content, index) => (
         <div key={index} className="border rounded-lg p-6 space-y-6 shadow-lg">
+        
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Content {index + 1}</h2>
             <button
@@ -181,11 +327,19 @@ const UpdateBlog = () => {
             </button>
           </div>
           <div className="flex flex-col items-center">
-            <img
-              src={`http://localhost:3000/${content.image}`}
-              alt={`Content ${index + 1}`}
-              className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
-            />
+            {content.file ? (
+              <img
+                src={URL.createObjectURL(content.file)}
+                alt={`Content ${index + 1}`}
+                className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
+              />
+            ) : (
+              <img
+                src={`http://localhost:3000/uploads/${content.image}`}
+                alt={`Content ${index + 1}`}
+                className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
+              />
+            )}
             <input
               type="file"
               onChange={(e) => handleImageChange(e, false, index)}
@@ -223,18 +377,24 @@ const UpdateBlog = () => {
               </div>
             ))}
             <button
-              onClick={() => addParagraph(index)}
+               onClick={(event) => addParagraph(event, index)}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
               Add Paragraph
             </button>
           </div>
+          <button
+            onClick={() => updateIndividualContent(index, content._id)}
+            className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
+          >
+            Update Content {index + 1}
+          </button>
         </div>
       ))}
 
       <button
         onClick={addNewContent}
-        className="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-orange-600"
+        className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-600"
       >
         <RiAddBoxLine /> Add Content
       </button>
@@ -251,6 +411,12 @@ const UpdateBlog = () => {
           <option value="lifestyle">Lifestyle</option>
           <option value="tech">Tech</option>
         </select>
+        <button
+          onClick={updateCategory}
+          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 mt-4"
+        >
+          Update Category
+        </button>
       </div>
     </div>
   );
