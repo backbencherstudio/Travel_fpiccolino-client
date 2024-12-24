@@ -1,19 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import {
-  TextField,
-  Grid,
-  Typography,
-  Slider,
-  Box,
-  Modal,
-} from "@mui/material";
+import { TextField, Grid, Typography, Slider, Box, Modal } from "@mui/material";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 
-const FlightBookingForm = ({ openModal, setOpenModal, setBookedFlights, bookedFlights }) => {
+const FlightBookingForm = ({
+  openModal,
+  setOpenModal,
+  setBookedFlights,
+  bookedFlights,
+}) => {
   const [formData, setFormData] = useState({
     flyingFrom: "",
     flyingTo: "",
@@ -21,9 +19,8 @@ const FlightBookingForm = ({ openModal, setOpenModal, setBookedFlights, bookedFl
     arrivalTime: null,
     breakTime: null,
     flightClass: "",
-    price: 500, 
+    price: 500,
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +46,7 @@ const FlightBookingForm = ({ openModal, setOpenModal, setBookedFlights, bookedFl
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    e.stopPropagation();
     // Add the current flight data to the bookedFlights state
     setBookedFlights([
       ...bookedFlights,
