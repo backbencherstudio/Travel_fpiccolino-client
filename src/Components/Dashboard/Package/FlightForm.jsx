@@ -48,9 +48,21 @@ const FlightBookingForm = ({
     e.preventDefault();
     e.stopPropagation();
     // Add the current flight data to the bookedFlights state
+    const formattedFormData = {
+      ...formData,
+      departureTime: formData.departureTime
+        ? formData.departureTime.format("HH:mm")
+        : null,
+      arrivalTime: formData.arrivalTime
+        ? formData.arrivalTime.format("HH:mm")
+        : null,
+      breakTime: formData.breakTime ? formData.breakTime.format("HH:mm") : null,
+    };
+
+    // Add the current flight data to the bookedFlights state
     setBookedFlights([
       ...bookedFlights,
-      { ...formData, id: bookedFlights.length + 1 },
+      { ...formattedFormData, id: bookedFlights.length + 1 },
     ]);
 
     // Reset form after submission
@@ -71,25 +83,19 @@ const FlightBookingForm = ({
     setBookedFlights(bookedFlights.filter((flight) => flight.id !== id));
   };
 
-  const formatTime = (time) => {
-    return time?.format("HH:mm") || "N/A";
-  };
-
   const getSliderMarks = (flight) => {
     const marks = [
       {
         value: 0,
-        label: `${formatTime(flight.departureTime)}`,
+        label: `${flight.departureTime}`,
       },
       {
         value: 50,
-        label: flight.breakTime
-          ? `Break: ${formatTime(flight.breakTime)}`
-          : "No Break",
+        label: flight.breakTime ? `Break: ${flight.breakTime}` : "No Break",
       },
       {
         value: 100,
-        label: `${formatTime(flight.arrivalTime)}`,
+        label: `${flight.arrivalTime}`,
       },
     ];
     return marks;

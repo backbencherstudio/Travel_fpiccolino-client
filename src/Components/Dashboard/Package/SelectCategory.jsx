@@ -8,6 +8,7 @@ import {
   createCategory,
   getCategory,
 } from "../../../features/category/categorySlice";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
 
 const SelectCategory = ({ category, setCategory }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -67,7 +68,11 @@ const SelectCategory = ({ category, setCategory }) => {
           {categories && categories.length > 0 ? (
             categories?.map((element, index) => (
               <option key={index} value={`${element.category}`}>
-                {element.category}
+                <div>
+                  {" "}
+                  <div className=""> {element.category}Delete</div>
+                  <DeleteOutlineOutlined />
+                </div>
               </option>
             ))
           ) : (
