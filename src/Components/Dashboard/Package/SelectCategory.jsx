@@ -3,7 +3,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import { FaRegSquarePlus } from "react-icons/fa6";
-import { Box, Grid, Modal, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import {
   createCategory,
   getCategory,
@@ -52,33 +60,32 @@ const SelectCategory = ({ category, setCategory }) => {
         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
           Category
         </h2>
-        <select
+        <Select
           style={{
             width: "100%",
-            padding: "8px",
             cursor: "pointer",
             fontSize: "14px",
             border: "1px solid #e86731",
             borderRadius: "4px",
-            color: "#e86731",
           }}
+          size="small"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
           {categories && categories.length > 0 ? (
             categories?.map((element, index) => (
-              <option key={index} value={`${element.category}`}>
-                <div>
-                  {" "}
-                  <div className=""> {element.category}Delete</div>
-                  <DeleteOutlineOutlined />
-                </div>
-              </option>
+              <MenuItem
+                className="flex"
+                key={index}
+                value={`${element.category}`}
+              >
+                <div> {element.category}</div> <DeleteOutlineOutlined />
+              </MenuItem>
             ))
           ) : (
-            <option value="">No Categories Available</option>
+            <MenuItem value="">No Categories Available</MenuItem>
           )}
-        </select>
+        </Select>
         <div className="mt-3 flex justify-end">
           <CustomDashboardButton
             handleSubmit={handleOpenModal}
