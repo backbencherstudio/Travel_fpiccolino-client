@@ -13,7 +13,10 @@ import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { createPackage } from "../../../features/pckage/packageSlice";
 const CreatePackage = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, control } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
@@ -24,16 +27,26 @@ const CreatePackage = () => {
   const [category, setCategory] = useState("All inclusive");
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
-  const onSubmit = (data) => {
+  const [includeIconName, setIncludeIconName] = useState([]);
+  const [notIncludeIconName, setNotIncludeIconName] = useState([]);
+  const onSubmit = async (data) => {
     const packageData = {
-      includeItems: selectedIncludeItems,
-      notIncludeItems: selectedNotIncludeItems,
+      includeItems: includeIconName,
+      notIncludeItems: notIncludeIconName,
       bookedFlights,
       category,
       images,
       ...data,
     };
-    console.log("Form Data:", packageData);
+    console.log(packageData);
+
+    try {
+      const response = await dispatch(createPackage(packageData));
+      console.log(response);
+    } catch (error) {
+      console.error("Error creating package:", error);
+      alert("Failed to create package. Please try again.");
+    }
   };
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -146,6 +159,8 @@ const CreatePackage = () => {
                 title="include"
                 selectedIcons={selectedIncludeItems}
                 setSelectedIcons={setSelectedIncludeItems}
+                iconName={includeIconName}
+                setIconName={setIncludeIconName}
               />
             </div>
 
@@ -155,6 +170,8 @@ const CreatePackage = () => {
                 title="not include"
                 selectedIcons={selectedNotIncludeItems}
                 setSelectedIcons={setSelectedNotIncludeItems}
+                iconName={notIncludeIconName}
+                setIconName={setNotIncludeIconName}
               />
             </div>
 

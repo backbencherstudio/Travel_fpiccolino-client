@@ -1,6 +1,6 @@
 import BlogSections from "../../Components/Blog/BlogSections";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
-import calender from '../../assets/icons/calender.svg'
+import calender from "../../assets/icons/calender.svg";
 import heroImage from "../../assets/Images/about.jpg";
 import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
@@ -366,7 +366,7 @@ const BlogDetails = () => {
     descriptionOne:
       "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
   };
-  
+
   const getCategoryCount = () => {
     const categoryCount = {};
     blogs.forEach((blog) => {
@@ -379,7 +379,6 @@ const BlogDetails = () => {
   const categoryCount = getCategoryCount();
   return (
     <div>
-
       <HeroScetion heroContent={heroContent} />
 
       <ParentComponent>
@@ -455,12 +454,18 @@ const BlogDetails = () => {
               Start implementing these travel hacks on your next trip and
               experience the joy of hassle-free adventures!
             </p>
-           <div className="flex mt-12 justify-between">
-           <p className="text-[20px] text-[#72777F]">Tag: <div className="bg-[#FDF0EA] text-[#E86731] border border-[#E86731] rounded-lg inline-block py-3 text-[16px] px-6 ml-3">{blogs[params.id].category}</div></p>
-           <p className="text-18 flex items-center">
-           <img className="h-6 w-6 mr-2" src={calender} alt="" /> {blogs[params.id].date}
-           </p>
-           </div>
+            <div className="flex mt-12 justify-between">
+              <p className="text-[20px] text-[#72777F]">
+                Tag:{" "}
+                <div className="bg-[#FDF0EA] text-[#E86731] border border-[#E86731] rounded-lg inline-block py-3 text-[16px] px-6 ml-3">
+                  {blogs[params.id].category}
+                </div>
+              </p>
+              <p className="text-18 flex items-center">
+                <img className="h-6 w-6 mr-2" src={calender} alt="" />{" "}
+                {blogs[params.id].date}
+              </p>
+            </div>
           </div>
           <div className="lg:col-span-1">
             <div className="relative mt-4">
@@ -489,9 +494,16 @@ const BlogDetails = () => {
               </div>
             </div>
             <h3 className="text-[24px] font-bold my-8">Popular Articles</h3>
-            {blogs.slice(0,3).map((blog, index) => (
-              <div key={index} className="flex justify-between gap-5 border-b border-[#DFE4EA] py-4">
-                <img className="w-[80px] h-[80px] rounded-full" src={blog?.headerImg} alt="" />
+            {blogs.slice(0, 3).map((blog, index) => (
+              <div
+                key={index}
+                className="flex justify-between gap-5 border-b border-[#DFE4EA] py-4"
+              >
+                <img
+                  className="w-[80px] h-[80px] rounded-full"
+                  src={blog?.headerImg}
+                  alt=""
+                />
                 <div>
                   <h5 className="text-[20px] font-semibold text-[#141D2A]">
                     {blog?.header}
