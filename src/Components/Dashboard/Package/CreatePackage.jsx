@@ -15,6 +15,7 @@ import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createPackage } from "../../../features/pckage/packageSlice";
+
 const CreatePackage = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, control } = useForm();
@@ -38,11 +39,11 @@ const CreatePackage = () => {
       images,
       ...data,
     };
-    console.log(packageData);
 
+    console.log("main data: ", packageData);
     try {
       const response = await dispatch(createPackage(packageData));
-      console.log(response);
+      console.log("responce", response);
     } catch (error) {
       console.error("Error creating package:", error);
       alert("Failed to create package. Please try again.");
