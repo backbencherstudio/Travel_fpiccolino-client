@@ -75,16 +75,18 @@ const UpdateBlog = () => {
 
   };
 
-  const addParagraph = (index) => {
-    console.log(index)
+  const addParagraph = (event, index) => {
+    event.stopPropagation();
+    console.log(index);
     console.log("Clicked add paragraph button");
-    // e.stopPropagation();
     setContentList((prevContentList) => {
-      const updatedContent = [...prevContentList];
-      updatedContent[index].paragraphs.push("New paragraph");
-      return updatedContent;
+        const updatedContent = [...prevContentList];
+        updatedContent[index].paragraphs.push("New paragraph");
+        console.log(updatedContent[index].paragraphs);
+        return updatedContent;
     });
-  };
+};
+
   
 
   const deleteParagraph = (contentIndex, paragraphIndex) => {
@@ -222,9 +224,10 @@ const updateHeroSection = async () => {
 
   const updateCategory = async () => {
     const payload = { category };
+    console.log(payload)
     try {
-      const response = await axios.put(
-        "http://localhost:3000/api/blogs/updateCategory",
+      const response = await axios.patch(
+        "http://localhost:3000/api/blogs/updatecatagory/676a52407856362ce9bd9526",
         payload
       );
       console.log("Category Updated", response.data);
@@ -367,7 +370,7 @@ const updateHeroSection = async () => {
               </div>
             ))}
             <button
-              onClick={() => addParagraph(index)}
+               onClick={(event) => addParagraph(event, index)}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
               Add Paragraph
