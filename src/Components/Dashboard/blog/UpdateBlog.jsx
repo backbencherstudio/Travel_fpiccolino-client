@@ -13,7 +13,7 @@ const UpdateBlog = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/blogGet/676a42e6693652c6461d190c"
+          "http://localhost:3000/api/blogs/blogGet/676a52407856362ce9bd9526"
         );
         const responseData = response.data;
 
@@ -50,12 +50,29 @@ const UpdateBlog = () => {
       ...prevContentList,
       { headings: ["New Heading"], image: "", paragraphs: ["New paragraph"] },
     ]);
+    console.log(contentList)
   };
 
-  const deleteContent = (index) => {
-    setContentList((prevContentList) =>
-      prevContentList.filter((_, i) => i !== index)
-    );
+  const deleteContent = async(index) => {
+
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/blogs/deleteContent/676a52407856362ce9bd9526/${index}`, 
+        {
+          headers: {
+            "Content-Type": "application/json", 
+          },
+        }
+      );
+      console.log("Hero Section Deleted", response.data);
+      setContentList((prevContentList) =>
+        prevContentList.filter((_, i) => i !== index)
+      );
+    } catch (error) {
+      console.error("Error deleting Hero Section", error);
+    }
+    
+
   };
 
   const addParagraph = (index) => {
@@ -146,7 +163,7 @@ const updateHeroSection = async () => {
 
   try {
     const response = await axios.patch(
-      "http://localhost:3000/api/blogs/updateHeroSection/676a42e6693652c6461d190c",
+      "http://localhost:3000/api/blogs/updateHeroSection/676a52407856362ce9bd9526",
       body, 
       {
         headers: {
@@ -188,7 +205,7 @@ const updateHeroSection = async () => {
     console.log(index, "jhljervhbrejvcrewufhe")
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/blogs/updateContent/676a42e6693652c6461d190c/${index}`,
+        `http://localhost:3000/api/blogs/updateContent/676a52407856362ce9bd9526/${index}`,
         body,
         {
           headers: {
@@ -197,6 +214,7 @@ const updateHeroSection = async () => {
         }
       );
       console.log(`Content ${index + 1} Updated`, response.data);
+      setContentList([]);
     } catch (error) {
       console.error(`Error updating Content ${index + 1}`, error);
     }
