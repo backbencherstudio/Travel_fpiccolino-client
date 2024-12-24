@@ -13,7 +13,7 @@ const UpdateBlog = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/blogGet/676a34385489df0f6d398547"
+          "http://localhost:3000/api/blogs/blogGet/676a42e6693652c6461d190c"
         );
         const responseData = response.data;
 
@@ -59,6 +59,7 @@ const UpdateBlog = () => {
   };
 
   const addParagraph = (index) => {
+    console.log(index)
     console.log("Clicked add paragraph button");
     // e.stopPropagation();
     setContentList((prevContentList) => {
@@ -124,18 +125,19 @@ const updateHeroSection = async () => {
 
   if (heroSection?.file) {
     const file = heroSection.file;
-    console.log(heroSection, "lalala");
+    // console.log(heroSection, "lalala");
     uploadedImages = await UploadimagePath();
 
     setImages([]);
-    console.log(uploadedImages);
-    console.log(uploadedImages[0]?.path);
+    // console.log(uploadedImages);
+    // console.log(uploadedImages[0]?.path);
   }
 
   console.log(heroSection);
 
   const body = {
     UpdatedImage: uploadedImages[0]?.path || "",
+    header: heroSection.header || "",
     text: heroSection.text || "",
     mainHeading: heroSection.mainHeading || "",
     mainSubHeading: heroSection.mainSubHeading || "",
@@ -144,7 +146,7 @@ const updateHeroSection = async () => {
 
   try {
     const response = await axios.patch(
-      "http://localhost:3000/api/blogs/updateHeroSection/676a34385489df0f6d398547",
+      "http://localhost:3000/api/blogs/updateHeroSection/676a42e6693652c6461d190c",
       body, 
       {
         headers: {
@@ -186,7 +188,7 @@ const updateHeroSection = async () => {
     console.log(index, "jhljervhbrejvcrewufhe")
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/blogs/updateContent/676a34385489df0f6d398547/${index}`,
+        `http://localhost:3000/api/blogs/updateContent/676a42e6693652c6461d190c/${index}`,
         body,
         {
           headers: {
@@ -245,6 +247,14 @@ const updateHeroSection = async () => {
             />
           </div>
           <div>
+            <label className="block mb-2 font-medium">Header Main Text</label>
+            <textarea
+              value={heroSection.header || ""}
+              onChange={(e) => handleHeroEdit("header", e.target.value)}
+              className="w-full border rounded p-2"
+            ></textarea>
+          </div>
+          <div>
             <label className="block mb-2 font-medium">Header Text</label>
             <textarea
               value={heroSection.text || ""}
@@ -280,7 +290,7 @@ const updateHeroSection = async () => {
       {/* Content List */}
       {contentList.map((content, index) => (
         <div key={index} className="border rounded-lg p-6 space-y-6 shadow-lg">
-          <div>{content._id}</div>
+        
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Content {index + 1}</h2>
             <button
