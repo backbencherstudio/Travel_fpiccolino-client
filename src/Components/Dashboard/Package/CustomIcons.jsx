@@ -68,11 +68,8 @@ const CustomIcons = ({
       return;
     }
 
-    setSelectedIcons([
-      ...selectedIcons,
-      { icon: icon, text: iconText, name: icon?.type?.name },
-    ]);
-    setIconName([...iconName, { name: icon?.type?.name }]);
+    setSelectedIcons([...selectedIcons, { icon: icon, text: iconText }]);
+    setIconName([...iconName, { name: icon?.type?.name , text: iconText  }]);
     setIconText("");
     setIsModalOpen(false);
   };
@@ -160,23 +157,26 @@ const CustomIcons = ({
           </h2>
 
           <Grid container spacing={3}>
-            {iconList.map((iconItem, index) => (
-              <Grid item key={index}>
-                <Button
-                  onClick={() => handleIconSelect(iconItem.icon)}
-                  style={{
-                    fontSize: "30px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    padding: "10px",
-                    color: "#e86731",
-                  }}
-                >
-                  {iconItem.icon}
-                </Button>
-              </Grid>
-            ))}
+            {iconList.map((iconItem, index) => {
+              // console.log(iconItem.icon?.type?.name);
+              return (
+                <Grid item key={index}>
+                  <Button
+                    onClick={() => handleIconSelect(iconItem.icon)}
+                    style={{
+                      fontSize: "30px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      padding: "10px",
+                      color: "#e86731",
+                    }}
+                  >
+                    {iconItem.icon}
+                  </Button>
+                </Grid>
+              );
+            })}
           </Grid>
         </div>
       </Modal>
