@@ -6,7 +6,7 @@ const Header = () => {
     // Form submission handler
     const onSubmit = (data) => {
         const file = data.heroImageFile[0];
-        console.log("Form Data:", data, file);
+        console.log("Form Data:", {...data, ...file});
     };
 
     return (

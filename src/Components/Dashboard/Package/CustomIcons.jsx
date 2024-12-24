@@ -56,7 +56,7 @@ const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
       return;
     }
 
-    setSelectedIcons([...selectedIcons, { icon: icon, text: iconText }]);
+    setSelectedIcons([...selectedIcons, { icon: icon?.type?.name, text: iconText }]);
     setIconText("");
     setIsModalOpen(false);
   };
