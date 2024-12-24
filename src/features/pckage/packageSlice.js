@@ -8,7 +8,7 @@ export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}/package/create`, packageData);
+      const response = await axios.post(`${base_url}/package`, packageData);
       console.log("slice", response.data);
       return response.data;
     } catch (error) {
