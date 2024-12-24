@@ -52,7 +52,13 @@ const CustomIcons = ({
     { icon: <MdOutlineFreeBreakfast /> },
   ];
 
-  const handleOpenModal = () => setIsModalOpen(true);
+  const handleOpenModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (iconText.length > 0) {
+      setIsModalOpen(true);
+    }
+  };
 
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -111,7 +117,7 @@ const CustomIcons = ({
       <div style={{ marginTop: "10px" }}>{renderSelectedIcons()}</div>
       <button
         color="primary"
-        onClick={iconText.length > 0 && handleOpenModal}
+        onClick={handleOpenModal}
         className={`absolute bottom-[13px] right-2 rounded border p-1 px-2 z-40 ${
           iconText.length > 0
             ? "primary_text border-[#ea7645] hover:bg-[#fdf0ea]"

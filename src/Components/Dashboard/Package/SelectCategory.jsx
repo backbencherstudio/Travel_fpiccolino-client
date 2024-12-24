@@ -1,14 +1,28 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { Box, Grid, Modal, TextField, Typography } from "@mui/material";
-import { packageCategory } from "../../../ALLJsonFile/const";
+import {
+  createCategory,
+  getCategory,
+} from "../../../features/category/categorySlice";
+
 const SelectCategory = ({ category, setCategory }) => {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
     category: "",
   });
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [dispatch]);
+  // Access Redux state
+  const { categories, categoryCreateLoading, categoryCreateLoadingError } =
+    useSelector((state) => state.category);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -16,16 +30,27 @@ const SelectCategory = ({ category, setCategory }) => {
       [name]: value,
     });
   };
-  const handleOpenModal = () => {
+
+  const handleOpenModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setOpenModal(true);
   };
+
+  const handleAddCategory = () => {
+    if (formData.category.trim()) {
+      dispatch(createCategory({ category: formData.category })); // Dispatch createCategory action
+      setFormData({ category: "" });
+      setOpenModal(false);
+    }
+  };
+
   return (
     <div>
       <div className="border rounded-lg p-4 mb-4">
         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
           Category
         </h2>
-        <h2 className="text-[#141D2A] mb-6">Blog Category</h2>
         <select
           style={{
             width: "100%",
@@ -39,11 +64,15 @@ const SelectCategory = ({ category, setCategory }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          {packageCategory.map((element, index) => (
-            <option key={index} value={`${element}`}>
-              {element}
-            </option>
-          ))}
+          {categories && categories.length > 0 ? (
+            categories?.map((element, index) => (
+              <option key={index} value={`${element.category}`}>
+                {element.category}
+              </option>
+            ))
+          ) : (
+            <option value="">No Categories Available</option>
+          )}
         </select>
         <div className="mt-3 flex justify-end">
           <CustomDashboardButton
@@ -56,6 +85,7 @@ const SelectCategory = ({ category, setCategory }) => {
           />
         </div>
       </div>
+
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -80,7 +110,6 @@ const SelectCategory = ({ category, setCategory }) => {
             Add New Category
           </Typography>
           <Grid container spacing={2}>
-            {/* Flying From */}
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -91,14 +120,20 @@ const SelectCategory = ({ category, setCategory }) => {
                 variant="outlined"
               />
             </Grid>
-
             <Grid item xs={12}>
               <button
-                type="submit"
+                type="button"
+                onClick={handleAddCategory}
                 className="primary_bg w-full text-white font-semibold text-[16px] py-2 rounded-md hover:opacity-90"
+                disabled={categoryCreateLoading} // Disable button during loading
               >
-                Add Category
+                {categoryCreateLoading ? "Adding..." : "Add Category"}
               </button>
+              {categoryCreateLoadingError && (
+                <Typography color="error" variant="body2" mt={2}>
+                  {categoryCreateLoadingError}
+                </Typography>
+              )}
             </Grid>
           </Grid>
         </Box>
