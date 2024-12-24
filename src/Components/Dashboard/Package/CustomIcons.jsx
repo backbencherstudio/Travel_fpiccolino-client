@@ -63,6 +63,7 @@ const CustomIcons = ({
     }
 
     setSelectedIcons([...selectedIcons, { icon: icon, text: iconText }]);
+    setIconName([...iconName, { name: icon?.type?.name , text: iconText  }]);
     setIconText("");
     setIsModalOpen(false);
   };
