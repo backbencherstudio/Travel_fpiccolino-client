@@ -13,7 +13,7 @@ const UpdateBlog = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/blogGet/6769469982aadab0dafc814f"
+          "http://localhost:3000/api/blogs/blogGet/676a34385489df0f6d398547"
         );
         const responseData = response.data;
 
@@ -144,7 +144,7 @@ const updateHeroSection = async () => {
 
   try {
     const response = await axios.patch(
-      "http://localhost:3000/api/blogs/updateHeroSection/6769469982aadab0dafc814f",
+      "http://localhost:3000/api/blogs/updateHeroSection/676a34385489df0f6d398547",
       body, 
       {
         headers: {
@@ -186,7 +186,7 @@ const updateHeroSection = async () => {
     console.log(index, "jhljervhbrejvcrewufhe")
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/blogs/updateContent/6769469982aadab0dafc814f/${index}`,
+        `http://localhost:3000/api/blogs/updateContent/676a34385489df0f6d398547/${index}`,
         body,
         {
           headers: {
@@ -233,7 +233,7 @@ const updateHeroSection = async () => {
               />
             ) : (
               <img
-                src={`http://localhost:3000/${heroSection.headerImg}`}
+                src={`http://localhost:3000/uploads/${heroSection.headerImg}`}
                 alt="Hero"
                 className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
               />
@@ -299,7 +299,7 @@ const updateHeroSection = async () => {
               />
             ) : (
               <img
-                src={`http://localhost:3000/${content.image}`}
+                src={`http://localhost:3000/uploads/${content.image}`}
                 alt={`Content ${index + 1}`}
                 className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
               />
