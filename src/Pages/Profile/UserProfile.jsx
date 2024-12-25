@@ -6,16 +6,18 @@ import TourSlider from "../../Components/Dashboard/Users/TourSlider";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import UpdateUserModal from "../../Components/Profile/UpdateUserModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RxAvatar } from "react-icons/rx";
+import { updateUser } from "../../features/auth/authSlice";
 
 const UserProfile = () => {
+  const dispatch = useDispatch()
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useSelector((state) => state.authorization);
-  console.log(41584854, user);
+  // console.log(41584854, user);
 
   const handleEditClick = () => {
     setIsModalOpen(true);
@@ -25,11 +27,13 @@ const UserProfile = () => {
   };
 
   const handleSubmit = (updatedDetails) => {
-    // Update user details with the new data (for now, we'll just update the local state)
     const updatedUserData = { ...user, ...updatedDetails };
-
-    // Optionally, here you could also send this updated data to your API to save changes in a database.
-    console.log("Updated User Details:", updatedUserData);
+    // const updatedUserData = { ...updatedDetails };
+    // console.log(updatedDetails); 
+    console.log(555,updatedUserData)
+    const responce = dispatch(updateUser(updatedUserData))
+    console.log("responce", responce)
+    
   };
 
   return (
@@ -43,9 +47,9 @@ const UserProfile = () => {
       <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
         <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
           <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
-          {user?.photoUrl ? (
+          {user?.image ? (
             <img
-              src={user?.customerImg}
+              src={user?.image_url}
               className="rounded-full w-[120px] h-[120px] mt-5"
               alt="User"
             />

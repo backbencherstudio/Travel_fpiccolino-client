@@ -23,7 +23,13 @@ import {
 } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 
-const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
+const CustomIcons = ({
+  selectedIcons,
+  setSelectedIcons,
+  title,
+  iconName,
+  setIconName,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [iconText, setIconText] = useState("");
 
@@ -46,7 +52,13 @@ const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
     { icon: <MdOutlineFreeBreakfast /> },
   ];
 
-  const handleOpenModal = () => setIsModalOpen(true);
+  const handleOpenModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (iconText.length > 0) {
+      setIsModalOpen(true);
+    }
+  };
 
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -57,6 +69,7 @@ const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
     }
 
     setSelectedIcons([...selectedIcons, { icon: icon, text: iconText }]);
+    setIconName([...iconName, { name: icon?.type?.name , text: iconText  }]);
     setIconText("");
     setIsModalOpen(false);
   };
@@ -105,7 +118,11 @@ const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
       <button
         color="primary"
         onClick={handleOpenModal}
-        className="absolute bottom-[13px] right-2 rounded border p-1 px-2 z-40 primary_text text-sm"
+        className={`absolute bottom-[13px] right-2 rounded border p-1 px-2 z-40 ${
+          iconText.length > 0
+            ? "primary_text border-[#ea7645] hover:bg-[#fdf0ea]"
+            : "text-gray-300"
+        } text-sm`}
       >
         Add Icon
       </button>
@@ -140,23 +157,26 @@ const CustomIcons = ({ selectedIcons, setSelectedIcons, title }) => {
           </h2>
 
           <Grid container spacing={3}>
-            {iconList.map((iconItem, index) => (
-              <Grid item key={index}>
-                <Button
-                  onClick={() => handleIconSelect(iconItem.icon)}
-                  style={{
-                    fontSize: "30px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    padding: "10px",
-                    color: "#e86731",
-                  }}
-                >
-                  {iconItem.icon}
-                </Button>
-              </Grid>
-            ))}
+            {iconList.map((iconItem, index) => {
+              // console.log(iconItem.icon?.type?.name);
+              return (
+                <Grid item key={index}>
+                  <Button
+                    onClick={() => handleIconSelect(iconItem.icon)}
+                    style={{
+                      fontSize: "30px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      padding: "10px",
+                      color: "#e86731",
+                    }}
+                  >
+                    {iconItem.icon}
+                  </Button>
+                </Grid>
+              );
+            })}
           </Grid>
         </div>
       </Modal>

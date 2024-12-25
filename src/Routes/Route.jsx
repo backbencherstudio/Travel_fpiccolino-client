@@ -31,6 +31,7 @@ import CreateBlog from "../Components/Dashboard/Blog/CreateBlog";
 import SignupOtp from "../Pages/Auth/SignupOtp";
 import UserProfile from "../Pages/Profile/UserProfile";
 import Header from "../Components/Dashboard/Header/Header";
+import UpdatePackage from "../Components/Dashboard/Package/UpdatePackage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -109,7 +110,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "package/update/:id",
-        element: <UpdateBlog />,
+        element: <UpdatePackage />,
       },
       {
         path: "package/create/new",
@@ -139,7 +140,6 @@ export const router = createBrowserRouter([
         path: "header",
         element: <Header />,
       },
-
     ],
   },
   {

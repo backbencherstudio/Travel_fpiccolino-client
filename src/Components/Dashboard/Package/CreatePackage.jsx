@@ -9,7 +9,15 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import FlightBookingForm from "./FlightForm";
 import { Controller, useForm } from "react-hook-form";
 import InsuranceForm from "./InsuranceForm";
+import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
+import SelectCategory from "./SelectCategory";
+import { DeleteOutlined } from "@mui/icons-material";
+import { FaPlusSquare } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { createPackage } from "../../../features/pckage/packageSlice";
+import dayjs from "dayjs";
 const CreatePackage = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, control } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
@@ -17,15 +25,55 @@ const CreatePackage = () => {
   const [bookedFlights, setBookedFlights] = useState([]);
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [insurance, setInsurance] = useState([]);
+  const [category, setCategory] = useState("All inclusive");
+  const [images, setImages] = useState([]);
+  const [updateImageIndex, setUpdateImageIndex] = useState(null);
+  const [includeIconName, setIncludeIconName] = useState([]);
+  const [notIncludeIconName, setNotIncludeIconName] = useState([]);
+  const onSubmit = async (data) => {
+    const formattedDate = data.tourDate
+      ? dayjs(data.tourDate).format("DD/MM/YYYY")
+      : null;
 
-  const onSubmit = (data) => {
     const packageData = {
-      includeItems: selectedIncludeItems,
-      notIncludeItems: selectedNotIncludeItems,
-      bookedFlights,
       ...data,
+      tourDate: formattedDate,
+      includeItems: includeIconName,
+      notIncludeItems: notIncludeIconName,
+      bookedFlights,
+      category,
+      images,
     };
-    console.log("Form Data:", packageData);
+
+    console.log("main data: ", packageData);
+    try {
+      const response = await dispatch(createPackage(packageData));
+      console.log("responce", response);
+    } catch (error) {
+      console.error("Error creating package:", error);
+      alert("Failed to create package. Please try again.");
+    }
+  };
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (updateImageIndex !== null) {
+      setImages((prevImages) =>
+        prevImages.map((img, i) => (i === updateImageIndex ? files[0] : img))
+      );
+      setUpdateImageIndex(null);
+    } else {
+      setImages((prevImages) => [...prevImages, ...files]);
+    }
+  };
+
+  const handleDeleteImage = (index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
+  const handleUpdateImage = (index) => {
+    setUpdateImageIndex(index);
+    document.getElementById("imageUpdateInput").click();
   };
 
   return (
@@ -35,16 +83,13 @@ const CreatePackage = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="flex justify-between mt-20">
           <h1 className="text-[24px] font-semibold">Create Package</h1>
-          <button
-            type="submit"
-            className="text-[16px] primary_bg text-white font-medium rounded-md px-4 py-2"
-          >
-            Upload Package
-          </button>
+          <div className=" flex justify-end">
+            <CustomDashboardButton content={<p> Create Package</p>} />
+          </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-5 mt-5">
-          <div className="col-span-3">
+        <div className="grid md:grid-cols-5 gap-5 mt-5">
+          <div className="md:col-span-3">
             <div className="border p-4 rounded-2xl">
               <h2 className="text-[20px] font-medium ">General Information</h2>
 
@@ -66,7 +111,7 @@ const CreatePackage = () => {
 
               <div className="grid grid-cols-2 gap-10 mt-3">
                 <div>
-                  <p className="text-[16px]">Tour Date</p>
+                  <p className="text-[16px] mb-2">Tour Date</p>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Controller
                       name="tourDate"
@@ -120,6 +165,8 @@ const CreatePackage = () => {
                 title="include"
                 selectedIcons={selectedIncludeItems}
                 setSelectedIcons={setSelectedIncludeItems}
+                iconName={includeIconName}
+                setIconName={setIncludeIconName}
               />
             </div>
 
@@ -129,6 +176,8 @@ const CreatePackage = () => {
                 title="not include"
                 selectedIcons={selectedNotIncludeItems}
                 setSelectedIcons={setSelectedNotIncludeItems}
+                iconName={notIncludeIconName}
+                setIconName={setNotIncludeIconName}
               />
             </div>
 
@@ -163,8 +212,74 @@ const CreatePackage = () => {
               />
             </div>
           </div>
-          <div className="col-span-2">
-            <h2>cooooooooollll</h2>
+          <div className="md:col-span-2">
+            <div className="">
+              <div className="border rounded-lg p-4 mb-4">
+                <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
+                  Upload Images
+                </h2>
+
+                {/* Big Image */}
+                {images.length > 0 && (
+                  <div className="relative mb-4">
+                    <img
+                      className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
+                      src={URL.createObjectURL(images[0])}
+                      alt={`Preview 0`}
+                      onClick={() => handleUpdateImage(0)}
+                    />
+                    <button
+                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                      onClick={() => handleDeleteImage(0)}
+                    >
+                      <DeleteOutlined />
+                    </button>
+                  </div>
+                )}
+
+                {/* Small Images */}
+                <div className="grid grid-cols-4 gap-4">
+                  {images.slice(1).map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
+                        src={URL.createObjectURL(img)}
+                        alt={`Preview ${index + 1}`}
+                        onClick={() => handleUpdateImage(index + 1)}
+                      />
+                      <button
+                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                        onClick={() => handleDeleteImage(index + 1)}
+                      >
+                        <DeleteOutlined />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="relative inline-block">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageUpload}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                    <div className="flex items-center justify-center bg-[#fdf0ea] text-white rounded-lg cursor-pointer h-[100px] w-full">
+                      <FaPlusSquare className="primary_text h-6 w-6" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Hidden Update Input */}
+                <input
+                  id="imageUpdateInput"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </div>
+              <SelectCategory category={category} setCategory={setCategory} />
+            </div>
           </div>
         </div>
       </form>

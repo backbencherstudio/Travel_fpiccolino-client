@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { TextField, Grid, Typography, Slider, Box, Modal } from "@mui/material";
-import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { DeleteOutlineOutlined } from "@mui/icons-material";
@@ -39,7 +39,7 @@ const InsuranceForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    e.stopPropagation();
     // Add the current flight data to the insurance state
     setInsurance([...insurance, { ...formData, id: insurance.length + 1 }]);
 
@@ -55,30 +55,6 @@ const InsuranceForm = ({
   const handleDelete = (id) => {
     // Remove the flight with the given id from the insurance array
     setInsurance(insurance.filter((flight) => flight.id !== id));
-  };
-
-  const formatTime = (time) => {
-    return time?.format("HH:mm") || "N/A";
-  };
-
-  const getSliderMarks = (flight) => {
-    const marks = [
-      {
-        value: 0,
-        label: `${formatTime(flight.departureTime)}`,
-      },
-      {
-        value: 50,
-        label: flight.breakTime
-          ? `Break: ${formatTime(flight.breakTime)}`
-          : "No Break",
-      },
-      {
-        value: 100,
-        label: `${formatTime(flight.arrivalTime)}`,
-      },
-    ];
-    return marks;
   };
 
   return (

@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { FiEdit3 } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
+import CustomDashboardButton from "./CustomDashboardButton";
 
 const CustomTable = ({
   tableType = "",
@@ -46,18 +47,24 @@ const CustomTable = ({
       // navigate(`/other-list/${id}`);
     }
   };
-console.log("data",data);
-
+  const handleCreatePackage = () => {
+    navigate("create/new");
+  };
   return (
     <div className="">
       <Paper>
         <div className="flex mt-8 p-5 justify-between flex-wrap">
           <h1 className="font-semibold text-[24px]">{title}</h1>{" "}
-          {(tableType === "blog" || tableType === "package")  && (
-            <button onClick={()=>navigate('create/new')} className="text-[16px] font-medium px-4 py-2 primary_bg  text-white rounded-md flex  items-center gap-1.5 hover:bg-opacity-90">
-              <FaRegSquarePlus className="text-xl" /> Add{" "}
-              {tableType.charAt(0).toUpperCase() + tableType.slice(1)}
-            </button>
+          {(tableType === "blog" || tableType === "package") && (
+            <CustomDashboardButton
+              content={
+                <div className="flex items-center gap-1.5 ">
+                  <FaRegSquarePlus className="text-xl" /> Add{" "}
+                  {tableType.charAt(0).toUpperCase() + tableType.slice(1)}
+                </div>
+              }
+              handleSubmit={handleCreatePackage}
+            />
           )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5  gap-3 px-4">
@@ -175,7 +182,7 @@ console.log("data",data);
                           <img
                             className="rounded-full"
                             src={item?.heroSection[0]?.headerImg}
-                            alt=''
+                            alt=""
                             style={{ width: "40px", height: "40px" }} // fixed size for the image
                           />
                           <span
