@@ -5,8 +5,9 @@ import mail from "../../assets/icons/mail2.svg";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { createContact } from "../../features/contact/contactSlice";
 const Contact = () => {
-
   const {
     register,
     handleSubmit,
@@ -14,6 +15,7 @@ const Contact = () => {
     reset
   } = useForm();
   const [selectedOption, setSelectedOption] = useState("phone");
+  const dispatch = useDispatch();
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -21,6 +23,9 @@ const Contact = () => {
 
   const onSubmit = (data) => {
     console.log("Submitted Data:", { ...data, contactMethod: selectedOption });
+    const contactData = { ...data, contactMethod: selectedOption };
+    const res = dispatch(createContact(contactData));
+    console.log('res', res)
     reset()
   };
 
