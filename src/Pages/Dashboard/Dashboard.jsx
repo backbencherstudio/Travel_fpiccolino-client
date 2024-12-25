@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { FaRegBell, FaRegUser } from "react-icons/fa";
 import { IoClose, IoGolfOutline, IoMenu } from "react-icons/io5";
-import { LuLayoutDashboard } from "react-icons/lu";
+import { LuClipboardList, LuLayoutDashboard } from "react-icons/lu";
 import { PiTrolleySuitcase } from "react-icons/pi";
 import { MdOutlinePayment } from "react-icons/md";
 import { GrArticle } from "react-icons/gr";
 import image from "../../assets/image1.jpg";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
-
+import { BiBookContent } from "react-icons/bi";
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,57 +45,74 @@ const Dashboard = () => {
     <div className="lg:flex h-screen">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform lg:translate-x-0 lg:relative w-[280px] bg-white border p-5 z-50 h-screen`}
+        className={`fixed inset-y-0 left-0 transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform lg:translate-x-0 lg:relative w-[280px] bg-white border p-5 z-50 h-screen`}
       >
         <h1 className="text-2xl font-bold mb-5">Admin</h1>
         <nav className="flex flex-col gap-4">
           <button
             onClick={() => handleNavigation("Dashboard", "")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Dashboard"
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Dashboard"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
-              }`}
+            }`}
           >
             <LuLayoutDashboard />
             <span>Dashboard</span>
           </button>
           <button
             onClick={() => handleNavigation("Tour", "tour-list")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Tour"
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Tour"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
-              }`}
+            }`}
           >
             <IoGolfOutline />
             <span>Tour</span>
           </button>
           <button
             onClick={() => handleNavigation("Users", "user-list")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Users"
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Users"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
-              }`}
+            }`}
           >
             <FaRegUser />
             <span>Users</span>
           </button>
           <button
-            onClick={() => handleNavigation("Package", "package")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Package"
+            onClick={() => handleNavigation("Orders", "order-list")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Orders"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
-              }`}
+            }`}
+          >
+            <LuClipboardList />
+            <span>Orders</span>
+          </button>
+          <button
+            onClick={() => handleNavigation("Package", "package")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Package"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
           >
             <PiTrolleySuitcase />
             <span>Package</span>
           </button>
           <button
             onClick={() => handleNavigation("Payment", "payment")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Payment"
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Payment"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
-              }`}
+            }`}
           >
             <MdOutlinePayment />
             <span>Payment History</span>
@@ -103,10 +120,11 @@ const Dashboard = () => {
 
           <button
             onClick={() => handleNavigation("Blog", "blog-list")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Blog"
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Blog"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
-              }`}
+            }`}
           >
             <GrArticle />
             <span>Blog</span>
@@ -114,17 +132,19 @@ const Dashboard = () => {
 
           <button
             onClick={() => handleNavigation("Header", "header")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Header"
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "Header"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
-              }`}
+            }`}
           >
-            <GrArticle />
-            <span>Add Header</span>
+            <BiBookContent />
+            <span>Banners</span>
           </button>
-
         </nav>
-        <button className="absolute bottom-5 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"><CiLogout className="mt-1" /> Logout</button>
+        <button className="absolute bottom-5 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]">
+          <CiLogout className="mt-1" /> Logout
+        </button>
       </aside>
 
       {/* Main Content */}

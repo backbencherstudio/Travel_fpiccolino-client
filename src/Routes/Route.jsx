@@ -32,6 +32,7 @@ import SignupOtp from "../Pages/Auth/SignupOtp";
 import UserProfile from "../Pages/Profile/UserProfile";
 import Header from "../Components/Dashboard/Header/Header";
 import UpdatePackage from "../Components/Dashboard/Package/UpdatePackage";
+import OrderList from "../Components/Dashboard/Orders/OrderList";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -103,6 +104,10 @@ export const router = createBrowserRouter([
       {
         path: "user-list/:id",
         element: <UserDetails />,
+      },
+      {
+        path: "order-list",
+        element: <OrderList />,
       },
       {
         path: "package",
