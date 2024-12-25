@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "../../../utils/base_path";
 
-
 const CreateBlog = () => {
   const style = {
     position: "absolute",
@@ -33,36 +32,41 @@ const CreateBlog = () => {
   const [mainimagepath, setMainimagepath] = useState([]);
   const [mainContentList, setMainContentList] = useState([]);
   const [deepCopy, setDeepCopy] = useState([]); // Use state for deepCopy
- 
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleMainContentOpen = () => setOpenMainContent(true);
   const handleMainContentClose = () => setOpenMainContent(false);
   // -----------------------------------------------------------------------------
-  
-    const [options, setOptions] = useState([
-      { value: "technology", label: "Technology" },
-      { value: "health", label: "Health" },
-      { value: "travel", label: "Travel" },
-    ]);
-    
-    const [newOption, setNewOption] = useState("");
-  
-    const handleAddOption = () => {
-      if (newOption.trim() !== "") {
-        const newOptionValue = newOption.trim().toLowerCase().replace(/\s+/g, "-");
-        setOptions((prevOptions) => [
-          ...prevOptions,
-          { value: newOptionValue, label: newOption },
-        ]);
-        setSelectedCategory(newOptionValue); // Optionally select the newly added option
-        setNewOption(""); // Clear the input field
-      }
-    };
-  
 
-    // -----------------------------------------------------------------------------------------------
+  const [options, setOptions] = useState([
+    { value: "technology", label: "Technology" },
+    { value: "health", label: "Health" },
+    { value: "travel", label: "Travel" },
+  ]);
+
+  const [newOption, setNewOption] = useState("");
+
+  const handleAddOption = () => {
+    if (newOption.trim() !== "") {
+      const newOptionValue = newOption
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+      setOptions((prevOptions) => [
+        ...prevOptions,
+        { value: newOptionValue, label: newOption },
+      ]);
+      setSelectedCategory(newOptionValue); // Optionally select the newly added option
+      setNewOption(""); // Clear the input field
+    }
+  };
+  const [tagvalue, setTagvalue] = useState("");
+
+  const handleChange = (e) => {
+    setTagvalue(e.target.value);
+  };
+  // -----------------------------------------------------------------------------------------------
 
   const [content, setContent] = useState({
     headings: [""],
@@ -202,7 +206,7 @@ const CreateBlog = () => {
     if (!uploadMainImage) {
       return;
     }
-    console.log(deepCopy, "last");
+    // console.log(deepCopy, "last");
     const body = {
       heroSection: [
         {
@@ -213,6 +217,7 @@ const CreateBlog = () => {
           mainSubHeading: deepCopy[0]?.subHeading,
         },
       ],
+      tag: tagvalue,
       category: selectedCategory,
       contentList: contentList.map((content, index) => ({
         headings: content.headings,
@@ -224,16 +229,13 @@ const CreateBlog = () => {
     console.log("Blog Data:", body);
 
     try {
-      const response = await fetch(
-        `${base_url}/api/blogs/createblog`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
+      const response = await fetch(`${base_url}/api/blogs/createblog`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
 
       if (response.ok) {
         alert("Blog uploaded successfully!");
@@ -333,80 +335,88 @@ const CreateBlog = () => {
             />
           </div>
           <div className="border rounded-lg p-4 mb-4">
-            <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
-              Category
+            <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
+              Add Category
             </h2>
-            <h2 className="text-[#141D2A] mb-6">Blog Category</h2>
-            <div style={{ maxWidth: "400px", margin: "0 auto", padding: "20px" }}>
-  <label
-    htmlFor="category-select"
-    style={{
-      display: "block",
-      marginBottom: "8px",
-      fontWeight: "bold",
-      fontSize: "14px",
-    }}
-  >
-    Choose a Category:
-  </label>
-  <select
-    id="category-select"
-    value={selectedCategory}
-    onChange={(e) => setSelectedCategory(e.target.value)}
-    style={{
-      width: "100%",
-      padding: "10px",
-      borderRadius: "4px",
-      border: "1px solid #ccc",
-      marginBottom: "10px",
-      fontSize: "14px",
-      backgroundColor: "#f9f9f9",
-    }}
-  >
-    <option value="">Select a category</option>
-    {options &&
-      options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-  </select>
-  <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-    <input
-      type="text"
-      value={newOption}
-      onChange={(e) => setNewOption(e.target.value)}
-      placeholder="Add new category"
-      style={{
-        flex: 1,
-        padding: "10px",
-        borderRadius: "4px",
-        border: "1px solid #ccc",
-        fontSize: "14px",
-        backgroundColor: "#f9f9f9",
-      }}
-    />
-    <button
-      onClick={handleAddOption}
-      style={{
-        padding: "10px 20px",
-        borderRadius: "4px",
-        border: "none",
-        backgroundColor: "#007BFF",
-        color: "#fff",
-        fontWeight: "bold",
-        cursor: "pointer",
-        fontSize: "14px",
-      }}
-    >
-      Add
-    </button>
-  </div>
-</div>
-
+            <div
+              style={{ maxWidth: "400px", margin: "0 auto", padding: "20px" }}
+            >
+              <label
+                htmlFor="category-select"
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: "bold",
+                  fontSize: "14px",
+                }}
+              ></label>
+              <select
+                id="category-select"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                  marginBottom: "10px",
+                  fontSize: "14px",
+                  backgroundColor: "#f9f9f9",
+                }}
+              >
+                <option value="">Select a category</option>
+                {options &&
+                  options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+              </select>
+              <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                <input
+                  type="text"
+                  value={newOption}
+                  onChange={(e) => setNewOption(e.target.value)}
+                  placeholder="Add new category"
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid #ccc",
+                    fontSize: "14px",
+                    backgroundColor: "#f9f9f9",
+                  }}
+                />
+                <button
+                  onClick={handleAddOption}
+                  style={{
+                    padding: "10px 20px",
+                    borderRadius: "4px",
+                    border: "none",
+                    backgroundColor: "#007BFF",
+                    color: "#fff",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+            <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2 mt-5">
+              Add Tag
+            </h2>
+            <div>
+              <input
+                type="text"
+                value={tagvalue}
+                onChange={handleChange}
+                placeholder="Enter text"
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
           </div>
-
-          
         </div>
       </div>
 
