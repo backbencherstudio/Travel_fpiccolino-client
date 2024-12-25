@@ -45,10 +45,10 @@ const CreatePackage = () => {
       images,
     };
 
-    console.log("main data: ", packageData);
     try {
       const response = await dispatch(createPackage(packageData));
       console.log("responce", response);
+
     } catch (error) {
       console.error("Error creating package:", error);
       alert("Failed to create package. Please try again.");
