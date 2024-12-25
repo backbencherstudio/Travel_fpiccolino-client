@@ -14,23 +14,31 @@ import {
 } from "@mui/material";
 import {
   createCategory,
+  deleteCategory,
   getCategory,
 } from "../../../features/category/categorySlice";
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 
 const SelectCategory = ({ category, setCategory }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [formData, setFormData] = useState({
     category: "",
   });
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
-  // Access Redux state
-  const { categories, categoryCreateLoading, categoryCreateLoadingError } =
-    useSelector((state) => state.category);
+
+  const {
+    categories,
+    categoryCreateLoading,
+    categoryCreateLoadingError,
+    categoryFetchLoading,
+    categoryFetchError,
+  } = useSelector((state) => state.category);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,17 +48,12 @@ const SelectCategory = ({ category, setCategory }) => {
     });
   };
 
-  const handleOpenModal = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setOpenModal(true);
-  };
-
   const handleAddCategory = () => {
     if (formData.category.trim()) {
-      dispatch(createCategory({ category: formData.category })); // Dispatch createCategory action
-      setFormData({ category: "" });
-      setOpenModal(false);
+      dispatch(createCategory({ category: formData.category })).then(() => {
+        // Close the modal after category is added successfully
+        setOpenModal(false);
+      });
     }
   };
 
@@ -60,35 +63,55 @@ const SelectCategory = ({ category, setCategory }) => {
         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
           Category
         </h2>
-        <Select
-          style={{
-            width: "100%",
-            cursor: "pointer",
-            fontSize: "14px",
-            border: "1px solid #e86731",
-            borderRadius: "4px",
-          }}
-          size="small"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          {categories && categories.length > 0 ? (
-            categories?.map((element, index) => (
-              <MenuItem
-                className="flex"
-                key={index}
-                value={`${element.category}`}
-              >
-                <div> {element.category}</div> <DeleteOutlineOutlined />
-              </MenuItem>
-            ))
-          ) : (
-            <MenuItem value="">No Categories Available</MenuItem>
-          )}
-        </Select>
+        {categoryFetchLoading ? (
+          <p>Loading categories...</p>
+        ) : categoryFetchError ? (
+          <p>Error fetching categories: {categoryFetchError}</p>
+        ) : (
+          <Select
+            style={{
+              width: "100%",
+              cursor: "pointer",
+              fontSize: "14px",
+              border: "1px solid #e86731",
+              borderRadius: "4px",
+            }}
+            size="small"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            onOpen={() => setIsDropdownOpen(true)}
+            onClose={() => setIsDropdownOpen(false)}
+          >
+            {categories && categories.length > 0 ? (
+              categories.map((element, index) => (
+                <MenuItem
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                  key={index}
+                  value={element.category}
+                >
+                  <div>{element.category}</div>
+                  {isDropdownOpen && category !== element.category && (
+                    <DeleteOutlineOutlined
+                      className="text-[red] z-20 bg-[#fdf0ea] rounded-full hover:scale-105"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(deleteCategory(element._id));
+                      }}
+                    />
+                  )}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem value="">No Categories Available</MenuItem>
+            )}
+          </Select>
+        )}
         <div className="mt-3 flex justify-end">
           <CustomDashboardButton
-            handleSubmit={handleOpenModal}
+            handleSubmit={() => setOpenModal(true)}
             content={
               <div className="flex items-center gap-1.5 ">
                 <FaRegSquarePlus className="text-xl" /> Add Category
@@ -137,7 +160,7 @@ const SelectCategory = ({ category, setCategory }) => {
                 type="button"
                 onClick={handleAddCategory}
                 className="primary_bg w-full text-white font-semibold text-[16px] py-2 rounded-md hover:opacity-90"
-                disabled={categoryCreateLoading} // Disable button during loading
+                disabled={categoryCreateLoading}
               >
                 {categoryCreateLoading ? "Adding..." : "Add Category"}
               </button>
