@@ -236,6 +236,7 @@ const updateHeroSection = async () => {
         payload
       );
       console.log("Category Updated", response.data);
+      setCategory( response.data.category)
     } catch (error) {
       console.error("Error updating Category", error);
     }
