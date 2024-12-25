@@ -16,6 +16,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import CustomDashboardButton from "./CustomDashboardButton";
+import { base_url } from "../utils/base_path";
 
 const CustomTable = ({
   tableType = "",
@@ -181,7 +182,7 @@ const CustomTable = ({
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
-                            src={item?.heroSection[0]?.headerImg}
+                            src={`${base_url}/uploads/${item?.heroSection[0]?.headerImg}`}
                             alt=""
                             style={{ width: "40px", height: "40px" }} // fixed size for the image
                           />
@@ -246,7 +247,7 @@ const CustomTable = ({
                           <div
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`update/${item.id}`);
+                              navigate(`update/${item._id}`);
                             }}
                             className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
                           >

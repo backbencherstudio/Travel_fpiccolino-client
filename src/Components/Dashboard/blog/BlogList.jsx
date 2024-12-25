@@ -3,6 +3,7 @@ import CustomTable from "../../../Shared/CustomTable";
 import { blogs } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import axios from "axios";
+import { base_url } from "../../../utils/base_path";
 
 const BlogList = () => {
   const [tourDateFilter, setTourDateFilter] = useState("all");
@@ -19,7 +20,7 @@ const BlogList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/blogs/allblogs"); 
+        const response = await axios.get(`${base_url}/api/blogs/allblogs`); 
         setBlogss(response.data.blogs);
       } catch (err) {
         setError(err.message || "Something went wrong while fetching blogs.");
