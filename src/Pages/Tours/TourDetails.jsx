@@ -63,9 +63,6 @@ const TourDetails = () => {
 
     const [imagePath, setImagePath] = useState(image3)
 
-
-
-
     return (
         <div className="text-black" >
             <HeroScetion heroContent={heroContent} />
