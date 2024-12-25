@@ -2,19 +2,20 @@
 import moment from "moment";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { base_url } from "../../utils/base_path";
 
 const BlogCard = ({ item }) => {
-  const { heroSection, category, createdAt, contentList, _id } = item;
+  const { heroSection, category, createdAt, contentList, id } = item;
   const navigate = useNavigate();
   return (
     <div
-      onClick={() => navigate(`/blog/${_id}`)}
+      onClick={() => navigate(`/blog/${id}`)}
       className="bg-[#effbfb] rounded-2xl"
     >
       <div className="relative group">
         <img
           className="h-[240px] w-full object-cover rounded-t-2xl "
-          src={heroSection[0].headerImg}
+          src={`${base_url}/uploads/${heroSection?.headerImg}`}
           alt=""
         />
         <div className="p-5">
@@ -24,12 +25,12 @@ const BlogCard = ({ item }) => {
               Adventure Awaits{" "}
             </h2>
             <h2 className="font-semibold text-[20px] text-[#141D2A]">
-              {heroSection[0].mainHeading}
+              {heroSection?.mainHeading}
             </h2>
             <div className="mt-10 flex justify-between">
               <div>
                 <p className="text-[#141D2A] text-[16px] font-semibold">
-                  {heroSection[0].mainSubHeading}
+                  {heroSection?.mainSubHeading}
                 </p>
                 <p className="font-normal text-[14px] text-[#72777F]  ">
                   {createdAt}

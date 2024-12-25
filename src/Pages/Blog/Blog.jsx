@@ -3,14 +3,16 @@ import { categories } from "../../ALLJsonFile/const";
 import BlogSections from "../../Components/Blog/BlogSections";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import heroImage from "../../assets/Images/about.jpg";
-import { getBlog } from "../../features/blog/blogSlice";
+import { getBlogsByCategory } from "../../features/blog/blogSlice";
 import { useEffect } from "react";
 
 const Blog = () => {
   const dispatch = useDispatch();
-  const { blogs } = useSelector((state) => state.blog.blogs);
+  const blogs = useSelector((state) => state.blog.categoryBlogs);
+  console.log(blogs);
+
   useEffect(() => {
-    dispatch(getBlog());
+    dispatch(getBlogsByCategory());
   }, [dispatch]);
   const heroContent = {
     heroImage,
@@ -22,8 +24,10 @@ const Blog = () => {
   return (
     <div>
       <HeroScetion heroContent={heroContent} />
-      {categories?.map((category) => {
-        return <BlogSections key={category} title={category} blogs={blogs} />;
+      {blogs?.map((blog, i) => {
+        return (
+          <BlogSections key={i} title={blog.category} blogs={blog.blogs} />
+        );
       })}
     </div>
   );
