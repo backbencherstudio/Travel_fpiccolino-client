@@ -1,6 +1,8 @@
 import { RiAddBoxLine, RiDeleteBin5Line } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { base_url } from "../../../utils/base_path";
+import { useParams } from "react-router-dom";
 
 const UpdateBlog = () => {
   const [heroSection, setHeroSection] = useState({});
@@ -9,11 +11,15 @@ const UpdateBlog = () => {
   const [data, setData] = useState(null);
   const [images, setImages] = useState([]);
 
+  const { id } = useParams();
+
+  console.log('id', id)
+
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/blogGet/676a52407856362ce9bd9526"
+          `${base_url}/api/blogs/blogGet/${id}`
         );
         const responseData = response.data;
 
@@ -62,7 +68,7 @@ const UpdateBlog = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/blogs/deleteContent/676a52407856362ce9bd9526/${index}`, 
+        `${base_url}/api/blogs/deleteContent/676a52407856362ce9bd9526/${index}`, 
         {
           headers: {
             "Content-Type": "application/json", 
@@ -82,15 +88,23 @@ const UpdateBlog = () => {
 
   const addParagraph = (event, index) => {
     event.stopPropagation();
-    console.log(index);
-    console.log("Clicked add paragraph button");
     setContentList((prevContentList) => {
-        const updatedContent = [...prevContentList];
-        updatedContent[index].paragraphs.push("New paragraph");
-        console.log(updatedContent[index].paragraphs);
-        return updatedContent;
+      // Create a copy of the current state
+      const updatedContent = [...prevContentList];
+  
+      // Add a single "New paragraph" field to the correct index
+      if (updatedContent[index] && updatedContent[index].paragraphs) {
+        updatedContent[index].paragraphs = [
+          ...updatedContent[index].paragraphs,
+          "New paragraph",
+        ];
+      }
+  
+      // Return the updated state
+      return updatedContent;
     });
-};
+  };
+  
 
   
 
@@ -127,7 +141,7 @@ const UpdateBlog = () => {
     });
 
     try {
-        const response = await axios.post("http://localhost:3000/api/blogs/uploads", formData, {
+        const response = await axios.post(`${base_url}/api/blogs/uploads`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -170,7 +184,7 @@ const updateHeroSection = async () => {
 
   try {
     const response = await axios.patch(
-      "http://localhost:3000/api/blogs/updateHeroSection/676a52407856362ce9bd9526",
+      `${base_url}/api/blogs/updateHeroSection/676a52407856362ce9bd9526`,
       body, 
       {
         headers: {
@@ -212,7 +226,7 @@ const updateHeroSection = async () => {
     console.log(index, "jhljervhbrejvcrewufhe")
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/blogs/updateContent/676a52407856362ce9bd9526/${index}`,
+        `${base_url}/api/blogs/updateContent/676a52407856362ce9bd9526/${index}`,
         body,
         {
           headers: {
@@ -232,7 +246,7 @@ const updateHeroSection = async () => {
     console.log(payload)
     try {
       const response = await axios.patch(
-        "http://localhost:3000/api/blogs/updatecatagory/676a52407856362ce9bd9526",
+        `${base_url}/api/blogs/updatecatagory/676a52407856362ce9bd9526`,
         payload
       );
       console.log("Category Updated", response.data);
@@ -262,7 +276,7 @@ const updateHeroSection = async () => {
               />
             ) : (
               <img
-                src={`http://localhost:3000/uploads/${heroSection.headerImg}`}
+                src={`${base_url}/uploads/${heroSection.headerImg}`}
                 alt="Hero"
                 className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
               />
@@ -336,7 +350,7 @@ const updateHeroSection = async () => {
               />
             ) : (
               <img
-                src={`http://localhost:3000/uploads/${content.image}`}
+                src={`${base_url}/uploads/${content.image}`}
                 alt={`Content ${index + 1}`}
                 className="w-full max-w-lg h-auto object-cover rounded-md shadow-md"
               />
@@ -378,7 +392,7 @@ const updateHeroSection = async () => {
               </div>
             ))}
             <button
-               onClick={(event) => addParagraph(event, index)}
+               onClick={(event) => addParagraph(event, paragraphIndex)}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
               Add Paragraph

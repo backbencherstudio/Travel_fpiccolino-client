@@ -4,6 +4,7 @@ import heroImage2 from "../../../assets/Images/HeroSection/heroImage2.jpg";
 import { RiAddBoxLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { base_url } from "../../../utils/base_path";
 
 
 const CreateBlog = () => {
@@ -144,7 +145,7 @@ const CreateBlog = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/blogs/uploads",
+        `${base_url}/api/blogs/uploads`,
         formData,
         {
           headers: {
@@ -170,7 +171,7 @@ const CreateBlog = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/blogs/uploads",
+        `${base_url}/api/blogs/uploads`,
         formData,
         {
           headers: {
@@ -224,7 +225,7 @@ const CreateBlog = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/blogs/createblog",
+        `${base_url}/api/blogs/createblog`,
         {
           method: "POST",
           headers: {
