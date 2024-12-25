@@ -8,7 +8,15 @@ export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}/package`, packageData);
+      // const formData = new FormData();
+      // formData.append("file", file);
+      // formData.append("userId", userId);
+      
+      const response = await axios.post(`${base_url}/package`, packageData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log("slice", response.data);
       return response.data;
     } catch (error) {
