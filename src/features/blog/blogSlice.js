@@ -29,6 +29,18 @@ export const getBlogsByCategory = createAsyncThunk(
     }
   }
 );
+export const getBlogDetails = createAsyncThunk(
+  "blog/getBlogDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      // Assuming you pass a category to filter blogs
+      const response = await axios.get(`${base_url}/api/blogs/blogGet/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
 
 // Initial state
 const initialState = {
@@ -38,6 +50,9 @@ const initialState = {
   categoryBlogs: [], // State to store blogs by category
   categoryBlogsLoading: false,
   categoryBlogsError: null, // For category-specific error handling
+  blogDetails: null,
+  blogDetailsLoading: false,
+  blogDetailsError: null,
 };
 
 // Create the slice
@@ -76,6 +91,21 @@ const blogSlice = createSlice({
       .addCase(getBlogsByCategory.rejected, (state, action) => {
         state.categoryBlogsLoading = false;
         state.categoryBlogsError =
+          action.payload?.message || "Error fetching blogs by category";
+      })
+
+      .addCase(getBlogDetails.pending, (state) => {
+        state.categoryBlogsLoading = true;
+        state.categoryBlogsError = null;
+      })
+      .addCase(getBlogDetails.fulfilled, (state, action) => {
+        state.blogCreateLoading = false;
+        state.blogDetailsError = null;
+        state.blogDetails = action.payload;
+      })
+      .addCase(getBlogDetails.rejected, (state, action) => {
+        state.blogDetailsLoading = false;
+        state.blogDetailsError =
           action.payload?.message || "Error fetching blogs by category";
       });
   },

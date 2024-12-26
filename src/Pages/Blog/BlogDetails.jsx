@@ -13,7 +13,11 @@ import image5 from "../../assets/image5.jpg";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { useParams } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getBlogDetails } from "../../features/blog/blogSlice";
 const BlogDetails = () => {
+  const dispatch = useDispatch();
   const params = useParams();
   const blogs = [
     {
@@ -359,7 +363,7 @@ const BlogDetails = () => {
       tag: "Discover History",
     },
   ];
-
+  dispatch(getBlogDetails(params.id));
   const heroContent = {
     heroImage: blogs[params.id].headerImg,
     titleOne: "Feel at Home Wherever You Roam",

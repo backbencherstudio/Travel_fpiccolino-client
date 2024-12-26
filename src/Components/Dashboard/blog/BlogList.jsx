@@ -20,9 +20,6 @@ const BlogList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/blogs/allblogs"
-        );
         const response = await axios.get(`${base_url}/api/blogs/allblogs`);
         setBlogss(response.data.blogs);
       } catch (err) {
