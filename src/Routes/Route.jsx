@@ -32,6 +32,7 @@ import SignupOtp from "../Pages/Auth/SignupOtp";
 import UserProfile from "../Pages/Profile/UserProfile";
 import Header from "../Components/Dashboard/Header/Header";
 import UpdatePackage from "../Components/Dashboard/Package/UpdatePackage";
+import ContactsTable from "../Components/Dashboard/Contact/ContactsTable ";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -139,6 +140,10 @@ export const router = createBrowserRouter([
       {
         path: "header",
         element: <Header />,
+      },
+      {
+        path: "contact",
+        element: <ContactsTable/>,
       },
     ],
   },

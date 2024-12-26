@@ -8,6 +8,7 @@ import { GrArticle } from "react-icons/gr";
 import image from "../../assets/image1.jpg";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
+import { IoMdContacts } from "react-icons/io";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -121,6 +122,17 @@ const Dashboard = () => {
           >
             <GrArticle />
             <span>Add Header</span>
+          </button>
+          <button
+            onClick={() => handleNavigation("Contact", "contact")}
+            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Contact"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+              }`}
+          >
+            <IoMdContacts />
+
+            <span>All Contact</span>
           </button>
 
         </nav>
