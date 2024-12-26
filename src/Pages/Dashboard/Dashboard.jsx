@@ -8,6 +8,8 @@ import { GrArticle } from "react-icons/gr";
 import image from "../../assets/image1.jpg";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
+import { IoMdContacts } from "react-icons/io";
+
 import { BiBookContent } from "react-icons/bi";
 const Dashboard = () => {
   const navigate = useNavigate();
