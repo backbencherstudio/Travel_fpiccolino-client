@@ -5,6 +5,8 @@ import { base_url } from "../../utils/base_path";
 axios.defaults.withCredentials = true;
 
 // Async Thunks
+
+// Get all blogs
 export const getBlog = createAsyncThunk(
   "blog/getBlog",
   async (_, { rejectWithValue }) => {
@@ -17,12 +19,42 @@ export const getBlog = createAsyncThunk(
   }
 );
 
+// Get blogs by category
 export const getBlogsByCategory = createAsyncThunk(
   "blog/getBlogsByCategory",
   async (category, { rejectWithValue }) => {
     try {
-      // Assuming you pass a category to filter blogs
-      const response = await axios.get(`${base_url}/api/blogs/all`);
+      const response = await axios.get(`${base_url}/api/blogs/all`, {
+        params: { category },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+// Get a single blog by ID
+export const getBlogDetails = createAsyncThunk(
+  "blog/getBlogDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/blogs/blogGet/${id}`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+// Get category count for blogs
+export const getCategoryCount = createAsyncThunk(
+  "blog/getCategoryCount",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/blogs/categoryCount`);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -35,9 +67,13 @@ const initialState = {
   blogCreateLoading: false,
   blogCreateLoadingError: null,
   blogs: [],
-  categoryBlogs: [], // State to store blogs by category
+  categoryBlogs: [],
   categoryBlogsLoading: false,
-  categoryBlogsError: null, // For category-specific error handling
+  categoryBlogsError: null,
+  blogDetails: null,
+  blogDetailsLoading: false,
+  blogDetailsError: null,
+  categoryCount: 0,
 };
 
 // Create the slice
@@ -77,6 +113,31 @@ const blogSlice = createSlice({
         state.categoryBlogsLoading = false;
         state.categoryBlogsError =
           action.payload?.message || "Error fetching blogs by category";
+      })
+
+      // Handle get blog details
+      .addCase(getBlogDetails.pending, (state) => {
+        state.blogDetailsLoading = true;
+        state.blogDetailsError = null;
+      })
+      .addCase(getBlogDetails.fulfilled, (state, action) => {
+        state.blogDetailsLoading = false;
+        state.blogDetailsError = null;
+        state.blogDetails = action.payload;
+      })
+      .addCase(getBlogDetails.rejected, (state, action) => {
+        state.blogDetailsLoading = false;
+        state.blogDetailsError =
+          action.payload?.message || "Error fetching blog details";
+      })
+
+      // Handle category count
+      .addCase(getCategoryCount.fulfilled, (state, action) => {
+        state.categoryCount = action.payload;
+      })
+      .addCase(getCategoryCount.rejected, (state, action) => {
+        state.blogCreateLoadingError =
+          action.payload?.message || "Error fetching category count";
       });
   },
 });

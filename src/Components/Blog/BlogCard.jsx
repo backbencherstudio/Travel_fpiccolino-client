@@ -10,7 +10,7 @@ const BlogCard = ({ item }) => {
   return (
     <div
       onClick={() => navigate(`/blog/${id}`)}
-      className="bg-[#effbfb] rounded-2xl"
+      className="bg-[#effbfb] rounded-2xl p-5 overflow-auto"
     >
       <div className="relative group">
         <img
@@ -29,8 +29,8 @@ const BlogCard = ({ item }) => {
             </h2>
             <div className="mt-10 flex justify-between">
               <div>
-                <p className="text-[#141D2A] text-[16px] font-semibold">
-                  {heroSection?.mainSubHeading}
+                <p className="text-[#141D2A] text-[16px] font-semibold max-w-[200px]">
+                  {heroSection?.mainSubHeading.slice(0, 200)}...
                 </p>
                 <p className="font-normal text-[14px] text-[#72777F]  ">
                   {createdAt}
