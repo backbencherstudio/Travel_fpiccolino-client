@@ -1,13 +1,37 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { createHeader } from "../../../features/header/headerSlice";
 
 const Header = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const dispatch = useDispatch();
 
     // Form submission handler
-    const onSubmit = (data) => {
-        const file = data.heroImageFile[0];
-        console.log("Form Data:", {...data, ...file});
+
+    // const onSubmit = (data) => {
+    //     const file = data.heroImageFile[0];
+    //     console.log("Form Data:", {...data});
+    //     console.log("Form File Data:", {file});
+    // };
+
+
+    const onSubmit = async (data) => {
+
+        const headerData = new FormData();
+        const file = data?.image[0];
+        headerData.append('image', file);
+        Object.keys(data).forEach((key) => {
+            if (key !== 'image') {
+                headerData.append(key, data[key]);
+            }
+        });
+
+        const response = await dispatch(createHeader(headerData));
+        console.log("responce", response);
+
+
     };
+
 
     return (
         <form
@@ -43,12 +67,12 @@ const Header = () => {
                 <input
                     type="file"
                     accept="image/*"
-                    {...register("heroImageFile", { required: "This field is required" })}
-                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.heroImageFile ? "border-red-500" : "border-gray-300"
+                    {...register("image", { required: "This field is required" })}
+                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.image ? "border-red-500" : "border-gray-300"
                         }`}
                 />
-                {errors.heroImageFile && (
-                    <p className="text-red-500 text-xs mt-2">{errors.heroImageFile.message}</p>
+                {errors.image && (
+                    <p className="text-red-500 text-xs mt-2">{errors.image.message}</p>
                 )}
             </div>
 
@@ -78,7 +102,7 @@ const Header = () => {
                     {...register("pageName", { required: "This field is required" })}
                     className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.pageName ? "border-red-500" : "border-gray-300"
                         }`}
-                    defaultValue="" 
+                    defaultValue=""
                 >
                     <option value="" disabled>
                         Select a Page
@@ -86,6 +110,9 @@ const Header = () => {
                     <option value="home">Home</option>
                     <option value="tour">Tour</option>
                     <option value="about">About</option>
+                    <option value="blog">Blog</option>
+                    <option value="contact">Contact</option>
+                    <option value="faq">FAQ</option>
                 </select>
                 {errors.pageName && (
                     <p className="text-red-500 text-xs mt-2">{errors.pageName.message}</p>
