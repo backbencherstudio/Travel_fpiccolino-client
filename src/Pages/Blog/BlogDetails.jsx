@@ -194,7 +194,7 @@ const BlogDetails = () => {
         <BlogSections
           relatedTitle={"Related Articles"}
           title={blogDetails?.category}
-          blogs={relatedBlogs.slice(1, 4)}
+          blogs={relatedBlogs?.slice(1, 4)}
         />
       </ParentComponent>
     </div>
