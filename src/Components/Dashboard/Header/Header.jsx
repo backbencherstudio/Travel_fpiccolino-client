@@ -92,6 +92,22 @@ const Header = () => {
 
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
+                    title Two
+                </label>
+                <input
+                    type="text"
+                    {...register("titleTwo")}
+                    placeholder="Main Title"
+                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.titleTwo ? "border-red-500" : "border-gray-300"
+                        }`}
+                />
+                {/* {errors.titleTwo && (
+                    <p className="text-red-500 text-xs mt-2">{errors.titleTwo.message}</p>
+                )} */}
+            </div>
+
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
                     Page Name
                 </label>
                 <select
@@ -131,6 +147,23 @@ const Header = () => {
                 {errors.descriptionOne && (
                     <p className="text-red-500 text-xs mt-2">{errors.descriptionOne.message}</p>
                 )}
+            </div>
+
+            {/* second  Description */}
+            <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Second Description
+                </label>
+                <textarea
+                    {...register("descriptionTwo")}
+                    placeholder="Description"
+                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.descriptionTwo ? "border-red-500" : "border-gray-300"
+                        }`}
+                    rows="4"
+                />
+                {/* {errors.descriptionTwo && (
+                    <p className="text-red-500 text-xs mt-2">{errors.descriptionTwo.message}</p>
+                )} */}
             </div>
 
             {/* Submit Button */}
