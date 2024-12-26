@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "../../../utils/base_path";
 import { useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const UpdateBlog = () => {
   const [heroSection, setHeroSection] = useState({});
@@ -10,10 +13,10 @@ const UpdateBlog = () => {
   const [category, setCategory] = useState("");
   const [data, setData] = useState(null);
   const [images, setImages] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   const { id } = useParams();
-
-  console.log('id', id)
+   console.log(id)
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -37,6 +40,10 @@ const UpdateBlog = () => {
     fetchBlogs();
   }, []);
 
+  // useEffect(() => {
+  //   fetchBlogs();
+  // }, [refresh]);
+
   const handleHeroEdit = (field, value) => {
     setHeroSection((prevHeroSection) => ({
       ...prevHeroSection,
@@ -44,12 +51,14 @@ const UpdateBlog = () => {
     }));
   };
 
-  const handleContentEdit = (index, field, value) => {
+  const handleContentEdit = (index, field, value, paragraphIndex=0) => {
     setContentList((prevContentList) => {
       const updatedContent = [...prevContentList];
-      if (field === "headings" || field === "paragraphs") {
-        updatedContent[index][field][0] = value;
-      } else {
+      if (field === "headings" || field === "paragraphs" ) {
+        updatedContent[index][field][paragraphIndex] = value;
+      } 
+      
+      else {
         updatedContent[index][field] = value;
       }
       return updatedContent;
@@ -78,43 +87,75 @@ const UpdateBlog = () => {
       console.log("Hero Section Deleted", response.data);
       setContentList((prevContentList) =>
         prevContentList.filter((_, i) => i !== index)
+       
       );
+      toast.success("Content Delete successfully!");
     } catch (error) {
       console.error("Error deleting Hero Section", error);
+      toast.error("Error deleting blog.");
     }
     
 
   };
 
+  // const addParagraph = (event, index) => {
+  //   event.stopPropagation();
+  //   setContentList((prevContentList) => {
+      
+  //     const updatedContent = [...prevContentList];
+  
+  //     // Add a single "New paragraph" field to the correct index
+  //     if (updatedContent[index] && updatedContent[index].paragraphs) {
+  //       updatedContent[index].paragraphs = [
+  //         ...updatedContent[index].paragraphs,
+  //         "New paragraph",
+  //       ];
+  //     }
+  
+  //     // Return the updated state
+  //     return updatedContent;
+  //   });
+  // };
   const addParagraph = (event, index) => {
     event.stopPropagation();
-    setContentList((prevContentList) => {
-      // Create a copy of the current state
-      const updatedContent = [...prevContentList];
-  
-      // Add a single "New paragraph" field to the correct index
-      if (updatedContent[index] && updatedContent[index].paragraphs) {
-        updatedContent[index].paragraphs = [
-          ...updatedContent[index].paragraphs,
-          "New paragraph",
-        ];
-      }
-  
-      // Return the updated state
-      return updatedContent;
-    });
+    setContentList((prevContentList) => 
+      prevContentList.map((content, i) => {
+        if (i === index) {
+          return {
+            ...content,
+            paragraphs: content.paragraphs ? [...content.paragraphs, "New paragraph"] : ["New paragraph"],
+          };
+        }
+        return content;
+      })
+    );
   };
   
+  
 
   
 
+  // const deleteParagraph = (contentIndex, paragraphIndex) => {
+  //   setContentList((prevContentList) => {
+  //     const updatedContent = [...prevContentList];
+  //     updatedContent[contentIndex].paragraphs.splice(paragraphIndex, 1);
+  //     return updatedContent;
+  //   });
+  // };
   const deleteParagraph = (contentIndex, paragraphIndex) => {
-    setContentList((prevContentList) => {
-      const updatedContent = [...prevContentList];
-      updatedContent[contentIndex].paragraphs.splice(paragraphIndex, 1);
-      return updatedContent;
-    });
+    setContentList((prevContentList) => 
+      prevContentList.map((content, i) => {
+        if (i === contentIndex) {
+          return {
+            ...content,
+            paragraphs: content.paragraphs.filter((_, idx) => idx !== paragraphIndex),
+          };
+        }
+        return content;
+      })
+    );
   };
+  
 
   const handleImageChange = (e, isHero = false, index = null) => {
     const file = e.target.files[0];
@@ -184,7 +225,7 @@ const updateHeroSection = async () => {
 
   try {
     const response = await axios.patch(
-      `${base_url}/api/blogs/updateHeroSection/676a52407856362ce9bd9526`,
+      `${base_url}/api/blogs/updateHeroSection/${id}`,
       body, 
       {
         headers: {
@@ -194,12 +235,14 @@ const updateHeroSection = async () => {
     );
     console.log("Hero Section Updated", response.data);
     setHeroSection({})
+    toast.success("Hero Section updated successfully!");
   } catch (error) {
     console.error("Error updating Hero Section", error);
+    toast.error("Error updating blog.");
   }
 };
 
-  const updateIndividualContent = async (index, id) => {
+  const updateIndividualContent = async (index, idd) => {
     let uploadedImages = {};
     const content = contentList[index];
     const formData = new FormData();
@@ -224,9 +267,10 @@ const updateHeroSection = async () => {
     console.log("this is body", body)
     
     console.log(index, "jhljervhbrejvcrewufhe")
+    console.log(id, index)
     try {
       const response = await axios.patch(
-        `${base_url}/api/blogs/updateContent/676a52407856362ce9bd9526/${index}`,
+        `${base_url}/api/blogs/updateContent/${id}/${index}`,
         body,
         {
           headers: {
@@ -236,8 +280,10 @@ const updateHeroSection = async () => {
       );
       console.log(`Content ${index + 1} Updated`, response.data);
       setContentList([]);
+      toast.success("Blog updated successfully!");
     } catch (error) {
       console.error(`Error updating Content ${index + 1}`, error);
+      toast.error("Error updating blog.");
     }
   };
 
@@ -246,18 +292,21 @@ const updateHeroSection = async () => {
     console.log(payload)
     try {
       const response = await axios.patch(
-        `${base_url}/api/blogs/updatecatagory/676a52407856362ce9bd9526`,
+        `${base_url}/api/blogs/updatecatagory/${id}`,
         payload
       );
       console.log("Category Updated", response.data);
       setCategory( response.data.category)
+      toast.success("Category updated successfully!");
     } catch (error) {
       console.error("Error updating Category", error);
+      toast.error("Error updating blog.");
     }
   };
 
   return (
     <div className="p-6 space-y-6">
+      <ToastContainer />
       {/* Header Section */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Edit Blog</h1>
@@ -372,7 +421,7 @@ const updateHeroSection = async () => {
               className="w-full border rounded p-2"
             />
           </div>
-          <div>
+          {/* <div>
             <label className="block mb-2 font-medium">Paragraphs</label>
             {content.paragraphs.map((paragraph, paragraphIndex) => (
               <div key={paragraphIndex} className="space-y-2">
@@ -397,10 +446,37 @@ const updateHeroSection = async () => {
             >
               Add Paragraph
             </button>
-          </div>
+          </div> */}
+          <div>
+  <label className="block mb-2 font-medium">Paragraphs</label>
+  {content.paragraphs.map((paragraph, paragraphIndex) => (
+    <div key={paragraphIndex} className="space-y-2">
+      <textarea
+        value={paragraph || ""}
+        onChange={(e) =>
+          handleContentEdit(index, "paragraphs", e.target.value, paragraphIndex)
+        }
+        className="w-full border rounded p-2 mt-8"
+      ></textarea>
+      <button
+        onClick={() => deleteParagraph(index, paragraphIndex)}
+        className="text-red-500 px-2 mb-5 rounded-md bg-red-100 "
+      >
+        Delete Paragraph
+      </button>
+    </div>
+  ))}
+  <button
+    onClick={(event) => addParagraph(event, index)}
+    className="bg-blue-500 text-white px-4 py-2 mt-5  rounded-md hover:bg-blue-600"
+  >
+    Add Paragraph
+  </button>
+</div>
+
           <button
             onClick={() => updateIndividualContent(index, content._id)}
-            className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
+            className="bg-orange-500 text-white px-4 py-2  rounded-md hover:bg-orange-600"
           >
             Update Content {index + 1}
           </button>

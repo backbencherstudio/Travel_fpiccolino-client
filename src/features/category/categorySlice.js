@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { base_url } from "../../utils/base_path";
+import {  } from "../../utils/base_path";
 
 axios.defaults.withCredentials = true;
 
