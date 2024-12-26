@@ -20,7 +20,7 @@ const BlogList = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1010/api/blogs/allblogs"
+          "http://localhost:3000/api/blogs/allblogs"
         );
         setBlogss(response.data.blogs);
       } catch (err) {
