@@ -39,8 +39,8 @@ const InsuranceForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    // Add the current flight data to the insurance state
+    e.stopPropagation()
+      // Add the current flight data to the insurance state
     setInsurance([...insurance, { ...formData, id: insurance.length + 1 }]);
 
     // Reset form after submission

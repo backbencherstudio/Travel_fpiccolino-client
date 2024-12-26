@@ -31,13 +31,13 @@ const CreatePackage = () => {
   const [includeIconName, setIncludeIconName] = useState([]);
   const [notIncludeIconName, setNotIncludeIconName] = useState([]);
   const onSubmit = async (data) => {
-    const formattedDate = data.tourDate
-      ? dayjs(data.tourDate).format("DD/MM/YYYY")
-      : null;
+    // const formattedDate = data.tourDate
+      // ? dayjs(data.tourDate).format("DD/MM/YYYY")
+      // : null;
 
     const packageData = {
       ...data,
-      tourDate: formattedDate,
+      tourDate: data.tourDate,
       includeItems: includeIconName,
       notIncludeItems: notIncludeIconName,
       bookedFlights,
@@ -45,10 +45,10 @@ const CreatePackage = () => {
       images,
     };
 
-    console.log("main data: ", packageData);
     try {
       const response = await dispatch(createPackage(packageData));
       console.log("responce", response);
+
     } catch (error) {
       console.error("Error creating package:", error);
       alert("Failed to create package. Please try again.");
