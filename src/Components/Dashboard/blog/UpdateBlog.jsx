@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "../../../utils/base_path";
 import { useParams } from "react-router-dom";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const UpdateBlog = () => {
   const [heroSection, setHeroSection] = useState({});
@@ -16,9 +16,7 @@ const UpdateBlog = () => {
   const [refresh, setRefresh] = useState(false);
 
   const { id } = useParams();
-
-  console.log("id", id);
-   console.log(id)
+  console.log(id);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -51,14 +49,12 @@ const UpdateBlog = () => {
     }));
   };
 
-  const handleContentEdit = (index, field, value, paragraphIndex=0) => {
+  const handleContentEdit = (index, field, value, paragraphIndex = 0) => {
     setContentList((prevContentList) => {
       const updatedContent = [...prevContentList];
-      if (field === "headings" || field === "paragraphs" ) {
+      if (field === "headings" || field === "paragraphs") {
         updatedContent[index][field][paragraphIndex] = value;
-      } 
-      
-      else {
+      } else {
         updatedContent[index][field] = value;
       }
       return updatedContent;
@@ -86,23 +82,20 @@ const UpdateBlog = () => {
       console.log("Hero Section Deleted", response.data);
       setContentList((prevContentList) =>
         prevContentList.filter((_, i) => i !== index)
-       
       );
       toast.success("Content Delete successfully!");
     } catch (error) {
       console.error("Error deleting Hero Section", error);
       toast.error("Error deleting blog.");
     }
-    
-
   };
 
   // const addParagraph = (event, index) => {
   //   event.stopPropagation();
   //   setContentList((prevContentList) => {
-      
+
   //     const updatedContent = [...prevContentList];
-  
+
   //     // Add a single "New paragraph" field to the correct index
   //     if (updatedContent[index] && updatedContent[index].paragraphs) {
   //       updatedContent[index].paragraphs = [
@@ -110,46 +103,27 @@ const UpdateBlog = () => {
   //         "New paragraph",
   //       ];
   //     }
-  
+
   //     // Return the updated state
   //     return updatedContent;
   //   });
   // };
   const addParagraph = (event, index) => {
     event.stopPropagation();
-    setContentList((prevContentList) => {
-      // Create a copy of the current state
-      const updatedContent = [...prevContentList];
-
-      // Add a single "New paragraph" field to the correct index
-      if (updatedContent[index] && updatedContent[index].paragraphs) {
-        updatedContent[index].paragraphs = [
-          ...updatedContent[index].paragraphs,
-          "New paragraph",
-        ];
-      }
-
-      // Return the updated state
-      return updatedContent;
-    });
-  };
-
-    setContentList((prevContentList) => 
+    setContentList((prevContentList) =>
       prevContentList.map((content, i) => {
         if (i === index) {
           return {
             ...content,
-            paragraphs: content.paragraphs ? [...content.paragraphs, "New paragraph"] : ["New paragraph"],
+            paragraphs: content.paragraphs
+              ? [...content.paragraphs, "New paragraph"]
+              : ["New paragraph"],
           };
         }
         return content;
       })
     );
   };
-  
-  
-
-  
 
   // const deleteParagraph = (contentIndex, paragraphIndex) => {
   //   setContentList((prevContentList) => {
@@ -159,19 +133,20 @@ const UpdateBlog = () => {
   //   });
   // };
   const deleteParagraph = (contentIndex, paragraphIndex) => {
-    setContentList((prevContentList) => 
+    setContentList((prevContentList) =>
       prevContentList.map((content, i) => {
         if (i === contentIndex) {
           return {
             ...content,
-            paragraphs: content.paragraphs.filter((_, idx) => idx !== paragraphIndex),
+            paragraphs: content.paragraphs.filter(
+              (_, idx) => idx !== paragraphIndex
+            ),
           };
         }
         return content;
       })
     );
   };
-  
 
   const handleImageChange = (e, isHero = false, index = null) => {
     const file = e.target.files[0];
@@ -242,7 +217,7 @@ const UpdateBlog = () => {
 
     try {
       const response = await axios.patch(
-        `${base_url}/api/blogs/updateHeroSection/676a52407856362ce9bd9526`,
+        `${base_url}/api/blogs/updateHeroSection/${id}`,
         body,
         {
           headers: {
@@ -252,28 +227,12 @@ const UpdateBlog = () => {
       );
       console.log("Hero Section Updated", response.data);
       setHeroSection({});
+      toast.success("Hero Section updated successfully!");
     } catch (error) {
       console.error("Error updating Hero Section", error);
+      toast.error("Error updating blog.");
     }
   };
-  try {
-    const response = await axios.patch(
-      `${base_url}/api/blogs/updateHeroSection/${id}`,
-      body, 
-      {
-        headers: {
-          "Content-Type": "application/json", 
-        },
-      }
-    );
-    console.log("Hero Section Updated", response.data);
-    setHeroSection({})
-    toast.success("Hero Section updated successfully!");
-  } catch (error) {
-    console.error("Error updating Hero Section", error);
-    toast.error("Error updating blog.");
-  }
-};
 
   const updateIndividualContent = async (index, idd) => {
     let uploadedImages = {};
@@ -300,11 +259,7 @@ const UpdateBlog = () => {
     console.log("this is body", body);
 
     console.log(index, "jhljervhbrejvcrewufhe");
-
-    console.log("this is body", body)
-    
-    console.log(index, "jhljervhbrejvcrewufhe")
-    console.log(id, index)
+    console.log(id, index);
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updateContent/${id}/${index}`,
@@ -334,7 +289,6 @@ const UpdateBlog = () => {
       );
       console.log("Category Updated", response.data);
       setCategory(response.data.category);
-      setCategory( response.data.category)
       toast.success("Category updated successfully!");
     } catch (error) {
       console.error("Error updating Category", error);
@@ -485,31 +439,36 @@ const UpdateBlog = () => {
             </button>
           </div> */}
           <div>
-  <label className="block mb-2 font-medium">Paragraphs</label>
-  {content.paragraphs.map((paragraph, paragraphIndex) => (
-    <div key={paragraphIndex} className="space-y-2">
-      <textarea
-        value={paragraph || ""}
-        onChange={(e) =>
-          handleContentEdit(index, "paragraphs", e.target.value, paragraphIndex)
-        }
-        className="w-full border rounded p-2 mt-8"
-      ></textarea>
-      <button
-        onClick={() => deleteParagraph(index, paragraphIndex)}
-        className="text-red-500 px-2 mb-5 rounded-md bg-red-100 "
-      >
-        Delete Paragraph
-      </button>
-    </div>
-  ))}
-  <button
-    onClick={(event) => addParagraph(event, index)}
-    className="bg-blue-500 text-white px-4 py-2 mt-5  rounded-md hover:bg-blue-600"
-  >
-    Add Paragraph
-  </button>
-</div>
+            <label className="block mb-2 font-medium">Paragraphs</label>
+            {content.paragraphs.map((paragraph, paragraphIndex) => (
+              <div key={paragraphIndex} className="space-y-2">
+                <textarea
+                  value={paragraph || ""}
+                  onChange={(e) =>
+                    handleContentEdit(
+                      index,
+                      "paragraphs",
+                      e.target.value,
+                      paragraphIndex
+                    )
+                  }
+                  className="w-full border rounded p-2 mt-8"
+                ></textarea>
+                <button
+                  onClick={() => deleteParagraph(index, paragraphIndex)}
+                  className="text-red-500 px-2 mb-5 rounded-md bg-red-100 "
+                >
+                  Delete Paragraph
+                </button>
+              </div>
+            ))}
+            <button
+              onClick={(event) => addParagraph(event, index)}
+              className="bg-blue-500 text-white px-4 py-2 mt-5  rounded-md hover:bg-blue-600"
+            >
+              Add Paragraph
+            </button>
+          </div>
 
           <button
             onClick={() => updateIndividualContent(index, content._id)}
