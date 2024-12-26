@@ -468,7 +468,7 @@ const updateHeroSection = async () => {
   ))}
   <button
     onClick={(event) => addParagraph(event, index)}
-    className="bg-blue-500 text-white px-4 py-2 mt-5  rounded-md hover:bg-blue-600"
+    className="bg-blue-500 text-white px-2  mt-5  rounded-md hover:bg-blue-600"
   >
     Add Paragraph
   </button>
