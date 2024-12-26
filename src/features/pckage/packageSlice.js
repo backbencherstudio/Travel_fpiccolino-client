@@ -4,19 +4,117 @@ import { base_url } from "../../utils/base_path";
 
 axios.defaults.withCredentials = true;
 
+// export const createPackage = createAsyncThunk(
+//   "package/create",
+//   async (packageData, { rejectWithValue }) => {
+
+//     console.log(11, packageData);
+
+//     const  images = packageData.images;
+
+//     console.log(images);    
+
+//     try {
+
+//       const formData = new FormData();
+
+//       formData.append("file", file);
+      
+//       const response = await axios.post(`${base_url}/package`, packageData);
+//       console.log("slice", response.data);
+//       return response.data;
+
+//     } catch (error) {
+//       console.log(error);
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+
+// export const createPackage = createAsyncThunk(
+//   "package/create",
+//   async (packageData, { rejectWithValue }) => {
+
+//     console.log(38, packageData);
+//     const { images, ...otherData } = packageData;
+//     console.log(40, images);
+//     console.log(41, otherData);
+    
+//     try {
+//       const formData = new FormData();
+//       for (const key in otherData) {
+//         if (key === "tourDuration" || key === "includeItems" || key === "notIncludeItems" || key === "bookedFlights") {
+//           formData.append(key, JSON.stringify(otherData[key]));
+//         } else {
+//           formData.append(key, otherData[key]);
+//         }
+//       }
+//       images.forEach((image, index) => {
+//         formData.append(`images[${index}]`, image);
+//       });
+
+//       // console.log(51, formData);
+      
+//         const response = await axios.post(`${base_url}/package`, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
+//       // console.log("slice", response.data);
+//       return response.data;
+
+//     } catch (error) {
+//       console.log(error);
+//       return rejectWithValue(error.response?.data || "Something went wrong");
+//     }
+//   }
+// );
+
+
 export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
+    console.log(38, packageData);
+    const { images, ...otherData } = packageData;
+    console.log(40, images);
+    console.log(41, otherData);
+
     try {
-      const response = await axios.post(`${base_url}/package/create`, packageData);
-      console.log("slice", response.data);
+      const formData = new FormData();
+
+      // Add other fields to formData
+      for (const key in otherData) {
+        if (
+          key === "tourDuration" ||
+          key === "includeItems" ||
+          key === "notIncludeItems" ||
+          key === "bookedFlights"
+        ) {
+          formData.append(key, JSON.stringify(otherData[key])); // Serialize objects/arrays
+        } else {
+          formData.append(key, otherData[key]); // Add simple fields
+        }
+      }
+      // Add images to formData
+      images.forEach((image, index) => {
+        formData.append(`images`, image); // No need for `[${index}]`, just `images` as the field name
+      });      
+
+      const response = await axios.post(`${base_url}/package`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       return response.data;
     } catch (error) {
       console.log(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
+
+
 
 const initialState = {
   packageCreateLoading: false,

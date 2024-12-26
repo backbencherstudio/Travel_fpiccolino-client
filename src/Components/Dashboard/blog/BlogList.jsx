@@ -20,7 +20,7 @@ const BlogList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(`${base_url}/api/blogs/allblogs`); 
+        const response = await axios.get(`${base_url}/api/blogs/allblogs`);
         setBlogss(response.data.blogs);
       } catch (err) {
         setError(err.message || "Something went wrong while fetching blogs.");
@@ -28,14 +28,14 @@ const BlogList = () => {
     };
 
     fetchBlogs();
-  }, []); 
-  console.log(blogss)
+  }, []);
+  console.log(blogss);
 
   return (
     <div>
-     <CustomHeadingDashboard/>
+      <CustomHeadingDashboard />
       <CustomTable
-       tableType={"blog"}
+        tableType={"blog"}
         title={"Blog List"}
         columns={columns}
         data={blogss}

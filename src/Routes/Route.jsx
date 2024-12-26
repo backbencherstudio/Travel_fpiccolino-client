@@ -33,6 +33,7 @@ import UserProfile from "../Pages/Profile/UserProfile";
 import Header from "../Components/Dashboard/Header/Header";
 import UpdatePackage from "../Components/Dashboard/Package/UpdatePackage";
 import ContactsTable from "../Components/Dashboard/Contact/ContactsTable ";
+import OrderList from "../Components/Dashboard/Orders/OrderList";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
         element: <UserDetails />,
       },
       {
+        path: "order-list",
+        element: <OrderList />,
+      },
+      {
         path: "package",
         element: <PackageList />,
       },
@@ -143,7 +148,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "contact",
-        element: <ContactsTable/>,
+        element: <ContactsTable />,
       },
     ],
   },

@@ -471,7 +471,7 @@ export const blogs = [
 ];
 
 export const categories = [
-  "Travel Tips",
+  "health",
   "Unforgettable Experiences You Can’t Miss",
   "Paradise Beaches",
   "Travel Vibes",
