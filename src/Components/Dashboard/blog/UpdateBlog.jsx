@@ -13,14 +13,12 @@ const UpdateBlog = () => {
 
   const { id } = useParams();
 
-  console.log('id', id)
+  console.log("id", id);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(
-          `${base_url}/api/blogs/blogGet/${id}`
-        );
+        const response = await axios.get(`${base_url}/api/blogs/blogGet/${id}`);
         const responseData = response.data;
 
         setData(responseData);
@@ -61,17 +59,16 @@ const UpdateBlog = () => {
       ...prevContentList,
       { headings: ["New Heading"], image: "", paragraphs: ["New paragraph"] },
     ]);
-    console.log(contentList)
+    console.log(contentList);
   };
 
-  const deleteContent = async(index) => {
-
+  const deleteContent = async (index) => {
     try {
       const response = await axios.delete(
-        `${base_url}/api/blogs/deleteContent/676a52407856362ce9bd9526/${index}`, 
+        `${base_url}/api/blogs/deleteContent/676a52407856362ce9bd9526/${index}`,
         {
           headers: {
-            "Content-Type": "application/json", 
+            "Content-Type": "application/json",
           },
         }
       );
@@ -82,8 +79,6 @@ const UpdateBlog = () => {
     } catch (error) {
       console.error("Error deleting Hero Section", error);
     }
-    
-
   };
 
   const addParagraph = (event, index) => {
@@ -91,7 +86,7 @@ const UpdateBlog = () => {
     setContentList((prevContentList) => {
       // Create a copy of the current state
       const updatedContent = [...prevContentList];
-  
+
       // Add a single "New paragraph" field to the correct index
       if (updatedContent[index] && updatedContent[index].paragraphs) {
         updatedContent[index].paragraphs = [
@@ -99,14 +94,11 @@ const UpdateBlog = () => {
           "New paragraph",
         ];
       }
-  
+
       // Return the updated state
       return updatedContent;
     });
   };
-  
-
-  
 
   const deleteParagraph = (contentIndex, paragraphIndex) => {
     setContentList((prevContentList) => {
@@ -133,71 +125,72 @@ const UpdateBlog = () => {
     }
   };
 
-  
   const UploadimagePath = async () => {
     const formData = new FormData();
     Array.from(images).forEach((image) => {
-        formData.append("images", image);
+      formData.append("images", image);
     });
 
     try {
-        const response = await axios.post(`${base_url}/api/blogs/uploads`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        console.log("Image uploaded successfully", response.data);
-        setImages([])
-        return response.data.images;
+      const response = await axios.post(
+        `${base_url}/api/blogs/uploads`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Image uploaded successfully", response.data);
+      setImages([]);
+      return response.data.images;
     } catch (error) {
-        console.error("Error uploading files:", error);
-        alert("Error uploading images. Please try again.");
-        return null;
+      console.error("Error uploading files:", error);
+      alert("Error uploading images. Please try again.");
+      return null;
     }
-};
-
-
-
-const updateHeroSection = async () => {
-  let uploadedImages = {};
-
-  if (heroSection?.file) {
-    const file = heroSection.file;
-    // console.log(heroSection, "lalala");
-    uploadedImages = await UploadimagePath();
-
-    setImages([]);
-    // console.log(uploadedImages);
-    // console.log(uploadedImages[0]?.path);
-  }
-
-  console.log(heroSection);
-
-  const body = {
-    UpdatedImage: uploadedImages[0]?.path || "",
-    header: heroSection.header || "",
-    text: heroSection.text || "",
-    mainHeading: heroSection.mainHeading || "",
-    mainSubHeading: heroSection.mainSubHeading || "",
-    oldImage : heroSection?.headerImg
   };
 
-  try {
-    const response = await axios.patch(
-      `${base_url}/api/blogs/updateHeroSection/676a52407856362ce9bd9526`,
-      body, 
-      {
-        headers: {
-          "Content-Type": "application/json", 
-        },
-      }
-    );
-    console.log("Hero Section Updated", response.data);
-    setHeroSection({})
-  } catch (error) {
-    console.error("Error updating Hero Section", error);
-  }
-};
+  const updateHeroSection = async () => {
+    let uploadedImages = {};
+
+    if (heroSection?.file) {
+      const file = heroSection.file;
+      // console.log(heroSection, "lalala");
+      uploadedImages = await UploadimagePath();
+
+      setImages([]);
+      // console.log(uploadedImages);
+      // console.log(uploadedImages[0]?.path);
+    }
+
+    console.log(heroSection);
+
+    const body = {
+      UpdatedImage: uploadedImages[0]?.path || "",
+      header: heroSection.header || "",
+      text: heroSection.text || "",
+      mainHeading: heroSection.mainHeading || "",
+      mainSubHeading: heroSection.mainSubHeading || "",
+      oldImage: heroSection?.headerImg,
+    };
+
+    try {
+      const response = await axios.patch(
+        `${base_url}/api/blogs/updateHeroSection/676a52407856362ce9bd9526`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Hero Section Updated", response.data);
+      setHeroSection({});
+    } catch (error) {
+      console.error("Error updating Hero Section", error);
+    }
+  };
 
   const updateIndividualContent = async (index, id) => {
     let uploadedImages = {};
@@ -205,32 +198,32 @@ const updateHeroSection = async () => {
     const formData = new FormData();
     if (content?.file) {
       const file = content?.file;
-      console.log(content)
+      console.log(content);
       uploadedImages = await UploadimagePath();
 
-    setImages([]);
-    console.log(uploadedImages);
-    console.log(uploadedImages[0]?.path);
+      setImages([]);
+      console.log(uploadedImages);
+      console.log(uploadedImages[0]?.path);
       formData.append("file", content.file);
     }
     const body = {
       UpdatedImage: uploadedImages[0]?.path || "",
-      oldImage : content?.image,
+      oldImage: content?.image,
       headings: content?.headings[0] || "",
-      paragraphs: content?.paragraphs.map((paragraph, pIndex) => paragraph) || [],
+      paragraphs:
+        content?.paragraphs.map((paragraph, pIndex) => paragraph) || [],
     };
 
+    console.log("this is body", body);
 
-    console.log("this is body", body)
-    
-    console.log(index, "jhljervhbrejvcrewufhe")
+    console.log(index, "jhljervhbrejvcrewufhe");
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updateContent/676a52407856362ce9bd9526/${index}`,
         body,
         {
           headers: {
-           "Content-Type": "application/json", 
+            "Content-Type": "application/json",
           },
         }
       );
@@ -243,14 +236,14 @@ const updateHeroSection = async () => {
 
   const updateCategory = async () => {
     const payload = { category };
-    console.log(payload)
+    console.log(payload);
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updatecatagory/676a52407856362ce9bd9526`,
         payload
       );
       console.log("Category Updated", response.data);
-      setCategory( response.data.category)
+      setCategory(response.data.category);
     } catch (error) {
       console.error("Error updating Category", error);
     }
@@ -331,7 +324,6 @@ const updateHeroSection = async () => {
       {/* Content List */}
       {contentList.map((content, index) => (
         <div key={index} className="border rounded-lg p-6 space-y-6 shadow-lg">
-        
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold">Content {index + 1}</h2>
             <button
@@ -392,7 +384,7 @@ const updateHeroSection = async () => {
               </div>
             ))}
             <button
-               onClick={(event) => addParagraph(event, paragraphIndex)}
+              onClick={(event) => addParagraph(event, paragraphIndex)}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
               Add Paragraph
