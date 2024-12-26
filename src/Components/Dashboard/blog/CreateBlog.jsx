@@ -5,6 +5,9 @@ import { RiAddBoxLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "../../../utils/base_path";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const CreateBlog = () => {
   const style = {
@@ -126,7 +129,7 @@ const CreateBlog = () => {
   };
 
   const handleSubmitMainContent = () => {
-    setMainContentList((prevContent) => [...prevContent, mainContent]);
+    setMainContentList((prevContent) => [mainContent]);
 
     // Create a deep copy of mainContent
     const newEntry = JSON.parse(JSON.stringify(mainContent));
@@ -238,11 +241,11 @@ const CreateBlog = () => {
       });
 
       if (response.ok) {
-        alert("Blog uploaded successfully!");
+        toast.success("Blog uploaded successfully!");
         setContentList([]);
         setSelectedCategory("");
       } else {
-        alert("Failed to upload the blog.");
+        toast.error("Failed to upload the blog.");
       }
     } catch (error) {
       console.error("Error uploading blog:", error);
@@ -252,6 +255,7 @@ const CreateBlog = () => {
 
   return (
     <div>
+      <ToastContainer />
       <CustomHeadingDashboard />
 
       <div className="mt-10 flex justify-between items-center">
@@ -266,21 +270,30 @@ const CreateBlog = () => {
 
       <div className="grid grid-cols-12 gap-5 mt-5">
         <div className="col-span-12 xl:col-span-8">
-          {mainContentList.map((content, index) => (
-            <div className="border rounded-lg p-4 mb-5" key={index}>
-              {content.image && (
+          {mainContentList.length > 0 && (
+            <div className="border rounded-lg p-4 mb-5">
+              <h2 className="text-[#141D2A] text-2xl font-semibold mb-2">
+                {mainContentList[0].Heroheading}
+              </h2>
+              <h4 className="text-[#141D2A]  mb-4">
+                {mainContentList[0].HerosubHeading}
+              </h4>
+              {mainContentList[0].image && (
                 <img
                   className="rounded-lg"
-                  src={URL.createObjectURL(content.image)}
+                  src={URL.createObjectURL(mainContentList[0].image)}
                   alt="Main Content Preview"
                 />
               )}
-              <h3 className="text-[#141D2A] font-semibold mb-2">
-                {content.heading}
-              </h3>
-              <h4 className="text-[#141D2A] mb-2">{content.subHeading}</h4>
+              <h2 className="text-[#141D2A] font-semibold mb-2 text-2xl mt-4">
+                {mainContentList[0].heading}
+              </h2>
+              <h4 className="text-[#141D2A] mb-2">
+                {mainContentList[0].subHeading}
+              </h4>
             </div>
-          ))}
+          )}
+
           {contentList.map((content, index) => (
             <div className="border rounded-lg p-4 mb-5" key={index}>
               <div>
@@ -324,7 +337,7 @@ const CreateBlog = () => {
         </div>
 
         <div className="col-span-12 xl:col-span-4">
-          <div className="border rounded-lg p-4 mb-4">
+          {/* <div className="border rounded-lg p-4 mb-4">
             <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
               Upload Img
             </h2>
@@ -333,7 +346,7 @@ const CreateBlog = () => {
               src={heroImage2}
               alt="Placeholder"
             />
-          </div>
+          </div> */}
           <div className="border rounded-lg p-4 mb-4">
             <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
               Add Category
