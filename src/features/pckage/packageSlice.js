@@ -70,6 +70,7 @@ axios.defaults.withCredentials = true;
 //   }
 // );
 
+
 export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
@@ -94,14 +95,10 @@ export const createPackage = createAsyncThunk(
           formData.append(key, otherData[key]); // Add simple fields
         }
       }
-
       // Add images to formData
       images.forEach((image, index) => {
         formData.append(`images`, image); // No need for `[${index}]`, just `images` as the field name
-      });
-
-      console.log(formData);
-      
+      });      
 
       const response = await axios.post(`${base_url}/package`, formData, {
         headers: {
@@ -116,6 +113,7 @@ export const createPackage = createAsyncThunk(
     }
   }
 );
+
 
 
 const initialState = {

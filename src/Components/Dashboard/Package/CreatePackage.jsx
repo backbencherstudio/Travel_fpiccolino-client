@@ -31,13 +31,13 @@ const CreatePackage = () => {
   const [includeIconName, setIncludeIconName] = useState([]);
   const [notIncludeIconName, setNotIncludeIconName] = useState([]);
   const onSubmit = async (data) => {
-    const formattedDate = data.tourDate
-      ? dayjs(data.tourDate).format("DD/MM/YYYY")
-      : null;
+    // const formattedDate = data.tourDate
+      // ? dayjs(data.tourDate).format("DD/MM/YYYY")
+      // : null;
 
     const packageData = {
       ...data,
-      tourDate: formattedDate,
+      tourDate: data.tourDate,
       includeItems: includeIconName,
       notIncludeItems: notIncludeIconName,
       bookedFlights,
