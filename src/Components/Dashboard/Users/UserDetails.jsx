@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../../features/users/userSlice";
+import { FaRegUserCircle } from "react-icons/fa";
 const UserDetails = () => {
   const dispatch = useDispatch();
   const [tourDateFilter, setTourDateFilter] = useState("all");
@@ -29,11 +30,15 @@ const UserDetails = () => {
       <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
         <CustomHeadingDashboard />
         <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
-        <img
-          src={userDetails?.image}
-          className="rounded-full w-[120px] h-[120px] mt-5"
-          alt=""
-        />
+        {userDetails?.image ? (
+          <img
+            src={userDetails?.image}
+            className="rounded-full w-[120px] h-[120px] mt-5"
+            alt=""
+          />
+        ) : (
+          <FaRegUserCircle className="w-28 h-28 mt-5 primary_text opacity-85" />
+        )}
         <h1 className="mt-5 text-[20px] font-medium">Personal Details</h1>
         <div className="mt-3  max-w-[680px]">
           <div className="grid grid-cols-2">
@@ -88,7 +93,7 @@ const UserDetails = () => {
         </div>
       </div>
       <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>
-      <TourSlider
+      {/* <TourSlider
         title={"Total Tours"}
         userData={userData}
         id={id}
@@ -96,7 +101,7 @@ const UserDetails = () => {
         setDateFilter={setTourDateFilter}
       />
       <TourSlider title={"Completed Tours"} userData={userData} id={id} />
-      <TourSlider title={"Pending Tours"} userData={userData} id={id} />
+      <TourSlider title={"Pending Tours"} userData={userData} id={id} /> */}
     </div>
   );
 };
