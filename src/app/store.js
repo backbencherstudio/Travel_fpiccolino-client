@@ -4,6 +4,7 @@ import categoryReducer from "../features/category/categorySlice";
 import contactReducer from "../features/contact/contactSlice";
 import headerReducer from "../features/header/headerSlice";
 import blogReducer from "../features/blog/blogSlice";
+import countryReducer from "../features/country/countrySlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     contact: contactReducer,
     header: headerReducer,
     blog: blogReducer,
+    country : countryReducer
   },
 });
 

@@ -14,22 +14,18 @@ const Header = () => {
     //     console.log("Form File Data:", {file});
     // };
 
-
+    
     const onSubmit = async (data) => {
-
         const headerData = new FormData();
-        const file = data?.image[0];
-        headerData.append('image', file);
+        const file = data?.heroImage[0];
+        headerData.append('heroImage', file);
         Object.keys(data).forEach((key) => {
-            if (key !== 'image') {
+            if (key !== 'heroImage') {
                 headerData.append(key, data[key]);
             }
         });
-
         const response = await dispatch(createHeader(headerData));
         console.log("responce", response);
-
-
     };
 
 
@@ -66,13 +62,13 @@ const Header = () => {
                 </label>
                 <input
                     type="file"
-                    accept="image/*"
-                    {...register("image", { required: "This field is required" })}
-                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.image ? "border-red-500" : "border-gray-300"
+                    accept="heroImage/*"
+                    {...register("heroImage", { required: "This field is required" })}
+                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.heroImage ? "border-red-500" : "border-gray-300"
                         }`}
                 />
-                {errors.image && (
-                    <p className="text-red-500 text-xs mt-2">{errors.image.message}</p>
+                {errors.heroImage && (
+                    <p className="text-red-500 text-xs mt-2">{errors.heroImage.message}</p>
                 )}
             </div>
 
@@ -92,6 +88,22 @@ const Header = () => {
                 {errors.titleOne && (
                     <p className="text-red-500 text-xs mt-2">{errors.titleOne.message}</p>
                 )}
+            </div>
+
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                    title Two
+                </label>
+                <input
+                    type="text"
+                    {...register("titleTwo")}
+                    placeholder="Main Title"
+                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.titleTwo ? "border-red-500" : "border-gray-300"
+                        }`}
+                />
+                {/* {errors.titleTwo && (
+                    <p className="text-red-500 text-xs mt-2">{errors.titleTwo.message}</p>
+                )} */}
             </div>
 
             <div className="mb-4">
@@ -135,6 +147,23 @@ const Header = () => {
                 {errors.descriptionOne && (
                     <p className="text-red-500 text-xs mt-2">{errors.descriptionOne.message}</p>
                 )}
+            </div>
+
+            {/* second  Description */}
+            <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Second Description
+                </label>
+                <textarea
+                    {...register("descriptionTwo")}
+                    placeholder="Description"
+                    className={`w-full px-3 py-2 border rounded focus:outline-none ${errors.descriptionTwo ? "border-red-500" : "border-gray-300"
+                        }`}
+                    rows="4"
+                />
+                {/* {errors.descriptionTwo && (
+                    <p className="text-red-500 text-xs mt-2">{errors.descriptionTwo.message}</p>
+                )} */}
             </div>
 
             {/* Submit Button */}

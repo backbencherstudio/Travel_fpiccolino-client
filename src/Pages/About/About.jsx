@@ -7,22 +7,35 @@ import CenterBannerSection from '../../Components/About/CenterBannerSection';
 import BottomBannerSection from '../../Shared/BottomBannerSection';
 import BenifitsSliderSection from '../../Components/About/BenifitsSliderSection';
 import WhyChooseUsSection from '../../Components/About/WhyChooseUsSection';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getHeader } from '../../features/header/headerSlice';
 
 const About = () => {
+
+
+    const dispatch = useDispatch();
+    const { headers } = useSelector((state) => state.header);
+    useEffect(() => {
+        dispatch(getHeader());
+    }, []);
+    const data = headers?.filter(item => item.pageName === "about")
     const heroContent = {
-        heroImage,
-        titleOne: "Who We Are and What Drives Us",
-        descriptionOne: "Passionate Travelers Creating Memorable Experiences Just for You",
+        heroImage : data[0]?.heroImage ,
+        titleOne: data[0]?.titleOne,
+        descriptionOne: data[0]?.descriptionOne,
     }
+
+    
     return (
         <div>
             <HeroScetion heroContent={heroContent} />
-            <ApproachSection/>
-            <JourneySection/>
-            <CenterBannerSection/>
-            <BenifitsSliderSection/>
-            <WhyChooseUsSection/>
-            <BottomBannerSection/>
+            <ApproachSection />
+            <JourneySection />
+            <CenterBannerSection />
+            <BenifitsSliderSection />
+            <WhyChooseUsSection />
+            <BottomBannerSection />
         </div>
     );
 };
