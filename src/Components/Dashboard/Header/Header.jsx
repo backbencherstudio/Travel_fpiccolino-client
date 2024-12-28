@@ -14,7 +14,7 @@ const Header = () => {
     //     console.log("Form File Data:", {file});
     // };
 
-
+    
     const onSubmit = async (data) => {
         const headerData = new FormData();
         const file = data?.heroImage[0];

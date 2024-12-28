@@ -16,7 +16,6 @@ const UpdateBlog = () => {
   const [refresh, setRefresh] = useState(false);
 
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     const fetchBlogs = async () => {

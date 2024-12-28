@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsAuthenticated } from "./features/auth/authSlice";
 import { Toaster } from "react-hot-toast";
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const dispatch = useDispatch();
 
@@ -22,6 +24,7 @@ function App() {
     <>
       <RouterProvider router={router} />
       <Toaster />
+      <ToastContainer />
     </>
   );
 }
