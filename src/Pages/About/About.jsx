@@ -12,8 +12,7 @@ import { useEffect } from 'react';
 import { getHeader } from '../../features/header/headerSlice';
 
 const About = () => {
-
-
+    
     const dispatch = useDispatch();
     const { headers } = useSelector((state) => state.header);
     useEffect(() => {
@@ -26,7 +25,6 @@ const About = () => {
         descriptionOne: data[0]?.descriptionOne,
     }
 
-    
     return (
         <div>
             <HeroScetion heroContent={heroContent} />

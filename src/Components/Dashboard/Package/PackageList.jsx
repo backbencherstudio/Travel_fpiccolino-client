@@ -10,11 +10,9 @@ const PackageList = () => {
   const { packag } = useSelector(
     (state) => state.package
   );
-
   useEffect(()=>{
     dispatch(getPackage())
-  } ,[])
-  
+  } ,[])  
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const [columns] = useState({
     date: true,
@@ -23,6 +21,9 @@ const PackageList = () => {
     amount:true,
     action: true,
   });
+
+  console.log(packag?.packages);
+  
   
   return (
     <div>
