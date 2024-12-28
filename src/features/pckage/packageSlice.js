@@ -74,38 +74,30 @@ axios.defaults.withCredentials = true;
 export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
-    console.log(38, packageData);
     const { images, ...otherData } = packageData;
-    console.log(40, images);
-    console.log(41, otherData);
-
     try {
       const formData = new FormData();
-
-      // Add other fields to formData
       for (const key in otherData) {
         if (
           key === "tourDuration" ||
           key === "includeItems" ||
           key === "notIncludeItems" ||
+          key === "insurance" ||
           key === "bookedFlights"
         ) {
-          formData.append(key, JSON.stringify(otherData[key])); // Serialize objects/arrays
+          formData.append(key, JSON.stringify(otherData[key])); 
         } else {
-          formData.append(key, otherData[key]); // Add simple fields
+          formData.append(key, otherData[key]);
         }
       }
-      // Add images to formData
       images.forEach((image, index) => {
-        formData.append(`images`, image); // No need for `[${index}]`, just `images` as the field name
-      });      
-
+        formData.append(`images`, image); 
+      });
       const response = await axios.post(`${base_url}/package`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
       return response.data;
     } catch (error) {
       console.log(error);
@@ -122,8 +114,8 @@ const initialState = {
   package: {},
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const packageSlice = createSlice({
+  name: "package",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -143,5 +135,5 @@ const authSlice = createSlice({
   },
 });
 
-// export const { clearRecent } = authSlice.actions;
-export default authSlice.reducer;
+// export const { clearRecent } = packageSlice.actions;
+export default packageSlice.reducer;

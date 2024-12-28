@@ -15,31 +15,27 @@ import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createPackage } from "../../../features/pckage/packageSlice";
-import dayjs from "dayjs";
 const CreatePackage = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, control } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
   const [openFlightModal, setOpenFlightModal] = useState(false);
-  const [bookedFlights, setBookedFlights] = useState([]);
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
+  const [bookedFlights, setBookedFlights] = useState([]);
   const [insurance, setInsurance] = useState([]);
   const [category, setCategory] = useState("All inclusive");
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
   const [includeIconName, setIncludeIconName] = useState([]);
-  const [notIncludeIconName, setNotIncludeIconName] = useState([]);
+  const [notIncludeIconName, setNotIncludeIconName] = useState([]); 
   const onSubmit = async (data) => {
-    // const formattedDate = data.tourDate
-      // ? dayjs(data.tourDate).format("DD/MM/YYYY")
-      // : null;
-
     const packageData = {
       ...data,
       tourDate: data.tourDate,
       includeItems: includeIconName,
       notIncludeItems: notIncludeIconName,
+      insurance,
       bookedFlights,
       category,
       images,
@@ -54,6 +50,7 @@ const CreatePackage = () => {
       alert("Failed to create package. Please try again.");
     }
   };
+
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
 

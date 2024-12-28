@@ -61,6 +61,21 @@ export const getCategoryCount = createAsyncThunk(
     }
   }
 );
+// Async Thunks
+
+// Delete a blog post
+export const deleteBlog = createAsyncThunk(
+  "blog/delete",
+  async (blogId, { rejectWithValue }) => {
+    try {
+      // Make API call to delete blog
+      await axios.delete(`${base_url}/api/blogs/blogDelete/${blogId}`);
+      return blogId; // Return blogId for removal from state
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Failed to delete blog");
+    }
+  }
+);
 
 // Initial state
 const initialState = {
@@ -76,7 +91,6 @@ const initialState = {
   categoryCount: 0,
 };
 
-// Create the slice
 const blogSlice = createSlice({
   name: "blog",
   initialState,
@@ -91,7 +105,7 @@ const blogSlice = createSlice({
       .addCase(getBlog.fulfilled, (state, action) => {
         state.blogCreateLoading = false;
         state.blogCreateLoadingError = null;
-        state.blogs = action.payload;
+        state.blogs = action.payload.blogs;
       })
       .addCase(getBlog.rejected, (state, action) => {
         state.blogCreateLoading = false;
@@ -138,9 +152,28 @@ const blogSlice = createSlice({
       .addCase(getCategoryCount.rejected, (state, action) => {
         state.blogCreateLoadingError =
           action.payload?.message || "Error fetching category count";
+      })
+
+      // Handle delete blog
+      .addCase(deleteBlog.pending, (state) => {
+        state.blogCreateLoading = true;
+        state.blogCreateLoadingError = null;
+      })
+      .addCase(deleteBlog.fulfilled, (state, action) => {
+        state.blogCreateLoading = false;
+        state.blogCreateLoadingError = null;
+        if (Array.isArray(state.blogs)) {
+          state.blogs = state.blogs.filter((b) => b._id !== action.payload);
+        } else {
+          console.error("state.blogs is not an array:", state.blogs);
+        }
+      })
+      .addCase(deleteBlog.rejected, (state, action) => {
+        state.blogCreateLoading = false;
+        state.blogCreateLoadingError =
+          action.payload?.message || "Error deleting the blog post";
       });
   },
 });
 
-// Export the reducer
 export default blogSlice.reducer;

@@ -1,17 +1,35 @@
+import { useDispatch, useSelector } from "react-redux";
 import { accordionData } from "../../ALLJsonFile/const";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 
 import heroImage from "../../assets/eve.jpg";
+import { useEffect } from "react";
+import { getHeader } from "../../features/header/headerSlice";
 
 const Faq = () => {
+
+    const dispatch = useDispatch();
+    const { headers } = useSelector((state) => state.header);
+    useEffect(() => {
+        dispatch(getHeader());
+    }, []);
+    const data = headers?.filter(item => item.pageName === "faq")
+
     const heroContent = {
-        heroImage,
-        titleOne: "Feel at Home Wherever You Roam",
-        descriptionOne:
-            "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
-    };
+        heroImage: data[0]?.heroImage,
+        titleOne: data[0]?.titleOne,
+        descriptionOne: data[0]?.descriptionOne,
+    }
+
+
+    // const heroContent = {
+    //     heroImage,
+    //     titleOne: "Feel at Home Wherever You Roam",
+    //     descriptionOne:
+    //         "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
+    // };
 
     // Accordion data
 

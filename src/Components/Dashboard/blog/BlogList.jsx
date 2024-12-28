@@ -4,8 +4,11 @@ import { blogs } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import axios from "axios";
 import { base_url } from "../../../utils/base_path";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlog } from "../../../features/blog/blogSlice";
 
 const BlogList = () => {
+  const dispatch = useDispatch();
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const [columns] = useState({
     blogName: true,
@@ -13,23 +16,19 @@ const BlogList = () => {
     date: true,
     action: true,
   });
-
-  const [blogss, setBlogss] = useState([]);
-  const [error, setError] = useState("");
+  const { blogs } = useSelector((state) => state.blog);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(`${base_url}/api/blogs/allblogs`);
-        setBlogss(response.data.blogs);
+        dispatch(getBlog());
       } catch (err) {
-        setError(err.message || "Something went wrong while fetching blogs.");
+        console.log(err);
       }
     };
 
     fetchBlogs();
   }, []);
-  console.log(blogss);
 
   return (
     <div>
@@ -38,7 +37,7 @@ const BlogList = () => {
         tableType={"blog"}
         title={"Blog List"}
         columns={columns}
-        data={blogss}
+        data={blogs}
         setDateFilter={setTourDateFilter}
         dateFilter={tourDateFilter}
       />

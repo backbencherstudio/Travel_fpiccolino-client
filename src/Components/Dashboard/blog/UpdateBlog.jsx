@@ -14,9 +14,63 @@ const UpdateBlog = () => {
   const [data, setData] = useState(null);
   const [images, setImages] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [options, setOptions] = useState([
+    { value: "technology", label: "Technology" },
+    { value: "health", label: "Health" },
+    { value: "travel", label: "Travel" },
+  ]);
+  const updateOptions = (apiResponse) => {
+    const newOptions = apiResponse.Categories.map((categoryObj) => {
+      const value = Object.keys(categoryObj)[0];
+      const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
+      return { value, label };
+    });
+  
+    setOptions((prevOptions) => {
+      const mergedOptions = [...prevOptions];
+  
+      newOptions.forEach((newOption) => {
+        if (!prevOptions.some((option) => option.value === newOption.value)) {
+          mergedOptions.push(newOption);
+        }
+      });
+  
+      return mergedOptions;
+    });
+  };
+
+  
+  useEffect(() => {
+    const fetchCategoryCount = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/blogs/categoryCount");
+        updateOptions(response.data); 
+      } catch (err) {
+        setError(err.message || "An error occurred");
+      } 
+    };
+
+    fetchCategoryCount();
+  }, []);
+
+  const [newOption, setNewOption] = useState("");
+  const handleAddOption = () => {
+    if (newOption.trim() !== "") {
+      const newOptionValue = newOption
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+      setOptions((prevOptions) => [
+        ...prevOptions,
+        { value: newOptionValue, label: newOption },
+      ]);
+      setSelectedCategory(newOptionValue); // Optionally select the newly added option
+      setNewOption(""); // Clear the input field
+    }
+  };
 
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -257,7 +311,7 @@ const UpdateBlog = () => {
   };
 
   const updateCategory = async () => {
-    const payload = { category };
+    const payload = { category : selectedCategory };
     console.log(payload);
     try {
       const response = await axios.patch(
@@ -598,13 +652,48 @@ const updateTexContent = async () => {
         <h2 className="text-lg font-semibold">Category</h2>
         <select
           value={category || ""}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => setSelectedCategory(e.target.value)}
           className="w-full border rounded p-2"
         >
-          <option value="travel">Travel</option>
-          <option value="lifestyle">Lifestyle</option>
-          <option value="tech">Tech</option>
+         <option value="">Select a category</option>
+                {options &&
+                  options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
         </select>
+        <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                <input
+                  type="text"
+                  value={newOption}
+                  onChange={(e) => setNewOption(e.target.value)}
+                  placeholder="Add new category"
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid #ccc",
+                    fontSize: "14px",
+                    backgroundColor: "#f9f9f9",
+                  }}
+                />
+                <button
+                  onClick={handleAddOption}
+                  style={{
+                    padding: "10px 20px",
+                    borderRadius: "4px",
+                    border: "none",
+                    backgroundColor: "#007BFF",
+                    color: "#fff",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                  }}
+                >
+                  Add
+                </button>
+              </div>
         <div class="flex justify-end">
         <button
           onClick={updateCategory}

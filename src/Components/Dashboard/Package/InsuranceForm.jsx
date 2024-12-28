@@ -15,10 +15,6 @@ const InsuranceForm = ({
   const [formData, setFormData] = useState({
     InsuranceName: "",
     description: "",
-    departureTime: null,
-    arrivalTime: null,
-    breakTime: null,
-    flightClass: "",
     price: 30,
   });
 
@@ -47,7 +43,7 @@ const InsuranceForm = ({
     setFormData({
       InsuranceName: "",
       description: "",
-      price: 500,
+      price: 30,
     });
     setOpenModal(false);
   };

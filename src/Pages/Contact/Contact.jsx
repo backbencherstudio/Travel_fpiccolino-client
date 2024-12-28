@@ -3,10 +3,12 @@ import ApproachSection from "../../Components/Home/ApproachSection";
 import call from "../../assets/icons/call2.svg";
 import mail from "../../assets/icons/mail2.svg";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../../features/contact/contactSlice";
+import { getHeader } from "../../features/header/headerSlice";
+import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 const Contact = () => {
   const {
     register,
@@ -29,9 +31,23 @@ const Contact = () => {
     reset()
   };
 
+  const { headers } = useSelector((state) => state.header);
+  useEffect(() => {
+    dispatch(getHeader());
+  }, []);
+
+  const data = headers?.filter(item => item.pageName === "contact")
+  
+  const heroContent = {
+    heroImage: data[0]?.heroImage,
+    titleOne: data[0]?.titleOne,
+    descriptionOne: data[0]?.descriptionOne,
+  }
+
   return (
     <div>
-      <BannerSection />
+      {/* <BannerSection /> */}
+      <HeroScetion heroContent={heroContent} />
       <ParentComponent>
         <div className="mt-20 grid md:grid-cols-2 max-w-[1440px] mx-auto gap-10">
           <div>

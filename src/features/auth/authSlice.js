@@ -75,7 +75,6 @@ export const loginOut = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}/auth/`, userData);
-
       console.log(response.data);
       return response.data.user;
     } catch (error) {
@@ -152,7 +151,6 @@ const initialState = {
   userUpddateError: null,
   recentOtpError: false,
   conformOtpError: null,
-
   callCount: 0,
 };
 
