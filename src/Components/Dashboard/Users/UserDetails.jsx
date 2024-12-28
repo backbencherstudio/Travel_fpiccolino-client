@@ -30,7 +30,7 @@ const UserDetails = () => {
         <CustomHeadingDashboard />
         <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
         <img
-          src={userDetails.image}
+          src={userDetails?.image}
           className="rounded-full w-[120px] h-[120px] mt-5"
           alt=""
         />
@@ -43,30 +43,30 @@ const UserDetails = () => {
             </div>{" "}
             <div>
               <h1 className="text-[16px]">Email</h1>
-              <p className="text-[#72777F] text-[14px]">{userDetails.email}</p>
+              <p className="text-[#72777F] text-[14px]">{userDetails?.email}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 mt-3">
             <div>
               <h1 className="text-[16px]">Phone</h1>
-              <p className="text-[#72777F] text-[14px]">{userDetails.phone}</p>
+              <p className="text-[#72777F] text-[14px]">{userDetails?.phone}</p>
             </div>{" "}
             <div>
               <h1 className="text-[16px]">Address</h1>
               <p className="text-[#72777F] text-[14px]">
-                {userDetails.address}
+                {userDetails?.address}
               </p>
             </div>
           </div>
           <div className="grid grid-cols-2 mt-3">
             <div>
               <h1 className="text-[16px]">City</h1>
-              <p className="text-[#72777F] text-[14px]">{userDetails.city}</p>
+              <p className="text-[#72777F] text-[14px]">{userDetails?.city}</p>
             </div>{" "}
             <div>
               <h1 className="text-[16px]">Country</h1>
               <p className="text-[#72777F] text-[14px]">
-                {userDetails.country}
+                {userDetails?.country}
               </p>
             </div>
           </div>
@@ -75,13 +75,13 @@ const UserDetails = () => {
             <div>
               <h1 className="text-[16px]">Bank Card</h1>
               <p className="text-[#72777F] text-[14px]">
-                {userDetails.bankCard}
+                {userDetails?.bankCard}
               </p>
             </div>{" "}
             <div>
               <h1 className="text-[16px]">Payment System</h1>
               <p className="text-[#72777F] text-[14px]">
-                {userDetails.paymentSystem}
+                {userDetails?.paymentSystem}
               </p>
             </div>
           </div>
