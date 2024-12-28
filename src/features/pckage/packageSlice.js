@@ -12,14 +12,14 @@ axios.defaults.withCredentials = true;
 
 //     const  images = packageData.images;
 
-//     console.log(images);    
+//     console.log(images);
 
 //     try {
 
 //       const formData = new FormData();
 
 //       formData.append("file", file);
-      
+
 //       const response = await axios.post(`${base_url}/package`, packageData);
 //       console.log("slice", response.data);
 //       return response.data;
@@ -39,7 +39,7 @@ axios.defaults.withCredentials = true;
 //     const { images, ...otherData } = packageData;
 //     console.log(40, images);
 //     console.log(41, otherData);
-    
+
 //     try {
 //       const formData = new FormData();
 //       for (const key in otherData) {
@@ -54,7 +54,7 @@ axios.defaults.withCredentials = true;
 //       });
 
 //       // console.log(51, formData);
-      
+
 //         const response = await axios.post(`${base_url}/package`, formData, {
 //         headers: {
 //           "Content-Type": "multipart/form-data",
@@ -70,7 +70,6 @@ axios.defaults.withCredentials = true;
 //   }
 // );
 
-
 export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
@@ -85,13 +84,13 @@ export const createPackage = createAsyncThunk(
           key === "insurance" ||
           key === "bookedFlights"
         ) {
-          formData.append(key, JSON.stringify(otherData[key])); 
+          formData.append(key, JSON.stringify(otherData[key]));
         } else {
           formData.append(key, otherData[key]);
         }
       }
-      images.forEach((image, index) => {
-        formData.append(`images`, image); 
+      images.forEach((image) => {
+        formData.append(`images`, image);
       });
       const response = await axios.post(`${base_url}/package`, formData, {
         headers: {
@@ -118,15 +117,28 @@ export const getPackage = createAsyncThunk(
     }
   }
 );
-
+export const getPackageDetails = createAsyncThunk(
+  "package/getPackageDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/package/${id}`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
 
 const initialState = {
   packageCreateLoading: false,
   packageCreateLoadingError: null,
   packag: [],
-
-  packagGetLoading : false,
-  packageGetError : null,
+  packagGetLoading: false,
+  packageGetError: null,
+  packageDetails: null,
+  packageDetailsLoading: false,
+  packageDetailsError: null,
 };
 
 const packageSlice = createSlice({
@@ -142,28 +154,42 @@ const packageSlice = createSlice({
       .addCase(createPackage.fulfilled, (state, action) => {
         state.signupLoading = false;
         state.signupError = null;
-        state.packag.push(action)
+        state.packag.push(action);
       })
       .addCase(createPackage.rejected, (state, action) => {
         state.signupLoading = false;
         state.signupError = action.payload?.message ?? null;
       });
 
-      // Handle get category
+    // Handle get category
     builder
-    .addCase(getPackage.pending, (state) => {
-      state.packagGetLoading = true;
-      state.packageGetError = null;
-    })
-    .addCase(getPackage.fulfilled, (state, action) => {
-      state.packagGetLoading = false;
-      state.packageGetError = null;   
-      state.packag = action.payload;
-    })
-    .addCase(getPackage.rejected, (state, action) => {
-      state.packagGetLoading = false;
-      state.packageGetError = action.payload?.message ?? null;
-    });
+      .addCase(getPackage.pending, (state) => {
+        state.packagGetLoading = true;
+        state.packageGetError = null;
+      })
+      .addCase(getPackage.fulfilled, (state, action) => {
+        state.packagGetLoading = false;
+        state.packageGetError = null;
+        state.packag = action.payload;
+      })
+      .addCase(getPackage.rejected, (state, action) => {
+        state.packagGetLoading = false;
+        state.packageGetError = action.payload?.message ?? null;
+      })
+      .addCase(getPackageDetails.pending, (state) => {
+        state.packageDetailsLoading = true;
+        state.packageDetailsError = null;
+      })
+      .addCase(getPackageDetails.fulfilled, (state, action) => {
+        state.packageDetailsLoading = false;
+        state.packageDetailsError = null;
+        state.packageDetails = action.payload;
+      })
+      .addCase(getPackageDetails.rejected, (state, action) => {
+        state.packageDetailsLoading = false;
+        state.packageDetailsError =
+          action.payload?.message || "Error fetching package details";
+      });
   },
 });
 
