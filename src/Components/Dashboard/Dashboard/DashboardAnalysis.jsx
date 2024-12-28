@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GiProfit } from "react-icons/gi";
 import { LuBaggageClaim, LuChartNoAxesCombined } from "react-icons/lu";
 import revenue from "../../../assets/dashboard/revenue.svg";
@@ -9,18 +9,24 @@ import Chart from "./Chart";
 import RadarChart from "./RadarChart";
 import CustomTable from "../../../Shared/CustomTable";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { getPackage } from "../../../features/pckage/packageSlice";
 
 const DashboardAnalysis = () => {
+  const dispatch = useDispatch();
   const [chartType, setChartType] = useState("Revenue");
   const [timeInterval, setTimeInterval] = useState("monthly");
   const [tourDateFilter, setTourDateFilter] = useState("all");
+  const { packag } = useSelector((state) => state.package);
+  useEffect(() => {
+    dispatch(getPackage());
+  }, []);
   const [columns] = useState({
-    bookingId: true,
-    name: true,
     date: true,
+    duration: true,
     destination: true,
     amount: true,
-    status: true,
+    // action: true,
   });
   const radarData = {
     categories: [
@@ -320,7 +326,7 @@ const DashboardAnalysis = () => {
   return (
     <div className="">
       <div>
-      <CustomHeadingDashboard/>
+        <CustomHeadingDashboard />
         <h2 className="text-[24px] font-semibold mt-8">Overview</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">
@@ -374,8 +380,13 @@ const DashboardAnalysis = () => {
         </div>
       </div>
 
-      <CustomTable title={"Tour List"} data={bookingData} setDateFilter={setTourDateFilter} dateFilter={tourDateFilter} columns={columns}/>
-    
+      <CustomTable
+        title={"Tour Package List"}
+        data={packag?.packages}
+        setDateFilter={setTourDateFilter}
+        dateFilter={tourDateFilter}
+        columns={columns}
+      />
     </div>
   );
 };
