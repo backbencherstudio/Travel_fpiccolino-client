@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import {
   createCategory,
-  deleteCategory,
   getCategory,
+  deleteCategory,
 } from "../../../features/category/categorySlice";
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 
@@ -29,13 +29,13 @@ const SelectCategory = ({ category, setCategory }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategory());
+    dispatch(getCategory()); // Fetch categories when the component mounts
   }, [dispatch]);
 
   const {
     categories,
-    categoryCreateLoading,
     categoryCreateLoadingError,
+    categoryCreateLoading,
     categoryFetchLoading,
     categoryFetchError,
   } = useSelector((state) => state.category);
@@ -48,12 +48,33 @@ const SelectCategory = ({ category, setCategory }) => {
     });
   };
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async () => {
     if (formData.category.trim()) {
-      dispatch(createCategory({ category: formData.category })).then(() => {
-        // Close the modal after category is added successfully
+      try {
+        // Dispatch createCategory action to add the category
+        await dispatch(createCategory({ category: formData.category }));
+
+        // Fetch the updated category list after creation
+        dispatch(getCategory());
+
+        // Close modal and reset form
         setOpenModal(false);
-      });
+        setFormData({ category: "" });
+      } catch (error) {
+        console.error("Error creating category:", error);
+      }
+    }
+  };
+
+  const handleDeleteCategory = async (categoryId) => {
+    try {
+      // Dispatch deleteCategory action to remove the category
+      await dispatch(deleteCategory(categoryId));
+
+      // Optionally, you can re-fetch categories to ensure list is updated
+      dispatch(getCategory());
+    } catch (error) {
+      console.error("Error deleting category:", error);
     }
   };
 
@@ -98,7 +119,7 @@ const SelectCategory = ({ category, setCategory }) => {
                       className="text-[red] z-20 bg-[#fdf0ea] rounded-full hover:scale-105"
                       onClick={(e) => {
                         e.stopPropagation();
-                        dispatch(deleteCategory(element._id));
+                        handleDeleteCategory(element._id); // Delete category
                       }}
                     />
                   )}
@@ -160,10 +181,14 @@ const SelectCategory = ({ category, setCategory }) => {
                 type="button"
                 onClick={handleAddCategory}
                 className="primary_bg w-full text-white font-semibold text-[16px] py-2 rounded-md hover:opacity-90"
-                disabled={categoryCreateLoading}
               >
-                {categoryCreateLoading ? "Adding..." : "Add Category"}
+                {"Add Category"}
               </button>
+              {categoryCreateLoading && (
+                <Typography variant="body2" color="textSecondary" mt={2}>
+                  Adding category...
+                </Typography>
+              )}
               {categoryCreateLoadingError && (
                 <Typography color="error" variant="body2" mt={2}>
                   {categoryCreateLoadingError}

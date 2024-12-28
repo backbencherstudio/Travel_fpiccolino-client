@@ -1,17 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+// features/category/categorySlice.js
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { base_url } from "../../utils/base_path";
 
-axios.defaults.withCredentials = true;
-
-// Async action to create a new category
-export const createCategory = createAsyncThunk(
-  "category/create",
-  async (categoryData, { rejectWithValue }) => {
+// Async thunk to get categories
+export const getCategory = createAsyncThunk(
+  "category/getCategories",
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}/category`, categoryData);
-      console.log("slice", response.data);
-      return response.data;
+      const response = await axios.get(`${base_url}/category`);
+      return response.data; // Return categories data
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -19,29 +18,29 @@ export const createCategory = createAsyncThunk(
   }
 );
 
-// Async action to get all categories
-export const getCategory = createAsyncThunk(
-  "category/get",
-  async (_, { rejectWithValue }) => {
+// Async thunk to create a new category
+export const createCategory = createAsyncThunk(
+  "category/create",
+  async (categoryData, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}/category`);
-      return response.data;
+      const response = await axios.post(`${base_url}/category`, categoryData);
+      return response.data; // Return created category data
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
 
-// Async action to delete a category
+// Async thunk to delete a category
 export const deleteCategory = createAsyncThunk(
   "category/delete",
   async (categoryId, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${base_url}/category/${categoryId}`);
-      return categoryId; // Return the deleted category ID to update the state
+      await axios.delete(`${base_url}/category/${categoryId}`);
+      return categoryId; // Return the ID of the deleted category
     } catch (error) {
-      console.error("Error deleting category:", error);
+      console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
@@ -49,71 +48,69 @@ export const deleteCategory = createAsyncThunk(
 
 // Initial state
 const initialState = {
+  categories: [],
   categoryCreateLoading: false,
   categoryCreateLoadingError: null,
-  categories: [],
+  categoryFetchLoading: false,
+  categoryFetchError: null,
+  categoryDeleteLoading: false,
+  categoryDeleteLoadingError: null,
 };
 
-// Create the slice
+// Category slice
 const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // Handle get category
     builder
-      // Handle create category
+      .addCase(getCategory.pending, (state) => {
+        state.categoryFetchLoading = true;
+        state.categoryFetchError = null;
+      })
+      .addCase(getCategory.fulfilled, (state, action) => {
+        state.categoryFetchLoading = false;
+        state.categories = action.payload; // Update categories list
+      })
+      .addCase(getCategory.rejected, (state, action) => {
+        state.categoryFetchLoading = false;
+        state.categoryFetchError = action.payload;
+      });
+
+    // Handle create category
+    builder
       .addCase(createCategory.pending, (state) => {
         state.categoryCreateLoading = true;
         state.categoryCreateLoadingError = null;
       })
       .addCase(createCategory.fulfilled, (state, action) => {
         state.categoryCreateLoading = false;
-        state.categoryCreateLoadingError = null;
-        // Add the new category to the categories array
-        state.categories.push(...action.payload);
+        state.categories.push(action.payload); // Add the new category to the list
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.categoryCreateLoading = false;
-        state.categoryCreateLoadingError =
-          action.payload?.message || "Error creating category";
-      })
+        state.categoryCreateLoadingError = action.payload;
+      });
 
-      // Handle get categories
-      .addCase(getCategory.pending, (state) => {
-        state.categoryCreateLoading = true;
-        state.categoryCreateLoadingError = null;
-      })
-      .addCase(getCategory.fulfilled, (state, action) => {
-        state.categoryCreateLoading = false;
-        state.categoryCreateLoadingError = null;
-        state.categories = action.payload;
-      })
-      .addCase(getCategory.rejected, (state, action) => {
-        state.categoryCreateLoading = false;
-        state.categoryCreateLoadingError =
-          action.payload?.message || "Error fetching categories";
-      })
-
-      // Handle delete category
+    // Handle delete category
+    builder
       .addCase(deleteCategory.pending, (state) => {
-        state.categoryCreateLoading = true;
-        state.categoryCreateLoadingError = null;
+        state.categoryDeleteLoading = true;
+        state.categoryDeleteLoadingError = null;
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
-        state.categoryCreateLoading = false;
-        state.categoryCreateLoadingError = null;
-        // Remove the deleted category from the categories array
+        state.categoryDeleteLoading = false;
         state.categories = state.categories.filter(
           (category) => category._id !== action.payload
-        );
+        ); // Remove the deleted category from the list
       })
       .addCase(deleteCategory.rejected, (state, action) => {
-        state.categoryCreateLoading = false;
-        state.categoryCreateLoadingError =
-          action.payload?.message || "Error deleting category";
+        state.categoryDeleteLoading = false;
+        state.categoryDeleteLoadingError = action.payload;
       });
   },
 });
 
-// Export the reducer
+// Export actions and reducer
 export default categorySlice.reducer;
