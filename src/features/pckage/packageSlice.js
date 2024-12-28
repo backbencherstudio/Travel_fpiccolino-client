@@ -106,12 +106,27 @@ export const createPackage = createAsyncThunk(
   }
 );
 
+export const getPackage = createAsyncThunk(
+  "package/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/package`);
+      return response.data; // Return categories data
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
 
 
 const initialState = {
   packageCreateLoading: false,
   packageCreateLoadingError: null,
-  package: {},
+  packag: [],
+
+  packagGetLoading : false,
+  packageGetError : null,
 };
 
 const packageSlice = createSlice({
@@ -127,11 +142,28 @@ const packageSlice = createSlice({
       .addCase(createPackage.fulfilled, (state, action) => {
         state.signupLoading = false;
         state.signupError = null;
+        state.packag.push(action)
       })
       .addCase(createPackage.rejected, (state, action) => {
         state.signupLoading = false;
         state.signupError = action.payload?.message ?? null;
       });
+
+      // Handle get category
+    builder
+    .addCase(getPackage.pending, (state) => {
+      state.packagGetLoading = true;
+      state.packageGetError = null;
+    })
+    .addCase(getPackage.fulfilled, (state, action) => {
+      state.packagGetLoading = false;
+      state.packageGetError = null;   
+      state.packag = action.payload;
+    })
+    .addCase(getPackage.rejected, (state, action) => {
+      state.packagGetLoading = false;
+      state.packageGetError = action.payload?.message ?? null;
+    });
   },
 });
 
