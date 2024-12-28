@@ -71,9 +71,12 @@ const CustomTable = ({
 
   const handleDelete = async () => {
     if (deleteId) {
-      await dispatch(deleteBlog(deleteId));
-      handleCloseDeleteDialog();
-      // window.location.reload();
+      try {
+        await dispatch(deleteBlog(deleteId));
+        handleCloseDeleteDialog();
+      } catch (error) {
+        console.error("Error deleting blog:", error);
+      }
     }
   };
 

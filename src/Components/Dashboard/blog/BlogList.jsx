@@ -37,7 +37,7 @@ const BlogList = () => {
         tableType={"blog"}
         title={"Blog List"}
         columns={columns}
-        data={blogs?.blogs}
+        data={blogs}
         setDateFilter={setTourDateFilter}
         dateFilter={tourDateFilter}
       />
