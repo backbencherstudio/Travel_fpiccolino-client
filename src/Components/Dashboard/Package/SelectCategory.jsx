@@ -84,11 +84,7 @@ const SelectCategory = ({ category, setCategory }) => {
         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
           Category
         </h2>
-        {categoryFetchLoading ? (
-          <p>Loading categories...</p>
-        ) : categoryFetchError ? (
-          <p>Error fetching categories: {categoryFetchError}</p>
-        ) : (
+      
           <Select
             style={{
               width: "100%",
@@ -129,7 +125,6 @@ const SelectCategory = ({ category, setCategory }) => {
               <MenuItem value="">No Categories Available</MenuItem>
             )}
           </Select>
-        )}
         <div className="mt-3 flex justify-end">
           <CustomDashboardButton
             handleSubmit={() => setOpenModal(true)}
