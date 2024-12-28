@@ -69,9 +69,12 @@ const UpdateBlog = () => {
   };
 
   const deleteContent = async (index) => {
+    setContentList((prevContentList) =>
+      prevContentList.filter((_, i) => i !== index)
+    );
     try {
       const response = await axios.delete(
-        `${base_url}/api/blogs/deleteContent/676a52407856362ce9bd9526/${index}`,
+        `${base_url}/api/blogs/deleteContent/${id}/${index}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -79,9 +82,7 @@ const UpdateBlog = () => {
         }
       );
       console.log("Hero Section Deleted", response.data);
-      setContentList((prevContentList) =>
-        prevContentList.filter((_, i) => i !== index)
-      );
+      
       toast.success("Content Delete successfully!");
     } catch (error) {
       console.error("Error deleting Hero Section", error);
@@ -360,12 +361,14 @@ const UpdateBlog = () => {
             ></textarea>
           </div>
         </div>
+        <div class="flex justify-end">
         <button
           onClick={updateHeroSection}
           className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
         >
           Update Hero Section
         </button>
+        </div>
       </div>
 
       {/* Content List */}
@@ -463,27 +466,29 @@ const UpdateBlog = () => {
             ))}
             <button
               onClick={(event) => addParagraph(event, index)}
-              className="bg-blue-500 text-white px-4 py-2 mt-5  rounded-md hover:bg-blue-600"
+              className="bg-blue-500 text-white px-2  mt-5  rounded-md hover:bg-blue-600"
             >
               Add Paragraph
             </button>
           </div>
-
+          <div class="flex justify-end">
           <button
             onClick={() => updateIndividualContent(index, content._id)}
             className="bg-orange-500 text-white px-4 py-2  rounded-md hover:bg-orange-600"
           >
             Update Content {index + 1}
           </button>
+          </div>
         </div>
       ))}
-
+       <div class="flex justify-end">
       <button
         onClick={addNewContent}
         className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-600"
       >
         <RiAddBoxLine /> Add Content
       </button>
+      </div>
 
       {/* Category Section */}
       <div className="border rounded-lg p-6 shadow-lg">
@@ -497,12 +502,14 @@ const UpdateBlog = () => {
           <option value="lifestyle">Lifestyle</option>
           <option value="tech">Tech</option>
         </select>
+        <div class="flex justify-end">
         <button
           onClick={updateCategory}
           className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 mt-4"
         >
           Update Category
         </button>
+        </div>
       </div>
     </div>
   );

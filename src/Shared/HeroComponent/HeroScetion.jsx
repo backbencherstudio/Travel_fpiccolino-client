@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 
+import { base_url } from "../../utils/base_path";
 import ParentComponent from "../ParentComponent/ParentComponent";
-
-
+import image from "../../assets/Images/about.jpg";
 const HeroScetion = ({ heroContent }) => {
     const { heroImage, titleOne, descriptionOne, titleTwo, descriptionTwo, blogDetailsTitle } = heroContent
     return (
@@ -25,20 +25,20 @@ const HeroScetion = ({ heroContent }) => {
                 </div>
             </div>
 
-            {
-                (titleTwo && descriptionTwo) && <div className="text-center py-5 lg:p-20 rounded-md bg-[#EFFBFB]  ">
-                    <ParentComponent>
-                        <h2 className="font-duera-expanded text-[32px] font-bold leading-[56px] text-center decoration-skip-ink w-full">
-                            {titleTwo}
-                        </h2>
-                        <p className="leading-8 lg:leading-[45px] mt-8 text-[18px]">{descriptionTwo}</p>
-                    </ParentComponent>
-                </div>
-            }
-
-
+      {titleTwo && descriptionTwo && (
+        <div className="text-center py-5 lg:p-20 rounded-md bg-[#EFFBFB]  ">
+          <ParentComponent>
+            <h2 className="font-duera-expanded text-[32px] font-bold leading-[56px] text-center decoration-skip-ink w-full">
+              {titleTwo}
+            </h2>
+            <p className="leading-8 lg:leading-[45px] mt-8 text-[18px]">
+              {descriptionTwo}
+            </p>
+          </ParentComponent>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default HeroScetion;
