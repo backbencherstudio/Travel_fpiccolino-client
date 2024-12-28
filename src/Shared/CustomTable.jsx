@@ -9,6 +9,11 @@ import {
   TableRow,
   Paper,
   TablePagination,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
 } from "@mui/material";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +22,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import CustomDashboardButton from "./CustomDashboardButton";
 import { base_url } from "../utils/base_path";
+import { useDispatch } from "react-redux";
+import { deleteBlog } from "../features/blog/blogSlice";
 
 const CustomTable = ({
   tableType = "",
@@ -28,10 +35,15 @@ const CustomTable = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Pagination states
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  // Delete modal state
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [deleteId, setDeleteId] = useState(null); // Store the id of the blog to delete
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -41,21 +53,35 @@ const CustomTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleRowClick = (id) => {
-    if (tableType === "user" || tableType === "blog") {
-      navigate(`${id}`);
-    } else {
-      // navigate(`/other-list/${id}`);
+
+  const handleRowClick = (id) =>
+    tableType === "user" || tableType === "blog" ? navigate(`${id}`) : null;
+
+  const handleCreatePackage = () => navigate("create/new");
+
+  const handleOpenDeleteDialog = (id) => {
+    setDeleteId(id);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+    setDeleteId(null);
+  };
+
+  const handleDelete = async () => {
+    if (deleteId) {
+      await dispatch(deleteBlog(deleteId));
+      handleCloseDeleteDialog();
+      // window.location.reload();
     }
   };
-  const handleCreatePackage = () => {
-    navigate("create/new");
-  };
+
   return (
-    <div className="">
+    <div>
       <Paper>
         <div className="flex mt-8 p-5 justify-between flex-wrap">
-          <h1 className="font-semibold text-[24px]">{title}</h1>{" "}
+          <h1 className="font-semibold text-[24px]">{title}</h1>
           {(tableType === "blog" || tableType === "package") && (
             <CustomDashboardButton
               content={
@@ -68,7 +94,7 @@ const CustomTable = ({
             />
           )}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5  gap-3 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5 gap-3 px-4">
           <div className="relative md:col-span-2">
             <input
               type="text"
@@ -84,7 +110,6 @@ const CustomTable = ({
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
             style={{
-              // width:'100%',
               padding: "8px 16px",
               cursor: "pointer",
               fontSize: "14px",
@@ -103,8 +128,6 @@ const CustomTable = ({
           <Table
             sx={{
               border: "1px solid #e0e0e0",
-
-              // "& th, & td": { border: "1px solid #E0E5E5", color: "gray" },
             }}
           >
             <TableHead>
@@ -115,7 +138,7 @@ const CustomTable = ({
                 {columns?.username && <TableCell>User Name</TableCell>}
                 {columns?.blogName && <TableCell>Blog Name</TableCell>}
                 {columns?.category && <TableCell>Category</TableCell>}
-                {columns?.email && <TableCell> Email</TableCell>}
+                {columns?.email && <TableCell>Email</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
@@ -146,31 +169,27 @@ const CustomTable = ({
                     {columns?.tourId && <TableCell>{item.bookingId}</TableCell>}
                     {columns?.name && (
                       <TableCell style={{ minWidth: "200px" }}>
-                        {/* Added minWidth for Name column */}
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
                             src={item.customerImg}
                             alt={item.customerName}
-                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                            style={{ width: "40px", height: "40px" }}
                           />
-                          <span className="truncate">{item.customerName}</span>{" "}
-                          {/* Added truncate to prevent overflow */}
+                          <span className="truncate">{item.customerName}</span>
                         </div>
                       </TableCell>
                     )}
                     {columns?.username && (
                       <TableCell style={{ minWidth: "200px" }}>
-                        {/* Added minWidth for Name column */}
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
                             src={item.customerImg}
                             alt={item.customerName}
-                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                            style={{ width: "40px", height: "40px" }}
                           />
-                          <span className="truncate">{item.name}</span>{" "}
-                          {/* Added truncate to prevent overflow */}
+                          <span className="truncate">{item.name}</span>
                         </div>
                       </TableCell>
                     )}
@@ -178,23 +197,19 @@ const CustomTable = ({
                       <TableCell
                         style={{ width: "400px", textWrap: "break-word" }}
                       >
-                        {/* Added minWidth for Name column */}
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
                             src={`${base_url}/uploads/${item?.heroSection[0]?.headerImg}`}
                             alt=""
-                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                            style={{ width: "40px", height: "40px" }}
                           />
                           <span
                             className="truncate"
-                            style={{
-                              wordWrap: "break-word",
-                            }}
+                            style={{ wordWrap: "break-word" }}
                           >
                             {item?.heroSection[0]?.mainHeading}
                           </span>
-                          {/* Added truncate to prevent overflow */}
                         </div>
                       </TableCell>
                     )}
@@ -206,36 +221,31 @@ const CustomTable = ({
                     {columns?.country && <TableCell>{item.country}</TableCell>}
                     {columns?.traveler && (
                       <TableCell style={{ minWidth: "200px" }}>
-                        {/* Added minWidth for Name column */}
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
                             src={item.customerImg}
                             alt={item.customerName}
-                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                            style={{ width: "40px", height: "40px" }}
                           />
-                          <span className="truncate">{item.customerName}</span>{" "}
-                          {/* Added truncate to prevent overflow */}
+                          <span className="truncate">{item.customerName}</span>
                         </div>
                       </TableCell>
                     )}
-
                     {columns?.date && <TableCell>{item.createdAt}</TableCell>}
                     {columns?.duration && (
                       <TableCell>{item.duration}</TableCell>
                     )}
                     {columns?.destination && (
                       <TableCell style={{ minWidth: "200px" }}>
-                        {/* Added minWidth for Name column */}
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
                             src={item.destinationImg}
                             alt={item.destination}
-                            style={{ width: "40px", height: "40px" }} // fixed size for the image
+                            style={{ width: "40px", height: "40px" }}
                           />
-                          <span className="truncate">{item.destination}</span>{" "}
-                          {/* Added truncate to prevent overflow */}
+                          <span className="truncate">{item.destination}</span>
                         </div>
                       </TableCell>
                     )}
@@ -253,7 +263,13 @@ const CustomTable = ({
                           >
                             <FiEdit3 />
                           </div>
-                          <div className="text-[#eb3d4d] border border-[#eb3d4d] hover:bg-[#eb3d4f1e] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center">
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenDeleteDialog(item._id);
+                            }}
+                            className="text-[#eb3d4d] border border-[#eb3d4d] hover:bg-[#eb3d4f1e] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center"
+                          >
                             <MdDeleteOutline />
                           </div>
                         </div>
@@ -275,6 +291,25 @@ const CustomTable = ({
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
+        <DialogTitle>
+          Delete {tableType.charAt(0).toUpperCase() + tableType.slice(1)}
+        </DialogTitle>
+        <DialogContent>
+          <p>
+            Are you sure you want to delete this {tableType}? This action cannot
+            be undone.
+          </p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
