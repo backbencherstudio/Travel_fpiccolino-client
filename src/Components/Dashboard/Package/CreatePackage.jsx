@@ -15,9 +15,10 @@ import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createPackage } from "../../../features/pckage/packageSlice";
+import { toast } from "react-toastify";
 const CreatePackage = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, reset } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
   const [openFlightModal, setOpenFlightModal] = useState(false);
@@ -44,6 +45,15 @@ const CreatePackage = () => {
     try {
       const response = await dispatch(createPackage(packageData));
       console.log("responce", response);
+      if (response?.payload.message) {
+        reset()
+        setBookedFlights([])
+        setInsurance([])
+        setImages([])
+        setIncludeIconName([])
+        setNotIncludeIconName([])
+        toast.success(response?.payload.message)
+      }
     } catch (error) {
       console.error("Error creating package:", error);
       alert("Failed to create package. Please try again.");
