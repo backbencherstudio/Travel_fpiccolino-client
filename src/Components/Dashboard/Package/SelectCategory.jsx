@@ -36,8 +36,6 @@ const SelectCategory = ({ category, setCategory }) => {
     categories,
     categoryCreateLoading,
     categoryCreateLoadingError,
-    categoryFetchLoading,
-    categoryFetchError,
   } = useSelector((state) => state.category);
 
   const handleChange = (e) => {
@@ -63,11 +61,7 @@ const SelectCategory = ({ category, setCategory }) => {
         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
           Category
         </h2>
-        {categoryFetchLoading ? (
-          <p>Loading categories...</p>
-        ) : categoryFetchError ? (
-          <p>Error fetching categories: {categoryFetchError}</p>
-        ) : (
+      
           <Select
             style={{
               width: "100%",
@@ -108,7 +102,6 @@ const SelectCategory = ({ category, setCategory }) => {
               <MenuItem value="">No Categories Available</MenuItem>
             )}
           </Select>
-        )}
         <div className="mt-3 flex justify-end">
           <CustomDashboardButton
             handleSubmit={() => setOpenModal(true)}
@@ -162,7 +155,7 @@ const SelectCategory = ({ category, setCategory }) => {
                 className="primary_bg w-full text-white font-semibold text-[16px] py-2 rounded-md hover:opacity-90"
                 disabled={categoryCreateLoading}
               >
-                {categoryCreateLoading ? "Adding..." : "Add Category"}
+                {"Add Category"}
               </button>
               {categoryCreateLoadingError && (
                 <Typography color="error" variant="body2" mt={2}>
