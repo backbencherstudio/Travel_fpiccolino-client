@@ -24,6 +24,7 @@ import CustomDashboardButton from "./CustomDashboardButton";
 import { base_url } from "../utils/base_path";
 import { useDispatch } from "react-redux";
 import { deleteBlog } from "../features/blog/blogSlice";
+import moment from "moment";
 
 const CustomTable = ({
   tableType = "",
@@ -145,9 +146,9 @@ const CustomTable = ({
                 {columns?.phone && <TableCell>Phone</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
-                {columns?.date && <TableCell>Date</TableCell>}
-                {columns?.duration && <TableCell>Duration</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
+                {columns?.duration && <TableCell>Duration</TableCell>}
+                {columns?.date && <TableCell>Date</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
                 {columns?.action && <TableCell>Action</TableCell>}
@@ -239,10 +240,6 @@ const CustomTable = ({
                         </div>
                       </TableCell>
                     )}
-                    {columns?.date && <TableCell>{item.createdAt}</TableCell>}
-                    {columns?.duration && (
-                      <TableCell>{item.duration}</TableCell>
-                    )}
                     {columns?.destination && (
                       <TableCell style={{ minWidth: "200px" }}>
                         <div className="flex items-center gap-3">
@@ -254,6 +251,18 @@ const CustomTable = ({
                           />
                           <span className="truncate">{item.destination}</span>
                         </div>
+                      </TableCell>
+                    )}
+
+                    {columns?.duration && (
+                      <TableCell style={{ minWidth: "200px" }}>
+                        {item.tourDuration.days} Days &{" "}
+                        {item.tourDuration.nights} Nights
+                      </TableCell>
+                    )}
+                    {columns?.date && (
+                      <TableCell>
+                        {moment(item.createdAt).format("DD/MM/yyyy")}
                       </TableCell>
                     )}
                     {columns?.amount && <TableCell>{item.amount}</TableCell>}
