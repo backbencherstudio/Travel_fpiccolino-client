@@ -28,7 +28,7 @@ const CreatePackage = () => {
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
   const [includeIconName, setIncludeIconName] = useState([]);
-  const [notIncludeIconName, setNotIncludeIconName] = useState([]); 
+  const [notIncludeIconName, setNotIncludeIconName] = useState([]);
   const onSubmit = async (data) => {
     const packageData = {
       ...data,
@@ -44,7 +44,6 @@ const CreatePackage = () => {
     try {
       const response = await dispatch(createPackage(packageData));
       console.log("responce", response);
-
     } catch (error) {
       console.error("Error creating package:", error);
       alert("Failed to create package. Please try again.");
@@ -103,6 +102,20 @@ const CreatePackage = () => {
                 {...register("tourDescription")}
                 type="text"
                 placeholder="Write Description...."
+                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+              />
+              <p className="text-[16px] mt-3">Tour Destination</p>
+              <input
+                {...register("destination")}
+                type="text"
+                placeholder="Write Destination...."
+                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+              />
+              <p className="text-[16px] mt-3">Amount</p>
+              <input
+                {...register("amount")}
+                type="number"
+                placeholder="Enter Amount...."
                 className="border rounded-md w-full p-1 mt-1 text-[#666666]"
               />
 
