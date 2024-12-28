@@ -138,7 +138,7 @@ const CustomTable = ({
                       "cursor-pointer hover:bg-[#fdf0ea]"
                     }`}
                     key={item?.bookingId}
-                    onClick={() => handleRowClick(item.id)}
+                    onClick={() => handleRowClick(item._id)}
                   >
                     {columns?.bookingId && (
                       <TableCell>{item.bookingId}</TableCell>

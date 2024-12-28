@@ -47,6 +47,39 @@ const CreateBlog = () => {
     { value: "health", label: "Health" },
     { value: "travel", label: "Travel" },
   ]);
+  const updateOptions = (apiResponse) => {
+    const newOptions = apiResponse.Categories.map((categoryObj) => {
+      const value = Object.keys(categoryObj)[0];
+      const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
+      return { value, label };
+    });
+  
+    setOptions((prevOptions) => {
+      const mergedOptions = [...prevOptions];
+  
+      newOptions.forEach((newOption) => {
+        if (!prevOptions.some((option) => option.value === newOption.value)) {
+          mergedOptions.push(newOption);
+        }
+      });
+  
+      return mergedOptions;
+    });
+  };
+
+
+  useEffect(() => {
+    const fetchCategoryCount = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/blogs/categoryCount");
+        updateOptions(response.data); // Assume the response has the data you need
+      } catch (err) {
+        setError(err.message || "An error occurred");
+      } 
+    };
+
+    fetchCategoryCount();
+  }, []);
 
   const [newOption, setNewOption] = useState("");
 

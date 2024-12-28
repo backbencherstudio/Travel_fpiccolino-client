@@ -23,29 +23,24 @@ import { base_url } from "../../utils/base_path";
 const BlogDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const { blogDetails, categoryCount } = useSelector((state) => state.blog);
+  const { blogDetails, categoryCount, categoryBlogs } = useSelector(
+    (state) => state.blog
+  );
 
   useEffect(() => {
     dispatch(getBlogDetails(params.id));
     dispatch(getCategoryCount());
   }, []);
   const heroContent = {
-    heroImage: image5,
+    heroImage: blogDetails?.heroSection[0].headerImg,
     titleOne: "Feel at Home Wherever You Roam",
     descriptionOne:
       "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
   };
 
-  // const getCategoryCount = () => {
-  //   const categoryCount = {};
-  //   blogs.forEach((blog) => {
-  //     categoryCount[blog.category] = (categoryCount[blog.category] || 0) + 1;
-  //   });
-  //   return categoryCount;
-  // };
-
-  // Get category count
-  // const categoryCount = getCategoryCount();
+  const relatedBlogs = categoryBlogs?.find(
+    (categoryObj) => categoryObj.category === blogDetails?.category
+  )?.blogs;
   return (
     <div>
       <HeroScetion heroContent={heroContent} />
@@ -199,7 +194,7 @@ const BlogDetails = () => {
         <BlogSections
           relatedTitle={"Related Articles"}
           title={blogDetails?.category}
-          // blogs={blogs}
+          blogs={relatedBlogs?.slice(1, 4)}
         />
       </ParentComponent>
     </div>
