@@ -190,7 +190,7 @@ const CustomTable = ({
                           {item?.image ? (
                             <img
                               className="rounded-full"
-                              src={`${base_url}${item?.image}`}
+                              src={`${item?.image}`}
                               alt={item.customerName}
                               style={{ width: "40px", height: "40px" }}
                             />
