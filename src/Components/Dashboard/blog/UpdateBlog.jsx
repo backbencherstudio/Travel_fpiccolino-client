@@ -27,6 +27,8 @@ const UpdateBlog = () => {
         setHeroSection(responseData?.heroSection?.[0] || {});
         setContentList(responseData?.contentList || []);
         setCategory(responseData?.category || "");
+        setSentences(responseData?.learn || []);
+        setThought( responseData?.thought || []);
       } catch (err) {
         console.error(
           err.message || "Something went wrong while fetching blogs."
@@ -37,10 +39,7 @@ const UpdateBlog = () => {
     fetchBlogs();
   }, []);
 
-  // useEffect(() => {
-  //   fetchBlogs();
-  // }, [refresh]);
-
+  
   const handleHeroEdit = (field, value) => {
     setHeroSection((prevHeroSection) => ({
       ...prevHeroSection,
@@ -90,24 +89,7 @@ const UpdateBlog = () => {
     }
   };
 
-  // const addParagraph = (event, index) => {
-  //   event.stopPropagation();
-  //   setContentList((prevContentList) => {
 
-  //     const updatedContent = [...prevContentList];
-
-  //     // Add a single "New paragraph" field to the correct index
-  //     if (updatedContent[index] && updatedContent[index].paragraphs) {
-  //       updatedContent[index].paragraphs = [
-  //         ...updatedContent[index].paragraphs,
-  //         "New paragraph",
-  //       ];
-  //     }
-
-  //     // Return the updated state
-  //     return updatedContent;
-  //   });
-  // };
   const addParagraph = (event, index) => {
     event.stopPropagation();
     setContentList((prevContentList) =>
@@ -125,13 +107,7 @@ const UpdateBlog = () => {
     );
   };
 
-  // const deleteParagraph = (contentIndex, paragraphIndex) => {
-  //   setContentList((prevContentList) => {
-  //     const updatedContent = [...prevContentList];
-  //     updatedContent[contentIndex].paragraphs.splice(paragraphIndex, 1);
-  //     return updatedContent;
-  //   });
-  // };
+
   const deleteParagraph = (contentIndex, paragraphIndex) => {
     setContentList((prevContentList) =>
       prevContentList.map((content, i) => {
@@ -296,6 +272,67 @@ const UpdateBlog = () => {
     }
   };
 
+// --------------------------------------------extra---------------------------------------
+const updateTexContent = async () => {
+  const payload = { 
+    learn : sentences, 
+    thought : thought };
+  console.log(payload);
+  try {
+    const response = await axios.patch(
+      `${base_url}/api/blogs/updateTexContent/${id}`,
+      payload
+    );
+    console.log("Text Updated", response.data);
+    setCategory(response.data.category);
+    toast.success("Text updated successfully!");
+  } catch (error) {
+    console.error("Error updating Text", error);
+    toast.error("Error updating blog.");
+  }
+}
+  const [sentences, setSentences] = useState([]);
+  const [newSentence, setNewSentence] = useState("");
+  const handleUpdate = (index, updatedText) => {
+    const updatedSentences = sentences.map((sentence, i) =>
+      i === index ? updatedText : sentence
+    );
+    setSentences(updatedSentences);
+  };
+
+  const handleAdd = () => {
+    if (newSentence.trim()) {
+      setSentences([...sentences, newSentence.trim()]);
+      setNewSentence("");
+    }
+  };
+
+  const handleDelete = (index) => {
+    const updatedSentences = sentences.filter((_, i) => i !== index);
+    setSentences(updatedSentences);
+  };
+  // --------------------------------------------extra---------------------------------------
+  const [thought, setThought] = useState([]);
+  const [newLearn, setNewLearn] = useState("");
+  const handleUpdatee = (index, updatedText) => {
+    const updatedSentences = thought.map((sentence, i) =>
+      i === index ? updatedText : sentence
+    );
+    setThought(updatedSentences);
+  };
+
+  const handleAddd = () => {
+    if (newLearn.trim()) {
+      setThought([...thought, newLearn.trim()]);
+      setNewLearn("");
+    }
+  };
+
+  const handleDeletee = (index) => {
+    const updatedSentences = thought.filter((_, i) => i !== index);
+    setThought(updatedSentences);
+  };
+
   return (
     <div className="p-6 space-y-6">
       <ToastContainer />
@@ -414,32 +451,6 @@ const UpdateBlog = () => {
               className="w-full border rounded p-2"
             />
           </div>
-          {/* <div>
-            <label className="block mb-2 font-medium">Paragraphs</label>
-            {content.paragraphs.map((paragraph, paragraphIndex) => (
-              <div key={paragraphIndex} className="space-y-2">
-                <textarea
-                  value={paragraph || ""}
-                  onChange={(e) =>
-                    handleContentEdit(index, "paragraphs", e.target.value)
-                  }
-                  className="w-full border rounded p-2"
-                ></textarea>
-                <button
-                  onClick={() => deleteParagraph(index, paragraphIndex)}
-                  className="text-red-500 px-2 py-1 rounded-md hover:bg-red-100"
-                >
-                  Delete Paragraph
-                </button>
-              </div>
-            ))}
-            <button
-               onClick={(event) => addParagraph(event, index)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            >
-              Add Paragraph
-            </button>
-          </div> */}
           <div>
             <label className="block mb-2 font-medium">Paragraphs</label>
             {content.paragraphs.map((paragraph, paragraphIndex) => (
@@ -488,6 +499,97 @@ const UpdateBlog = () => {
       >
         <RiAddBoxLine /> Add Content
       </button>
+      </div>
+
+      {/* --------------------------------------------extra--------------------------------------- */}
+      <div className="border rounded-lg p-6 space-y-6 shadow-lg">
+     
+      <div className="p-4">
+        <h1 className="text-xl font-bold mb-4">Learn Basic Local Phrases</h1>
+        <ul className="space-y-2">
+          {sentences.map((sentence, index) => (
+            <li key={index} className="flex items-center space-x-2">
+              <input
+                type="text"
+                value={sentence}
+                onChange={(e) => handleUpdate(index, e.target.value)}
+                className="border rounded px-2 py-1 flex-1"
+              />
+              <button
+                onClick={() => handleDelete(index)}
+                className="text-red-500 px-2  rounded-md bg-red-100 "
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4">
+          <input
+            type="text"
+            value={newSentence}
+            onChange={(e) => setNewSentence(e.target.value)}
+            placeholder="Add a new sentence"
+            className="border rounded px-2 py-1 mr-2"
+          />
+          <button
+            onClick={handleAdd}
+            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+          >
+            Add Sentence
+          </button>
+        </div>
+      </div>
+
+
+
+      <div className="p-4">
+        <h1 className="text-xl font-bold mb-4">Final Thoughts</h1>
+        <ul className="space-y-2">
+          {thought.map((sentence, index) => (
+            <li key={index} className="flex items-center space-x-2">
+              <input
+                type="text"
+                value={sentence}
+                onChange={(e) => handleUpdatee(index, e.target.value)}
+                className="border rounded px-2 py-1 flex-1"
+              />
+              <button
+                onClick={() => handleDeletee(index)}
+                className="text-red-500 px-2  rounded-md bg-red-100 "
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4">
+          <input
+            type="text"
+            value={newLearn}
+            onChange={(e) => setNewLearn(e.target.value)}
+            placeholder="Add a new sentence"
+            className="border rounded px-2 py-1 mr-2"
+          />
+          <button
+            onClick={handleAddd}
+            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+          >
+            Add Sentence
+          </button>
+        </div>
+      </div>
+
+
+      <div class="flex justify-end">
+        <button
+          onClick={updateTexContent}
+          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 mt-4"
+        >
+          Update
+        </button>
+        </div>
+    
       </div>
 
       {/* Category Section */}

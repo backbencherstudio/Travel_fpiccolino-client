@@ -47,6 +47,39 @@ const CreateBlog = () => {
     { value: "health", label: "Health" },
     { value: "travel", label: "Travel" },
   ]);
+  const updateOptions = (apiResponse) => {
+    const newOptions = apiResponse.Categories.map((categoryObj) => {
+      const value = Object.keys(categoryObj)[0];
+      const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
+      return { value, label };
+    });
+  
+    setOptions((prevOptions) => {
+      const mergedOptions = [...prevOptions];
+  
+      newOptions.forEach((newOption) => {
+        if (!prevOptions.some((option) => option.value === newOption.value)) {
+          mergedOptions.push(newOption);
+        }
+      });
+  
+      return mergedOptions;
+    });
+  };
+
+
+  useEffect(() => {
+    const fetchCategoryCount = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/blogs/categoryCount");
+        updateOptions(response.data); // Assume the response has the data you need
+      } catch (err) {
+        setError(err.message || "An error occurred");
+      } 
+    };
+
+    fetchCategoryCount();
+  }, []);
 
   const [newOption, setNewOption] = useState("");
 
@@ -221,6 +254,8 @@ const CreateBlog = () => {
         },
       ],
       tag: tagvalue,
+      learn : learnlist.Learn,
+      thought : thoughtlist.thought,
       category: selectedCategory,
       contentList: contentList.map((content, index) => ({
         headings: content.headings,
@@ -251,6 +286,51 @@ const CreateBlog = () => {
       console.error("Error uploading blog:", error);
       alert("An error occurred while uploading the blog.");
     }
+  };
+
+  // -----------------------------------------------------------------------------------------------
+  const [learnlist, setLearnlist] = useState({ Learn: [] });
+  // Function to handle input changes
+  const handlesentenceInputChange = (e, field, index) => {
+    const newContentList = { ...learnlist };
+    newContentList.Learn[index] = e.target.value;
+    setLearnlist(newContentList);
+  };
+
+  // Function to add a new sentence
+  const handleAddSentence = () => {
+    const newContentList = { ...learnlist };
+    newContentList.Learn.push(""); // Add an empty string as a new sentence
+    setLearnlist(newContentList);
+  };
+
+  // Function to remove a sentence
+  const handleRemoveSentence = (index) => {
+    const newContentList = { ...learnlist };
+    newContentList.Learn.splice(index, 1); // Remove the sentence at the given index
+    setLearnlist(newContentList);
+  };
+  // -----------------------------------------------------------------------------------------------
+  const [thoughtlist, setThoughtlist] = useState({ thought: [] });
+  // Function to handle input changes
+  const handlethoughtInputChange = (e, field, index) => {
+    const newContentList = { ...thoughtlist };
+    newContentList.thought[index] = e.target.value;
+    setThoughtlist(newContentList);
+  };
+
+  // Function to add a new sentence
+  const handleAddthought = () => {
+    const newContentList = { ...thoughtlist };
+    newContentList.thought.push(""); // Add an empty string as a new sentence
+    setThoughtlist(newContentList);
+  };
+
+  // Function to remove a sentence
+  const handleRemovethought = (index) => {
+    const newContentList = { ...thoughtlist };
+    newContentList.thought.splice(index, 1); // Remove the sentence at the given index
+    setThoughtlist(newContentList);
   };
 
   return (
@@ -294,7 +374,7 @@ const CreateBlog = () => {
             </div>
           )}
 
-          {contentList.map((content, index) => (
+          {contentList && contentList?.map((content, index) => (
             <div className="border rounded-lg p-4 mb-5" key={index}>
               <div>
                 {content.image && (
@@ -347,6 +427,77 @@ const CreateBlog = () => {
               alt="Placeholder"
             />
           </div> */}
+
+
+          {/* ----------------------------------------------------------------------------------------------------- */}
+          <div className="border rounded-lg p-4 mb-4">
+          <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
+             Add Learn Basic Local Phrases
+            </h2>
+          
+            {learnlist && learnlist?.Learn.map((sentence, index) => (
+        <div key={index} className="flex items-center gap-4 mb-3">
+          <input
+            type="text"
+            placeholder={`Sentence ${index + 1}`}
+            value={sentence}
+            onChange={(e) => handlesentenceInputChange(e, "sentence", index)}
+            className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            onClick={() => handleRemoveSentence(index)}
+            className="text-red-500 bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={handleAddSentence}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+      >
+        Add Sentence
+      </button>
+          </div>
+{/* ------------------------------------------------------------------------ */}
+          {/* ----------------------------------------------------------------------------------------------------- */}
+          <div className="border rounded-lg p-4 mb-4">
+          <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
+             Add Final Thoughts
+            </h2>
+          
+            {thoughtlist && thoughtlist?.thought.map((sentence, index) => (
+        <div key={index} className="flex items-center gap-4 mb-3">
+          <input
+            type="text"
+            placeholder={`Sentence ${index + 1}`}
+            value={sentence}
+            onChange={(e) => handlethoughtInputChange(e, "sentence", index)}
+            className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            onClick={() => handleRemovethought(index)}
+            className="text-red-500 bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={handleAddthought}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+      >
+        Add Sentence
+      </button>
+          </div>
+{/* ------------------------------------------------------------------------ */}
+
+
+
           <div className="border rounded-lg p-4 mb-4">
             <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
               Add Category
