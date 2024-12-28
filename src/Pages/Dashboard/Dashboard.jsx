@@ -145,6 +145,17 @@ const Dashboard = () => {
             <span>Banners</span>
           </button>
 
+          <button
+            onClick={() => handleNavigation("AddContent", "addContent")}
+            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "AddContent"
+              ? "bg-[#fdf0ea] primary_text font-semibold"
+              : "hover:bg-zinc-300"
+              }`}
+          >
+            <BiBookContent />
+            <span>Add Content</span>
+          </button>
+
 
 
         </nav>

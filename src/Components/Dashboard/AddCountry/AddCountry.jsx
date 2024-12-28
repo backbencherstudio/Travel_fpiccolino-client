@@ -13,7 +13,6 @@ const AddCountry = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data);
         try {
             const response = await dispatch(createCountry(data));
             console.log("responce", response?.payload);
@@ -22,7 +21,7 @@ const AddCountry = () => {
         } catch (error) {
             console.error("Error creating package:", error);
             alert("Failed to create package. Please try again.");
-        }
+        }        
     };
 
     return (
