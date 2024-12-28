@@ -20,10 +20,7 @@ const PackageList = () => {
     destination:true,
     amount:true,
     action: true,
-  });
-
-  console.log(packag?.packages);
-  
+  });  
   
   return (
     <div>
