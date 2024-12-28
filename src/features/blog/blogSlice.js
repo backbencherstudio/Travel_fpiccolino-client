@@ -61,6 +61,23 @@ export const getCategoryCount = createAsyncThunk(
     }
   }
 );
+// Async Thunks
+
+// Delete a blog post
+export const deleteBlog = createAsyncThunk(
+  "blog/deleteBlog",
+  async (id, { rejectWithValue }) => {
+    try {
+      // Send the DELETE request
+      const response = await axios.delete(
+        `${base_url}/api/blogs/blogDelete/${id}`
+      );
+      return id; // Return the deleted blog ID to update the state
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
 
 // Initial state
 const initialState = {
@@ -76,7 +93,6 @@ const initialState = {
   categoryCount: 0,
 };
 
-// Create the slice
 const blogSlice = createSlice({
   name: "blog",
   initialState,
@@ -138,9 +154,24 @@ const blogSlice = createSlice({
       .addCase(getCategoryCount.rejected, (state, action) => {
         state.blogCreateLoadingError =
           action.payload?.message || "Error fetching category count";
+      })
+
+      // Handle delete blog
+      .addCase(deleteBlog.pending, (state) => {
+        state.blogCreateLoading = true;
+        state.blogCreateLoadingError = null;
+      })
+      .addCase(deleteBlog.fulfilled, (state, action) => {
+        state.blogCreateLoading = false;
+        state.blogCreateLoadingError = null;
+        state.blogs = state.blogs.filter((blog) => blog._id !== action.payload);
+      })
+      .addCase(deleteBlog.rejected, (state, action) => {
+        state.blogCreateLoading = false;
+        state.blogCreateLoadingError =
+          action.payload?.message || "Error deleting the blog post";
       });
   },
 });
 
-// Export the reducer
 export default blogSlice.reducer;
