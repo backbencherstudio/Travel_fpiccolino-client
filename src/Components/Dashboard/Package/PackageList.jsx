@@ -13,7 +13,6 @@ const PackageList = () => {
     amount:true,
     action: true,
   });
-
   
   return (
     <div>

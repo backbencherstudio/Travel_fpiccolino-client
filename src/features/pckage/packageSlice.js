@@ -114,8 +114,8 @@ const initialState = {
   package: {},
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const packageSlice = createSlice({
+  name: "package",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -135,5 +135,5 @@ const authSlice = createSlice({
   },
 });
 
-// export const { clearRecent } = authSlice.actions;
-export default authSlice.reducer;
+// export const { clearRecent } = packageSlice.actions;
+export default packageSlice.reducer;

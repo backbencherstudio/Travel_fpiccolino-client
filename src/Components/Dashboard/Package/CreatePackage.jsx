@@ -28,13 +28,8 @@ const CreatePackage = () => {
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
   const [includeIconName, setIncludeIconName] = useState([]);
-  const [notIncludeIconName, setNotIncludeIconName] = useState([]);
-
-  // console.log({insurance});
-  
-
+  const [notIncludeIconName, setNotIncludeIconName] = useState([]); 
   const onSubmit = async (data) => {
-
     const packageData = {
       ...data,
       tourDate: data.tourDate,
