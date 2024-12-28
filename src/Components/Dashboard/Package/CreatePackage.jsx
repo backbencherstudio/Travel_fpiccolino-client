@@ -15,7 +15,6 @@ import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { createPackage } from "../../../features/pckage/packageSlice";
-import dayjs from "dayjs";
 const CreatePackage = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, control } = useForm();
@@ -35,12 +34,6 @@ const CreatePackage = () => {
   
 
   const onSubmit = async (data) => {
-
-    // const formattedDate = data.tourDate
-    // ? dayjs(data.tourDate).format("DD/MM/YYYY")
-    // : null; 
-    console.log(bookedFlights);
-    console.log({insurance});
 
     const packageData = {
       ...data,
