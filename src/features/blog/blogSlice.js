@@ -65,16 +65,14 @@ export const getCategoryCount = createAsyncThunk(
 
 // Delete a blog post
 export const deleteBlog = createAsyncThunk(
-  "blog/deleteBlog",
-  async (id, { rejectWithValue }) => {
+  "blog/delete",
+  async (blogId, { rejectWithValue }) => {
     try {
-      // Send the DELETE request
-      const response = await axios.delete(
-        `${base_url}/api/blogs/blogDelete/${id}`
-      );
-      return id; // Return the deleted blog ID to update the state
+      // Make API call to delete blog
+      await axios.delete(`${base_url}/api/blogs/blogDelete/${blogId}`);
+      return blogId; // Return blogId for removal from state
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Something went wrong");
+      return rejectWithValue(error.response?.data || "Failed to delete blog");
     }
   }
 );
@@ -107,7 +105,7 @@ const blogSlice = createSlice({
       .addCase(getBlog.fulfilled, (state, action) => {
         state.blogCreateLoading = false;
         state.blogCreateLoadingError = null;
-        state.blogs = action.payload;
+        state.blogs = action.payload.blogs;
       })
       .addCase(getBlog.rejected, (state, action) => {
         state.blogCreateLoading = false;
@@ -164,7 +162,11 @@ const blogSlice = createSlice({
       .addCase(deleteBlog.fulfilled, (state, action) => {
         state.blogCreateLoading = false;
         state.blogCreateLoadingError = null;
-        state.blogs = state.blogs.filter((blog) => blog._id !== action.payload);
+        if (Array.isArray(state.blogs)) {
+          state.blogs = state.blogs.filter((b) => b._id !== action.payload);
+        } else {
+          console.error("state.blogs is not an array:", state.blogs);
+        }
       })
       .addCase(deleteBlog.rejected, (state, action) => {
         state.blogCreateLoading = false;

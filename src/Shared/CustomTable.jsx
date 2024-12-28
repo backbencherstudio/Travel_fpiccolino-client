@@ -15,7 +15,7 @@ import {
   DialogTitle,
   Button,
 } from "@mui/material";
-import { FaSearch } from "react-icons/fa";
+import { FaRegUserCircle, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FiEdit3 } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
@@ -71,9 +71,12 @@ const CustomTable = ({
 
   const handleDelete = async () => {
     if (deleteId) {
-      await dispatch(deleteBlog(deleteId));
-      handleCloseDeleteDialog();
-      // window.location.reload();
+      try {
+        await dispatch(deleteBlog(deleteId));
+        handleCloseDeleteDialog();
+      } catch (error) {
+        console.error("Error deleting blog:", error);
+      }
     }
   };
 
@@ -183,12 +186,16 @@ const CustomTable = ({
                     {columns?.username && (
                       <TableCell style={{ minWidth: "200px" }}>
                         <div className="flex items-center gap-3">
-                          <img
-                            className="rounded-full"
-                            src={item.customerImg}
-                            alt={item.customerName}
-                            style={{ width: "40px", height: "40px" }}
-                          />
+                          {item?.image ? (
+                            <img
+                              className="rounded-full"
+                              src={`${base_url}${item?.image}`}
+                              alt={item.customerName}
+                              style={{ width: "40px", height: "40px" }}
+                            />
+                          ) : (
+                            <FaRegUserCircle className="h-9 w-9 primary_text" />
+                          )}
                           <span className="truncate">{item.name}</span>
                         </div>
                       </TableCell>
@@ -216,8 +223,8 @@ const CustomTable = ({
                     {columns?.category && (
                       <TableCell>{item.category}</TableCell>
                     )}
-                    {columns?.phone && <TableCell>{item.phone}</TableCell>}
                     {columns?.email && <TableCell>{item.email}</TableCell>}
+                    {columns?.phone && <TableCell>{item.phone}</TableCell>}
                     {columns?.country && <TableCell>{item.country}</TableCell>}
                     {columns?.traveler && (
                       <TableCell style={{ minWidth: "200px" }}>

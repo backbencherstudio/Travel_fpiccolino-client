@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
 import { userData } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../../features/users/userSlice";
 
 const UserList = () => {
+  const dispatch = useDispatch();
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const [columns] = useState({
     username: true,
@@ -11,16 +14,29 @@ const UserList = () => {
     email: true,
     country: true,
   });
+  const { users } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        dispatch(getUser());
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+  console.log(users);
 
   return (
     <div>
-      <CustomHeadingDashboard/>
+      <CustomHeadingDashboard />
       <CustomTable
         tableType={"user"}
         title={"User List"}
         columns={columns}
-        data={userData}
+        data={users}
         setDateFilter={setTourDateFilter}
         dateFilter={tourDateFilter}
       />
