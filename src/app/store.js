@@ -17,7 +17,6 @@ export const store = configureStore({
     blog: blogReducer,
     country: countryReducer,
     user: userReducer,
-    country : countryReducer,
     package : packageReducer
   },
 });
