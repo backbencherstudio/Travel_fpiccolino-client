@@ -22,24 +22,32 @@ const CreatePackage = () => {
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
   const [openFlightModal, setOpenFlightModal] = useState(false);
-  const [bookedFlights, setBookedFlights] = useState([]);
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
+  const [bookedFlights, setBookedFlights] = useState([]);
   const [insurance, setInsurance] = useState([]);
   const [category, setCategory] = useState("All inclusive");
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
   const [includeIconName, setIncludeIconName] = useState([]);
   const [notIncludeIconName, setNotIncludeIconName] = useState([]);
+
+  // console.log({insurance});
+  
+
   const onSubmit = async (data) => {
+
     // const formattedDate = data.tourDate
-      // ? dayjs(data.tourDate).format("DD/MM/YYYY")
-      // : null;
+    // ? dayjs(data.tourDate).format("DD/MM/YYYY")
+    // : null; 
+    console.log(bookedFlights);
+    console.log({insurance});
 
     const packageData = {
       ...data,
       tourDate: data.tourDate,
       includeItems: includeIconName,
       notIncludeItems: notIncludeIconName,
+      insurance,
       bookedFlights,
       category,
       images,
@@ -54,6 +62,7 @@ const CreatePackage = () => {
       alert("Failed to create package. Please try again.");
     }
   };
+
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
 

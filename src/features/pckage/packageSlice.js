@@ -82,6 +82,7 @@ export const createPackage = createAsyncThunk(
           key === "tourDuration" ||
           key === "includeItems" ||
           key === "notIncludeItems" ||
+          key === "insurance" ||
           key === "bookedFlights"
         ) {
           formData.append(key, JSON.stringify(otherData[key])); 
