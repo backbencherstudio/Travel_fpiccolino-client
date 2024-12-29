@@ -154,7 +154,7 @@ const packageSlice = createSlice({
       .addCase(createPackage.fulfilled, (state, action) => {
         state.signupLoading = false;
         state.signupError = null;
-        state.packag.push(action.payload);
+        state.packag.push(action);
       })
       .addCase(createPackage.rejected, (state, action) => {
         state.signupLoading = false;

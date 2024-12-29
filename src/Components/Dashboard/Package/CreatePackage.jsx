@@ -52,6 +52,9 @@ const CreatePackage = () => {
       // hotelInfo,
     };
 
+    console.log(packageData);
+    
+
     try {
       const response = await dispatch(createPackage(packageData));
       console.log("responce", response);

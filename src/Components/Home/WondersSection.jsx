@@ -5,7 +5,21 @@ import natureImage2 from "../../assets/natureImage2.jpg";
 import banner from "../../assets/banner.jpg";
 import banner2 from '../../assets/eve.jpg';
 import WonderCard from "./WonderCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getSectionData } from "../../features/sectionTitle/sectionTitleSlice";
 const WondersSection = () => {
+
+  const dispatch = useDispatch()
+  const { title } = useSelector(
+    (state) => state.section
+  );
+  useEffect(() => {
+    dispatch(getSectionData())
+  }, [])
+
+  
+
   const cardDetails = [
     {
       image: banner,
@@ -50,14 +64,19 @@ const WondersSection = () => {
       description: "Explore Every Destination Awaiting",
     },
   ];
+
+
+
   return (
     <div>
       <ParentComponent>
         <div className="mt-[100px] mb-[56px]">
+
           <HeadLine
             title="A New Year's Eve to Remember"
             description="Ring in the New Year with Joyful Celebrations and Lasting Memories"
           />
+
         </div>
         <div>
           <div className="grid grid-col-1 md:grid-cols-5 gap-6">
