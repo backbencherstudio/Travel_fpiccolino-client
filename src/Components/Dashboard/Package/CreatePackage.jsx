@@ -30,7 +30,16 @@ const CreatePackage = () => {
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
   const [includeIconName, setIncludeIconName] = useState([]);
   const [notIncludeIconName, setNotIncludeIconName] = useState([]);
+  const [hotelImages, setHotelImages] = useState([]); // State for hotel images
+  const [hotelName, setHotelName] = useState(""); // State for hotel name
+  const [hotelAbout, setHotelAbout] = useState("");
+  const [updateHotelImageIndex, setUpdateHotelImageIndex] = useState(null);
   const onSubmit = async (data) => {
+    const hotelInfo = {
+      name: hotelName,
+      description: hotelAbout,
+      images: hotelImages,
+    };
     const packageData = {
       ...data,
       tourDate: data.tourDate,
@@ -40,19 +49,20 @@ const CreatePackage = () => {
       bookedFlights,
       category,
       images,
+      // hotelInfo,
     };
 
     try {
       const response = await dispatch(createPackage(packageData));
       console.log("responce", response);
       if (response?.payload.message) {
-        reset()
-        setBookedFlights([])
-        setInsurance([])
-        setImages([])
-        setIncludeIconName([])
-        setNotIncludeIconName([])
-        toast.success(response?.payload.message)
+        reset();
+        setBookedFlights([]);
+        setInsurance([]);
+        setImages([]);
+        setIncludeIconName([]);
+        setNotIncludeIconName([]);
+        toast.success(response?.payload.message);
       }
     } catch (error) {
       console.error("Error creating package:", error);
@@ -79,6 +89,27 @@ const CreatePackage = () => {
 
   const handleUpdateImage = (index) => {
     setUpdateImageIndex(index);
+    document.getElementById("imageUpdateInput").click();
+  };
+  const handleHotelImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (updateHotelImageIndex !== null) {
+      setHotelImages((prevImages) =>
+        prevImages.map((img, i) =>
+          i === updateHotelImageIndex ? files[0] : img
+        )
+      );
+      setUpdateHotelImageIndex(null);
+    } else {
+      setHotelImages((prevImages) => [...prevImages, ...files]);
+    }
+  };
+  const handleDeleteHotelImage = (index) => {
+    setHotelImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+  const handleUpdateHotelImage = (index) => {
+    setUpdateHotelImageIndex(index);
     document.getElementById("imageUpdateInput").click();
   };
 
@@ -108,7 +139,7 @@ const CreatePackage = () => {
               />
 
               <p className="text-[16px] mt-3">Tour Description</p>
-              <input
+              <textarea
                 {...register("tourDescription")}
                 type="text"
                 placeholder="Write Description...."
@@ -236,7 +267,7 @@ const CreatePackage = () => {
             <div className="">
               <div className="border rounded-lg p-4 mb-4">
                 <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
-                  Upload Images
+                  Upload Package Images
                 </h2>
 
                 {/* Big Image */}
@@ -297,6 +328,93 @@ const CreatePackage = () => {
                   onChange={handleImageUpload}
                   className="hidden"
                 />
+              </div>
+              <div className="border rounded-lg p-4 mb-4">
+                <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
+                  Hotel Information
+                </h2>
+
+                <p className="text-[16px] mt-3">Hotel Name</p>
+                <input
+                  value={hotelName}
+                  onChange={(e) => setHotelName(e.target.value)}
+                  type="text"
+                  placeholder="Write Hotel Name...."
+                  className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+                />
+
+                <p className="text-[16px] mt-3">Hotel About</p>
+                <textarea
+                  value={hotelAbout}
+                  onChange={(e) => setHotelAbout(e.target.value)}
+                  placeholder="Write Hotel Description...."
+                  className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+                />
+
+                <div className="border rounded-lg p-4 mb-4">
+                  <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
+                    Upload Hotel Images
+                  </h2>
+
+                  {/* Big Image */}
+                  {hotelImages.length > 0 && (
+                    <div className="relative mb-4">
+                      <img
+                        className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
+                        src={URL.createObjectURL(hotelImages[0])}
+                        alt={`Preview 0`}
+                        onClick={() => handleUpdateHotelImage(0)}
+                      />
+                      <button
+                        className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                        onClick={() => handleDeleteHotelImage(0)}
+                      >
+                        <DeleteOutlined />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Small Images */}
+                  <div className="grid grid-cols-4 gap-4">
+                    {hotelImages.slice(1).map((img, index) => (
+                      <div key={index} className="relative">
+                        <img
+                          className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
+                          src={URL.createObjectURL(img)}
+                          alt={`Preview ${index + 1}`}
+                          onClick={() => handleUpdateHotelImage(index + 1)}
+                        />
+                        <button
+                          className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                          onClick={() => handleDeleteHotelImage(index + 1)}
+                        >
+                          <DeleteOutlined />
+                        </button>
+                      </div>
+                    ))}
+                    <div className="relative inline-block">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleHotelImageUpload}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                      <div className="flex items-center justify-center bg-[#fdf0ea] text-white rounded-lg cursor-pointer h-[100px] w-full">
+                        <FaPlusSquare className="primary_text h-6 w-6" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Hidden Update Input */}
+                  <input
+                    id="imageUpdateInput"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleHotelImageUpload}
+                    className="hidden"
+                  />
+                </div>
               </div>
               <SelectCategory category={category} setCategory={setCategory} />
             </div>

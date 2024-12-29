@@ -47,7 +47,7 @@ const TourDetails = () => {
   const { packageDetails } = useSelector((state) => state.package);
 
   useEffect(() => {
-    dispatch(getPackageDetails("676f775c8f56597f55ba56a3"));
+    dispatch(getPackageDetails("6770be9fad043dab1c66b9df"));
   }, []);
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
