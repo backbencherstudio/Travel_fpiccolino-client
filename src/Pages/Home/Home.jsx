@@ -17,16 +17,22 @@ const Home = () => {
     const { homePageLoaging, homePageError, homePageData } = useSelector(
         (state) => state.pageData
     );
+
     useEffect(() => {
         dispatch(getHomePageData())
     }, [])
 
     // console.log(
-    //     "ijfndifuhewf", homePageLoaging, homePageError, homePageData.package
+    //     "ijfndifuhewf", homePageLoaging, homePageError, homePageData
     // );
 
     const cardDetails = homePageData?.package?.data;
-    
+    const countrySection = homePageData?.country?.data;
+    const titleWithoutContent = homePageData?.titleWithoutContent;
+    const contact = homePageData?.contact;
+    const blogSection = homePageData?.blogSection;
+    // blurSliderSection={blurSliderSection}
+    // console.log(homePageData);
 
 
     return (
@@ -35,10 +41,19 @@ const Home = () => {
             <SearchBar />
             <AdventureSection cardDetails={cardDetails} />
             <BlurSliderSection />
-            <WondersSection />
-            <ApproachSection />
-            <ReviewSection />
-            <ArticleAndNewsSection />
+            {
+                countrySection &&
+                <WondersSection countrySection={countrySection} />
+            }
+            <ApproachSection titleWithoutContent={titleWithoutContent} />
+            {
+                contact &&
+                <ReviewSection contact={contact} />
+            }
+            {
+                blogSection &&
+                <ArticleAndNewsSection blogSection={blogSection} />
+            }
             <JourneySection />
             <BottomBannerSection />
         </div>

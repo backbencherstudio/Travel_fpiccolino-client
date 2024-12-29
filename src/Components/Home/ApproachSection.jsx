@@ -4,14 +4,14 @@ import stay from "../../assets/icons/stay.svg";
 import connect from "../../assets/icons/connect.svg";
 import explore from "../../assets/icons/explore.svg";
 
-const ApproachSection = () => {
+const ApproachSection = ({titleWithoutContent}) => {
   return (
     <div>
       <ParentComponent>
         <div className="mt-[80px] mb-[100px] lg:mb-0">
           <HeadLine
-            title="Our Approach to Meaningful Travel"
-            description="Connecting You to Authentic Experiences and Lasting Memories"
+            title={titleWithoutContent?.title}
+            description={titleWithoutContent?.subtitle}
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[60px] mt-14">
             <div className="text-center">

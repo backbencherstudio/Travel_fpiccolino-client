@@ -21,24 +21,25 @@ const Tours = () => {
     }, []);
     const data = headers?.filter(item => item.pageName === "tour")
 
-    const heroContent = {
-        heroImage: data[0]?.heroImage,
-        titleOne: data[0]?.titleOne,
-        titleTwo: data[0]?.titleTwo,
-        descriptionOne: data[0]?.descriptionOne,
-        descriptionTwo: data[0]?.descriptionTwo,
-    }
+    // const heroContent = {
+    //     heroImage: data[0]?.heroImage,
+    //     titleOne: data[0]?.titleOne,
+    //     titleTwo: data[0]?.titleTwo,
+    //     descriptionOne: data[0]?.descriptionOne,
+    //     descriptionTwo: data[0]?.descriptionTwo,
+    // }
+
 
     // console.log(heroContent);
-    
 
-    // const heroContent = {
-    //     heroImage,
-    //     titleOne: "A Taste of Italy",
-    //     descriptionOne: "Experience the Richness of Italian Culture, One Bite at a Time",
-    //     titleTwo: "Italy",
-    //     descriptionTwo: "Does your mind switch to Do Not Disturb mode the moment your vacation starts? Is your perfect getaway all about sandy beaches, a cocktail in hand, and zero worries? If travel for you is the ultimate way to recharge, we’ve got the perfect destinations lined up just for you."
-    // }
+
+    const heroContent = {
+        heroImage,
+        titleOne: "A Taste of Italy",
+        descriptionOne: "Experience the Richness of Italian Culture, One Bite at a Time",
+        titleTwo: "Italy",
+        descriptionTwo: "Does your mind switch to Do Not Disturb mode the moment your vacation starts? Is your perfect getaway all about sandy beaches, a cocktail in hand, and zero worries? If travel for you is the ultimate way to recharge, we’ve got the perfect destinations lined up just for you."
+    }
 
 
     return (
