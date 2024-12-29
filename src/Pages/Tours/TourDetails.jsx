@@ -81,27 +81,6 @@ const TourDetails = () => {
     { icon: iconn1, tag: "Forever summer" },
   ];
 
-  const includeds = [
-    { icon: iconn4, include: "7 nights in accommodation" },
-    { icon: iconn3, include: "Included experience: beginner surf class" },
-    { icon: iconn1, include: "Coach in Italian" },
-    { icon: iconn3, include: "Utravel assistance" },
-    { icon: iconn4, include: "Dedicated app" },
-    {
-      icon: iconn1,
-      include:
-        "Basic insurance: coverage for medical expenses up to €5,000 and up to €1,000 for luggage, plus a maximum of €310 for essential purchases",
-    },
-  ];
-
-  const notIncludeds = [
-    { include: "Round trip flight (you can add it during booking)" },
-    { include: "All meals" },
-    { include: "Coworking area" },
-    { include: "Car rental" },
-    { include: "Tourist tax" },
-    { include: "Everything not mentioned in What's included " },
-  ];
   const images = [
     { image: image1 },
     { image: image2 },
