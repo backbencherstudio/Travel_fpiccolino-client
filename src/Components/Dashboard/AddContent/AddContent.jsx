@@ -10,11 +10,9 @@ const AddContent = () => {
         formState: { errors },
     } = useForm();
 
-
     const onSubmit = (data) => {
         dispatch(createTitle(data))
     };
-
 
     return (
         <form
