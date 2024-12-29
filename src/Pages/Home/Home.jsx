@@ -17,6 +17,7 @@ const Home = () => {
     const { homePageLoaging, homePageError, homePageData } = useSelector(
         (state) => state.pageData
     );
+
     useEffect(() => {
         dispatch(getHomePageData())
     }, [])
@@ -27,11 +28,11 @@ const Home = () => {
 
     const cardDetails = homePageData?.package?.data;
     const countrySection = homePageData?.country?.data;
+    const titleWithoutContent = homePageData?.titleWithoutContent;
+    const contact = homePageData?.contact;
+    const blogSection = homePageData?.blogSection;
     // blurSliderSection={blurSliderSection}
-    console.log(countrySection);
-
-
-
+    // console.log(homePageData);
 
 
     return (
@@ -44,9 +45,15 @@ const Home = () => {
                 countrySection &&
                 <WondersSection countrySection={countrySection} />
             }
-            <ApproachSection />
-            <ReviewSection />
-            <ArticleAndNewsSection />
+            <ApproachSection titleWithoutContent={titleWithoutContent} />
+            {
+                contact &&
+                <ReviewSection contact={contact} />
+            }
+            {
+                blogSection &&
+                <ArticleAndNewsSection blogSection={blogSection} />
+            }
             <JourneySection />
             <BottomBannerSection />
         </div>

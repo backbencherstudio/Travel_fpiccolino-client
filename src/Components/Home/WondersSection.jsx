@@ -18,7 +18,6 @@ const WondersSection = ({countrySection}) => {
     dispatch(getSectionData())
   }, [])
 
-  console.log(countrySection);
     
 
   const cardDetails = [

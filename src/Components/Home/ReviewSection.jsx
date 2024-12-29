@@ -10,7 +10,7 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 import ReviewCard from "./ReviewCard";
-const ReviewSection = () => {
+const ReviewSection = ({contact}) => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -61,13 +61,17 @@ const ReviewSection = () => {
         "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
     },
   ];
+
+
   return (
     <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">
       <ParentComponent>
+
         <HeadLine
-          title="What Our Travelers Are Saying"
-          description="Hear from Those Who've Experienced Unforgettable Journeys with Us"
+          title={contact.title}
+          description={contact.subtitle}
         />
+
         <div className="relative grid grid-cols-1 md:grid-cols-12">
           <div className="mt-14 md:col-span-11">
             <Swiper
