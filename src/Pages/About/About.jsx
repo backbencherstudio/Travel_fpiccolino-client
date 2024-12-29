@@ -18,12 +18,18 @@ const About = () => {
     useEffect(() => {
         dispatch(getHeader());
     }, []);
+    
+    console.log(headers);
+    
     const data = headers?.filter(item => item.pageName === "about")
     const heroContent = {
         heroImage : data[0]?.heroImage ,
         titleOne: data[0]?.titleOne,
         descriptionOne: data[0]?.descriptionOne,
     }
+
+    console.log(heroContent);
+    
 
     return (
         <div>

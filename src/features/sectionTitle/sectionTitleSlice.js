@@ -8,10 +8,7 @@ axios.defaults.withCredentials = true;
 // Async action to create a new header
 export const createTitle = createAsyncThunk(
   "sectionTitle/create",
-  async (titleData, { rejectWithValue }) => {
-    console.log(11, "Hit");
-    console.log(12, {titleData});
-    
+  async (titleData, { rejectWithValue }) => {    
     try {
       const response = await axios.post(`${base_url}/section-title`, titleData);
       console.log("slice", response.data);
@@ -24,7 +21,7 @@ export const createTitle = createAsyncThunk(
 );
 
 // Async action to get all headers
-export const getHeader = createAsyncThunk(
+export const getSectionData = createAsyncThunk(
   "sectionTitle/get",
   async (_, { rejectWithValue }) => {
     try {
@@ -38,7 +35,7 @@ export const getHeader = createAsyncThunk(
 );
 
 // Async action to delete a header
-export const deleteHeader = createAsyncThunk(
+export const deleteSectionData = createAsyncThunk(
   "sectionTitle/delete",
   async (headerId, { rejectWithValue }) => {
     try {
@@ -55,11 +52,14 @@ export const deleteHeader = createAsyncThunk(
 const initialState = {
   createTitleLoading: false,
   createTitleLoadingError: null,
+
+  getTitleLoading: false,
+  getTitleError: null,
   title: [],
 };
 
 // Create the slice
-const headerSlice = createSlice({
+const sectionSlice = createSlice({
   name: "sectionTitle",
   initialState,
   reducers: {},
@@ -83,27 +83,27 @@ const headerSlice = createSlice({
       })
 
       // Handle get headers
-      .addCase(getHeader.pending, (state) => {
-        state.headerCreateLoading = true;
-        state.headerCreateLoadingError = null;
+      .addCase(getSectionData.pending, (state) => {
+        state.getTitleLoading = true;
+        state.getTitleError = null;
       })
-      .addCase(getHeader.fulfilled, (state, action) => {
-        state.headerCreateLoading = false;
-        state.headerCreateLoadingError = null;
-        state.headers = action.payload;
+      .addCase(getSectionData.fulfilled, (state, action) => {
+        state.getTitleLoading = false;
+        state.getTitleError = null;
+        state.title = action.payload;
       })
-      .addCase(getHeader.rejected, (state, action) => {
-        state.headerCreateLoading = false;
-        state.headerCreateLoadingError =
+      .addCase(getSectionData.rejected, (state, action) => {
+        state.getTitleLoading = false;
+        state.getTitleError =
           action.payload?.message || "Error fetching headers";
       })
 
       // Handle delete header
-      .addCase(deleteHeader.pending, (state) => {
+      .addCase(deleteSectionData.pending, (state) => {
         state.headerCreateLoading = true;
         state.headerCreateLoadingError = null;
       })
-      .addCase(deleteHeader.fulfilled, (state, action) => {
+      .addCase(deleteSectionData.fulfilled, (state, action) => {
         state.headerCreateLoading = false;
         state.headerCreateLoadingError = null;
         // Remove the deleted header from the headers array
@@ -111,7 +111,7 @@ const headerSlice = createSlice({
           (header) => header._id !== action.payload
         );
       })
-      .addCase(deleteHeader.rejected, (state, action) => {
+      .addCase(deleteSectionData.rejected, (state, action) => {
         state.headerCreateLoading = false;
         state.headerCreateLoadingError =
           action.payload?.message || "Error deleting header";
@@ -120,4 +120,4 @@ const headerSlice = createSlice({
 });
 
 // Export the reducer
-export default headerSlice.reducer;
+export default sectionSlice.reducer;
