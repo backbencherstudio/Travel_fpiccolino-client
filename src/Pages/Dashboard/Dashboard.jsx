@@ -153,6 +153,18 @@ const Dashboard = () => {
             <BiBookContent />
             <span>Banners</span>
           </button>
+
+          <button
+            onClick={() => handleNavigation("AddContent", "addContent")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "AddContent"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <BiBookContent />
+            <span>Add Content</span>
+          </button>
         </nav>
         <button className="absolute bottom-5 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]">
           <CiLogout className="mt-1" /> Logout
