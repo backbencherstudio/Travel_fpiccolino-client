@@ -5,16 +5,12 @@ import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
-import {
-  FaArrowLeft,
-  FaArrowRight,
-} from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ReviewCard from "./ReviewCard";
 const ReviewSection = () => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-
   const cardDetails = [
     {
       image: natureImage,
@@ -29,7 +25,7 @@ const ReviewSection = () => {
       name: "Esther Howard",
       title: "World Traveler, Italy",
       rating: 4.8,
-      totalReviews:'2,300',
+      totalReviews: "2,300",
       review:
         "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
     },
@@ -38,7 +34,7 @@ const ReviewSection = () => {
       name: "Esther Howard",
       title: "World Traveler, Italy",
       rating: 4.8,
-      totalReviews:'2,300',
+      totalReviews: "2,300",
       review:
         "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
     },
@@ -47,7 +43,7 @@ const ReviewSection = () => {
       name: "Esther Howard",
       title: "World Traveler, Italy",
       rating: 4.8,
-      totalReviews:'2,300',
+      totalReviews: "2,300",
       review:
         "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
     },
@@ -56,7 +52,7 @@ const ReviewSection = () => {
       name: "Esther Howard",
       title: "World Traveler, Italy",
       rating: 4.8,
-      totalReviews:'2,300',
+      totalReviews: "2,300",
       review:
         "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
     },
@@ -93,26 +89,28 @@ const ReviewSection = () => {
             </Swiper>
           </div>
           <div className="relative mt-5">
-          <div className=" md:absolute bottom-0 ">
-            <button
-              onClick={() => swiperRef.current?.slidePrev()}
-              className={`p-2.5 m-1 ${
-                isBeginning ? "bg-white primary_text" : "primary_bg text-white "
-              } w-9 h-9 rounded-full transition-opacity z-20`}
-              disabled={isBeginning}
-            >
-              <FaArrowLeft />
-            </button>
-            <button
-              onClick={() => swiperRef.current?.slideNext()}
-              className={`p-2.5 z-20 m-1 h-9 w-9 ${
-                isEnd ? "bg-white primary_text" : "primary_bg text-white "
-              } rounded-full transition-opacity`}
-              disabled={isEnd} // Disable button based on isEnd state
-            >
-              <FaArrowRight />
-            </button>
-          </div>
+            <div className=" md:absolute bottom-0 ">
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className={`p-2.5 m-1 ${
+                  isBeginning
+                    ? "bg-white primary_text"
+                    : "primary_bg text-white "
+                } w-9 h-9 rounded-full transition-opacity z-20`}
+                disabled={isBeginning}
+              >
+                <FaArrowLeft />
+              </button>
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className={`p-2.5 z-20 m-1 h-9 w-9 ${
+                  isEnd ? "bg-white primary_text" : "primary_bg text-white "
+                } rounded-full transition-opacity`}
+                disabled={isEnd} // Disable button based on isEnd state
+              >
+                <FaArrowRight />
+              </button>
+            </div>
           </div>
         </div>
       </ParentComponent>

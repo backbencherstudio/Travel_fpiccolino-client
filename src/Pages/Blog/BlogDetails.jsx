@@ -32,7 +32,7 @@ const BlogDetails = () => {
     dispatch(getCategoryCount());
   }, []);
   const heroContent = {
-    heroImage: `http://localhost:3000/uploads/${blogDetails?.heroSection[0].headerImg}`,
+    heroImage: `/uploads/${blogDetails?.heroSection[0].headerImg}`,
     titleOne: "Feel at Home Wherever You Roam",
     descriptionOne:
       "Discover the warmth of home in every destination, blending comfort, connection, and local charm",

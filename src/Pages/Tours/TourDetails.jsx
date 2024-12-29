@@ -41,6 +41,7 @@ import {
   PiPersonSimpleSwimLight,
 } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
+import moment from "moment";
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -219,20 +220,22 @@ const TourDetails = () => {
                   <span className="flex justify-center gap-10">
                     <h2 className="flex items-center font-semibold text-[18px] text-[#25CE50] ">
                       {" "}
-                      <RiMoneyEuroCircleLine /> 294
+                      <RiMoneyEuroCircleLine /> {packageDetails?.amount}
                     </h2>
                     <h2 className="flex items-center font-semibold text-[18px] text-[#72777F] line-through ">
                       {" "}
                       <RiMoneyEuroCircleLine /> 347
                     </h2>
                   </span>
-                  <p className="text-[14px] text-[#72777F] text-center ">
-                    or 3 installments of €83 with no interest.
-                  </p>
                 </div>
                 <div>
                   <h2 className="text-center border rounded-lg px-8 py-4 mb-4 text-[#141D2A]">
-                    November 16 - 23 (7 nights)
+                    {moment(packageDetails?.tourDate)
+                      .utc()
+                      .format("DD/MM/YYYY")}{" "}
+                    <br />
+                    {packageDetails?.tourDuration?.nights} Nights &{" "}
+                    {packageDetails?.tourDuration?.days} Days
                   </h2>
                   <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
                     Change dates

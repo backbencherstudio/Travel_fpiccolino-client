@@ -2,7 +2,7 @@ import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomIcons from "./CustomIcons";
 import { TextField } from "@mui/material";
 import { FaRegSquarePlus } from "react-icons/fa6";
@@ -13,9 +13,10 @@ import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPackage } from "../../../features/pckage/packageSlice";
 import { toast } from "react-toastify";
+import { getCountry } from "../../../features/country/countrySlice";
 const CreatePackage = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, control, reset } = useForm();
@@ -34,6 +35,10 @@ const CreatePackage = () => {
   const [hotelName, setHotelName] = useState(""); // State for hotel name
   const [hotelAbout, setHotelAbout] = useState("");
   const [updateHotelImageIndex, setUpdateHotelImageIndex] = useState(null);
+  const { country } = useSelector((state) => state.country);
+  useEffect(() => {
+    dispatch(getCountry());
+  }, []);
   const onSubmit = async (data) => {
     const hotelInfo = {
       name: hotelName,
@@ -53,7 +58,6 @@ const CreatePackage = () => {
     };
 
     console.log(packageData);
-    
 
     try {
       const response = await dispatch(createPackage(packageData));
