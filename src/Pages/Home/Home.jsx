@@ -22,11 +22,16 @@ const Home = () => {
     }, [])
 
     // console.log(
-    //     "ijfndifuhewf", homePageLoaging, homePageError, homePageData.package
+    //     "ijfndifuhewf", homePageLoaging, homePageError, homePageData
     // );
 
     const cardDetails = homePageData?.package?.data;
-    
+    const countrySection = homePageData?.country?.data;
+    // blurSliderSection={blurSliderSection}
+    console.log(countrySection);
+
+
+
 
 
     return (
@@ -35,7 +40,10 @@ const Home = () => {
             <SearchBar />
             <AdventureSection cardDetails={cardDetails} />
             <BlurSliderSection />
-            <WondersSection />
+            {
+                countrySection &&
+                <WondersSection countrySection={countrySection} />
+            }
             <ApproachSection />
             <ReviewSection />
             <ArticleAndNewsSection />

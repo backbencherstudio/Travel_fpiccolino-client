@@ -78,7 +78,7 @@ const AdventureSection = ({ cardDetails }) => {
   //   },
   // ];
 
-  const data = cardDetails?.map(item => console.log(item))
+  // const data = cardDetails?.map(item => console.log(item))
   
 
   return (
