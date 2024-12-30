@@ -67,6 +67,12 @@ const AddContent = () => {
                     <option value="landing4">Landing 4</option>
                     <option value="landing5">Landing 5</option>
                     <option value="landing6">Landing 6</option>
+                     
+                    <option value="tour1">tour 1</option>
+                    <option value="tour2">tour 2</option>
+                    <option value="tour3">tour 3</option>
+                    <option value="tour4">tour 4</option>
+
                 </select>
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
             </div>
