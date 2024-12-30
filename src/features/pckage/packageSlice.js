@@ -81,6 +81,12 @@ export const deletePackage = createAsyncThunk(
     }
   }
 );
+export const resetPackageDetails = createAsyncThunk(
+  "package/reset",
+  async () => {
+    // No need to do anything here, just dispatch to trigger reset
+  }
+);
 
 // Initial State
 const initialState = {
@@ -169,6 +175,11 @@ const packageSlice = createSlice({
           // If state.packag is a proxy or not an array, log an error
           console.error("packag is not an array:", state.packag);
         }
+      })
+      .addCase(resetPackageDetails.fulfilled, (state) => {
+        console.log("reset");
+
+        state.packageDetails = [];
       });
   },
 });

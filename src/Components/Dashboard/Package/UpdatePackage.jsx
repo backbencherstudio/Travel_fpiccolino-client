@@ -16,7 +16,10 @@ import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import CountryDropdown from "./SelectCountry";
 import { useDispatch, useSelector } from "react-redux";
-import { getPackageDetails } from "../../../features/pckage/packageSlice";
+import {
+  getPackageDetails,
+  resetPackageDetails,
+} from "../../../features/pckage/packageSlice";
 import { useParams } from "react-router-dom";
 const UpdatePackage = () => {
   const dispatch = useDispatch();
@@ -36,7 +39,6 @@ const UpdatePackage = () => {
   const [updateHotelImageIndex, setUpdateHotelImageIndex] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
   const { packageDetails } = useSelector((state) => state.package);
-  const formData = new FormData();
   const {
     control,
     handleSubmit,
@@ -44,8 +46,10 @@ const UpdatePackage = () => {
     formState: { errors },
   } = useForm({});
   useEffect(() => {
+    dispatch(resetPackageDetails());
     dispatch(getPackageDetails(params.id));
   }, [dispatch, params.id]);
+
   const onSubmit = (data) => {
     const packageData = {
       includeItems: selectedIncludeItems,
@@ -177,6 +181,7 @@ const UpdatePackage = () => {
                     <Controller
                       name="tourDuration.days"
                       control={control}
+                      defaultValue={packageDetails?.tourDuration?.days || ""} // Ensure defaultValue is provided directly to the Controller
                       render={({ field }) => (
                         <TextField
                           {...field}

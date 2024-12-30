@@ -263,8 +263,8 @@ const CustomTable = ({
 
                     {columns?.duration && (
                       <TableCell style={{ minWidth: "200px" }}>
-                        {item.tourDuration?.days} Days &{" "}
-                        {item.tourDuration?.nights} Nights
+                        {item.tourDuration?.nights} Nights &{" "}
+                        {item.tourDuration?.days} Days
                       </TableCell>
                     )}
                     {columns?.date && (
