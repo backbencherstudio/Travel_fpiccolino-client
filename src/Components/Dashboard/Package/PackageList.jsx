@@ -27,7 +27,7 @@ const PackageList = () => {
         tableType={"package"}
         title={"Package List"}
         columns={columns}
-        data={packag?.packages}
+        data={packag}
         setDateFilter={setTourDateFilter}
         dateFilter={tourDateFilter}
       />
