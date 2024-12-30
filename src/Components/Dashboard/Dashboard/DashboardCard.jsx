@@ -28,7 +28,7 @@ const DashboardCard = ({
       </div>
       <div className="grid grid-cols-2 gap-2 mt-2">
         <div>
-          <h1 className="text-[28px] font-bold">${amount}</h1>
+          <h1 className="text-[28px] font-bold">{amount}</h1>
           {/* <div className="flex items-center text-green-500 mt-3">
             <PiChartLineUpLight />
             <p>{percent}%</p>

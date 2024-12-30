@@ -240,7 +240,7 @@ const Navbar = () => {
                   {!isAuthenticated && (
                     <div className="flex xl:gap-6">
                       <Link
-                        className="rounded-xl primary_text bg-transparent border border-primary  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2 border-orange-600"
+                        className="rounded-xl primary_text bg-transparent border  px-8 py-4 text-[18px] xl:text-sm hover:bg-[#63280141] font-medium mx-2 border-orange-600"
                         to="/login"
                       >
                         Login
@@ -248,7 +248,7 @@ const Navbar = () => {
 
                       <div className="hidden lg:flex items-center justify-center">
                         <Link
-                          className="rounded-xl text-[white] primary_bg  px-8 py-4 text-[18px] xl:text-sm font-medium mx-2"
+                          className="rounded-xl text-[white] primary_bg  px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2"
                           to="/signup"
                         >
                           Sign Up
