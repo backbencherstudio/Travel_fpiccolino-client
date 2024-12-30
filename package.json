@@ -40,6 +40,7 @@
     "react-rating": "^2.0.5",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.26.2",
+    "react-select-country-list": "^2.2.3",
     "react-toastify": "^11.0.2",
     "sort-by": "^1.2.0",
     "swiper": "^11.1.15"

@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPackage } from "../../../features/pckage/packageSlice";
 import { toast } from "react-toastify";
 import { getCountry } from "../../../features/country/countrySlice";
+import CountryDropdown from "./SelectCountry";
 const CreatePackage = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, control, reset } = useForm();
@@ -35,16 +36,12 @@ const CreatePackage = () => {
   const [hotelName, setHotelName] = useState(""); // State for hotel name
   const [hotelAbout, setHotelAbout] = useState("");
   const [updateHotelImageIndex, setUpdateHotelImageIndex] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState("");
   const { country } = useSelector((state) => state.country);
   useEffect(() => {
     dispatch(getCountry());
   }, []);
   const onSubmit = async (data) => {
-    const hotelInfo = {
-      name: hotelName,
-      description: hotelAbout,
-      images: hotelImages,
-    };
     const packageData = {
       ...data,
       tourDate: data.tourDate,
@@ -54,7 +51,10 @@ const CreatePackage = () => {
       bookedFlights,
       category,
       images,
-      // hotelInfo,
+      counrty: selectedCountry,
+      hotelName,
+      hotelAbout,
+      hotelImages,
     };
 
     console.log(packageData);
@@ -423,6 +423,10 @@ const CreatePackage = () => {
                   />
                 </div>
               </div>
+              <CountryDropdown
+                value={selectedCountry}
+                setValue={setSelectedCountry}
+              />
               <SelectCategory category={category} setCategory={setCategory} />
             </div>
           </div>

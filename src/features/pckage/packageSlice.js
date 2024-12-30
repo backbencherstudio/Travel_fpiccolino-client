@@ -73,7 +73,7 @@ axios.defaults.withCredentials = true;
 export const createPackage = createAsyncThunk(
   "package/create",
   async (packageData, { rejectWithValue }) => {
-    const { images, ...otherData } = packageData;
+    const { images, hotelImages, ...otherData } = packageData;
     try {
       const formData = new FormData();
       for (const key in otherData) {
@@ -91,6 +91,9 @@ export const createPackage = createAsyncThunk(
       }
       images.forEach((image) => {
         formData.append(`images`, image);
+      });
+      hotelImages.forEach((image) => {
+        formData.append(`hotelImages`, image);
       });
       const response = await axios.post(`${base_url}/package`, formData, {
         headers: {
