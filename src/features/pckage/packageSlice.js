@@ -133,7 +133,6 @@ const packageSlice = createSlice({
       .addCase(getPackage.fulfilled, (state, action) => {
         state.packagGetLoading = false;
         state.packageGetError = null;
-        console.log(action.payload);
         state.packag = action.payload.packages; // Update the package list
       })
       // Get Package Rejected
