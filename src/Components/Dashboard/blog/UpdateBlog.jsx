@@ -2,7 +2,7 @@ import { RiAddBoxLine, RiDeleteBin5Line } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "../../../utils/base_path";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +14,59 @@ const UpdateBlog = () => {
   const [data, setData] = useState(null);
   const [images, setImages] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  
+  const navigate = useNavigate();
+  const [options, setOptions] = useState([]);
+  const updateOptions = (apiResponse) => {
+    const newOptions = apiResponse.Categories.map((categoryObj) => {
+      const value = Object.keys(categoryObj)[0];
+      const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
+      return { value, label };
+    });
+  
+    setOptions((prevOptions) => {
+      const mergedOptions = [...prevOptions];
+  
+      newOptions.forEach((newOption) => {
+        if (!prevOptions.some((option) => option.value === newOption.value)) {
+          mergedOptions.push(newOption);
+        }
+      });
+  
+      return mergedOptions;
+    });
+  };
+
+  
+  useEffect(() => {
+    const fetchCategoryCount = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/blogs/categoryCount");
+        updateOptions(response.data); 
+      } catch (err) {
+        setError(err.message || "An error occurred");
+      } 
+    };
+
+    fetchCategoryCount();
+  }, []);
+
+  const [newOption, setNewOption] = useState("");
+  const handleAddOption = () => {
+    if (newOption.trim() !== "") {
+      const newOptionValue = newOption
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+      setOptions((prevOptions) => [
+        ...prevOptions,
+        { value: newOptionValue, label: newOption },
+      ]);
+      setSelectedCategory(newOptionValue); // Optionally select the newly added option
+      setNewOption(""); // Clear the input field
+    }
+  };
 
   const { id } = useParams();
 
@@ -83,6 +136,7 @@ const UpdateBlog = () => {
       console.log("Hero Section Deleted", response.data);
       
       toast.success("Content Delete successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Error deleting Hero Section", error);
       toast.error("Error deleting blog.");
@@ -203,7 +257,9 @@ const UpdateBlog = () => {
       );
       console.log("Hero Section Updated", response.data);
       setHeroSection({});
+      
       toast.success("Hero Section updated successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Error updating Hero Section", error);
       toast.error("Error updating blog.");
@@ -232,10 +288,10 @@ const UpdateBlog = () => {
         content?.paragraphs.map((paragraph, pIndex) => paragraph) || [],
     };
 
-    console.log("this is body", body);
+    // console.log("this is body", body);
 
-    console.log(index, "jhljervhbrejvcrewufhe");
-    console.log(id, index);
+    // console.log(index, "jhljervhbrejvcrewufhe");
+    // console.log(id, index);
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updateContent/${id}/${index}`,
@@ -249,6 +305,7 @@ const UpdateBlog = () => {
       console.log(`Content ${index + 1} Updated`, response.data);
       setContentList([]);
       toast.success("Blog updated successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error(`Error updating Content ${index + 1}`, error);
       toast.error("Error updating blog.");
@@ -256,7 +313,7 @@ const UpdateBlog = () => {
   };
 
   const updateCategory = async () => {
-    const payload = { category };
+    const payload = { category : selectedCategory };
     console.log(payload);
     try {
       const response = await axios.patch(
@@ -266,6 +323,7 @@ const UpdateBlog = () => {
       console.log("Category Updated", response.data);
       setCategory(response.data.category);
       toast.success("Category updated successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Error updating Category", error);
       toast.error("Error updating blog.");
@@ -286,9 +344,11 @@ const updateTexContent = async () => {
     console.log("Text Updated", response.data);
     setCategory(response.data.category);
     toast.success("Text updated successfully!");
+    navigate(`/blog/${id}`);
   } catch (error) {
     console.error("Error updating Text", error);
     toast.error("Error updating blog.");
+   
   }
 }
   const [sentences, setSentences] = useState([]);
@@ -596,14 +656,49 @@ const updateTexContent = async () => {
       <div className="border rounded-lg p-6 shadow-lg">
         <h2 className="text-lg font-semibold">Category</h2>
         <select
-          value={category || ""}
-          onChange={(e) => setCategory(e.target.value)}
+          value={selectedCategory || ""}
+          onChange={(e) => setSelectedCategory(e.target.value)}
           className="w-full border rounded p-2"
         >
-          <option value="travel">Travel</option>
-          <option value="lifestyle">Lifestyle</option>
-          <option value="tech">Tech</option>
+         <option value="">Select a category</option>
+                {options &&
+                  options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
         </select>
+        <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                <input
+                  type="text"
+                  value={ newOption  }
+                  onChange={(e) => setNewOption(e.target.value)}
+                  placeholder="Add new category"
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid #ccc",
+                    fontSize: "14px",
+                    backgroundColor: "#f9f9f9",
+                  }}
+                />
+                <button
+                  onClick={handleAddOption}
+                  style={{
+                    padding: "10px 20px",
+                    borderRadius: "4px",
+                    border: "none",
+                    backgroundColor: "#007BFF",
+                    color: "#fff",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                  }}
+                >
+                  Add
+                </button>
+              </div>
         <div class="flex justify-end">
         <button
           onClick={updateCategory}

@@ -22,7 +22,19 @@ export const getCountry = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/api/country`);
-      return response.data; // Return categories data
+      return response.data; // Return countries data
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+export const deleteCountry = createAsyncThunk(
+  "country/delete",
+  async (countryId, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${base_url}/api/country/${countryId}`);
+      return countryId; // Return the ID of the deleted country
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -33,7 +45,7 @@ export const getCountry = createAsyncThunk(
 const countrySlice = createSlice({
   name: "country",
   initialState: {
-    country: [],
+    countries: [],
     loading: false,
     error: null,
   },
@@ -46,7 +58,7 @@ const countrySlice = createSlice({
       })
       .addCase(createCountry.fulfilled, (state, action) => {
         state.loading = false;
-        state.country.push(action.payload);
+        state.countries.push(action.payload);
       })
       .addCase(createCountry.rejected, (state, action) => {
         state.loading = false;
@@ -60,11 +72,27 @@ const countrySlice = createSlice({
       .addCase(getCountry.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.country = action.payload;
+        state.countries = action.payload;
       })
       .addCase(getCountry.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message ?? null;
+      });
+
+    builder
+      .addCase(deleteCountry.pending, (state) => {
+        state.countryDeleteLoading = true;
+        state.countryDeleteLoadingError = null;
+      })
+      .addCase(deleteCountry.fulfilled, (state, action) => {
+        state.countryDeleteLoading = false;
+        state.countries = state.countries.filter(
+          (country) => country._id !== action.payload
+        ); // Remove the deleted country from the list
+      })
+      .addCase(deleteCountry.rejected, (state, action) => {
+        state.countryDeleteLoading = false;
+        state.countryDeleteLoadingError = action.payload;
       });
   },
 });

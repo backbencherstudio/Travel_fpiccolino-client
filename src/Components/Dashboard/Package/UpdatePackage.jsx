@@ -5,7 +5,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useEffect, useState } from "react";
 import CustomIcons from "./CustomIcons";
 import dayjs from "dayjs";
-import { TextField } from "@mui/material";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import FlightBookingForm from "./FlightForm";
 import { Controller, useForm } from "react-hook-form";
@@ -14,16 +13,14 @@ import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
-import CountryDropdown from "./SelectCountry";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getPackageDetails,
-  resetPackageDetails,
-} from "../../../features/pckage/packageSlice";
 import { useParams } from "react-router-dom";
+import { base_url } from "../../../utils/base_path";
+import SelectCountry from "./SelectCountry";
+import { useDispatch } from "react-redux";
+import { updatePackage } from "../../../features/pckage/packageSlice";
 const UpdatePackage = () => {
-  const dispatch = useDispatch();
   const params = useParams();
+  const dispatch = useDispatch();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
   const [openFlightModal, setOpenFlightModal] = useState(false);
@@ -31,37 +28,90 @@ const UpdatePackage = () => {
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [insurance, setInsurance] = useState([]);
   const [category, setCategory] = useState("All inclusive");
+  const [uploadedImages, setUploadedImages] = useState([]);
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
+  const [uploadedHotelImages, setUploadedHotelImages] = useState([]);
   const [hotelImages, setHotelImages] = useState([]); // State for hotel images
   const [hotelName, setHotelName] = useState(""); // State for hotel name
   const [hotelAbout, setHotelAbout] = useState("");
   const [updateHotelImageIndex, setUpdateHotelImageIndex] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
-  const { packageDetails } = useSelector((state) => state.package);
+  // const { packageDetails } = useSelector((state) => state.package);
+  const [includeIconName, setIncludeIconName] = useState([]);
+  const [notIncludeIconName, setNotIncludeIconName] = useState([]);
+  const [packageDetails, setPackageDetails] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null);
   const {
     control,
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm({});
   useEffect(() => {
-    dispatch(resetPackageDetails());
-    dispatch(getPackageDetails(params.id));
-  }, [dispatch, params.id]);
+    const fetchData = async () => {
+      if (!params.id) return;
 
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await fetch(`${base_url}/package/${params.id}`);
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setPackageDetails(result);
+        setBookedFlights(result?.bookedFlights);
+        setInsurance(result?.insurance);
+        setSelectedIncludeItems(result?.includeItems);
+        setSelectedNotIncludeItems(result?.notIncludeItems);
+        setUploadedImages(result?.images || []);
+        setUploadedHotelImages(result?.hotelImages || []);
+        setSelectedCountry(result?.country);
+        setCategory(result?.category);
+        setValue("tourName", result?.tourName);
+        setValue("tourDescription", result?.tourDescription);
+        setValue("destination", result?.destination);
+        setValue("amount", result?.amount);
+        setValue("tourDate", dayjs(result?.tourDate));
+        setValue("tourDuration.nights", result?.tourDuration?.nights);
+        setValue("tourDuration.days", result?.tourDuration?.days);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [params.id]);
   const onSubmit = (data) => {
     const packageData = {
       includeItems: selectedIncludeItems,
       notIncludeItems: selectedNotIncludeItems,
       bookedFlights,
       category,
-      images,
+      country: selectedCountry,
+      images: uploadedImages,
+      hotelImages: uploadedHotelImages,
       ...data,
     };
+    dispatch(updatePackage({ packageId: params.id, data: packageData }))
+      .unwrap()
+      .then((response) => {
+        console.log("Package updated successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Failed to update package:", error);
+      });
+
     console.log("Form Data:", packageData);
   };
   const handleImageUpload = (e) => {
+    e.stopPropagation();
     const files = Array.from(e.target.files);
 
     if (updateImageIndex !== null) {
@@ -74,15 +124,28 @@ const UpdatePackage = () => {
     }
   };
 
-  const handleDeleteImage = (index) => {
-    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  const handleDeleteImage = (e, index, isUploaded = false) => {
+    e.stopPropagation();
+    if (isUploaded) {
+      setUploadedImages((prevImages) =>
+        prevImages.filter((_, i) => i !== index)
+      );
+    } else {
+      setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    }
   };
 
-  const handleUpdateImage = (index) => {
+  const handleUpdateImage = (index, isUploaded = false) => {
+    if (isUploaded) {
+      alert("Updating previously uploaded images is not supported directly.");
+      return;
+    }
     setUpdateImageIndex(index);
     document.getElementById("imageUpdateInput").click();
   };
+
   const handleHotelImageUpload = (e) => {
+    e.stopPropagation();
     const files = Array.from(e.target.files);
 
     if (updateHotelImageIndex !== null) {
@@ -96,10 +159,22 @@ const UpdatePackage = () => {
       setHotelImages((prevImages) => [...prevImages, ...files]);
     }
   };
-  const handleDeleteHotelImage = (index) => {
-    setHotelImages((prevImages) => prevImages.filter((_, i) => i !== index));
+
+  const handleDeleteHotelImage = (index, isUploaded = false) => {
+    if (isUploaded) {
+      setUploadedHotelImages((prevImages) =>
+        prevImages.filter((_, i) => i !== index)
+      );
+    } else {
+      setHotelImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    }
   };
-  const handleUpdateHotelImage = (index) => {
+
+  const handleUpdateHotelImage = (index, isUploaded = false) => {
+    if (isUploaded) {
+      alert("Updating previously uploaded images is not supported directly.");
+      return;
+    }
     setUpdateHotelImageIndex(index);
     document.getElementById("imageUpdateInput").click();
   };
@@ -136,10 +211,26 @@ const UpdatePackage = () => {
                 defaultValue={packageDetails?.tourDescription}
                 type="text"
                 placeholder="Write Description...."
-                className="border rounded-md w-full p-1 mt-1 text-[#333333]"
+                className="border rounded-md min-h-[100px] w-full p-1 mt-1 text-[#333333]"
+              />
+              <p className="text-[16px] mt-3">Tour Destination</p>
+              <input
+                {...register("destination")}
+                defaultValue={packageDetails?.destination}
+                type="text"
+                placeholder="Write Destination...."
+                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+              />
+              <p className="text-[16px] mt-3">Amount</p>
+              <input
+                {...register("amount")}
+                defaultValue={packageDetails?.amount}
+                type="number"
+                placeholder="Enter Amount...."
+                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
               />
 
-              <div className="grid grid-cols-2 gap-10 mt-3">
+              <div className="grid xl:grid-cols-2 mt-3">
                 <div>
                   <p className="text-[16px] mb-2">Tour Date</p>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -161,35 +252,24 @@ const UpdatePackage = () => {
                   </LocalizationProvider>
                 </div>
 
-                <div>
+                <div className="xl:mt-0 mt-3 ">
                   <p className="text-[16px]">Tour Duration</p>
-                  <div className="flex mt-2 gap-1">
-                    <Controller
-                      name="tourDuration.nights"
-                      control={control}
-                      defaultValue={packageDetails?.tourDuration?.nights || ""} // Ensure defaultValue is provided directly to the Controller
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          size="small"
-                          placeholder="Night"
-                          type="number"
-                        />
-                      )}
+                  <div className="flex gap-5 mt-2">
+                    <p className="text-[16px] mb-2">Nights:</p>
+                    <input
+                      {...register("tourDuration.nights")}
+                      defaultValue={packageDetails?.tourDuration?.nights}
+                      type="number"
+                      placeholder="Nights"
+                      className="border rounded-md w-full p-1 mt-1 text-[#666666]"
                     />
-
-                    <Controller
-                      name="tourDuration.days"
-                      control={control}
-                      defaultValue={packageDetails?.tourDuration?.days || ""} // Ensure defaultValue is provided directly to the Controller
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          size="small"
-                          placeholder="Day"
-                          type="number"
-                        />
-                      )}
+                    <p className="text-[16px] mb-2">Days:</p>
+                    <input
+                      {...register("tourDuration.days")}
+                      defaultValue={packageDetails?.tourDuration?.days}
+                      type="number"
+                      placeholder="Days"
+                      className="border rounded-md w-full p-1 mt-1 text-[#666666]"
                     />
                   </div>
                 </div>
@@ -202,6 +282,8 @@ const UpdatePackage = () => {
                 title="include"
                 selectedIcons={selectedIncludeItems}
                 setSelectedIcons={setSelectedIncludeItems}
+                iconName={includeIconName}
+                setIconName={setIncludeIconName}
               />
             </div>
 
@@ -211,6 +293,8 @@ const UpdatePackage = () => {
                 title="not include"
                 selectedIcons={selectedNotIncludeItems}
                 setSelectedIcons={setSelectedNotIncludeItems}
+                iconName={notIncludeIconName}
+                setIconName={setNotIncludeIconName}
               />
             </div>
 
@@ -253,36 +337,52 @@ const UpdatePackage = () => {
                 </h2>
 
                 {/* Big Image */}
-                {images.length > 0 && (
-                  <div className="relative mb-4">
+                {uploadedImages.slice(0, 1).map((img, index) => (
+                  <div key={index} className="relative my-2">
                     <img
-                      className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
-                      src={URL.createObjectURL(images[0])}
-                      alt={`Preview 0`}
-                      onClick={() => handleUpdateImage(0)}
+                      className="h-[200px] lg:h-[400px] w-full object-cover rounded-lg cursor-pointer"
+                      src={`${img}`} // Use base_url to resolve paths
+                      alt={`Uploaded Preview ${index + 1}`}
+                      onClick={() => handleUpdateImage(index, true)}
                     />
                     <button
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                      onClick={() => handleDeleteImage(0)}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                      onClick={(e) => handleDeleteImage(e, index, true)}
                     >
                       <DeleteOutlined />
                     </button>
                   </div>
-                )}
+                ))}
 
                 {/* Small Images */}
-                <div className="grid grid-cols-4 gap-4">
-                  {images.slice(1).map((img, index) => (
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  {uploadedImages.slice(1, 100).map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
+                        src={`${img}`} // Use base_url to resolve paths
+                        alt={`Uploaded Preview ${index + 1}`}
+                        onClick={() => handleUpdateImage(index, true)}
+                      />
+                      <button
+                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                        onClick={() => handleDeleteImage(index, true)}
+                      >
+                        <DeleteOutlined />
+                      </button>
+                    </div>
+                  ))}
+                  {images.map((img, index) => (
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
                         src={URL.createObjectURL(img)}
                         alt={`Preview ${index + 1}`}
-                        onClick={() => handleUpdateImage(index + 1)}
+                        onClick={() => handleUpdateImage(index)}
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteImage(index + 1)}
+                        onClick={() => handleDeleteImage(index)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -319,7 +419,7 @@ const UpdatePackage = () => {
 
               <p className="text-[16px] mt-3">Hotel Name</p>
               <input
-                value={hotelName}
+                defaultValue={packageDetails?.hotelName}
                 onChange={(e) => setHotelName(e.target.value)}
                 type="text"
                 placeholder="Write Hotel Name...."
@@ -328,10 +428,10 @@ const UpdatePackage = () => {
 
               <p className="text-[16px] mt-3">Hotel About</p>
               <textarea
-                value={hotelAbout}
+                defaultValue={packageDetails?.hotelAbout}
                 onChange={(e) => setHotelAbout(e.target.value)}
                 placeholder="Write Hotel Description...."
-                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+                className="border min-h-[100px] rounded-md w-full p-1 mt-1 text-[#666666]"
               />
 
               <div className="border rounded-lg p-4 mb-4">
@@ -340,36 +440,52 @@ const UpdatePackage = () => {
                 </h2>
 
                 {/* Big Image */}
-                {hotelImages.length > 0 && (
-                  <div className="relative mb-4">
+                {uploadedHotelImages.slice(0, 1).map((img, index) => (
+                  <div key={index} className="relative my-2">
                     <img
-                      className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
-                      src={URL.createObjectURL(hotelImages[0])}
-                      alt={`Preview 0`}
-                      onClick={() => handleUpdateHotelImage(0)}
+                      className="lg:h-[400px] h-[200px] w-full object-cover rounded-lg cursor-pointer"
+                      src={`${img}`} // Use base_url to resolve paths
+                      alt={`Uploaded Preview ${index + 1}`}
+                      onClick={() => handleUpdateHotelImage(index, true)}
                     />
                     <button
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                      onClick={() => handleDeleteHotelImage(0)}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                      onClick={() => handleDeleteHotelImage(index, true)}
                     >
                       <DeleteOutlined />
                     </button>
                   </div>
-                )}
+                ))}
 
                 {/* Small Images */}
-                <div className="grid grid-cols-4 gap-4">
-                  {hotelImages.slice(1).map((img, index) => (
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  {uploadedHotelImages.slice(1, 100).map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
+                        src={`${img}`} // Use base_url to resolve paths
+                        alt={`Uploaded Preview ${index + 1}`}
+                        onClick={() => handleUpdateHotelImage(index, true)}
+                      />
+                      <button
+                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                        onClick={() => handleDeleteHotelImage(index, true)}
+                      >
+                        <DeleteOutlined />
+                      </button>
+                    </div>
+                  ))}
+                  {hotelImages.map((img, index) => (
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
                         src={URL.createObjectURL(img)}
                         alt={`Preview ${index + 1}`}
-                        onClick={() => handleUpdateHotelImage(index + 1)}
+                        onClick={() => handleUpdateHotelImage(index)}
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteHotelImage(index + 1)}
+                        onClick={() => handleDeleteHotelImage(index)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -399,9 +515,9 @@ const UpdatePackage = () => {
                 />
               </div>
             </div>
-            <CountryDropdown
-              value={selectedCountry}
-              setValue={setSelectedCountry}
+            <SelectCountry
+              country={selectedCountry}
+              setCountry={setSelectedCountry}
             />
             <SelectCategory category={category} setCategory={setCategory} />
           </div>
