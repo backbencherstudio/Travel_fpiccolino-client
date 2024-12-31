@@ -341,7 +341,7 @@ const UpdatePackage = () => {
                   <div key={index} className="relative my-2">
                     <img
                       className="h-[200px] lg:h-[400px] w-full object-cover rounded-lg cursor-pointer"
-                      src={`${base_url}${img}`} // Use base_url to resolve paths
+                      src={`${img}`} // Use base_url to resolve paths
                       alt={`Uploaded Preview ${index + 1}`}
                       onClick={() => handleUpdateImage(index, true)}
                     />
@@ -360,7 +360,7 @@ const UpdatePackage = () => {
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
-                        src={`${base_url}${img}`} // Use base_url to resolve paths
+                        src={`${img}`} // Use base_url to resolve paths
                         alt={`Uploaded Preview ${index + 1}`}
                         onClick={() => handleUpdateImage(index, true)}
                       />
@@ -444,7 +444,7 @@ const UpdatePackage = () => {
                   <div key={index} className="relative my-2">
                     <img
                       className="lg:h-[400px] h-[200px] w-full object-cover rounded-lg cursor-pointer"
-                      src={`${base_url}${img}`} // Use base_url to resolve paths
+                      src={`${img}`} // Use base_url to resolve paths
                       alt={`Uploaded Preview ${index + 1}`}
                       onClick={() => handleUpdateHotelImage(index, true)}
                     />
@@ -463,7 +463,7 @@ const UpdatePackage = () => {
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
-                        src={`${base_url}${img}`} // Use base_url to resolve paths
+                        src={`${img}`} // Use base_url to resolve paths
                         alt={`Uploaded Preview ${index + 1}`}
                         onClick={() => handleUpdateHotelImage(index, true)}
                       />
