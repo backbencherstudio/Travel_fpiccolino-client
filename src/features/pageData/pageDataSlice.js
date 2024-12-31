@@ -12,7 +12,22 @@ export const getHomePageData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/api/pageData/home`);
-    //   console.log(5451445454, response);
+      // console.log(5451445454, response);
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching headers:", error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const getAboutPageData = createAsyncThunk(
+  "pageDataSlice/about/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/pageData/about`);
+      // console.log(5451445454, response);
       
       return response.data;
     } catch (error) {
@@ -24,11 +39,16 @@ export const getHomePageData = createAsyncThunk(
 
  
 // Initial state
+//  ========================= home
 const initialState = {
  homePageLoaging: false,
  homePageError: null,
+ homePageData: [],
 
- homePageData: []
+//  ========================= about
+ aboutPageLoaging: false,
+ aboutPageError: null,
+ aboutPageData: []
 };
 
 // Create the slice
@@ -53,6 +73,26 @@ const pageDataSlice = createSlice({
         state.homePageError =
           action.payload?.message || "Error fetching headers";
       })
+
+      // ============================  about
+    builder
+      // Handle get headers
+      .addCase(getAboutPageData.pending, (state) => {
+        state.aboutPageLoaging = true;
+        state.aboutPageError = null;
+      })
+      .addCase(getAboutPageData.fulfilled, (state, action) => {
+        state.aboutPageLoaging = false;
+        state.aboutPageError = null;
+        state.aboutPageData = action.payload;
+      })
+      .addCase(getAboutPageData.rejected, (state, action) => {
+        state.aboutPageLoaging = false;
+        state.aboutPageError =
+          action.payload?.message || "Error fetching headers";
+      })
+
+
   },
 });
 

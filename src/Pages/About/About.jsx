@@ -10,33 +10,47 @@ import WhyChooseUsSection from '../../Components/About/WhyChooseUsSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getHeader } from '../../features/header/headerSlice';
+import { getAboutPageData } from '../../features/pageData/pageDataSlice';
 
 const About = () => {
-    
-    const dispatch = useDispatch();
-    const { headers } = useSelector((state) => state.header);
+
+    const dispatch = useDispatch()
+    const { aboutPageData } = useSelector(
+        (state) => state.pageData
+    );
     useEffect(() => {
-        dispatch(getHeader());
+        dispatch(getAboutPageData())
     }, []);
-    
-    console.log(headers);
-    
-    const data = headers?.filter(item => item.pageName === "about")
+
+    const heroSection = aboutPageData?.hero;
+    // ============================================ Hero section
     const heroContent = {
-        heroImage : data[0]?.heroImage ,
-        titleOne: data[0]?.titleOne,
-        descriptionOne: data[0]?.descriptionOne,
+        image: heroSection?.image,
+        titleOne: heroSection?.titleOne,
+        descriptionOne: heroSection?.descriptionOne,
     }
-    
+    const aboutWithoutContent = aboutPageData?.aboutWithoutContent
+    const footer_3 = aboutPageData?.footer_3
+
+
 
     return (
         <div>
-            <HeroScetion heroContent={heroContent} />
-            <ApproachSection />
+            {
+                aboutPageData?.hero &&
+                <HeroScetion heroContent={heroContent} />
+            }
+            {
+                aboutWithoutContent &&
+                <ApproachSection aboutWithoutContent={aboutWithoutContent} />
+            }
             <JourneySection />
             <CenterBannerSection />
             <BenifitsSliderSection />
-            <WhyChooseUsSection />
+            {
+                footer_3 &&
+                <WhyChooseUsSection footer_3={footer_3} />
+            }
             <BottomBannerSection />
         </div>
     );

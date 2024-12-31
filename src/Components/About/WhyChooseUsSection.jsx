@@ -4,14 +4,14 @@ import experience from "../../assets/icons/experience.svg";
 import support from "../../assets/icons/support.svg";
 import connection from "../../assets/icons/connection.svg";
 import natureImage2 from "../../assets/natureImage2.jpg";
-const WhyChooseUsSection = () => {
+const WhyChooseUsSection = ({footer_3}) => {
   return (
     <div>
       <ParentComponent>
         <div className="mt-[80px] lg:mb-0 lg:px-20 px-5">
           <HeadLine
-            title="Why Choose Us?"
-            description="Connecting You to Authentic Experiences and Lasting Memories"
+            title={footer_3.title}
+            description={footer_3.description}
           />
           <div className="grid lg:grid-cols-5 grid-cols-1 lg:gap-14 mt-14">
             <div className="col-span-2 h-[520px] max-w-[720px] ">
