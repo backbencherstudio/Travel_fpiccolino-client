@@ -48,13 +48,12 @@ const TourDetails = () => {
   const { packageDetails } = useSelector((state) => state.package);
 
   useEffect(() => {
-    dispatch(getPackageDetails("6770be9fad043dab1c66b9df"));
+    dispatch(getPackageDetails(params.id));
   }, []);
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
     heroImage: blogDetailsImage,
     titleOne: packageDetails?.tourName,
-    descriptionOne: packageDetails?.tourDescription,
   };
   const iconMap = {
     MdOutlineBedtime: MdOutlineBedtime,
@@ -120,30 +119,9 @@ const TourDetails = () => {
                 {/* ================================================  Blog Hero Content ==================================== */}
                 <div className="mt-16 mb-20 text-[#72777F]">
                   <p className="mb-4">
-                    Okay, not to brag: we also take some trips every now and
-                    then. And we can say that in Fuerteventura, we breathed in a
-                    magical atmosphere. Maybe it's the waves of the Atlantic
-                    Ocean crashing on the beach, the wind blowing steadily
-                    through our hair, or the silhouette of Calderon Hondo rising
-                    on the horizon.
+                    {packageDetails?.tourDescription}
                   </p>
-
-                  <p className="mb-4">
-                    Whatever your travel mood is, Club Fuerteventura will allow
-                    you to experience all of this (and much more) alongside
-                    other young travelers and discover the true essence of the
-                    destination. We won’t force you to walk kilometers under the
-                    sun or wake up at dawn: you can manage your trip in total
-                    freedom according to your own pace and with the experiences
-                    you choose to have (alone or with other Utravelers).
-                  </p>
-
-                  <p className="mb-4">
-                    You will also find a local coach ready to advise you on the
-                    most local spots and share all the secrets of the
-                    destination! They will serve as a link between you and your
-                    travel companions.
-                  </p>
+                
                 </div>
                 {/* ==============================================  Accordion ==============================================    */}
                 <div className="text-[#1C1C1C]">
