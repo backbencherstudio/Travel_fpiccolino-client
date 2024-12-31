@@ -81,10 +81,27 @@ export const deletePackage = createAsyncThunk(
     }
   }
 );
-export const resetPackageDetails = createAsyncThunk(
-  "package/reset",
-  async () => {
-    // No need to do anything here, just dispatch to trigger reset
+
+export const updatePackage = createAsyncThunk(
+  "package/update",
+  async ({ packageId, data }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${base_url}/package/${packageId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data; // Return the updated package data
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(
+        error.response?.data || "Failed to update package"
+      );
+    }
   }
 );
 
@@ -174,11 +191,34 @@ const packageSlice = createSlice({
           // If state.packag is a proxy or not an array, log an error
           console.error("packag is not an array:", state.packag);
         }
+      });
+    builder
+      // Update Package Pending
+      .addCase(updatePackage.pending, (state) => {
+        state.packageCreateLoading = true;
+        state.packageCreateError = null;
       })
-      .addCase(resetPackageDetails.fulfilled, (state) => {
-        console.log("reset");
+      // Update Package Fulfilled
+      .addCase(updatePackage.fulfilled, (state, action) => {
+        state.packageCreateLoading = false;
+        state.packageCreateError = null;
 
-        state.packageDetails = [];
+        // Update the package in the packag array
+        const updatedPackage = action.payload;
+        if (Array.isArray(state.packag)) {
+          const index = state.packag.findIndex(
+            (pkg) => pkg._id === updatedPackage._id
+          );
+          if (index !== -1) {
+            state.packag[index] = updatedPackage; // Replace the package
+          }
+        }
+      })
+      // Update Package Rejected
+      .addCase(updatePackage.rejected, (state, action) => {
+        state.packageCreateLoading = false;
+        state.packageCreateError =
+          action.payload?.message || "Error updating package";
       });
   },
 });

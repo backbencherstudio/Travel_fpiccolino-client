@@ -16,8 +16,11 @@ import { FaPlusSquare } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { base_url } from "../../../utils/base_path";
 import SelectCountry from "./SelectCountry";
+import { useDispatch } from "react-redux";
+import { updatePackage } from "../../../features/pckage/packageSlice";
 const UpdatePackage = () => {
   const params = useParams();
+  const dispatch = useDispatch();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
   const [openFlightModal, setOpenFlightModal] = useState(false);
@@ -37,7 +40,6 @@ const UpdatePackage = () => {
   // const { packageDetails } = useSelector((state) => state.package);
   const [includeIconName, setIncludeIconName] = useState([]);
   const [notIncludeIconName, setNotIncludeIconName] = useState([]);
-
   const [packageDetails, setPackageDetails] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null);
@@ -92,10 +94,20 @@ const UpdatePackage = () => {
       notIncludeItems: selectedNotIncludeItems,
       bookedFlights,
       category,
+      country: selectedCountry,
       images: uploadedImages,
       hotelImages: uploadedHotelImages,
       ...data,
     };
+    dispatch(updatePackage({ packageId: params.id, data: packageData }))
+      .unwrap()
+      .then((response) => {
+        console.log("Package updated successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Failed to update package:", error);
+      });
+
     console.log("Form Data:", packageData);
   };
   const handleImageUpload = (e) => {
