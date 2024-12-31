@@ -15,7 +15,7 @@ const Blog = () => {
     dispatch(getBlogsByCategory());
   }, [dispatch]);
   const heroContent = {
-    heroImage,
+    heroImage: "/uploads/heroImage-1735207035947-125034052.jpg",
     titleOne: "Feel at Home Wherever You Roam",
     descriptionOne:
       "Discover the warmth of home in every destination, blending comfort, connection, and local charm",

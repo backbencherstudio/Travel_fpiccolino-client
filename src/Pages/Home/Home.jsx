@@ -11,35 +11,52 @@ import JourneySection from '../../Components/Home/JourneySection';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomePageData } from '../../features/pageData/pageDataSlice';
+import { getHeader } from '../../features/header/headerSlice';
+import HeroScetion from '../../Shared/HeroComponent/HeroScetion';
 
 const Home = () => {
     const dispatch = useDispatch()
     const { homePageLoaging, homePageError, homePageData } = useSelector(
         (state) => state.pageData
     );
-
     useEffect(() => {
         dispatch(getHomePageData())
-    }, [])
+    }, []);
 
-    // console.log(
-    //     "ijfndifuhewf", homePageLoaging, homePageError, homePageData
-    // );
+    const { headers } = useSelector((state) => state.header);
+    useEffect(() => {
+        dispatch(getHeader());
+    }, []);
 
-    const cardDetails = homePageData?.package?.data;
-    const countrySection = homePageData?.country?.data;
+    const data = headers?.filter(item => item.pageName === "home")
+    const heroContent = {
+        heroImage: data[0]?.heroImage,
+        titleOne: data[0]?.titleOne,
+        descriptionOne: data[0]?.descriptionOne,
+    }
+
+    console.log(homePageData);
+
+
+    const cardDetails = homePageData?.package;
+    const countrySection = homePageData?.countryWithImage;
     const titleWithoutContent = homePageData?.titleWithoutContent;
-    const contact = homePageData?.contact;
+    const review = homePageData?.review;
     const blogSection = homePageData?.blogSection;
-    // blurSliderSection={blurSliderSection}
-    // console.log(homePageData);
+
+    console.log(review);
+    
 
 
     return (
         <div>
-            <BannerSection />
+            {/* <BannerSection /> */}
+            <HeroScetion heroContent={heroContent} />
             <SearchBar />
-            <AdventureSection cardDetails={cardDetails} />
+            {
+                cardDetails &&
+                <AdventureSection cardDetails={cardDetails} />
+            }
             <BlurSliderSection />
             {
                 countrySection &&
@@ -47,8 +64,8 @@ const Home = () => {
             }
             <ApproachSection titleWithoutContent={titleWithoutContent} />
             {
-                contact &&
-                <ReviewSection contact={contact} />
+                review &&
+                <ReviewSection review={review} />
             }
             {
                 blogSection &&

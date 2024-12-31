@@ -27,8 +27,6 @@ const About = () => {
         titleOne: data[0]?.titleOne,
         descriptionOne: data[0]?.descriptionOne,
     }
-
-    console.log(heroContent);
     
 
     return (

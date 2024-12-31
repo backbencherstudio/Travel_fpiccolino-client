@@ -79,14 +79,14 @@ const AdventureSection = ({ cardDetails }) => {
   // ];
 
   // const data = cardDetails?.map(item => console.log(item))
-  
+
 
   return (
     <div className="bg-[#EFFBFB] lg:p-20 p-5 ">
       <ParentComponent>
         <HeadLine
-          title="Our Most Loved Adventures"
-          description="Discover the Destinations Our Travelers Can’t Get Enough Of"
+          title={cardDetails.title}
+          description={cardDetails.description}
         />
         <div className="relative">
           <div className="mb-4">
@@ -149,7 +149,7 @@ const AdventureSection = ({ cardDetails }) => {
               }}
             >
 
-              {cardDetails?.map((item) => (
+              {cardDetails?.data?.map((item) => (
                 <div key={item._id}>
                   <SwiperSlide>
                     <TureCard item={item} />

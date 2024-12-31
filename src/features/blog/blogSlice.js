@@ -162,6 +162,8 @@ const blogSlice = createSlice({
       .addCase(deleteBlog.fulfilled, (state, action) => {
         state.blogCreateLoading = false;
         state.blogCreateLoadingError = null;
+        console.log(state.blogs);
+
         if (Array.isArray(state.blogs)) {
           state.blogs = state.blogs.filter((b) => b._id !== action.payload);
         } else {
