@@ -116,7 +116,7 @@ const packageSlice = createSlice({
       .addCase(createPackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = null;
-        state.packag.push(action.payload); // Add the newly created package to the list
+        state.packag = action.payload; // Add the newly created package to the list
       })
       // Create Package Rejected
       .addCase(createPackage.rejected, (state, action) => {

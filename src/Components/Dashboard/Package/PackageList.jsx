@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
-import { packages } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackage } from "../../../features/pckage/packageSlice";

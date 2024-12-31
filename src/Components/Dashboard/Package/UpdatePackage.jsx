@@ -94,6 +94,7 @@ const UpdatePackage = () => {
     console.log("Form Data:", packageData);
   };
   const handleImageUpload = (e) => {
+    e.stopPropagation();
     const files = Array.from(e.target.files);
 
     if (updateImageIndex !== null) {
@@ -106,7 +107,8 @@ const UpdatePackage = () => {
     }
   };
 
-  const handleDeleteImage = (index, isUploaded = false) => {
+  const handleDeleteImage = (e, index, isUploaded = false) => {
+    e.stopPropagation();
     if (isUploaded) {
       setUploadedImages((prevImages) =>
         prevImages.filter((_, i) => i !== index)
@@ -126,6 +128,7 @@ const UpdatePackage = () => {
   };
 
   const handleHotelImageUpload = (e) => {
+    e.stopPropagation();
     const files = Array.from(e.target.files);
 
     if (updateHotelImageIndex !== null) {
@@ -327,7 +330,7 @@ const UpdatePackage = () => {
                     />
                     <button
                       className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                      onClick={() => handleDeleteImage(index, true)}
+                      onClick={(e) => handleDeleteImage(e, index, true)}
                     >
                       <DeleteOutlined />
                     </button>
@@ -496,8 +499,8 @@ const UpdatePackage = () => {
               </div>
             </div>
             <SelectCountry
-              category={selectedCountry}
-              setCategory={setSelectedCountry}
+              country={selectedCountry}
+              setCountry={setSelectedCountry}
             />
             <SelectCategory category={category} setCategory={setCategory} />
           </div>
