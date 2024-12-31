@@ -5,7 +5,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useEffect, useState } from "react";
 import CustomIcons from "./CustomIcons";
 import dayjs from "dayjs";
-import { TextField } from "@mui/material";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import FlightBookingForm from "./FlightForm";
 import { Controller, useForm } from "react-hook-form";
@@ -15,14 +14,9 @@ import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import CountryDropdown from "./SelectCountry";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getPackageDetails,
-  resetPackageDetails,
-} from "../../../features/pckage/packageSlice";
 import { useParams } from "react-router-dom";
+import { base_url } from "../../../utils/base_path";
 const UpdatePackage = () => {
-  const dispatch = useDispatch();
   const params = useParams();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
@@ -38,7 +32,13 @@ const UpdatePackage = () => {
   const [hotelAbout, setHotelAbout] = useState("");
   const [updateHotelImageIndex, setUpdateHotelImageIndex] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
-  const { packageDetails } = useSelector((state) => state.package);
+  // const { packageDetails } = useSelector((state) => state.package);
+  const [includeIconName, setIncludeIconName] = useState([]);
+  const [notIncludeIconName, setNotIncludeIconName] = useState([]);
+
+  const [packageDetails, setPackageDetails] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null);
   const {
     control,
     handleSubmit,
@@ -46,9 +46,35 @@ const UpdatePackage = () => {
     formState: { errors },
   } = useForm({});
   useEffect(() => {
-    dispatch(resetPackageDetails());
-    dispatch(getPackageDetails(params.id));
-  }, [dispatch, params.id]);
+    const fetchData = async () => {
+      if (!params.id) return;
+
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await fetch(`${base_url}/package/${params.id}`);
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const result = await response.json();
+        setPackageDetails(result);
+        setBookedFlights(result?.bookedFlights);
+        setInsurance(result?.insurance);
+        setSelectedIncludeItems(result?.includeItems);
+        setSelectedNotIncludeItems(result?.notIncludeItems);
+        // setImages(result?.images);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [params.id]);
+  console.log(packageDetails);
 
   const onSubmit = (data) => {
     const packageData = {
@@ -138,8 +164,24 @@ const UpdatePackage = () => {
                 placeholder="Write Description...."
                 className="border rounded-md w-full p-1 mt-1 text-[#333333]"
               />
+              <p className="text-[16px] mt-3">Tour Destination</p>
+              <input
+                {...register("destination")}
+                defaultValue={packageDetails?.destination}
+                type="text"
+                placeholder="Write Destination...."
+                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+              />
+              <p className="text-[16px] mt-3">Amount</p>
+              <input
+                {...register("amount")}
+                defaultValue={packageDetails?.amount}
+                type="number"
+                placeholder="Enter Amount...."
+                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+              />
 
-              <div className="grid grid-cols-2 gap-10 mt-3">
+              <div className="grid xl:grid-cols-2 mt-3">
                 <div>
                   <p className="text-[16px] mb-2">Tour Date</p>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -161,35 +203,24 @@ const UpdatePackage = () => {
                   </LocalizationProvider>
                 </div>
 
-                <div>
+                <div className="xl:mt-0 mt-3 ">
                   <p className="text-[16px]">Tour Duration</p>
-                  <div className="flex mt-2 gap-1">
-                    <Controller
-                      name="tourDuration.nights"
-                      control={control}
-                      defaultValue={packageDetails?.tourDuration?.nights || ""} // Ensure defaultValue is provided directly to the Controller
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          size="small"
-                          placeholder="Night"
-                          type="number"
-                        />
-                      )}
+                  <div className="flex gap-5 mt-2">
+                    <p className="text-[16px] mb-2">Nights:</p>
+                    <input
+                      {...register("tourDuration.nights")}
+                      defaultValue={packageDetails?.tourDuration?.nights}
+                      type="number"
+                      placeholder="Nights"
+                      className="border rounded-md w-full p-1 mt-1 text-[#666666]"
                     />
-
-                    <Controller
-                      name="tourDuration.days"
-                      control={control}
-                      defaultValue={packageDetails?.tourDuration?.days || ""} // Ensure defaultValue is provided directly to the Controller
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          size="small"
-                          placeholder="Day"
-                          type="number"
-                        />
-                      )}
+                    <p className="text-[16px] mb-2">Days:</p>
+                    <input
+                      {...register("tourDuration.days")}
+                      defaultValue={packageDetails?.tourDuration?.days}
+                      type="number"
+                      placeholder="Days"
+                      className="border rounded-md w-full p-1 mt-1 text-[#666666]"
                     />
                   </div>
                 </div>
@@ -202,6 +233,8 @@ const UpdatePackage = () => {
                 title="include"
                 selectedIcons={selectedIncludeItems}
                 setSelectedIcons={setSelectedIncludeItems}
+                iconName={includeIconName}
+                setIconName={setIncludeIconName}
               />
             </div>
 
@@ -211,6 +244,8 @@ const UpdatePackage = () => {
                 title="not include"
                 selectedIcons={selectedNotIncludeItems}
                 setSelectedIcons={setSelectedNotIncludeItems}
+                iconName={notIncludeIconName}
+                setIconName={setNotIncludeIconName}
               />
             </div>
 
