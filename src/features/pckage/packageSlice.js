@@ -85,6 +85,8 @@ export const deletePackage = createAsyncThunk(
 export const updatePackage = createAsyncThunk(
   "package/update",
   async ({ packageId, data }, { rejectWithValue }) => {
+    console.log(2423543543, packageId, data);
+
     try {
       const response = await axios.put(
         `${base_url}/package/${packageId}`,
