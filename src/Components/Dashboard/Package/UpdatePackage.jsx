@@ -16,6 +16,7 @@ import { FaPlusSquare } from "react-icons/fa";
 import CountryDropdown from "./SelectCountry";
 import { useParams } from "react-router-dom";
 import { base_url } from "../../../utils/base_path";
+import SelectCountry from "./SelectCountry";
 const UpdatePackage = () => {
   const params = useParams();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
@@ -25,8 +26,10 @@ const UpdatePackage = () => {
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [insurance, setInsurance] = useState([]);
   const [category, setCategory] = useState("All inclusive");
+  const [uploadedImages, setUploadedImages] = useState([]);
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
+  const [uploadedHotelImages, setUploadedHotelImages] = useState([]);
   const [hotelImages, setHotelImages] = useState([]); // State for hotel images
   const [hotelName, setHotelName] = useState(""); // State for hotel name
   const [hotelAbout, setHotelAbout] = useState("");
@@ -64,7 +67,10 @@ const UpdatePackage = () => {
         setInsurance(result?.insurance);
         setSelectedIncludeItems(result?.includeItems);
         setSelectedNotIncludeItems(result?.notIncludeItems);
-        // setImages(result?.images);
+        setUploadedImages(result?.images || []);
+        setUploadedHotelImages(result?.hotelImages || []);
+        setSelectedCountry(result?.category);
+        setCategory(result?.category);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -100,14 +106,25 @@ const UpdatePackage = () => {
     }
   };
 
-  const handleDeleteImage = (index) => {
-    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  const handleDeleteImage = (index, isUploaded = false) => {
+    if (isUploaded) {
+      setUploadedImages((prevImages) =>
+        prevImages.filter((_, i) => i !== index)
+      );
+    } else {
+      setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    }
   };
 
-  const handleUpdateImage = (index) => {
+  const handleUpdateImage = (index, isUploaded = false) => {
+    if (isUploaded) {
+      alert("Updating previously uploaded images is not supported directly.");
+      return;
+    }
     setUpdateImageIndex(index);
     document.getElementById("imageUpdateInput").click();
   };
+
   const handleHotelImageUpload = (e) => {
     const files = Array.from(e.target.files);
 
@@ -122,10 +139,22 @@ const UpdatePackage = () => {
       setHotelImages((prevImages) => [...prevImages, ...files]);
     }
   };
-  const handleDeleteHotelImage = (index) => {
-    setHotelImages((prevImages) => prevImages.filter((_, i) => i !== index));
+
+  const handleDeleteHotelImage = (index, isUploaded = false) => {
+    if (isUploaded) {
+      setUploadedHotelImages((prevImages) =>
+        prevImages.filter((_, i) => i !== index)
+      );
+    } else {
+      setHotelImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    }
   };
-  const handleUpdateHotelImage = (index) => {
+
+  const handleUpdateHotelImage = (index, isUploaded = false) => {
+    if (isUploaded) {
+      alert("Updating previously uploaded images is not supported directly.");
+      return;
+    }
     setUpdateHotelImageIndex(index);
     document.getElementById("imageUpdateInput").click();
   };
@@ -162,7 +191,7 @@ const UpdatePackage = () => {
                 defaultValue={packageDetails?.tourDescription}
                 type="text"
                 placeholder="Write Description...."
-                className="border rounded-md w-full p-1 mt-1 text-[#333333]"
+                className="border rounded-md min-h-[100px] w-full p-1 mt-1 text-[#333333]"
               />
               <p className="text-[16px] mt-3">Tour Destination</p>
               <input
@@ -288,36 +317,52 @@ const UpdatePackage = () => {
                 </h2>
 
                 {/* Big Image */}
-                {images.length > 0 && (
-                  <div className="relative mb-4">
+                {uploadedImages.slice(0, 1).map((img, index) => (
+                  <div key={index} className="relative my-2">
                     <img
-                      className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
-                      src={URL.createObjectURL(images[0])}
-                      alt={`Preview 0`}
-                      onClick={() => handleUpdateImage(0)}
+                      className="h-[200px] lg:h-[400px] w-full object-cover rounded-lg cursor-pointer"
+                      src={`${base_url}${img}`} // Use base_url to resolve paths
+                      alt={`Uploaded Preview ${index + 1}`}
+                      onClick={() => handleUpdateImage(index, true)}
                     />
                     <button
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                      onClick={() => handleDeleteImage(0)}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                      onClick={() => handleDeleteImage(index, true)}
                     >
                       <DeleteOutlined />
                     </button>
                   </div>
-                )}
+                ))}
 
                 {/* Small Images */}
-                <div className="grid grid-cols-4 gap-4">
-                  {images.slice(1).map((img, index) => (
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  {uploadedImages.slice(1, 100).map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
+                        src={`${base_url}${img}`} // Use base_url to resolve paths
+                        alt={`Uploaded Preview ${index + 1}`}
+                        onClick={() => handleUpdateImage(index, true)}
+                      />
+                      <button
+                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                        onClick={() => handleDeleteImage(index, true)}
+                      >
+                        <DeleteOutlined />
+                      </button>
+                    </div>
+                  ))}
+                  {images.map((img, index) => (
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
                         src={URL.createObjectURL(img)}
                         alt={`Preview ${index + 1}`}
-                        onClick={() => handleUpdateImage(index + 1)}
+                        onClick={() => handleUpdateImage(index)}
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteImage(index + 1)}
+                        onClick={() => handleDeleteImage(index)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -354,7 +399,7 @@ const UpdatePackage = () => {
 
               <p className="text-[16px] mt-3">Hotel Name</p>
               <input
-                value={hotelName}
+                defaultValue={packageDetails?.hotelName}
                 onChange={(e) => setHotelName(e.target.value)}
                 type="text"
                 placeholder="Write Hotel Name...."
@@ -363,10 +408,10 @@ const UpdatePackage = () => {
 
               <p className="text-[16px] mt-3">Hotel About</p>
               <textarea
-                value={hotelAbout}
+                defaultValue={packageDetails?.hotelAbout}
                 onChange={(e) => setHotelAbout(e.target.value)}
                 placeholder="Write Hotel Description...."
-                className="border rounded-md w-full p-1 mt-1 text-[#666666]"
+                className="border min-h-[100px] rounded-md w-full p-1 mt-1 text-[#666666]"
               />
 
               <div className="border rounded-lg p-4 mb-4">
@@ -375,36 +420,52 @@ const UpdatePackage = () => {
                 </h2>
 
                 {/* Big Image */}
-                {hotelImages.length > 0 && (
-                  <div className="relative mb-4">
+                {uploadedHotelImages.slice(0, 1).map((img, index) => (
+                  <div key={index} className="relative my-2">
                     <img
-                      className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
-                      src={URL.createObjectURL(hotelImages[0])}
-                      alt={`Preview 0`}
-                      onClick={() => handleUpdateHotelImage(0)}
+                      className="lg:h-[400px] h-[200px] w-full object-cover rounded-lg cursor-pointer"
+                      src={`${base_url}${img}`} // Use base_url to resolve paths
+                      alt={`Uploaded Preview ${index + 1}`}
+                      onClick={() => handleUpdateHotelImage(index, true)}
                     />
                     <button
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                      onClick={() => handleDeleteHotelImage(0)}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                      onClick={() => handleDeleteHotelImage(index, true)}
                     >
                       <DeleteOutlined />
                     </button>
                   </div>
-                )}
+                ))}
 
                 {/* Small Images */}
-                <div className="grid grid-cols-4 gap-4">
-                  {hotelImages.slice(1).map((img, index) => (
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  {uploadedHotelImages.slice(1, 100).map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
+                        src={`${base_url}${img}`} // Use base_url to resolve paths
+                        alt={`Uploaded Preview ${index + 1}`}
+                        onClick={() => handleUpdateHotelImage(index, true)}
+                      />
+                      <button
+                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
+                        onClick={() => handleDeleteHotelImage(index, true)}
+                      >
+                        <DeleteOutlined />
+                      </button>
+                    </div>
+                  ))}
+                  {hotelImages.map((img, index) => (
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
                         src={URL.createObjectURL(img)}
                         alt={`Preview ${index + 1}`}
-                        onClick={() => handleUpdateHotelImage(index + 1)}
+                        onClick={() => handleUpdateHotelImage(index)}
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteHotelImage(index + 1)}
+                        onClick={() => handleDeleteHotelImage(index)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -434,9 +495,9 @@ const UpdatePackage = () => {
                 />
               </div>
             </div>
-            <CountryDropdown
-              value={selectedCountry}
-              setValue={setSelectedCountry}
+            <SelectCountry
+              category={selectedCountry}
+              setCategory={setSelectedCountry}
             />
             <SelectCategory category={category} setCategory={setCategory} />
           </div>

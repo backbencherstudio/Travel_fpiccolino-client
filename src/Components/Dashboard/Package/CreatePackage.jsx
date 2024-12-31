@@ -428,6 +428,7 @@ const CreatePackage = () => {
                 setValue={setSelectedCountry}
               />
               <SelectCategory category={category} setCategory={setCategory} />
+              <SelectCategory category={category} setCategory={setCategory} />
             </div>
           </div>
         </div>

@@ -32,13 +32,8 @@ const SelectCategory = ({ category, setCategory }) => {
     dispatch(getCategory()); // Fetch categories when the component mounts
   }, [dispatch]);
 
-  const {
-    categories,
-    categoryCreateLoadingError,
-    categoryCreateLoading,
-    categoryFetchLoading,
-    categoryFetchError,
-  } = useSelector((state) => state.category);
+  const { categories, categoryCreateLoadingError, categoryCreateLoading } =
+    useSelector((state) => state.category);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,13 +52,10 @@ const SelectCategory = ({ category, setCategory }) => {
     e.stopPropagation();
     if (formData.category.trim()) {
       try {
-        // Dispatch createCategory action to add the category
         await dispatch(createCategory({ category: formData.category }));
 
-        // Fetch the updated category list after creation
         dispatch(getCategory());
 
-        // Close modal and reset form
         setOpenModal(false);
         setFormData({ category: "" });
       } catch (error) {
@@ -74,10 +66,8 @@ const SelectCategory = ({ category, setCategory }) => {
 
   const handleDeleteCategory = async (categoryId) => {
     try {
-      // Dispatch deleteCategory action to remove the category
       await dispatch(deleteCategory(categoryId));
 
-      // Optionally, you can re-fetch categories to ensure list is updated
       dispatch(getCategory());
     } catch (error) {
       console.error("Error deleting category:", error);
