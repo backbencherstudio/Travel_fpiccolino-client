@@ -43,8 +43,6 @@ const Home = () => {
     const titleWithoutContent = homePageData?.titleWithoutContent;
     const review = homePageData?.review;
     const blogSection = homePageData?.blogSection;
-
-    console.log(homePageData);
     
 
     return (
