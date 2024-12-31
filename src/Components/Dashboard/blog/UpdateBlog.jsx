@@ -2,7 +2,7 @@ import { RiAddBoxLine, RiDeleteBin5Line } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "../../../utils/base_path";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -15,11 +15,9 @@ const UpdateBlog = () => {
   const [images, setImages] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [options, setOptions] = useState([
-    { value: "technology", label: "Technology" },
-    { value: "health", label: "Health" },
-    { value: "travel", label: "Travel" },
-  ]);
+  
+  const navigate = useNavigate();
+  const [options, setOptions] = useState([]);
   const updateOptions = (apiResponse) => {
     const newOptions = apiResponse.Categories.map((categoryObj) => {
       const value = Object.keys(categoryObj)[0];
@@ -138,6 +136,7 @@ const UpdateBlog = () => {
       console.log("Hero Section Deleted", response.data);
       
       toast.success("Content Delete successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Error deleting Hero Section", error);
       toast.error("Error deleting blog.");
@@ -258,7 +257,9 @@ const UpdateBlog = () => {
       );
       console.log("Hero Section Updated", response.data);
       setHeroSection({});
+      
       toast.success("Hero Section updated successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Error updating Hero Section", error);
       toast.error("Error updating blog.");
@@ -287,10 +288,10 @@ const UpdateBlog = () => {
         content?.paragraphs.map((paragraph, pIndex) => paragraph) || [],
     };
 
-    console.log("this is body", body);
+    // console.log("this is body", body);
 
-    console.log(index, "jhljervhbrejvcrewufhe");
-    console.log(id, index);
+    // console.log(index, "jhljervhbrejvcrewufhe");
+    // console.log(id, index);
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updateContent/${id}/${index}`,
@@ -304,6 +305,7 @@ const UpdateBlog = () => {
       console.log(`Content ${index + 1} Updated`, response.data);
       setContentList([]);
       toast.success("Blog updated successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error(`Error updating Content ${index + 1}`, error);
       toast.error("Error updating blog.");
@@ -321,6 +323,7 @@ const UpdateBlog = () => {
       console.log("Category Updated", response.data);
       setCategory(response.data.category);
       toast.success("Category updated successfully!");
+      navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Error updating Category", error);
       toast.error("Error updating blog.");
@@ -341,9 +344,11 @@ const updateTexContent = async () => {
     console.log("Text Updated", response.data);
     setCategory(response.data.category);
     toast.success("Text updated successfully!");
+    navigate(`/blog/${id}`);
   } catch (error) {
     console.error("Error updating Text", error);
     toast.error("Error updating blog.");
+   
   }
 }
   const [sentences, setSentences] = useState([]);
@@ -651,7 +656,7 @@ const updateTexContent = async () => {
       <div className="border rounded-lg p-6 shadow-lg">
         <h2 className="text-lg font-semibold">Category</h2>
         <select
-          value={category || ""}
+          value={selectedCategory || ""}
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="w-full border rounded p-2"
         >
@@ -666,7 +671,7 @@ const updateTexContent = async () => {
         <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
                 <input
                   type="text"
-                  value={newOption}
+                  value={ newOption  }
                   onChange={(e) => setNewOption(e.target.value)}
                   placeholder="Add new category"
                   style={{

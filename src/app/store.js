@@ -8,7 +8,8 @@ import countryReducer from "../features/country/countrySlice";
 import packageReducer from "../features/pckage/packageSlice";
 import userReducer from "../features/users/userSlice";
 import sectionReducer from "../features/sectionTitle/sectionTitleSlice";
-import pageDataRedicer from "../features/pageData/pageDataSlice"
+import pageDataRedicer from "../features/pageData/pageDataSlice";
+import reviewReducer from "../features/review/reviewSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,8 +21,9 @@ export const store = configureStore({
     country: countryReducer,
     user: userReducer,
     package: packageReducer,
-    section : sectionReducer,
-    pageData: pageDataRedicer
+    section: sectionReducer,
+    pageData: pageDataRedicer,
+    review: reviewReducer,
   },
 });
 

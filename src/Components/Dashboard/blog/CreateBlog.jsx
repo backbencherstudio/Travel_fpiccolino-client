@@ -35,6 +35,7 @@ const CreateBlog = () => {
   const [mainimagepath, setMainimagepath] = useState([]);
   const [mainContentList, setMainContentList] = useState([]);
   const [deepCopy, setDeepCopy] = useState([]); // Use state for deepCopy
+  const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -279,6 +280,7 @@ const CreateBlog = () => {
         toast.success("Blog uploaded successfully!");
         setContentList([]);
         setSelectedCategory("");
+        navigate(`/blog/${id}`);
       } else {
         toast.error("Failed to upload the blog.");
       }

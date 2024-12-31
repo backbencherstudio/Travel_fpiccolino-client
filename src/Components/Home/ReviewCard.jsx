@@ -2,9 +2,10 @@
 import comma from "../../assets/icons/review.svg";
 import star from "../../assets/icons/star.svg";
 import halfStar from "../../assets/icons/half-star.svg"; // Add half-star image for condition
+import { base_url } from "../../utils/base_path";
 
 const ReviewCard = ({ item }) => {
-  const { image, title, review, name, rating, totalReviews } = item;
+  const { image, title, comment, name, rating, totalReviews, pakageImg } = item;
 
   // Helper function to render stars dynamically
   const renderStars = (rating) => {
@@ -32,7 +33,7 @@ const ReviewCard = ({ item }) => {
         <div className="md:col-span-2 h-[600px]">
           <img
             className="h-full object-cover rounded-[20px]"
-            src={image}
+            src={`${base_url}${pakageImg}`}
             alt=""
           />
         </div>
@@ -53,7 +54,7 @@ const ReviewCard = ({ item }) => {
             </p>
             <div className="xl:p-[60px] p-5 bg-white rounded-2xl">
               <img src={comma} alt="" />
-              <p className="text-[18px] w-full">{review}</p>
+              <p className="text-[18px] w-full">{comment}</p>
               <div className="mt-5 mb-8">
                 <h1 className="text-[24px] font-bold">{name}</h1>
                 <p className="text-[#72777F] text-[18px]">{title}</p>

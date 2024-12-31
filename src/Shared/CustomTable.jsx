@@ -25,6 +25,7 @@ import { base_url } from "../utils/base_path";
 import { useDispatch } from "react-redux";
 import { deleteBlog } from "../features/blog/blogSlice";
 import moment from "moment";
+import { deletePackage } from "../features/pckage/packageSlice";
 
 const CustomTable = ({
   tableType = "",
@@ -73,7 +74,13 @@ const CustomTable = ({
   const handleDelete = async () => {
     if (deleteId) {
       try {
-        await dispatch(deleteBlog(deleteId));
+        if (tableType === "blog") {
+          await dispatch(deleteBlog(deleteId));
+        } else if (tableType === "package") {
+          await dispatch(deletePackage(deleteId));
+        } else {
+          console.log("Invalid table type:", tableType);
+        }
         handleCloseDeleteDialog();
       } catch (error) {
         console.error("Error deleting blog:", error);
@@ -256,8 +263,8 @@ const CustomTable = ({
 
                     {columns?.duration && (
                       <TableCell style={{ minWidth: "200px" }}>
-                        {item.tourDuration.days} Days &{" "}
-                        {item.tourDuration.nights} Nights
+                        {item.tourDuration?.nights} Nights &{" "}
+                        {item.tourDuration?.days} Days
                       </TableCell>
                     )}
                     {columns?.date && (
