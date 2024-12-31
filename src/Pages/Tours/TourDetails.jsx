@@ -107,7 +107,7 @@ const TourDetails = () => {
                     <div className="flex bg-[#E867311A] px-4 py-2 items-center gap-2 rounded-full ">
                       <img
                         className="size-5"
-                        src={`${packageDetails?.imageUrl[0]}`}
+                        src={`${packageDetails?.images[0]}`}
                         alt=""
                       />
                       <h2 className="text-[#E86731]"> {item?.tag} </h2>
@@ -118,10 +118,7 @@ const TourDetails = () => {
               <div>
                 {/* ================================================  Blog Hero Content ==================================== */}
                 <div className="mt-16 mb-20 text-[#72777F]">
-                  <p className="mb-4">
-                    {packageDetails?.tourDescription}
-                  </p>
-                
+                  <p className="mb-4">{packageDetails?.tourDescription}</p>
                 </div>
                 {/* ==============================================  Accordion ==============================================    */}
                 <div className="text-[#1C1C1C]">
@@ -202,7 +199,8 @@ const TourDetails = () => {
                     </h2>
                     <h2 className="flex items-center font-semibold text-[24px] text-[#72777F] line-through ">
                       {" "}
-                      <RiMoneyEuroCircleLine />  {parseInt(packageDetails?.amount * 1.12)}
+                      <RiMoneyEuroCircleLine />{" "}
+                      {parseInt(packageDetails?.amount * 1.12)}
                     </h2>
                   </span>
                 </div>
@@ -255,10 +253,10 @@ const TourDetails = () => {
                   </h2>
 
                   <p className="mt-5 text-[#72777F]">
-                    {packageDetails?.hotelAbout.slice(0, 150)}
+                    {packageDetails?.hotelAbout?.slice(0, 150)}
                   </p>
                   <p className="mt-2 text-[#72777F]">
-                    {packageDetails?.hotelAbout.slice(150)}
+                    {packageDetails?.hotelAbout?.slice(150)}
                   </p>
                 </div>
 
