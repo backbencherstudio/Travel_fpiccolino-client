@@ -252,7 +252,7 @@ const CustomTable = ({
                         <div className="flex items-center gap-3">
                           <img
                             className="rounded-full"
-                            src={item.imageUrl[0]}
+                            src={item.images[0]}
                             alt={item.destination}
                             style={{ width: "40px", height: "40px" }}
                           />
