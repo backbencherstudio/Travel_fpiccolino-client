@@ -44,6 +44,9 @@ const Home = () => {
     const review = homePageData?.review;
     const blogSection = homePageData?.blogSection;
 
+    console.log(homePageData);
+    
+
     return (
         <div>
             {/* <BannerSection /> */}
