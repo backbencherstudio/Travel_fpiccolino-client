@@ -38,6 +38,7 @@ const ArticleAndNewsSection = ({blogSection}) => {
       description: "Discover unique travel tips, guides, and inspiration.",
     },
   ];
+  
   return (
     <div className="bg-[#fff] lg:p-20 lg:pb-0 pt-5">
       <ParentComponent>
