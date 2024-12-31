@@ -83,10 +83,10 @@ const AddContent = () => {
                     {...register("pageName", { required: "Page name is required" })}
                 >
                     <option value="">Select Page Name</option>
-                    <option value="landing">Landing</option>
-                    <option value="about">About</option>
-                    <option value="tours">Tours</option>
-                    <option value="contact">Contact</option>
+                    <option value="home">Landing Page</option>
+                    <option value="about">About Page</option>
+                    <option value="tours">Tours Page</option>
+                    <option value="contact">Contact Page</option>
                 </select>
                 {errors.pageName && (
                     <p className="text-red-500 text-sm mt-1">{errors.pageName.message}</p>

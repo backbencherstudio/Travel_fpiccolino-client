@@ -3,14 +3,14 @@
 import CustomButton from "../../Shared/CustomButton";
 
 const ArticleCard = ({ item }) => {
-  const { headerImg, header, text, mainHeading } = item.heroSection[0];
+  const { headerImg, header, text, mainHeading } = item?.heroSection[0];
 
   return (
     <div>
       <div className="relative">
         <img
           className="h-[320px] w-full object-cover rounded-xl "
-          src={`http://localhost:5000/uploads/${headerImg}`}
+          src={`http://localhost:3000/uploads/${headerImg}`}
           alt=""
         />
         {/* <div className="w-full h-full absolute top-0 left-0  rounded-xl group-hover:bg-[#E867311A] duration-300 "></div> */}

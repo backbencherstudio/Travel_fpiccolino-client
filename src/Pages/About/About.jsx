@@ -10,24 +10,40 @@ import WhyChooseUsSection from '../../Components/About/WhyChooseUsSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getHeader } from '../../features/header/headerSlice';
+import { getAboutPageData } from '../../features/pageData/pageDataSlice';
 
 const About = () => {
+
+    const dispatch = useDispatch()
+    const { aboutPageData } = useSelector(
+        (state) => state.pageData
+    );
+
+    useEffect(() => {
+        dispatch(getAboutPageData())
+    }, []);
+
+    console.log(aboutPageData);
     
-    const dispatch = useDispatch();
+
+
+    // =============================================================
+
     const { headers } = useSelector((state) => state.header);
     useEffect(() => {
         dispatch(getHeader());
     }, []);
-    
+
     console.log(headers);
-    
+
     const data = headers?.filter(item => item.pageName === "about")
     const heroContent = {
-        heroImage : data[0]?.heroImage ,
+        heroImage: data[0]?.heroImage,
         titleOne: data[0]?.titleOne,
         descriptionOne: data[0]?.descriptionOne,
     }
-    
+
+
 
     return (
         <div>

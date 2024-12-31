@@ -11,47 +11,46 @@ import JourneySection from '../../Components/Home/JourneySection';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomePageData } from '../../features/pageData/pageDataSlice';
-import { getHeader } from '../../features/header/headerSlice';
+// import { getHeader } from '../../features/header/headerSlice';
 import HeroScetion from '../../Shared/HeroComponent/HeroScetion';
 
 const Home = () => {
+
     const dispatch = useDispatch()
     const { homePageLoaging, homePageError, homePageData } = useSelector(
         (state) => state.pageData
     );
+
     useEffect(() => {
         dispatch(getHomePageData())
     }, []);
 
-    const { headers } = useSelector((state) => state.header);
-    useEffect(() => {
-        dispatch(getHeader());
-    }, []);
+    // const { headers } = useSelector((state) => state.header);
+    // useEffect(() => {
+    //     dispatch(getHeader());
+    // }, []);
 
-    const data = headers?.filter(item => item.pageName === "home")
-    const heroContent = {
-        heroImage: data[0]?.heroImage,
-        titleOne: data[0]?.titleOne,
-        descriptionOne: data[0]?.descriptionOne,
-    }
+    // const data = headers?.filter(item => item.pageName === "home")
+    // const heroContent = {
+    //     heroImage: data[0]?.heroImage,
+    //     titleOne: data[0]?.titleOne,
+    //     descriptionOne: data[0]?.descriptionOne,
+    // }
 
-    console.log(homePageData);
-
-
+    const heroSection = homePageData?.hero
     const cardDetails = homePageData?.package;
     const countrySection = homePageData?.countryWithImage;
     const titleWithoutContent = homePageData?.titleWithoutContent;
     const review = homePageData?.review;
     const blogSection = homePageData?.blogSection;
 
-    console.log(review);
-    
-
-
     return (
         <div>
             {/* <BannerSection /> */}
-            <HeroScetion heroContent={heroContent} />
+            {
+                heroSection &&
+                <HeroScetion heroContent={heroSection} />
+            }
             <SearchBar />
             {
                 cardDetails &&
