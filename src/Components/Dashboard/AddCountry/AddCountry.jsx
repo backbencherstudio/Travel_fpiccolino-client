@@ -13,12 +13,18 @@ const AddCountry = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data);
         try {
-            const response = await dispatch(createCountry(data));
-            console.log("responce", response?.payload);
-            toast.success(response?.payload?.message)
-            reset(); 
+            // Convert image file to FormData for uploading
+            const formData = new FormData();
+            formData.append("name", data.name);
+            formData.append("contentTitle", data.contentTitle);
+            formData.append("contentDescription", data.contentDescription);
+            formData.append("image", data.image[0]); // Adding image file
+
+            const response = await dispatch(createCountry(formData));
+            console.log("response", response?.payload);
+            toast.success(response?.payload?.message);
+            reset();
         } catch (error) {
             console.error("Error creating package:", error);
             alert("Failed to create package. Please try again.");
@@ -29,6 +35,7 @@ const AddCountry = () => {
         <form
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md space-y-4"
+            encType="multipart/form-data" // Required for file uploads
         >
             <h2 className="text-xl font-bold text-gray-800 text-center">Add Country</h2>
 
@@ -71,6 +78,23 @@ const AddCountry = () => {
                     {...register("contentDescription")}
                     className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
                 />
+            </div>
+
+            {/* Image Upload Field */}
+            <div className="flex flex-col">
+                <label htmlFor="image" className="text-gray-600 mb-1">
+                    Upload Image
+                </label>
+                <input
+                    id="image"
+                    type="file"
+                    accept="image/*"
+                    {...register("image", { required: "Image is required" })}
+                    className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {errors.image && (
+                    <span className="text-sm text-red-500 mt-1">{errors.image.message}</span>
+                )}
             </div>
 
             {/* Submit Button */}

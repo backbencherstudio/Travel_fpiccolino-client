@@ -7,7 +7,7 @@ import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ArticleCard from "./ArticleCard";
-const ArticleAndNewsSection = () => {
+const ArticleAndNewsSection = ({blogSection}) => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -41,10 +41,12 @@ const ArticleAndNewsSection = () => {
   return (
     <div className="bg-[#fff] lg:p-20 lg:pb-0 pt-5">
       <ParentComponent>
+
         <HeadLine
-          title="Discover Our  Updated Articles and News"
-          description="Stay Updated with the Latest Insights and Trends"
+          title={blogSection.title}
+          description={blogSection.subtitle}
         />
+
         <div className="relative mx-4 lg:mx-0">
           <div className="mb-4">
             <button

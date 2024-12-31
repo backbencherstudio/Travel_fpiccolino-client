@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
-import { userData } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../features/users/userSlice";

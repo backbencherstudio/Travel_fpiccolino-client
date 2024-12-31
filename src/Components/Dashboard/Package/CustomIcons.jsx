@@ -69,7 +69,7 @@ const CustomIcons = ({
     }
 
     setSelectedIcons([...selectedIcons, { icon: icon, text: iconText }]);
-    setIconName([...iconName, { name: icon?.type?.name , text: iconText  }]);
+    setIconName([...iconName, { name: icon?.type?.name, text: iconText }]);
     setIconText("");
     setIsModalOpen(false);
   };
@@ -92,7 +92,7 @@ const CustomIcons = ({
       >
         <div
           style={{ fontSize: "20px", marginRight: "10px" }}
-          className={`${title === "not include" && "text-red-500"}`}
+          className="text-red-500"
         >
           {item.icon}
         </div>

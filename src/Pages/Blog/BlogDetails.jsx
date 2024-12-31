@@ -32,11 +32,12 @@ const BlogDetails = () => {
     dispatch(getCategoryCount());
   }, []);
   const heroContent = {
-    heroImage: blogDetails?.heroSection[0].headerImg,
+    heroImage: `/uploads/${blogDetails?.heroSection[0].headerImg}`,
     titleOne: "Feel at Home Wherever You Roam",
     descriptionOne:
       "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
   };
+  console.log(heroContent);
 
   const relatedBlogs = categoryBlogs?.find(
     (categoryObj) => categoryObj.category === blogDetails?.category
@@ -81,45 +82,33 @@ const BlogDetails = () => {
                       />
                     </div>
                   </div>
-                  {index === 0 && (
+                  {index === 0 && blogDetails?.learn?.length > 0 && (
                     <div>
                       <h1 className="text-[32px] font-medium my-6">
                         Learn Basic Local Phrases
                       </h1>
-                      <p className="text-[18px] mt-4">
-                        A few words in the local language can go a long way.
-                        Learn phrases like “thank you,” “help,” and “where is…”
-                        to make interactions easier and show respect for the
-                        local culture.
-                      </p>
-                      <p className="text-[18px] mt-4">
-                        Download travel apps for navigation, translation, and
-                        currency conversion. Tools like Google Maps offline mode
-                        and TripIt can help you stay organized even without
-                        internet access.
-                      </p>
-                      <p className="text-[18px] mt-4">
-                        Save time by checking in online and keeping your travel
-                        documents handy. Wear slip-on shoes for quick security
-                        checks, and always have an empty reusable water bottle
-                        to fill after passing security.
-                      </p>
+                      {blogDetails?.learn.map((th, i) => (
+                        <p key={i} className="text-[18px] mt-4">
+                          {th}
+                        </p>
+                      ))}{" "}
                     </div>
                   )}
                 </div>
               ))}
             </div>
-            <h1 className="text-[32px] font-medium mt-12">Final Thoughts</h1>
-            <p className="text-[18px] mt-4">
-              Traveling doesn’t have to be stressful. With a bit of planning and
-              the right hacks, you can focus on what truly matters—exploring new
-              places, meeting new people, and making memories that last a
-              lifetime.
-            </p>
-            <p className="text-[18px] mt-4">
-              Start implementing these travel hacks on your next trip and
-              experience the joy of hassle-free adventures!
-            </p>
+            {blogDetails?.thought.length > 0 && (
+              <div>
+                <h1 className="text-[32px] font-medium mt-12">
+                  Final Thoughts
+                </h1>
+                {blogDetails?.thought.map((th, i) => (
+                  <p key={i} className="text-[18px] mt-4">
+                    {th}
+                  </p>
+                ))}{" "}
+              </div>
+            )}
             <div className="flex mt-12 justify-between">
               <p className="text-[20px] text-[#72777F]">
                 Tag:{" "}

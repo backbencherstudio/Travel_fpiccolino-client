@@ -22,7 +22,7 @@ const Navbar = () => {
   const { user, appLoading, isAuthenticated } = useSelector(
     (state) => state.authorization
   );
- 
+
   const ProfileRef = useRef();
   const menuRef = useRef();
   const buttonRef = useRef();
@@ -91,7 +91,7 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-// console.log(first)
+  // console.log(first)
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflowY = "hidden";
@@ -301,7 +301,7 @@ const Navbar = () => {
                       >
                         {user?.image ? (
                           <img
-                            src= {user?.image_url}  
+                            src={user?.image_url}
                             alt="Avatar"
                             className="w-full h-full object-cover rounded-full"
                           />
@@ -426,6 +426,7 @@ const Navbar = () => {
                   ].map((item, index) => (
                     <li key={index}>
                       <NavLink
+                        onClick={() => setIsMenuOpen(false)}
                         to={item.to}
                         className="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100 hover:text-gray-600"
                       >

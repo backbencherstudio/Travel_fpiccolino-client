@@ -47,8 +47,14 @@ const SelectCategory = ({ category, setCategory }) => {
       [name]: value,
     });
   };
+  const handleOpenModal = (e) => {
+    e.stopPropagation(); // Stop propagation
+    e.preventDefault(); // Prevent form submission or default button action
+    setOpenModal(true); // Open modal
+  };
 
-  const handleAddCategory = async () => {
+  const handleAddCategory = async (e) => {
+    e.stopPropagation();
     if (formData.category.trim()) {
       try {
         // Dispatch createCategory action to add the category
@@ -84,50 +90,50 @@ const SelectCategory = ({ category, setCategory }) => {
         <h2 className="text-[#141D2A] font-semibold text-[20px] mb-6">
           Category
         </h2>
-      
-          <Select
-            style={{
-              width: "100%",
-              cursor: "pointer",
-              fontSize: "14px",
-              border: "1px solid #e86731",
-              borderRadius: "4px",
-            }}
-            size="small"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            onOpen={() => setIsDropdownOpen(true)}
-            onClose={() => setIsDropdownOpen(false)}
-          >
-            {categories && categories.length > 0 ? (
-              categories.map((element, index) => (
-                <MenuItem
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                  key={index}
-                  value={element.category}
-                >
-                  <div>{element.category}</div>
-                  {isDropdownOpen && category !== element.category && (
-                    <DeleteOutlineOutlined
-                      className="text-[red] z-20 bg-[#fdf0ea] rounded-full hover:scale-105"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteCategory(element._id); // Delete category
-                      }}
-                    />
-                  )}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem value="">No Categories Available</MenuItem>
-            )}
-          </Select>
+
+        <Select
+          style={{
+            width: "100%",
+            cursor: "pointer",
+            fontSize: "14px",
+            border: "1px solid #e86731",
+            borderRadius: "4px",
+          }}
+          size="small"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          onOpen={() => setIsDropdownOpen(true)}
+          onClose={() => setIsDropdownOpen(false)}
+        >
+          {categories && categories.length > 0 ? (
+            categories.map((element, index) => (
+              <MenuItem
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+                key={index}
+                value={element.category}
+              >
+                <div>{element.category}</div>
+                {isDropdownOpen && category !== element.category && (
+                  <DeleteOutlineOutlined
+                    className="text-[red] z-20 bg-[#fdf0ea] rounded-full hover:scale-105"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteCategory(element._id); // Delete category
+                    }}
+                  />
+                )}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem value="">No Categories Available</MenuItem>
+          )}
+        </Select>
         <div className="mt-3 flex justify-end">
           <CustomDashboardButton
-            handleSubmit={() => setOpenModal(true)}
+            handleSubmit={(e) => handleOpenModal(e)}
             content={
               <div className="flex items-center gap-1.5 ">
                 <FaRegSquarePlus className="text-xl" /> Add Category
@@ -139,7 +145,10 @@ const SelectCategory = ({ category, setCategory }) => {
 
       <Modal
         open={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={(e) => {
+          e.stopPropagation(); // Prevents the event from bubbling when closing
+          setOpenModal(false); // Closes the modal
+        }}
         aria-labelledby="flight-booking-modal"
         aria-describedby="form-for-flight-booking"
       >
@@ -174,7 +183,7 @@ const SelectCategory = ({ category, setCategory }) => {
             <Grid item xs={12}>
               <button
                 type="button"
-                onClick={handleAddCategory}
+                onClick={(e) => handleAddCategory(e)}
                 className="primary_bg w-full text-white font-semibold text-[16px] py-2 rounded-md hover:opacity-90"
               >
                 {"Add Category"}

@@ -1,275 +1,351 @@
 /* eslint-disable react/no-unescaped-entities */
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import blogDetailsImage from "../../assets/Images/blogDetails.jpg"
-import iconn1 from "../../assets/icone/icone1.png"
-import iconn2 from "../../assets/icone/icone2.png"
-import iconn3 from "../../assets/icone/icone3.png"
-import iconn4 from "../../assets/icone/icone4.png"
-import yes from "../../assets/icone/yes.png"
-
-import flight from "../../assets/icone/flight.png"
-
-import image1 from "../../assets/Image1.jpg"
-import image2 from "../../assets/Image2.jpg"
-import image3 from "../../assets/Image3.jpg"
-import image4 from "../../assets/Image4.jpg"
-import { useState } from "react";
+import blogDetailsImage from "../../assets/Images/blogDetails.jpg";
+import iconn1 from "../../assets/icone/icone1.png";
+import iconn2 from "../../assets/icone/icone2.png";
+import iconn3 from "../../assets/icone/icone3.png";
+import iconn4 from "../../assets/icone/icone4.png";
+import yes from "../../assets/icone/yes.png";
+import flight from "../../assets/icone/flight.png";
+import image1 from "../../assets/Image1.jpg";
+import image2 from "../../assets/Image2.jpg";
+import image3 from "../../assets/Image3.jpg";
+import image4 from "../../assets/Image4.jpg";
+import { useEffect, useState } from "react";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { reviews } from "../../ALLJsonFile/const";
 import TestimonialCard from "../../Components/Cards/TestimonialCard";
 import { RiMoneyEuroCircleLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getPackageDetails } from "../../features/pckage/packageSlice";
+import {
+  MdOutlineBedtime,
+  MdOutlineCarRental,
+  MdOutlineDone,
+  MdOutlineFreeBreakfast,
+  MdOutlineMapsHomeWork,
+} from "react-icons/md";
+import {
+  IoCloudDoneOutline,
+  IoFastFoodOutline,
+  IoGameControllerOutline,
+  IoWifiOutline,
+} from "react-icons/io5";
+import { LuContact, LuSquareParking } from "react-icons/lu";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
+import { CiMobile3 } from "react-icons/ci";
+import {
+  PiAirplaneTakeoffLight,
+  PiPersonSimpleSwimLight,
+} from "react-icons/pi";
+import { RxCross2 } from "react-icons/rx";
+import moment from "moment";
 const TourDetails = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { packageDetails } = useSelector((state) => state.package);
 
-    const heroContent = {
-        blogDetailsTitle: "7 notti / 8 Giorni",
-        heroImage: blogDetailsImage,
-        titleOne: "Who We Are and What Drives Us",
-        descriptionOne: "Passionate Travelers Creating Memorable Experiences Just for You",
-    }
+  useEffect(() => {
+    dispatch(getPackageDetails("6770be9fad043dab1c66b9df"));
+  }, []);
+  const heroContent = {
+    blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
+    heroImage: blogDetailsImage,
+    titleOne: packageDetails?.tourName,
+    descriptionOne: packageDetails?.tourDescription,
+  };
+  const iconMap = {
+    MdOutlineBedtime: MdOutlineBedtime,
+    MdOutlineCarRental: MdOutlineCarRental,
+    MdOutlineDone: MdOutlineDone,
+    MdOutlineFreeBreakfast: MdOutlineFreeBreakfast,
+    MdOutlineMapsHomeWork: MdOutlineMapsHomeWork,
+    IoCloudDoneOutline: IoCloudDoneOutline,
+    IoFastFoodOutline: IoFastFoodOutline,
+    IoGameControllerOutline: IoGameControllerOutline,
+    IoWifiOutline: IoWifiOutline,
+    LuContact: LuContact,
+    LuSquareParking: LuSquareParking,
+    TfiHeadphoneAlt: TfiHeadphoneAlt,
+    CiMobile3: CiMobile3,
+    PiAirplaneTakeoffLight: PiAirplaneTakeoffLight,
+    PiPersonSimpleSwimLight: PiPersonSimpleSwimLight,
+    RxCross2: RxCross2, // Add this for the "cross" icon
+  };
 
-    const tags = [
-        { icon: iconn4, tag: "Gen Z approved" },
-        { icon: iconn3, tag: "Ride the wave" },
-        { icon: iconn2, tag: "Relaxed vibes" },
-        { icon: iconn1, tag: "Forever summer" },
-    ]
+  const tags = [
+    { icon: iconn4, tag: "Gen Z approved" },
+    { icon: iconn3, tag: "Ride the wave" },
+    { icon: iconn2, tag: "Relaxed vibes" },
+    { icon: iconn1, tag: "Forever summer" },
+  ];
 
-    const includeds = [
-        { icon: iconn4, include: "7 nights in accommodation" },
-        { icon: iconn3, include: "Included experience: beginner surf class" },
-        { icon: iconn1, include: "Coach in Italian" },
-        { icon: iconn3, include: "Utravel assistance" },
-        { icon: iconn4, include: "Dedicated app" },
-        { icon: iconn1, include: "Basic insurance: coverage for medical expenses up to €5,000 and up to €1,000 for luggage, plus a maximum of €310 for essential purchases" },
-    ]
+  const images = [
+    { image: image1 },
+    { image: image2 },
+    { image: image3 },
+    { image: image4 },
+  ];
 
-    const notIncludeds = [
-        { include: "Round trip flight (you can add it during booking)" },
-        { include: "All meals" },
-        { include: "Coworking area" },
-        { include: "Car rental" },
-        { include: "Tourist tax" },
-        { include: "Everything not mentioned in What's included " },
-    ]
-    const images = [
-        { image: image1 },
-        { image: image2 },
-        { image: image3 },
-        { image: image4 },
-    ]
+  const [imagePath, setImagePath] = useState(image3);
+  console.log(packageDetails);
 
-    const [imagePath, setImagePath] = useState(image3)
-
-    return (
-        <div className="text-black" >
-            <HeroScetion heroContent={heroContent} />
-            <div className="bg-[#EFFBFB]" >
-
-                <ParentComponent>
-                    <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 " >
-
-                        <div className="col-span-12 lg:col-span-8" >
-                            <h2 className="lg:text-[40px] font-bold text-[#0C0C1D] uppercase " >FOR THOSE WHO ALWAYS LOOK TO THE HORIZON</h2>
-                            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4 " >
-                                {
-                                    tags?.map(item => <div key={item?._id} >
-
-                                        <div className="flex bg-[#E867311A] px-4 py-2 items-center gap-2 rounded-full " >
-                                            <img className="size-5" src={item?.icon} alt="" />
-                                            <h2 className="text-[#E86731]" > {item?.tag} </h2>
-                                        </div>
-
-                                    </div>)
-                                }
-                            </div>
-                            <div>
-                                {/* ================================================  Blog Hero Content ==================================== */}
-                                <div className="mt-16 mb-20 text-[#72777F]" >
-
-                                    <p className="mb-4" >Okay, not to brag: we also take some trips every now and then. And we can say that in Fuerteventura, we breathed in a magical atmosphere.
-                                        Maybe it's the waves of the Atlantic Ocean crashing on the beach, the wind blowing steadily through our hair, or the silhouette of Calderon Hondo rising on the horizon.</p>
-
-                                    <p className="mb-4" >Whatever your travel mood is, Club Fuerteventura will allow you to experience all of this (and much more) alongside other young travelers and discover the
-                                        true essence of the destination. We won’t force you to walk kilometers under the sun or wake up at dawn: you can manage your trip in total freedom according to your own pace and with the experiences you choose to have (alone or with other Utravelers).</p>
-
-                                    <p className="mb-4" >You will also find a local coach ready to advise you on the most local spots and share all the secrets of the destination! They will serve as a link between you and your travel companions.</p>
-                                </div>
-                                {/* ==============================================  Accordion ==============================================    */}
-                                <div className="text-[#1C1C1C]" >
-
-                                    <div className="collapse collapse-arrow bg-[#FFFFFF] mb-10">
-                                        <input type="radio" name="my-accordion-2" defaultChecked />
-                                        <div className="collapse-title text-xl font-medium flex items-center">
-                                            <img className="mr-2" src={yes} alt="" />
-                                            <h2 className="text-[20px] font-semibold " >
-                                                What's included
-                                            </h2>
-                                        </div>
-                                        <div className="collapse-content">
-
-                                            <div className="grid lg:grid-cols-2" >
-                                                <div>
-                                                    {
-                                                        includeds.map(item =>
-                                                            <div key={item?.id} className="flex items-center mb-5" >
-                                                                <img className="mr-2" src={item?.icon} alt="" />
-                                                                <h2>{item.include}</h2>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-
-                                                <div>
-                                                    <h2 className="font-semibold text-[18px] mb-5 " >The travel fee does not include</h2>
-                                                    {
-                                                        notIncludeds.map(item =>
-                                                            <div key={item?.id} className="flex items-center mb-4" >
-                                                                <span className="mr-2 text-red-500" >X</span>
-                                                                <h2>{item.include}</h2>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="collapse collapse-arrow bg-[#FFFFFF]">
-                                        <input type="radio" name="my-accordion-2" />
-
-                                        <div className="collapse-title text-xl font-medium flex items-center">
-                                            <img className="mr-2" src={yes} alt="" />
-                                            <h2 className="text-[20px] font-semibold " >
-                                                What's included
-                                            </h2>
-                                        </div>
-
-                                        <div className="collapse-content">
-
-                                            <div className="grid lg:grid-cols-2" >
-                                                <div>
-                                                    {
-                                                        includeds.map(item =>
-                                                            <div key={item?.id} className="flex items-center mb-5" >
-                                                                <img className="mr-2" src={item?.icon} alt="" />
-                                                                <h2>{item.include}</h2>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-
-                                                <div>
-                                                    <h2 className="font-semibold text-[18px] mb-5 " >The travel fee does not include</h2>
-                                                    {
-                                                        notIncludeds.map(item =>
-                                                            <div key={item?.id} className="flex items-center mb-4" >
-                                                                <span className="mr-2 text-red-500" >X</span>
-                                                                <h2>{item.include}</h2>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className=" col-span-12 lg:col-span-4 mt-10 md:mt-0  " >
-                            {/* ==============================================  Hero Section Right Side Bar ===================================== */}
-                            <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 " >
-                                <div className="mb-10" >
-                                    <h2 className="text-center text-[#1C1C1C]" >Starting from</h2>
-                                    <span className="flex justify-center gap-10" >
-                                        <h2 className="flex items-center font-semibold text-[18px] text-[#25CE50] " > <RiMoneyEuroCircleLine /> 294</h2>
-                                        <h2 className="flex items-center font-semibold text-[18px] text-[#72777F] line-through " > <RiMoneyEuroCircleLine /> 347</h2>
-                                    </span>
-                                    <p className="text-[14px] text-[#72777F] text-center " >or 3 installments of €83 with no interest.</p>
-                                </div>
-                                <div>
-                                    <h2 className="text-center border rounded-lg px-8 py-4 mb-4 text-[#141D2A]" >November 16 - 23 (7 nights)</h2>
-                                    <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4" >Change dates</h2>
-                                    <Link to="/flight/dd" className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full" >Continue</Link>
-                                </div>
-                            </div>
-                            <div className="bg-[#FFFFFF] p-10 rounded-lg " >
-                                <div className="mb-10" >
-                                    <h2 className="text-[#E86731] flex items-center" > <img src={flight} alt="" /> Add flight</h2>
-                                </div>
-                                <div>
-                                    <p>Come From Text Editor</p>
-                                </div>
-                            </div>
-                        </div>
+  return (
+    <div className="text-black">
+      <HeroScetion heroContent={heroContent} />
+      <div className="bg-[#EFFBFB]">
+        <ParentComponent>
+          <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
+            <div className="col-span-12 lg:col-span-8">
+              <h2 className="lg:text-[40px] font-bold text-[#0C0C1D] uppercase ">
+                FOR THOSE WHO ALWAYS LOOK TO THE HORIZON
+              </h2>
+              <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
+                {tags?.map((item) => (
+                  <div key={item?._id}>
+                    <div className="flex bg-[#E867311A] px-4 py-2 items-center gap-2 rounded-full ">
+                      <img
+                        className="size-5"
+                        src={`${packageDetails?.imageUrl[0]}`}
+                        alt=""
+                      />
+                      <h2 className="text-[#E86731]"> {item?.tag} </h2>
                     </div>
-                </ParentComponent>
+                  </div>
+                ))}
+              </div>
+              <div>
+                {/* ================================================  Blog Hero Content ==================================== */}
+                <div className="mt-16 mb-20 text-[#72777F]">
+                  <p className="mb-4">
+                    Okay, not to brag: we also take some trips every now and
+                    then. And we can say that in Fuerteventura, we breathed in a
+                    magical atmosphere. Maybe it's the waves of the Atlantic
+                    Ocean crashing on the beach, the wind blowing steadily
+                    through our hair, or the silhouette of Calderon Hondo rising
+                    on the horizon.
+                  </p>
 
-                {/* ====================================================  Hotail Section ============================= */}
-                <div className="bg-[#FFFFFF]" >
-                    <ParentComponent>
-                        <div className="grid grid-cols-12 pt-20 pb-20 lg:gap-4 xl:gap-14 relative " >
-                            <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between" >
-                                <div>
-                                    <h2 className="uppercase font-bold text-[32px] " >WHERE WILL YOU STAY</h2>
-                                    <h2 className="text-[20px] font-semibold " >MAAR House - or similar</h2>
+                  <p className="mb-4">
+                    Whatever your travel mood is, Club Fuerteventura will allow
+                    you to experience all of this (and much more) alongside
+                    other young travelers and discover the true essence of the
+                    destination. We won’t force you to walk kilometers under the
+                    sun or wake up at dawn: you can manage your trip in total
+                    freedom according to your own pace and with the experiences
+                    you choose to have (alone or with other Utravelers).
+                  </p>
 
-                                    <p className="mt-5 text-[#72777F]">MAAR House is the villa with a pool that you've always dreamed of: good vibes, new travel companions, a barbecue, and two common areas to fully enjoy the island vibes!</p>
-
-                                    <p className="mt-5 text-[#72777F]">MAAR House is the villa with a pool that you've always dreamed of: good vibes, new travel companions, a barbecue, and two common areas to fully enjoy the island vibes!</p>
-
-                                    <p className="mt-5 text-[#72777F]">MAAR House is the villa with a pool that you've always dreamed of: good vibes, new travel companions, a barbecue, and two common areas to fully enjoy the island vibes!</p>
-
-                                </div>
-
-                                <div className="flex flex-wrap justify-center lg:gap-4 py-5 lg:py-0  " >
-                                    {
-                                        images?.map(item => <img key={item?._id} src={item.image} onClick={() => { setImagePath(item.image) }}
-                                            className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${item?.image === imagePath ? "border-2 border-red-500" : "border-2 border-transparent"} `} alt="" />)
-                                    }
-                                </div>
-
-                            </div>
-
-                            <div className=" col-span-12 lg:col-span-5 h-[400px] lg:h-[720px] w-[100%]  " >
-                                <img className="h-full w-[100%] rounded-xl object-cover " src={imagePath} alt="" />
-                            </div>
-
-
-
-                        </div>
-                    </ParentComponent>
+                  <p className="mb-4">
+                    You will also find a local coach ready to advise you on the
+                    most local spots and share all the secrets of the
+                    destination! They will serve as a link between you and your
+                    travel companions.
+                  </p>
                 </div>
-
-                {/* ==========================================  Testimonial ================================= */}
-
-                <div className="bg-[#EFFBFB] py-20 " >
-
-                    <HeadLine title="WHAT DO PEOPLE WHO HAVE TRAVELED WITH US SAY?" description="Real Reviews from Golfers Who Elevate Their Game in Our Apparel" />
-
-                    <ParentComponent>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12 " >
-                            {
-                                reviews?.map(item => <div key={item._id} >
-                                    <TestimonialCard item={item} />
-                                </div>)
-                            }
+                {/* ==============================================  Accordion ==============================================    */}
+                <div className="text-[#1C1C1C]">
+                  <div className="collapse collapse-arrow bg-[#FFFFFF] mb-10">
+                    <input type="radio" name="my-accordion-2" defaultChecked />
+                    <div className="collapse-title text-xl font-medium flex items-center">
+                      <img className="mr-2" src={yes} alt="" />
+                      <h2 className="text-[20px] font-semibold ">
+                        What's included
+                      </h2>
+                    </div>
+                    <div className="collapse-content">
+                      <div className="grid lg:grid-cols-2">
+                        <div>
+                          {packageDetails?.includeItems?.map((item) => {
+                            const IconComponent = iconMap[item.name];
+                            return (
+                              <div
+                                key={item.include}
+                                className="flex items-center mb-5"
+                              >
+                                {IconComponent && (
+                                  <IconComponent className="text-xl mr-3 primary_text" />
+                                )}
+                                <h2>{item.text}</h2>
+                              </div>
+                            );
+                          })}
                         </div>
-                    </ParentComponent>
+                      </div>
+                    </div>
+                  </div>
 
+                  <div className="collapse collapse-arrow bg-[#FFFFFF]">
+                    <input type="radio" name="my-accordion-2" />
+
+                    <div className="collapse-title text-xl font-medium flex items-center">
+                      <RxCross2 className="mr-2 primary_text" />
+                      <h2 className="text-[20px] font-semibold ">
+                        What's Not included
+                      </h2>
+                    </div>
+
+                    <div className="collapse-content">
+                      <div className="grid lg:grid-cols-2">
+                        <div>
+                          {packageDetails?.notIncludeItems?.map((item) => {
+                            const IconComponent = iconMap[item.name];
+                            return (
+                              <div
+                                key={item.include}
+                                className="flex items-center mb-5"
+                              >
+                                {IconComponent && (
+                                  <IconComponent className="text-xl mr-3 primary_text" />
+                                )}
+                                <h2>{item.text}</h2>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-
-
-
+              </div>
             </div>
 
+            <div className=" col-span-12 lg:col-span-4 mt-10  ">
+              {/* ==============================================  Hero Section Right Side Bar ===================================== */}
+              <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 ">
+                <div className="mb-10">
+                  <h2 className="text-center text-[#1C1C1C]">Starting from</h2>
+                  <span className="flex justify-center gap-10">
+                    <h2 className="flex items-center font-semibold text-[18px] text-[#25CE50] ">
+                      {" "}
+                      <RiMoneyEuroCircleLine /> {packageDetails?.amount}
+                    </h2>
+                    <h2 className="flex items-center font-semibold text-[18px] text-[#72777F] line-through ">
+                      {" "}
+                      <RiMoneyEuroCircleLine /> 347
+                    </h2>
+                  </span>
+                </div>
+                <div>
+                  <h2 className="text-center border rounded-lg px-8 py-4 mb-4 text-[#141D2A]">
+                    {moment(packageDetails?.tourDate)
+                      .utc()
+                      .format("DD/MM/YYYY")}{" "}
+                    <br />
+                    {packageDetails?.tourDuration?.nights} Nights &{" "}
+                    {packageDetails?.tourDuration?.days} Days
+                  </h2>
+                  <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
+                    Change dates
+                  </h2>
+                  <Link
+                    to="/flight/dd"
+                    className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
+                  >
+                    Continue
+                  </Link>
+                </div>
+              </div>
+              <div className="bg-[#FFFFFF] p-10 rounded-lg ">
+                <div className="mb-10">
+                  <h2 className="text-[#E86731] flex items-center">
+                    {" "}
+                    <img src={flight} alt="" /> Add flight
+                  </h2>
+                </div>
+                <div>
+                  <p>Come From Text Editor</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ParentComponent>
 
+        {/* ====================================================  Hotail Section ============================= */}
+        <div className="bg-[#FFFFFF]">
+          <ParentComponent>
+            <div className="grid grid-cols-12 pt-20 pb-20 lg:gap-4 xl:gap-14 relative ">
+              <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
+                <div>
+                  <h2 className="uppercase font-bold text-[32px] ">
+                    WHERE WILL YOU STAY
+                  </h2>
+                  <h2 className="text-[20px] font-semibold ">
+                    MAAR House - or similar
+                  </h2>
+
+                  <p className="mt-5 text-[#72777F]">
+                    MAAR House is the villa with a pool that you've always
+                    dreamed of: good vibes, new travel companions, a barbecue,
+                    and two common areas to fully enjoy the island vibes!
+                  </p>
+
+                  <p className="mt-5 text-[#72777F]">
+                    MAAR House is the villa with a pool that you've always
+                    dreamed of: good vibes, new travel companions, a barbecue,
+                    and two common areas to fully enjoy the island vibes!
+                  </p>
+
+                  <p className="mt-5 text-[#72777F]">
+                    MAAR House is the villa with a pool that you've always
+                    dreamed of: good vibes, new travel companions, a barbecue,
+                    and two common areas to fully enjoy the island vibes!
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap justify-center lg:gap-4 py-5 lg:py-0  ">
+                  {images?.map((item) => (
+                    <img
+                      key={item?._id}
+                      src={item.image}
+                      onClick={() => {
+                        setImagePath(item.image);
+                      }}
+                      className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${
+                        item?.image === imagePath
+                          ? "border-2 border-red-500"
+                          : "border-2 border-transparent"
+                      } `}
+                      alt=""
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className=" col-span-12 lg:col-span-5 h-[400px] lg:h-[720px] w-[100%]  ">
+                <img
+                  className="h-full w-[100%] rounded-xl object-cover "
+                  src={imagePath}
+                  alt=""
+                />
+              </div>
+            </div>
+          </ParentComponent>
         </div>
-    );
+
+        {/* ==========================================  Testimonial ================================= */}
+
+        <div className="bg-[#EFFBFB] py-20 ">
+          <HeadLine
+            title="WHAT DO PEOPLE WHO HAVE TRAVELED WITH US SAY?"
+            description="Real Reviews from Golfers Who Elevate Their Game in Our Apparel"
+          />
+
+          <ParentComponent>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12 ">
+              {reviews?.map((item) => (
+                <div key={item._id}>
+                  <TestimonialCard item={item} />
+                </div>
+              ))}
+            </div>
+          </ParentComponent>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default TourDetails;

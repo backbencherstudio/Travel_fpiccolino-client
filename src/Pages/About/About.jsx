@@ -12,13 +12,15 @@ import { useEffect } from 'react';
 import { getHeader } from '../../features/header/headerSlice';
 
 const About = () => {
-
-
+    
     const dispatch = useDispatch();
     const { headers } = useSelector((state) => state.header);
     useEffect(() => {
         dispatch(getHeader());
     }, []);
+    
+    console.log(headers);
+    
     const data = headers?.filter(item => item.pageName === "about")
     const heroContent = {
         heroImage : data[0]?.heroImage ,
@@ -26,7 +28,9 @@ const About = () => {
         descriptionOne: data[0]?.descriptionOne,
     }
 
+    console.log(heroContent);
     
+
     return (
         <div>
             <HeroScetion heroContent={heroContent} />

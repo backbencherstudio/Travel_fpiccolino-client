@@ -35,6 +35,7 @@ import UpdatePackage from "../Components/Dashboard/Package/UpdatePackage";
 import ContactsTable from "../Components/Dashboard/Contact/ContactsTable ";
 import OrderList from "../Components/Dashboard/Orders/OrderList";
 import AddCountry from "../Components/Dashboard/AddCountry/AddCountry";
+import AddContent from "../Components/Dashboard/AddContent/AddContent";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -61,7 +62,7 @@ export const router = createBrowserRouter([
         element: <Faq />,
       },
       {
-        path: "/TourDetails/:id",
+        path: "/tours/:id",
         element: <TourDetails />,
       },
       {
@@ -154,6 +155,10 @@ export const router = createBrowserRouter([
       {
         path: "addCountry",
         element: <AddCountry />,
+      },
+      {
+        path: "addContent",
+        element: <AddContent />,
       },
     ],
   },
