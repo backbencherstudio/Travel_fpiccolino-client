@@ -13,7 +13,6 @@ import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
-import CountryDropdown from "./SelectCountry";
 import { useParams } from "react-router-dom";
 import { base_url } from "../../../utils/base_path";
 import SelectCountry from "./SelectCountry";
@@ -46,6 +45,7 @@ const UpdatePackage = () => {
     control,
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm({});
   useEffect(() => {
@@ -60,7 +60,6 @@ const UpdatePackage = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
         const result = await response.json();
         setPackageDetails(result);
         setBookedFlights(result?.bookedFlights);
@@ -69,8 +68,15 @@ const UpdatePackage = () => {
         setSelectedNotIncludeItems(result?.notIncludeItems);
         setUploadedImages(result?.images || []);
         setUploadedHotelImages(result?.hotelImages || []);
-        setSelectedCountry(result?.category);
+        setSelectedCountry(result?.country);
         setCategory(result?.category);
+        setValue("tourName", result?.tourName);
+        setValue("tourDescription", result?.tourDescription);
+        setValue("destination", result?.destination);
+        setValue("amount", result?.amount);
+        setValue("tourDate", dayjs(result?.tourDate));
+        setValue("tourDuration.nights", result?.tourDuration?.nights);
+        setValue("tourDuration.days", result?.tourDuration?.days);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -80,15 +86,14 @@ const UpdatePackage = () => {
 
     fetchData();
   }, [params.id]);
-  console.log(packageDetails);
-
   const onSubmit = (data) => {
     const packageData = {
       includeItems: selectedIncludeItems,
       notIncludeItems: selectedNotIncludeItems,
       bookedFlights,
       category,
-      images,
+      images: uploadedImages,
+      hotelImages: uploadedHotelImages,
       ...data,
     };
     console.log("Form Data:", packageData);
