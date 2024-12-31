@@ -10,16 +10,20 @@ import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getHeader } from "../../features/header/headerSlice";
+import { getPackage } from "../../features/pckage/packageSlice";
 
 
 const Tours = () => {
 
     const dispatch = useDispatch();
     const { headers } = useSelector((state) => state.header);
+    const { packag } = useSelector((state) => state.package);
     useEffect(() => {
         dispatch(getHeader());
+        dispatch(getPackage())
     }, []);
     const data = headers?.filter(item => item.pageName === "tour")
+console.log(packag);
 
     // const heroContent = {
     //     heroImage: data[0]?.heroImage,
@@ -49,8 +53,8 @@ const Tours = () => {
                 <HeadLine title="Celebrate Easter Monday and Italy Around the Globe" description="Discover How to Turn These Spring Holidays into an International Adventure" />
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20" >
                     {
-                        cardDetails?.map(item => <div key={item._id} >
-                            <Link to={`/tourDetails/${item.id}`} >
+                        packag?.map(item => <div key={item._id} >
+                            <Link to={`/tours/${item._id}`} >
                                 <TureCard item={item} />
                             </Link>
                         </div>)

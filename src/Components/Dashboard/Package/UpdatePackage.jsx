@@ -13,12 +13,14 @@ import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
-import CountryDropdown from "./SelectCountry";
 import { useParams } from "react-router-dom";
 import { base_url } from "../../../utils/base_path";
 import SelectCountry from "./SelectCountry";
+import { useDispatch } from "react-redux";
+import { updatePackage } from "../../../features/pckage/packageSlice";
 const UpdatePackage = () => {
   const params = useParams();
+  const dispatch = useDispatch();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
   const [openFlightModal, setOpenFlightModal] = useState(false);
@@ -38,7 +40,6 @@ const UpdatePackage = () => {
   // const { packageDetails } = useSelector((state) => state.package);
   const [includeIconName, setIncludeIconName] = useState([]);
   const [notIncludeIconName, setNotIncludeIconName] = useState([]);
-
   const [packageDetails, setPackageDetails] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null);
@@ -46,6 +47,7 @@ const UpdatePackage = () => {
     control,
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm({});
   useEffect(() => {
@@ -60,7 +62,6 @@ const UpdatePackage = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
         const result = await response.json();
         setPackageDetails(result);
         setBookedFlights(result?.bookedFlights);
@@ -69,8 +70,15 @@ const UpdatePackage = () => {
         setSelectedNotIncludeItems(result?.notIncludeItems);
         setUploadedImages(result?.images || []);
         setUploadedHotelImages(result?.hotelImages || []);
-        setSelectedCountry(result?.category);
+        setSelectedCountry(result?.country);
         setCategory(result?.category);
+        setValue("tourName", result?.tourName);
+        setValue("tourDescription", result?.tourDescription);
+        setValue("destination", result?.destination);
+        setValue("amount", result?.amount);
+        setValue("tourDate", dayjs(result?.tourDate));
+        setValue("tourDuration.nights", result?.tourDuration?.nights);
+        setValue("tourDuration.days", result?.tourDuration?.days);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -80,17 +88,26 @@ const UpdatePackage = () => {
 
     fetchData();
   }, [params.id]);
-  console.log(packageDetails);
-
   const onSubmit = (data) => {
     const packageData = {
       includeItems: selectedIncludeItems,
       notIncludeItems: selectedNotIncludeItems,
       bookedFlights,
       category,
-      images,
+      country: selectedCountry,
+      images: uploadedImages,
+      hotelImages: uploadedHotelImages,
       ...data,
     };
+    dispatch(updatePackage({ packageId: params.id, data: packageData }))
+      .unwrap()
+      .then((response) => {
+        console.log("Package updated successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Failed to update package:", error);
+      });
+
     console.log("Form Data:", packageData);
   };
   const handleImageUpload = (e) => {
