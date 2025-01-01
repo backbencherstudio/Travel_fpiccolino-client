@@ -14,6 +14,7 @@ import Footer from "../../Shared/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackageDetails } from "../../features/pckage/packageSlice";
 import moment from "moment";
+import { TiDeleteOutline } from "react-icons/ti";
 
 const Flight = () => {
 
@@ -27,14 +28,20 @@ const Flight = () => {
     const [flightAmount, setFlightAmount] = useState(packageDetails?.bookedFlights[0]?.price);
     const [totalFlightAmount, totalSetFlightAmount] = useState(packageDetails?.bookedFlights[0]?.price);
     const [toureAmount, setToureAmount] = useState(packageDetails?.amount);
+    const [updateToureAmount, setUpdateToureAmount] = useState(packageDetails?.amount);
     const [person, setPerson] = useState("1");
-    const [highLight, setHighLight] = useState(packageDetails?.bookedFlights[0]._id)
+    const [highLight, setHighLight] = useState(packageDetails?.bookedFlights[0]._id);
+    const [addFlight, setAddFlight] = useState(false)
 
     console.log(packageDetails);
 
     useEffect(() => {
         totalSetFlightAmount(parseInt(flightAmount) * parseInt(person))
     }, [person, flightAmount])
+
+    useEffect(() => {
+        setUpdateToureAmount(parseInt(person) * parseInt(toureAmount))
+    }, [person])
 
     const toureData = {
         tourDate: packageDetails?.tourDate,
@@ -155,7 +162,7 @@ const Flight = () => {
                                         <h2 className="text-[#000000] text-[18px] font-bold text-center " >€ {totalFlightAmount} </h2>
                                         <h2 className="text-center" >per person </h2>
                                     </div>
-                                    <button className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded " >Add Flight</button>
+                                    <button onClick={() => { setAddFlight(true) }} className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded " >Add Flight</button>
                                 </div>
                             </div>
                         </div>
@@ -176,12 +183,20 @@ const Flight = () => {
                                         {moment(packageDetails?.tourDate)
                                             .utc()
                                             .format("DD/MM/YYYY HH:mm")}{" "}
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ {toureAmount} </h2>
+                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ {updateToureAmount} </h2>
                                     </span>
                                     <span className="flex items-start justify-between mb-3 " >
                                         <h2>Passengers</h2>
                                         <h2 className="text-[#000000] text-[18px] font-semibold text-center " >X {person} </h2>
                                     </span>
+                                    {
+                                        addFlight &&
+                                        <span className="flex items-start justify-between mb-3 " >
+                                            <h2 className="flex items-center relative " > <TiDeleteOutline className="text-red-600 absolute cursor-pointer -right-2 -top-3 text-xl " onClick={() => { setAddFlight(false) }} /> Flight Amount</h2>
+                                            <h2 className="text-[#000000] text-[18px] font-semibold text-center " > {totalFlightAmount} </h2>
+                                        </span>
+                                    }
+
                                     <span className="flex items-start justify-between mb-3 " >
                                         <h2>Room</h2>
                                         <h2 className="text-[#000000] text-[18px] font-semibold text-center " >Private Double </h2>
