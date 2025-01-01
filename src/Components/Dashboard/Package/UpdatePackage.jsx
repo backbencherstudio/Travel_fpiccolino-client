@@ -93,9 +93,48 @@ const UpdatePackage = () => {
     fetchData();
   }, [params.id]);
   const onSubmit = (data) => {
+    const combinedIncludeItems = [
+      ...selectedIncludeItems.map((item) => ({
+        name: typeof item.name === "object" ? item.name.name : item.name,
+        text: item.text || "",
+      })),
+      ...includeIconName.map((icon) => ({
+        name: typeof icon === "string" ? icon : icon.name,
+        text: icon.text || "",
+      })),
+    ];
+
+    const uniqueIncludeItems = Array.from(
+      new Map(
+        combinedIncludeItems.map((item) => [
+          item.name,
+          { name: item.name, text: item.text },
+        ])
+      ).values()
+    );
+
+    const combinedNotIncludeItems = [
+      ...selectedNotIncludeItems.map((item) => ({
+        name: typeof item.name === "object" ? item.name.name : item.name,
+        text: item.text || "",
+      })),
+      ...notIncludeIconName.map((icon) => ({
+        name: typeof icon === "string" ? icon : icon.name,
+        text: icon.text || "",
+      })),
+    ];
+
+    const uniqueNotIncludeItems = Array.from(
+      new Map(
+        combinedNotIncludeItems.map((item) => [
+          item.name,
+          { name: item.name, text: item.text },
+        ])
+      ).values()
+    );
     const packageData = {
-      includeItems: selectedIncludeItems,
-      notIncludeItems: selectedNotIncludeItems,
+      includeItems: uniqueIncludeItems,
+      notIncludeItems: uniqueNotIncludeItems,
       bookedFlights,
       insurance,
       category,

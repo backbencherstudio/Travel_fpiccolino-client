@@ -112,10 +112,10 @@ const CustomIcons = ({
           style={{ fontSize: "20px", marginRight: "10px" }}
           className="text-red-500"
         >
-          {item.icon} {ICONS_MAP[item.name]}
+          {item?.icon} {ICONS_MAP[item?.name]}
         </div>
         <Typography variant="body1" style={{ flex: 1 }}>
-          {item.text}
+          {item?.text}
         </Typography>
         <RxCross2
           onClick={() => handleDeleteIcon(index)}
@@ -180,7 +180,7 @@ const CustomIcons = ({
               return (
                 <Grid item key={index}>
                   <Button
-                    onClick={() => handleIconSelect(iconItem.icon)}
+                    onClick={() => handleIconSelect(iconItem?.icon)}
                     style={{
                       fontSize: "30px",
                       display: "flex",
@@ -190,7 +190,7 @@ const CustomIcons = ({
                       color: "#e86731",
                     }}
                   >
-                    {iconItem.icon}
+                    {iconItem?.icon}
                   </Button>
                 </Grid>
               );
