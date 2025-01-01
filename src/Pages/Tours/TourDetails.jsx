@@ -46,10 +46,16 @@ const TourDetails = () => {
 
   const dispatch = useDispatch();
   const params = useParams();
+  console.log(params.id);
+  
+
   const { packageDetails } = useSelector((state) => state.package);
   useEffect(() => {
-    dispatch(getPackageDetails(params.id));
+    dispatch(getPackageDetails(params?.id));
   }, []);
+
+  console.log(packageDetails);
+
 
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
@@ -90,7 +96,6 @@ const TourDetails = () => {
   ];
 
   const [imagePath, setImagePath] = useState(image3);
-  console.log(packageDetails);
 
   return (
     <div className="text-black">
@@ -218,7 +223,7 @@ const TourDetails = () => {
                     Change dates
                   </h2> */}
                   <Link
-                    to={`/flight/${packageDetails._id}`}
+                    to={`/flight/${packageDetails?._id}`}
                     className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
                   >
                     Continue
@@ -270,8 +275,8 @@ const TourDetails = () => {
                         setImagePath(item.image);
                       }}
                       className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${item?.image === imagePath
-                          ? "border-2 border-red-500"
-                          : "border-2 border-transparent"
+                        ? "border-2 border-red-500"
+                        : "border-2 border-transparent"
                         } `}
                       alt=""
                     />
