@@ -13,7 +13,7 @@ const InsuranceForm = ({
   insurance,
 }) => {
   const [formData, setFormData] = useState({
-    InsuranceName: "",
+    insuranceName: "",
     description: "",
     price: 30,
   });
@@ -90,8 +90,8 @@ const InsuranceForm = ({
                   <TextField
                     fullWidth
                     label="Insurance Name"
-                    name="InsuranceName"
-                    value={formData.InsuranceName}
+                    name="insuranceName"
+                    value={formData.insuranceName}
                     onChange={handleChange}
                     variant="outlined"
                   />
@@ -164,7 +164,7 @@ const InsuranceForm = ({
                     <p className="text-[#141D2A] text-[14px]">
                       Insurance Name :{" "}
                       <span className="text-[#72777F]">
-                        {flight.InsuranceName}
+                        {flight.insuranceName}
                       </span>
                     </p>
                     <p className="text-[#141D2A] text-[14px]">Description :</p>

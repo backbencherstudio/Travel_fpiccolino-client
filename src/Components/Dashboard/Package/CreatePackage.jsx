@@ -47,7 +47,7 @@ const CreatePackage = () => {
       bookedFlights,
       category,
       images,
-      counrty: selectedCountry,
+      country: selectedCountry,
       hotelName,
       hotelAbout,
       hotelImages,
