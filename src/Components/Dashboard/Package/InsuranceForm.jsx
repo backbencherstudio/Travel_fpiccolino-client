@@ -35,8 +35,8 @@ const InsuranceForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation()
-      // Add the current flight data to the insurance state
+    e.stopPropagation();
+    // Add the current flight data to the insurance state
     setInsurance([...insurance, { ...formData, id: insurance.length + 1 }]);
 
     // Reset form after submission
@@ -85,7 +85,7 @@ const InsuranceForm = ({
             </Typography>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                {/* Flying From */}
+                {/* Flight From */}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
@@ -97,7 +97,7 @@ const InsuranceForm = ({
                   />
                 </Grid>
 
-                {/* Flying To */}
+                {/* Flight To */}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth

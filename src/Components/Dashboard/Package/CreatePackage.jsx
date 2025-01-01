@@ -52,6 +52,7 @@ const CreatePackage = () => {
       hotelAbout,
       hotelImages,
     };
+    console.log(packageData);
 
     if (isCreate) {
       try {
@@ -69,7 +70,7 @@ const CreatePackage = () => {
           setCategory("");
           toast.success(response?.payload.message);
           setIsCreate(false);
-          window.location.reload();
+          // window.location.reload();
         } else {
           toast.error(`${response?.payload?.error._message}`);
         }
