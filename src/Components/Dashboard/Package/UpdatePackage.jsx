@@ -96,6 +96,7 @@ const UpdatePackage = () => {
       includeItems: selectedIncludeItems,
       notIncludeItems: selectedNotIncludeItems,
       bookedFlights,
+      insurance,
       category,
       country: selectedCountry,
       images: uploadedImages,
