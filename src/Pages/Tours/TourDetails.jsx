@@ -47,7 +47,7 @@ const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
   console.log(params.id);
-  
+
 
   const { packageDetails } = useSelector((state) => state.package);
   useEffect(() => {
@@ -59,9 +59,11 @@ const TourDetails = () => {
 
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
-    heroImage: blogDetailsImage,
+    image: "http://localhost:3000"+packageDetails?.images[0],
     titleOne: packageDetails?.tourName,
   };
+  console.log("heroContent dddd ",heroContent);
+  
   const iconMap = {
     MdOutlineBedtime: MdOutlineBedtime,
     MdOutlineCarRental: MdOutlineCarRental,
