@@ -43,13 +43,14 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import moment from "moment";
 const TourDetails = () => {
+
   const dispatch = useDispatch();
   const params = useParams();
   const { packageDetails } = useSelector((state) => state.package);
-
   useEffect(() => {
     dispatch(getPackageDetails(params.id));
   }, []);
+
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
     heroImage: blogDetailsImage,
@@ -217,7 +218,7 @@ const TourDetails = () => {
                     Change dates
                   </h2> */}
                   <Link
-                    to="/flight/dd"
+                    to={`/flight/${packageDetails._id}`}
                     className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
                   >
                     Continue
@@ -268,11 +269,10 @@ const TourDetails = () => {
                       onClick={() => {
                         setImagePath(item.image);
                       }}
-                      className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${
-                        item?.image === imagePath
+                      className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${item?.image === imagePath
                           ? "border-2 border-red-500"
                           : "border-2 border-transparent"
-                      } `}
+                        } `}
                       alt=""
                     />
                   ))}
