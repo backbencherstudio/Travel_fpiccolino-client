@@ -8,6 +8,9 @@ const TureCard = ({ item }) => {
     amount: price,
     category: isInclusive,
   } = item;
+
+  console.log(item);
+  
  
 
   return (
@@ -15,7 +18,7 @@ const TureCard = ({ item }) => {
       <div className="relative group">
         <img
           className="h-[360px] object-cover rounded-xl "
-          src="https://img.artpal.com/941672/35-23-4-11-0-2-20m.jpg"
+          src={item.images[0]}
           alt=""
         />
         <div className="w-full h-full absolute top-0 left-0  rounded-xl group-hover:bg-[#E867311A] duration-300 "></div>

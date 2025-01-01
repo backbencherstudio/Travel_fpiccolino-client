@@ -45,16 +45,23 @@ import moment from "moment";
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  console.log(params.id);
+
   const { packageDetails } = useSelector((state) => state.package);
 
   useEffect(() => {
-    dispatch(getPackageDetails(params.id));
+    dispatch(getPackageDetails(params?.id));
   }, []);
+
+  console.log(packageDetails);
+
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
-    heroImage: blogDetailsImage,
+    image: "http://localhost:3000" + packageDetails?.images[0],
     titleOne: packageDetails?.tourName,
   };
+  console.log("heroContent dddd ", heroContent);
+
   const iconMap = {
     MdOutlineBedtime: MdOutlineBedtime,
     MdOutlineCarRental: MdOutlineCarRental,
@@ -89,7 +96,6 @@ const TourDetails = () => {
   ];
 
   const [imagePath, setImagePath] = useState(image3);
-  console.log(packageDetails);
 
   return (
     <div className="text-black">
@@ -217,7 +223,7 @@ const TourDetails = () => {
                     Change dates
                   </h2> */}
                   <Link
-                    to="/flight/dd"
+                    to={`/flight/${packageDetails?._id}`}
                     className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
                   >
                     Continue
