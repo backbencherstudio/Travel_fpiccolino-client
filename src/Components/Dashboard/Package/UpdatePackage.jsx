@@ -79,6 +79,8 @@ const UpdatePackage = () => {
         setValue("tourDate", dayjs(result?.tourDate));
         setValue("tourDuration.nights", result?.tourDuration?.nights);
         setValue("tourDuration.days", result?.tourDuration?.days);
+        setValue("hotelName", result?.hotelName);
+        setValue("hotelAbout", result?.hotelAbout);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -419,6 +421,7 @@ const UpdatePackage = () => {
 
               <p className="text-[16px] mt-3">Hotel Name</p>
               <input
+                {...register("hotelName")}
                 defaultValue={packageDetails?.hotelName}
                 onChange={(e) => setHotelName(e.target.value)}
                 type="text"
@@ -428,6 +431,7 @@ const UpdatePackage = () => {
 
               <p className="text-[16px] mt-3">Hotel About</p>
               <textarea
+                {...register("hotelAbout")}
                 defaultValue={packageDetails?.hotelAbout}
                 onChange={(e) => setHotelAbout(e.target.value)}
                 placeholder="Write Hotel Description...."
