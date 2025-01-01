@@ -36,6 +36,7 @@ const Home = () => {
     //     titleOne: data[0]?.titleOne,
     //     descriptionOne: data[0]?.descriptionOne,
     // }
+    
 
     const heroSection = homePageData?.hero
     const cardDetails = homePageData?.package;
