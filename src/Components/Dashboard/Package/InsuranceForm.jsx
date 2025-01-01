@@ -13,7 +13,7 @@ const InsuranceForm = ({
   insurance,
 }) => {
   const [formData, setFormData] = useState({
-    InsuranceName: "",
+    insuranceName: "",
     description: "",
     price: 30,
   });
@@ -35,8 +35,8 @@ const InsuranceForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation()
-      // Add the current flight data to the insurance state
+    e.stopPropagation();
+    // Add the current flight data to the insurance state
     setInsurance([...insurance, { ...formData, id: insurance.length + 1 }]);
 
     // Reset form after submission
@@ -85,19 +85,19 @@ const InsuranceForm = ({
             </Typography>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                {/* Flying From */}
+                {/* Flight From */}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
                     label="Insurance Name"
-                    name="InsuranceName"
-                    value={formData.InsuranceName}
+                    name="insuranceName"
+                    value={formData.insuranceName}
                     onChange={handleChange}
                     variant="outlined"
                   />
                 </Grid>
 
-                {/* Flying To */}
+                {/* Flight To */}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
@@ -164,7 +164,7 @@ const InsuranceForm = ({
                     <p className="text-[#141D2A] text-[14px]">
                       Insurance Name :{" "}
                       <span className="text-[#72777F]">
-                        {flight.InsuranceName}
+                        {flight.insuranceName}
                       </span>
                     </p>
                     <p className="text-[#141D2A] text-[14px]">Description :</p>

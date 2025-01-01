@@ -47,11 +47,12 @@ const CreatePackage = () => {
       bookedFlights,
       category,
       images,
-      counrty: selectedCountry,
+      country: selectedCountry,
       hotelName,
       hotelAbout,
       hotelImages,
     };
+    console.log(packageData);
 
     if (isCreate) {
       try {
@@ -69,7 +70,7 @@ const CreatePackage = () => {
           setCategory("");
           toast.success(response?.payload.message);
           setIsCreate(false);
-          window.location.reload();
+          // window.location.reload();
         } else {
           toast.error(`${response?.payload?.error._message}`);
         }

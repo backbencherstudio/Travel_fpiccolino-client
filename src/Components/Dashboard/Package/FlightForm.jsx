@@ -13,8 +13,8 @@ const FlightBookingForm = ({
   bookedFlights,
 }) => {
   const [formData, setFormData] = useState({
-    flyingFrom: "",
-    flyingTo: "",
+    flightFrom: "",
+    flightTo: "",
     departureTime: null,
     arrivalTime: null,
     breakTime: null,
@@ -67,8 +67,8 @@ const FlightBookingForm = ({
 
     // Reset form after submission
     setFormData({
-      flyingFrom: "",
-      flyingTo: "",
+      flightFrom: "",
+      flightTo: "",
       departureTime: null,
       arrivalTime: null,
       breakTime: null,
@@ -133,25 +133,25 @@ const FlightBookingForm = ({
             </Typography>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                {/* Flying From */}
+                {/* Flight From */}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Flying From"
-                    name="flyingFrom"
-                    value={formData.flyingFrom}
+                    label="Flight From"
+                    name="flightFrom"
+                    value={formData.flightFrom}
                     onChange={handleChange}
                     variant="outlined"
                   />
                 </Grid>
 
-                {/* Flying To */}
+                {/* Flight To */}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Flying To"
-                    name="flyingTo"
-                    value={formData.flyingTo}
+                    label="Flight To"
+                    name="flightTo"
+                    value={formData.flightTo}
                     onChange={handleChange}
                     variant="outlined"
                   />
@@ -262,9 +262,9 @@ const FlightBookingForm = ({
                 </Typography>
                 <div className="flex justify-between mt-5">
                   <p className="font-semibold text-[20px]">
-                    {flight.flyingFrom}
+                    {flight.flightFrom}
                   </p>
-                  <p className="font-semibold text-[20px]">{flight.flyingTo}</p>
+                  <p className="font-semibold text-[20px]">{flight.flightTo}</p>
                 </div>
 
                 <Slider
