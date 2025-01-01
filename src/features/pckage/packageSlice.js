@@ -86,21 +86,17 @@ export const updatePackage = createAsyncThunk(
   "package/update",
   async ({ packageId, data }, { rejectWithValue }) => {
     try {
-      // Destructure images and hotelImages from data
       const { images, hotelImages, ...packageData } = data;
 
-      // Remove undefined or null fields from packageData to avoid sending invalid data
       const cleanedData = { ...packageData };
 
-      // If country is undefined, set it to null or remove it from cleanedData
       if (cleanedData.country === undefined) {
-        delete cleanedData.country; // or cleanedData.country = null;
+        delete cleanedData.country;
       }
 
-      // Create a new FormData object to append images and hotel images
       const formData = new FormData();
 
-      // Loop through the packageData object (excluding images and hotelImages) and append each field
+      // Add other package data
       for (const key in cleanedData) {
         if (
           key === "tourDuration" ||
@@ -109,25 +105,29 @@ export const updatePackage = createAsyncThunk(
           key === "insurance" ||
           key === "bookedFlights"
         ) {
-          // If it's an array or object that needs to be JSON-stringified
           formData.append(key, JSON.stringify(cleanedData[key]));
         } else {
-          // Otherwise, directly append the field
           formData.append(key, cleanedData[key]);
         }
       }
 
-      // If there are images, append them to FormData
-      if (images && images.length > 0) {
-        images.forEach((image) => formData.append("images", image));
-      }
+      // Process images
+      images.forEach((image) => {
+        if (typeof image !== "string") {
+          formData.append("images", image);
+        } else {
+          formData.append("existingImages", image);
+        }
+      });
 
-      // If there are hotelImages, append them to FormData
-      if (hotelImages && hotelImages.length > 0) {
-        hotelImages.forEach((image) => formData.append("hotelImages", image));
-      }
+      hotelImages.forEach((image) => {
+        if (typeof image !== "string") {
+          formData.append("hotelImages", image);
+        } else {
+          formData.append("existingHotelImages", image);
+        }
+      });
 
-      // Make the PUT request with the FormData
       const response = await axios.put(
         `${base_url}/package/${packageId}`,
         formData,
@@ -138,7 +138,7 @@ export const updatePackage = createAsyncThunk(
         }
       );
 
-      return response.data; // Return the updated package data
+      return response.data;
     } catch (error) {
       console.error(error);
       return rejectWithValue(

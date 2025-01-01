@@ -73,6 +73,7 @@ const CreatePackage = () => {
           // window.location.reload();
         } else {
           toast.error(`${response?.payload?.error._message}`);
+          setIsCreate(false);
         }
       } catch (error) {
         console.error("Error creating package:", error);

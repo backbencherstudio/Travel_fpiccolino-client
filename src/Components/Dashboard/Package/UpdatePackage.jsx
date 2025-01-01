@@ -44,6 +44,7 @@ const UpdatePackage = () => {
   const [packageDetails, setPackageDetails] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null);
+  const [isUpdate, setIsUpdate] = useState(false);
   const {
     control,
     handleSubmit,
@@ -99,30 +100,32 @@ const UpdatePackage = () => {
       insurance,
       category,
       country: selectedCountry,
-      images: uploadedImages,
-      hotelImages: uploadedHotelImages,
+      images: [...uploadedImages, ...images],
+      hotelImages: [...uploadedHotelImages, ...hotelImages],
       ...data,
     };
-    dispatch(updatePackage({ packageId: params.id, data: packageData }))
-      .unwrap()
-      .then((response) => {
-        console.log("Package updated successfully:", response);
-        toast.success("Package Updated Successfully");
-      })
-      .catch((error) => {
-        console.error("Failed to update package:", error);
-        toast.error(`Failed to update package`);
-      });
-
-    console.log("Form Data:", packageData);
+    if (isUpdate) {
+      dispatch(updatePackage({ packageId: params.id, data: packageData }))
+        .unwrap()
+        .then((response) => {
+          console.log("Package updated successfully:", response);
+          toast.success("Package Updated Successfully");
+          setIsUpdate(false);
+        })
+        .catch((error) => {
+          console.error("Failed to update package:", error);
+          toast.error(`Failed to update package`);
+          setIsUpdate(false);
+        });
+    }
   };
   const handleImageUpload = (e) => {
     e.stopPropagation();
     const files = Array.from(e.target.files);
-
     if (updateImageIndex !== null) {
-      setImages((prevImages) =>
-        prevImages.map((img, i) => (i === updateImageIndex ? files[0] : img))
+      setImages(
+        (prevImages) =>
+          prevImages.map((img, i) => (i === updateImageIndex ? files[0] : img)) // Replace the image at the updateImageIndex
       );
       setUpdateImageIndex(null);
     } else {
@@ -130,8 +133,7 @@ const UpdatePackage = () => {
     }
   };
 
-  const handleDeleteImage = (e, index, isUploaded = false) => {
-    e.stopPropagation();
+  const handleDeleteImage = (index, isUploaded = false) => {
     if (isUploaded) {
       setUploadedImages((prevImages) =>
         prevImages.filter((_, i) => i !== index)
@@ -143,7 +145,9 @@ const UpdatePackage = () => {
 
   const handleUpdateImage = (index, isUploaded = false) => {
     if (isUploaded) {
-      alert("Updating previously uploaded images is not supported directly.");
+      toast.warning(
+        "Updating previously uploaded images is not supported directly."
+      );
       return;
     }
     setUpdateImageIndex(index);
@@ -178,7 +182,9 @@ const UpdatePackage = () => {
 
   const handleUpdateHotelImage = (index, isUploaded = false) => {
     if (isUploaded) {
-      alert("Updating previously uploaded images is not supported directly.");
+      toast.warning(
+        "Updating previously uploaded images is not supported directly."
+      );
       return;
     }
     setUpdateHotelImageIndex(index);
@@ -188,15 +194,15 @@ const UpdatePackage = () => {
   return (
     <div>
       <CustomHeadingDashboard />
-
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="flex justify-between mt-20">
           <h1 className="text-[24px] font-semibold">Update Package</h1>
-          <div className=" flex justify-end">
-            <CustomDashboardButton content={<p> Update Package</p>} />
+          <div className="flex justify-end">
+            <div onClick={() => setIsUpdate(true)}>
+              <CustomDashboardButton content={<p> Update Package</p>} />
+            </div>
           </div>
         </div>
-
         <div className="grid md:grid-cols-5 gap-5 mt-5">
           <div className="md:col-span-3">
             <div className="border p-4 rounded-2xl">
@@ -353,7 +359,7 @@ const UpdatePackage = () => {
                     />
                     <button
                       className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                      onClick={(e) => handleDeleteImage(e, index, true)}
+                      onClick={() => handleDeleteImage(index, true)}
                     >
                       <DeleteOutlined />
                     </button>
