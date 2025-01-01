@@ -92,33 +92,6 @@ const AddContent = () => {
         )}
       </div>
 
-      {/* Name Field */}
-      <div className="mb-4">
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Name
-        </label>
-        <select
-          id="name"
-          className={`mt-1 block w-full rounded border ${
-            errors.name ? "border-red-500" : "border-gray-300"
-          } focus:ring-blue-500 focus:border-blue-500`}
-          {...register("name", { required: "Name is required" })}
-        >
-          <option value="">Select Name</option>
-          <option value="landing1">Landing 1</option>
-          <option value="landing2">Landing 2</option>
-          <option value="landing3">Landing 3</option>
-          <option value="landing4">Landing 4</option>
-          <option value="landing5">Landing 5</option>
-          <option value="landing6">Landing 6</option>
-        </select>
-        {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-        )}
-      </div>
 
       {/* Page Name Field */}
       <div className="mb-4">

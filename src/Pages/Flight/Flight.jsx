@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { GoChevronLeft } from "react-icons/go";
@@ -11,11 +11,24 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { getPackageDetails } from "../../features/pckage/packageSlice";
 
 const Flight = ({
     startTime = { time: "10:40", timeZone: "am" },
     endTime = { time: "3:45", timeZone: "pm" },
 }) => {
+
+    const dispatch = useDispatch();
+    const params = useParams();
+    const { packageDetails } = useSelector((state) => state.package);
+    useEffect(() => {
+        dispatch(getPackageDetails(params.id));
+    }, []);
+
+    console.log("flight", packageDetails);
+    
+
     const convertToMinutes = (time, timeZone) => {
         const [hours, minutes] = time.split(":").map(Number);
         let totalMinutes = hours * 60 + minutes;
@@ -195,7 +208,7 @@ const Flight = ({
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
                                 <p>8 Days / 7 Nights</p>
-                                
+
                                 <div className="border border-b-[#c8c8ce] mt-3"></div>
 
                                 <div className="mt-4">

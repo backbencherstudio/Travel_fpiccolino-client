@@ -36,6 +36,7 @@ const Home = () => {
     //     titleOne: data[0]?.titleOne,
     //     descriptionOne: data[0]?.descriptionOne,
     // }
+    
 
     const heroSection = homePageData?.hero
     const cardDetails = homePageData?.package;
@@ -43,8 +44,6 @@ const Home = () => {
     const titleWithoutContent = homePageData?.titleWithoutContent;
     const review = homePageData?.review;
     const blogSection = homePageData?.blogSection;
-
-    console.log(homePageData);
     
 
     return (
