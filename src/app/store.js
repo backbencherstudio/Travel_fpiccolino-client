@@ -10,10 +10,12 @@ import userReducer from "../features/users/userSlice";
 import sectionReducer from "../features/sectionTitle/sectionTitleSlice";
 import pageDataRedicer from "../features/pageData/pageDataSlice";
 import reviewReducer from "../features/review/reviewSlice";
+import dashboardReducer from "../features/dashboard/dashboardSlice";
 
 export const store = configureStore({
   reducer: {
     authorization: authReducer,
+    dashboard: dashboardReducer,
     category: categoryReducer,
     contact: contactReducer,
     header: headerReducer,
