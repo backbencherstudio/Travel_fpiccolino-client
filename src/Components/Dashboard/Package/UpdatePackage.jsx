@@ -18,6 +18,7 @@ import { base_url } from "../../../utils/base_path";
 import SelectCountry from "./SelectCountry";
 import { useDispatch } from "react-redux";
 import { updatePackage } from "../../../features/pckage/packageSlice";
+import { toast } from "react-toastify";
 const UpdatePackage = () => {
   const params = useParams();
   const dispatch = useDispatch();
@@ -105,9 +106,11 @@ const UpdatePackage = () => {
       .unwrap()
       .then((response) => {
         console.log("Package updated successfully:", response);
+        toast.success("Package Updated Successfully");
       })
       .catch((error) => {
         console.error("Failed to update package:", error);
+        toast.error(`Failed to update package`);
       });
 
     console.log("Form Data:", packageData);
@@ -343,7 +346,7 @@ const UpdatePackage = () => {
                   <div key={index} className="relative my-2">
                     <img
                       className="h-[200px] lg:h-[400px] w-full object-cover rounded-lg cursor-pointer"
-                      src={`${img}`} // Use base_url to resolve paths
+                      src={`${base_url}${img}`}
                       alt={`Uploaded Preview ${index + 1}`}
                       onClick={() => handleUpdateImage(index, true)}
                     />
@@ -362,7 +365,7 @@ const UpdatePackage = () => {
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
-                        src={`${img}`} // Use base_url to resolve paths
+                        src={`${base_url}${img}`}
                         alt={`Uploaded Preview ${index + 1}`}
                         onClick={() => handleUpdateImage(index, true)}
                       />
@@ -448,7 +451,7 @@ const UpdatePackage = () => {
                   <div key={index} className="relative my-2">
                     <img
                       className="lg:h-[400px] h-[200px] w-full object-cover rounded-lg cursor-pointer"
-                      src={`${img}`} // Use base_url to resolve paths
+                      src={`${base_url}${img}`} // Use base_url to resolve paths
                       alt={`Uploaded Preview ${index + 1}`}
                       onClick={() => handleUpdateHotelImage(index, true)}
                     />
@@ -467,7 +470,7 @@ const UpdatePackage = () => {
                     <div key={index} className="relative">
                       <img
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
-                        src={`${img}`} // Use base_url to resolve paths
+                        src={`${base_url}${img}`} // Use base_url to resolve paths
                         alt={`Uploaded Preview ${index + 1}`}
                         onClick={() => handleUpdateHotelImage(index, true)}
                       />
