@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomePageData } from '../../features/pageData/pageDataSlice';
 
+
 const Home = () => {
     const dispatch = useDispatch()
     const { homePageLoaging, homePageError, homePageData } = useSelector(
@@ -56,6 +57,7 @@ const Home = () => {
             }
             <JourneySection />
             <BottomBannerSection />
+           
         </div>
     );
 };
