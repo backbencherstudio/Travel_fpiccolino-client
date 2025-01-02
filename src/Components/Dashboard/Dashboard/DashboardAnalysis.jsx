@@ -22,7 +22,7 @@ const DashboardAnalysis = () => {
   const [timeInterval, setTimeInterval] = useState("monthly");
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const { packag } = useSelector((state) => state.package);
-  const { totalData } = useSelector((state) => state.dashboard);
+  const { totalData, radarData } = useSelector((state) => state.dashboard);
   useEffect(() => {
     Promise.all([
       dispatch(getPackage()),
@@ -37,19 +37,7 @@ const DashboardAnalysis = () => {
     amount: true,
     // action: true,
   });
-  const radarData = {
-    categories: [
-      "All inclusive",
-      "USA",
-      "Italy",
-      "Japan",
-      "Thailand",
-      "Africa",
-      "Bali",
-    ],
-    completed: [80, 50, 30, 40, 100, 20, 60],
-    pending: [20, 30, 40, 80, 20, 80, 40],
-  };
+
   const dashboardData = [
     {
       title: "Revenue",
@@ -192,7 +180,7 @@ const DashboardAnalysis = () => {
             )}
           </div>
           <div className="md:col-span-1 border my-4 rounded-xl">
-            <RadarChart data={radarData} />
+            <RadarChart data={radarData?.radarData} />
           </div>
         </div>
       </div>

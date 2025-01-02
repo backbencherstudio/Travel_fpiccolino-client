@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import ReactApexChart from "react-apexcharts";
 
-const RadarChart = ({data}) => {
+const RadarChart = ({ data }) => {
   const chartData = {
     series: [
       {
         name: "Completed",
-        data: data.completed, // Using prop data for Completed
+        data: data?.completed, // Using prop data for Completed
       },
       {
         name: "Pending",
-        data: data.pending, // Using prop data for Pending
+        data: data?.pending, // Using prop data for Pending
       },
     ],
     options: {
@@ -45,7 +45,7 @@ const RadarChart = ({data}) => {
         stepSize: 20,
       },
       xaxis: {
-        categories: data.categories, // Using prop categories for x-axis
+        categories: data?.destination, // Using prop categories for x-axis
       },
       colors: ["#62d3d4", "#e86731"], // Custom colors for Completed and Pending
       legend: {
