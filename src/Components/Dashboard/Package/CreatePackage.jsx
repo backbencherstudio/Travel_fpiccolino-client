@@ -17,8 +17,10 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import SelectCountry from "./SelectCountry";
 import { createPackage } from "../../../features/pckage/packageSlice";
+import { useNavigate } from "react-router-dom";
 const CreatePackage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { register, handleSubmit, control, reset } = useForm();
   const [selectedIncludeItems, setSelectedIncludeItems] = useState([]);
   const [selectedNotIncludeItems, setSelectedNotIncludeItems] = useState([]);
@@ -26,7 +28,7 @@ const CreatePackage = () => {
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [bookedFlights, setBookedFlights] = useState([]);
   const [insurance, setInsurance] = useState([]);
-  const [category, setCategory] = useState("All inclusive");
+  const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
   const [includeIconName, setIncludeIconName] = useState([]);
@@ -38,6 +40,72 @@ const CreatePackage = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [isCreate, setIsCreate] = useState(false);
   const onSubmit = async (data) => {
+    if (!data.tourName) {
+      toast.warn("Tour Name is required.");
+      return;
+    }
+    if (!data.tourDescription) {
+      toast.warn("Tour Description is required.");
+      return;
+    }
+    if (!data.destination) {
+      toast.warn("Tour Destination is required.");
+      return;
+    }
+    if (!data.amount) {
+      toast.warn("Tour Amount is required.");
+      return;
+    }
+    if (!data.tourDuration) {
+      toast.warn("Tour Duration is required.");
+      return;
+    }
+    if (!data.tourDate) {
+      toast.warn("Tour date is required.");
+      return;
+    }
+    if (!includeIconName || includeIconName.length === 0) {
+      toast.warn("Please select at least one included item.");
+      return;
+    }
+    if (!notIncludeIconName || notIncludeIconName.length === 0) {
+      toast.warn("Please select at least one item not included.");
+      return;
+    }
+    if (!bookedFlights || bookedFlights.length === 0) {
+      toast.warn("Please provide booked flight details.");
+      return;
+    }
+    if (!insurance || insurance.length === 0) {
+      toast.warn("Insurance details are required.");
+      return;
+    }
+
+    if (!images || images.length === 0) {
+      toast.warn("Please upload at least one image.");
+      return;
+    }
+    if (!hotelName) {
+      toast.warn("Hotel name is required.");
+      return;
+    }
+    if (!hotelAbout) {
+      toast.warn("Please provide a description of the hotel.");
+      return;
+    }
+    if (!hotelImages || hotelImages.length === 0) {
+      toast.warn("Please upload hotel images.");
+      return;
+    }
+    if (!selectedCountry) {
+      toast.warn("Please select a country.");
+      return;
+    }
+    if (!category) {
+      toast.warn("Package category is required.");
+      return;
+    }
+
     const packageData = {
       ...data,
       tourDate: data.tourDate,
@@ -70,7 +138,8 @@ const CreatePackage = () => {
           setCategory("");
           toast.success(response?.payload.message);
           setIsCreate(false);
-          // window.location.reload();
+          window.location.reload();
+          navigate("/dashboard/packages");
         } else {
           toast.error(`${response?.payload?.error._message}`);
           setIsCreate(false);

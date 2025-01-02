@@ -7,6 +7,7 @@ import natureImage from "../../assets/natureImage.jpg";
 import TureCard from "../ToursComponents/TureCard";
 import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const AdventureSection = ({ cardDetails }) => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -80,7 +81,6 @@ const AdventureSection = ({ cardDetails }) => {
 
   // const data = cardDetails?.map(item => console.log(item))
 
-
   return (
     <div className="bg-[#EFFBFB] lg:p-20 p-5 ">
       <ParentComponent>
@@ -92,16 +92,20 @@ const AdventureSection = ({ cardDetails }) => {
           <div className="mb-4">
             <button
               onClick={() => swiperRef.current?.slidePrev()}
-              className={`p-2.5 m-1  ${isBeginning ? "bg-zinc-300 text-zinc-400" : "bg-white text-[#F8D0BF]"
-                } w-9 h-9 rounded-full transition-opacity -left-7 absolute top-[35%] z-20`}
+              className={`p-2.5 m-1  ${
+                isBeginning
+                  ? "bg-zinc-300 text-zinc-400"
+                  : "bg-white text-[#F8D0BF]"
+              } w-9 h-9 rounded-full transition-opacity -left-7 absolute top-[35%] z-20`}
               disabled={isBeginning}
             >
               <FaAngleLeft />
             </button>
             <button
               onClick={() => swiperRef.current?.slideNext()}
-              className={`p-2.5 m-1 ${isEnd ? "bg-zinc-300 text-zinc-400" : "bg-white text-[#F8D0BF] "
-                }  rounded-full transition-opacity absolute top-[35%] -right-7 z-20 `}
+              className={`p-2.5 m-1 ${
+                isEnd ? "bg-zinc-300 text-zinc-400" : "bg-white text-[#F8D0BF] "
+              }  rounded-full transition-opacity absolute top-[35%] -right-7 z-20 `}
               disabled={isEnd}
             >
               <FaAngleRight />
@@ -148,11 +152,12 @@ const AdventureSection = ({ cardDetails }) => {
                 },
               }}
             >
-
               {cardDetails?.data?.map((item) => (
                 <div key={item._id}>
                   <SwiperSlide>
-                    <TureCard item={item} />
+                    <Link to={`/tours/${item._id}`}>
+                      <TureCard item={item} />
+                    </Link>
                   </SwiperSlide>
                 </div>
               ))}

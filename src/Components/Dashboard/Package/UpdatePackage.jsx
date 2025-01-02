@@ -93,6 +93,17 @@ const UpdatePackage = () => {
     fetchData();
   }, [params.id]);
   const onSubmit = (data) => {
+    const allImages = [...uploadedImages, ...images];
+    const allHotelImages = [...uploadedHotelImages, ...hotelImages];
+    if (allImages.length < 2) {
+      toast.warn("At least 2 images required for this package.");
+      return;
+    }
+
+    if (allHotelImages.length < 2) {
+      toast.warn("At least 2 hotel images required for this package.");
+      return;
+    }
     const combinedIncludeItems = [
       ...selectedIncludeItems.map((item) => ({
         name: typeof item.name === "object" ? item.name.name : item.name,
@@ -103,16 +114,6 @@ const UpdatePackage = () => {
         text: icon.text || "",
       })),
     ];
-
-    const uniqueIncludeItems = Array.from(
-      new Map(
-        combinedIncludeItems.map((item) => [
-          item.name,
-          { name: item.name, text: item.text },
-        ])
-      ).values()
-    );
-
     const combinedNotIncludeItems = [
       ...selectedNotIncludeItems.map((item) => ({
         name: typeof item.name === "object" ? item.name.name : item.name,
@@ -123,24 +124,15 @@ const UpdatePackage = () => {
         text: icon.text || "",
       })),
     ];
-
-    const uniqueNotIncludeItems = Array.from(
-      new Map(
-        combinedNotIncludeItems.map((item) => [
-          item.name,
-          { name: item.name, text: item.text },
-        ])
-      ).values()
-    );
     const packageData = {
-      includeItems: uniqueIncludeItems,
-      notIncludeItems: uniqueNotIncludeItems,
+      includeItems: combinedIncludeItems,
+      notIncludeItems: combinedNotIncludeItems,
       bookedFlights,
       insurance,
       category,
       country: selectedCountry,
-      images: [...uploadedImages, ...images],
-      hotelImages: [...uploadedHotelImages, ...hotelImages],
+      images: allImages,
+      hotelImages: allHotelImages,
       ...data,
     };
     if (isUpdate) {
