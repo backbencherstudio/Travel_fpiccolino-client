@@ -36,8 +36,8 @@ const InsuranceForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // Add the current flight data to the insurance state
-    setInsurance([...insurance, { ...formData, _id: insurance.length + 1 }]);
+    // Add the current insrnce data to the insurance state
+    setInsurance([...insurance, { ...formData, id: insurance.length + 1 }]);
 
     // Reset form after submission
     setFormData({
@@ -49,8 +49,14 @@ const InsuranceForm = ({
   };
 
   const handleDelete = (id) => {
-    // Remove the flight with the given id from the insurance array
-    setInsurance(insurance.filter((flight) => flight._id !== id));
+    // Remove the insrnce with the given id from the insurance array
+    console.log(id);
+
+    setInsurance(
+      insurance.filter(
+        (insrnce) => (insrnce._id ? insrnce._id : insrnce.id) !== id
+      )
+    );
   };
 
   return (
@@ -63,8 +69,8 @@ const InsuranceForm = ({
         <Modal
           open={openModal}
           onClose={() => setOpenModal(false)}
-          aria-labelledby="flight-booking-modal"
-          aria-describedby="form-for-flight-booking"
+          aria-labelledby="insrnce-booking-modal"
+          aria-describedby="form-for-insrnce-booking"
         >
           <Box
             sx={{
@@ -141,9 +147,9 @@ const InsuranceForm = ({
         {/* Display Booked Flights */}
         {insurance.length > 0 ? (
           <Box mt={1}>
-            {insurance.map((flight) => (
+            {insurance.map((insrnce) => (
               <Box
-                key={flight.id}
+                key={insrnce.id}
                 sx={{
                   border: "1px solid #ddd",
                   padding: "16px",
@@ -164,18 +170,20 @@ const InsuranceForm = ({
                     <p className="text-[#141D2A] text-[14px]">
                       Insurance Name :{" "}
                       <span className="text-[#72777F]">
-                        {flight.insuranceName}
+                        {insrnce.insuranceName}
                       </span>
                     </p>
                     <p className="text-[#141D2A] text-[14px]">Description :</p>
-                    <p className="text-[#72777F]">{flight.description}</p>
+                    <p className="text-[#72777F]">{insrnce.description}</p>
                     <div className="text-[#141D2A] text-[14px]">
                       Price:{" "}
-                      <span className="primary_text">€{flight.price}</span>
+                      <span className="primary_text">€{insrnce.price}</span>
                     </div>
                   </div>
                   <DeleteOutlineOutlined
-                    onClick={() => handleDelete(flight._id)}
+                    onClick={() =>
+                      handleDelete(insrnce._id ? insrnce._id : insrnce.id)
+                    }
                     className="text-red-500 cursor-pointer"
                   />
                 </Typography>
