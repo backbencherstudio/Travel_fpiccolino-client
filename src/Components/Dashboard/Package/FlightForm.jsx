@@ -62,9 +62,8 @@ const FlightBookingForm = ({
     // Add the current flight data to the bookedFlights state
     setBookedFlights([
       ...bookedFlights,
-      { ...formattedFormData, id: bookedFlights.length + 1 },
+      { ...formattedFormData, _id: bookedFlights.length + 1 },
     ]);
-
     // Reset form after submission
     setFormData({
       flightFrom: "",
@@ -80,7 +79,7 @@ const FlightBookingForm = ({
 
   const handleDelete = (id) => {
     // Remove the flight with the given id from the bookedFlights array
-    setBookedFlights(bookedFlights.filter((flight) => flight.id !== id));
+    setBookedFlights(bookedFlights.filter((flight) => flight._id !== id));
   };
 
   const getSliderMarks = (flight) => {
@@ -256,7 +255,7 @@ const FlightBookingForm = ({
                   </div>
 
                   <DeleteOutlineOutlined
-                    onClick={() => handleDelete(flight.id)}
+                    onClick={() => handleDelete(flight._id)}
                     className="text-red-500 cursor-pointer"
                   />
                 </Typography>

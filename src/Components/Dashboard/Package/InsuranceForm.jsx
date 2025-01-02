@@ -37,7 +37,7 @@ const InsuranceForm = ({
     e.preventDefault();
     e.stopPropagation();
     // Add the current flight data to the insurance state
-    setInsurance([...insurance, { ...formData, id: insurance.length + 1 }]);
+    setInsurance([...insurance, { ...formData, _id: insurance.length + 1 }]);
 
     // Reset form after submission
     setFormData({
@@ -50,7 +50,7 @@ const InsuranceForm = ({
 
   const handleDelete = (id) => {
     // Remove the flight with the given id from the insurance array
-    setInsurance(insurance.filter((flight) => flight.id !== id));
+    setInsurance(insurance.filter((flight) => flight._id !== id));
   };
 
   return (
@@ -175,7 +175,7 @@ const InsuranceForm = ({
                     </div>
                   </div>
                   <DeleteOutlineOutlined
-                    onClick={() => handleDelete(flight.id)}
+                    onClick={() => handleDelete(flight._id)}
                     className="text-red-500 cursor-pointer"
                   />
                 </Typography>
