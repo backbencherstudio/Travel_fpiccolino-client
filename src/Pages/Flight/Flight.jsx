@@ -99,7 +99,6 @@ const Flight = () => {
                             </div>
 
                             <div className="grid grid-cols-12 border rounded-lg mt-2" >
-
                                 <div className="col-span-12 md:col-span-8 md:border-r border-dashed relative">
                                     <div className="size-10 hidden md:block bg-white border-b rounded-full absolute right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
                                     <div className="size-10 hidden md:block bg-white border-t rounded-full absolute right-0 bottom-0 translate-x-1/2 translate-y-1/2"></div>
