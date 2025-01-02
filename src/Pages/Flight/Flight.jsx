@@ -25,15 +25,17 @@ const Flight = () => {
         dispatch(getPackageDetails(params.id));
     }, []);
 
-    const [flightAmount, setFlightAmount] = useState(packageDetails?.bookedFlights[0]?.price);
-    const [totalFlightAmount, totalSetFlightAmount] = useState(packageDetails?.bookedFlights[0]?.price);
-    const [toureAmount, setToureAmount] = useState(packageDetails?.amount);
-    const [updateToureAmount, setUpdateToureAmount] = useState(packageDetails?.amount);
+    const [flightAmount, setFlightAmount] = useState(parseInt(packageDetails?.bookedFlights[0]?.price));
+    const [totalFlightAmount, totalSetFlightAmount] = useState(parseInt(packageDetails?.bookedFlights[0]?.price));
+    const [toureAmount, setToureAmount] = useState(parseInt(packageDetails?.amount));
+    const [updateToureAmount, setUpdateToureAmount] = useState(parseInt(packageDetails?.amount));
     const [person, setPerson] = useState("1");
-    const [highLight, setHighLight] = useState(packageDetails?.bookedFlights[0]._id);
+    const [highLight, setHighLight] = useState(packageDetails?.bookedFlights[0]);
     const [addFlight, setAddFlight] = useState(false)
 
-    console.log(packageDetails);
+    // console.log(packageDetails?.amount);
+    // console.log(updateToureAmount);
+    console.log(highLight);
 
     useEffect(() => {
         totalSetFlightAmount(parseInt(flightAmount) * parseInt(person))
@@ -41,14 +43,13 @@ const Flight = () => {
 
     useEffect(() => {
         setUpdateToureAmount(parseInt(person) * parseInt(toureAmount))
-    }, [person])
+    }, [person, packageDetails])
 
     const toureData = {
         tourDate: packageDetails?.tourDate,
         toureAmount
     }
 
-    console.log(flightAmount);
 
 
 
@@ -107,7 +108,7 @@ const Flight = () => {
                                     {packageDetails?.bookedFlights?.map((item, i) => (
                                         <div
                                             onClick={() => setFlightAmount(item?.price)}
-                                            onMouseDown={() => setHighLight(item._id)}
+                                            onMouseDown={() => setHighLight(item)}
                                             key={i}
                                             className={`p-6 cursor-pointer ${i === packageDetails?.bookedFlights?.length - 1 ? "" : "border-b"} 
                                              duration-300 `}
@@ -140,7 +141,7 @@ const Flight = () => {
                                             </div>
                                             <div className="flex justify-center items-center">
                                                 <span
-                                                    className={`flex border items-center px-4 rounded ${highLight === item._id && "bg-[#a72b6f1a]"} duration-300 `}>
+                                                    className={`flex border items-center px-4 rounded ${highLight._id === item._id && "bg-[#a72b6f1a]"} duration-300 `}>
                                                     <img
                                                         className="size-10 p-1 border-r pr-3 mr-3"
                                                         src={flightIcon}
@@ -158,7 +159,7 @@ const Flight = () => {
                                         <img src={infoIcon} alt="" />
                                     </div>
                                     <div className="w-full flex flex-col text-center items-center " >
-                                        <h2 className="text-[#000000] text-[18px] font-bold text-center " >€ {totalFlightAmount} </h2>
+                                        <h2 className="text-[#000000] text-[18px] font-bold text-center " >€ {!totalFlightAmount ? packageDetails?.bookedFlights[0]?.price : totalFlightAmount} </h2>
                                         <h2 className="text-center" >per person </h2>
                                     </div>
                                     <button onClick={() => { setAddFlight(true) }} className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded " >Add Flight</button>
@@ -172,7 +173,7 @@ const Flight = () => {
                             <div className=" shadow-lg rounded-lg p-2 md:p-10">
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
-                                <p>8 Days / 7 Nights</p>
+                                <p>{packageDetails?.tourDuration.days} Days / {packageDetails?.tourDuration.nights} Nights</p>
 
                                 <div className="border border-b-[#c8c8ce] mt-3"></div>
 
@@ -182,7 +183,8 @@ const Flight = () => {
                                         {moment(packageDetails?.tourDate)
                                             .utc()
                                             .format("DD/MM/YYYY HH:mm")}{" "}
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ {updateToureAmount} </h2>
+                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ { updateToureAmount  } </h2>
+                                        {/* <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ = {!updateToureAmount ? packageDetails?.amount : updateToureAmount} </h2> */}
                                     </span>
                                     <span className="flex items-start justify-between mb-3 " >
                                         <h2>Passengers</h2>
