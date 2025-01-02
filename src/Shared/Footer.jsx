@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.svg";
 import ParentComponent from "../Shared/ParentComponent/ParentComponent";
 import stripe from "../assets/payment/stripe.svg";
@@ -9,12 +9,44 @@ import call from "../assets/icons/call.svg";
 import mail from "../assets/icons/mail.svg";
 import { base_url } from "../utils/base_path";
 import { toast } from "react-hot-toast"; // Importing the toast function
+import { useDispatch, useSelector } from "react-redux";
+import { getHomePageData } from "../features/pageData/pageDataSlice";
+import { getHeader } from "../features/header/headerSlice";
 
 const Footer = () => {
   // State for email input and checkbox
   const [email, setEmail] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
   const [message, setMessage] = useState(""); // To display success or error message
+
+  const dispatch = useDispatch()
+  const { homePageLoaging, homePageError, homePageData } = useSelector(
+    (state) => state.pageData
+  );
+  
+  useEffect(() => {
+    dispatch(getHomePageData())
+  }, []);
+
+  // const { headers } = useSelector((state) => state.header);
+  // useEffect(() => {
+  //   dispatch(getHeader());
+  // }, []);
+
+  // const data = headers?.filter(item => item.pageName === "home")
+  // const heroContent = {
+  //   heroImage: data[0]?.heroImage,
+  //   titleOne: data[0]?.titleOne,
+  //   descriptionOne: data[0]?.descriptionOne,
+  // }
+
+
+  // if (homePageData) {
+  //   const contactInfo = homePageData?.footer;
+  //   console.log(contactInfo);
+  // }
+
+
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -71,10 +103,10 @@ const Footer = () => {
               <h1 className="text-[20px] font-medium mb-6">Contact Us</h1>
               <p>{"We're"} Here to Help with Any Questions or Concerns</p>
               <p className="flex gap-1 mt-4">
-                <img src={call} alt="" /> 012-3456-7899
+                <img src={call} alt="" /> +01010101010101
               </p>
               <p className="flex gap-1 mt-2">
-                <img src={mail} alt="" /> latuafuga@gmail.com
+                <img src={mail} alt="" /> cool@cool.com
               </p>
             </div>
           </div>

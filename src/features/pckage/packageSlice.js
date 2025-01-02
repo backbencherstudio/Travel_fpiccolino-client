@@ -81,10 +81,70 @@ export const deletePackage = createAsyncThunk(
     }
   }
 );
-export const resetPackageDetails = createAsyncThunk(
-  "package/reset",
-  async () => {
-    // No need to do anything here, just dispatch to trigger reset
+
+export const updatePackage = createAsyncThunk(
+  "package/update",
+  async ({ packageId, data }, { rejectWithValue }) => {
+    try {
+      const { images, hotelImages, ...packageData } = data;
+
+      const cleanedData = { ...packageData };
+
+      if (cleanedData.country === undefined) {
+        delete cleanedData.country;
+      }
+
+      const formData = new FormData();
+
+      // Add other package data
+      for (const key in cleanedData) {
+        if (
+          key === "tourDuration" ||
+          key === "includeItems" ||
+          key === "notIncludeItems" ||
+          key === "insurance" ||
+          key === "bookedFlights"
+        ) {
+          formData.append(key, JSON.stringify(cleanedData[key]));
+        } else {
+          formData.append(key, cleanedData[key]);
+        }
+      }
+
+      // Process images
+      images.forEach((image) => {
+        if (typeof image !== "string") {
+          formData.append("images", image);
+        } else {
+          formData.append("existingImages", image);
+        }
+      });
+
+      hotelImages.forEach((image) => {
+        if (typeof image !== "string") {
+          formData.append("hotelImages", image);
+        } else {
+          formData.append("existingHotelImages", image);
+        }
+      });
+
+      const response = await axios.put(
+        `${base_url}/package/${packageId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(
+        error.response?.data || "Failed to update package"
+      );
+    }
   }
 );
 
@@ -116,7 +176,7 @@ const packageSlice = createSlice({
       .addCase(createPackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = null;
-        state.packag.push(action.payload); // Add the newly created package to the list
+        state.packag = action.payload; // Add the newly created package to the list
       })
       // Create Package Rejected
       .addCase(createPackage.rejected, (state, action) => {
@@ -133,7 +193,6 @@ const packageSlice = createSlice({
       .addCase(getPackage.fulfilled, (state, action) => {
         state.packagGetLoading = false;
         state.packageGetError = null;
-        console.log(action.payload);
         state.packag = action.payload.packages; // Update the package list
       })
       // Get Package Rejected
@@ -175,11 +234,34 @@ const packageSlice = createSlice({
           // If state.packag is a proxy or not an array, log an error
           console.error("packag is not an array:", state.packag);
         }
+      });
+    builder
+      // Update Package Pending
+      .addCase(updatePackage.pending, (state) => {
+        state.packageCreateLoading = true;
+        state.packageCreateError = null;
       })
-      .addCase(resetPackageDetails.fulfilled, (state) => {
-        console.log("reset");
+      // Update Package Fulfilled
+      .addCase(updatePackage.fulfilled, (state, action) => {
+        state.packageCreateLoading = false;
+        state.packageCreateError = null;
 
-        state.packageDetails = [];
+        // Update the package in the packag array
+        const updatedPackage = action.payload;
+        if (Array.isArray(state.packag)) {
+          const index = state.packag.findIndex(
+            (pkg) => pkg._id === updatedPackage._id
+          );
+          if (index !== -1) {
+            state.packag[index] = updatedPackage; // Replace the package
+          }
+        }
+      })
+      // Update Package Rejected
+      .addCase(updatePackage.rejected, (state, action) => {
+        state.packageCreateLoading = false;
+        state.packageCreateError =
+          action.payload?.message || "Error updating package";
       });
   },
 });

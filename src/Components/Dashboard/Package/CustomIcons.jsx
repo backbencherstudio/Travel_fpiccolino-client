@@ -51,6 +51,24 @@ const CustomIcons = ({
     { icon: <IoGameControllerOutline /> },
     { icon: <MdOutlineFreeBreakfast /> },
   ];
+  const ICONS_MAP = {
+    MdOutlineBedtime: <MdOutlineBedtime />,
+    IoCloudDoneOutline: <IoCloudDoneOutline />,
+    LuContact: <LuContact />,
+    TfiHeadphoneAlt: <TfiHeadphoneAlt />,
+    CiMobile3: <CiMobile3 />,
+    PiAirplaneTakeoffLight: <PiAirplaneTakeoffLight />,
+    IoFastFoodOutline: <IoFastFoodOutline />,
+    MdOutlineMapsHomeWork: <MdOutlineMapsHomeWork />,
+    MdOutlineCarRental: <MdOutlineCarRental />,
+    LuSquareParking: <LuSquareParking />,
+    IoWifiOutline: <IoWifiOutline />,
+    PiPersonSimpleSwimLight: <PiPersonSimpleSwimLight />,
+    MdOutlineDone: <MdOutlineDone />,
+    RxCross2: <RxCross2 />,
+    IoGameControllerOutline: <IoGameControllerOutline />,
+    MdOutlineFreeBreakfast: <MdOutlineFreeBreakfast />,
+  };
 
   const handleOpenModal = (e) => {
     e.preventDefault();
@@ -94,10 +112,10 @@ const CustomIcons = ({
           style={{ fontSize: "20px", marginRight: "10px" }}
           className="text-red-500"
         >
-          {item.icon}
+          {item?.icon} {ICONS_MAP[item?.name]}
         </div>
         <Typography variant="body1" style={{ flex: 1 }}>
-          {item.text}
+          {item?.text}
         </Typography>
         <RxCross2
           onClick={() => handleDeleteIcon(index)}
@@ -162,7 +180,7 @@ const CustomIcons = ({
               return (
                 <Grid item key={index}>
                   <Button
-                    onClick={() => handleIconSelect(iconItem.icon)}
+                    onClick={() => handleIconSelect(iconItem?.icon)}
                     style={{
                       fontSize: "30px",
                       display: "flex",
@@ -172,7 +190,7 @@ const CustomIcons = ({
                       color: "#e86731",
                     }}
                   >
-                    {iconItem.icon}
+                    {iconItem?.icon}
                   </Button>
                 </Grid>
               );

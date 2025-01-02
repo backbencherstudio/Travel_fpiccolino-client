@@ -2,7 +2,7 @@ import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomIcons from "./CustomIcons";
 import { TextField } from "@mui/material";
 import { FaRegSquarePlus } from "react-icons/fa6";
@@ -13,11 +13,10 @@ import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
 import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { createPackage } from "../../../features/pckage/packageSlice";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getCountry } from "../../../features/country/countrySlice";
-import CountryDropdown from "./SelectCountry";
+import SelectCountry from "./SelectCountry";
+import { createPackage } from "../../../features/pckage/packageSlice";
 const CreatePackage = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, control, reset } = useForm();
@@ -37,10 +36,7 @@ const CreatePackage = () => {
   const [hotelAbout, setHotelAbout] = useState("");
   const [updateHotelImageIndex, setUpdateHotelImageIndex] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
-  const { country } = useSelector((state) => state.country);
-  useEffect(() => {
-    dispatch(getCountry());
-  }, []);
+  const [isCreate, setIsCreate] = useState(false);
   const onSubmit = async (data) => {
     const packageData = {
       ...data,
@@ -51,33 +47,44 @@ const CreatePackage = () => {
       bookedFlights,
       category,
       images,
-      counrty: selectedCountry,
+      country: selectedCountry,
       hotelName,
       hotelAbout,
       hotelImages,
     };
-
     console.log(packageData);
 
-    try {
-      const response = await dispatch(createPackage(packageData));
-      console.log("responce", response);
-      if (response?.payload.message) {
-        reset();
-        setBookedFlights([]);
-        setInsurance([]);
-        setImages([]);
-        setIncludeIconName([]);
-        setNotIncludeIconName([]);
-        toast.success(response?.payload.message);
+    if (isCreate) {
+      try {
+        const response = await dispatch(createPackage(packageData));
+        console.log("responce", response);
+        if (!response?.error) {
+          reset();
+          setBookedFlights([]);
+          setInsurance([]);
+          setImages([]);
+          setHotelImages([]);
+          setIncludeIconName([]);
+          setNotIncludeIconName([]);
+          setSelectedCountry("");
+          setCategory("");
+          toast.success(response?.payload.message);
+          setIsCreate(false);
+          // window.location.reload();
+        } else {
+          toast.error(`${response?.payload?.error._message}`);
+          setIsCreate(false);
+        }
+      } catch (error) {
+        console.error("Error creating package:", error);
+        toast.error("Failed to create package. Please try again.");
       }
-    } catch (error) {
-      console.error("Error creating package:", error);
-      alert("Failed to create package. Please try again.");
     }
   };
+  console.log(isCreate);
 
   const handleImageUpload = (e) => {
+    e.stopPropagation();
     const files = Array.from(e.target.files);
 
     if (updateImageIndex !== null) {
@@ -90,7 +97,7 @@ const CreatePackage = () => {
     }
   };
 
-  const handleDeleteImage = (index) => {
+  const handleDeleteImage = (e, index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
@@ -99,6 +106,7 @@ const CreatePackage = () => {
     document.getElementById("imageUpdateInput").click();
   };
   const handleHotelImageUpload = (e) => {
+    e.stopPropagation();
     const files = Array.from(e.target.files);
 
     if (updateHotelImageIndex !== null) {
@@ -123,12 +131,13 @@ const CreatePackage = () => {
   return (
     <div>
       <CustomHeadingDashboard />
-
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="flex justify-between mt-20">
           <h1 className="text-[24px] font-semibold">Create Package</h1>
           <div className=" flex justify-end">
-            <CustomDashboardButton content={<p> Create Package</p>} />
+            <div onClick={() => setIsCreate(true)}>
+              <CustomDashboardButton content={<p> Create Package</p>} />
+            </div>
           </div>
         </div>
 
@@ -281,14 +290,14 @@ const CreatePackage = () => {
                 {images.length > 0 && (
                   <div className="relative mb-4">
                     <img
-                      className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
+                      className="h-[200px] lg:h-[400px] w-full object-cover rounded-lg cursor-pointer"
                       src={URL.createObjectURL(images[0])}
                       alt={`Preview 0`}
                       onClick={() => handleUpdateImage(0)}
                     />
                     <button
                       className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                      onClick={() => handleDeleteImage(0)}
+                      onClick={(e) => handleDeleteImage(e, 0)}
                     >
                       <DeleteOutlined />
                     </button>
@@ -296,7 +305,7 @@ const CreatePackage = () => {
                 )}
 
                 {/* Small Images */}
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {images.slice(1).map((img, index) => (
                     <div key={index} className="relative">
                       <img
@@ -367,7 +376,7 @@ const CreatePackage = () => {
                   {hotelImages.length > 0 && (
                     <div className="relative mb-4">
                       <img
-                        className="h-[400px] w-full object-cover rounded-lg cursor-pointer"
+                        className="h-[200px] lg:h-[400px] w-full object-cover rounded-lg cursor-pointer"
                         src={URL.createObjectURL(hotelImages[0])}
                         alt={`Preview 0`}
                         onClick={() => handleUpdateHotelImage(0)}
@@ -382,7 +391,7 @@ const CreatePackage = () => {
                   )}
 
                   {/* Small Images */}
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {hotelImages.slice(1).map((img, index) => (
                       <div key={index} className="relative">
                         <img
@@ -423,9 +432,9 @@ const CreatePackage = () => {
                   />
                 </div>
               </div>
-              <CountryDropdown
-                value={selectedCountry}
-                setValue={setSelectedCountry}
+              <SelectCountry
+                country={selectedCountry}
+                setCountry={setSelectedCountry}
               />
               <SelectCategory category={category} setCategory={setCategory} />
             </div>

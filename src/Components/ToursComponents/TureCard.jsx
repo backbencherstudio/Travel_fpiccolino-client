@@ -2,19 +2,23 @@
 
 const TureCard = ({ item }) => {
   const {
-    images: image,
+    // images: image,
     tourName: title,
     tourDuration,
     amount: price,
     category: isInclusive,
   } = item;
 
+  console.log(item);
+  
+ 
+
   return (
     <div>
       <div className="relative group">
         <img
           className="h-[360px] object-cover rounded-xl "
-          src={image[0]}
+          src={item.images[0]}
           alt=""
         />
         <div className="w-full h-full absolute top-0 left-0  rounded-xl group-hover:bg-[#E867311A] duration-300 "></div>

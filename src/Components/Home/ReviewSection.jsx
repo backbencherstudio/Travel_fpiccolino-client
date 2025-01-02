@@ -9,12 +9,12 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ReviewCard from "./ReviewCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../features/review/reviewSlice";
-const ReviewSection = ({ contact }) => {
+const ReviewSection = ({ review }) => {
   const dispatch = useDispatch();
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const { review } = useSelector((state) => state.review);
+  // const { review } = useSelector((state) => state.review);
   const reviews = [
     {
       image: natureImage,
@@ -61,14 +61,14 @@ const ReviewSection = ({ contact }) => {
         "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
     },
   ];
-  console.log(review);
   useEffect(() => {
     dispatch(getReview());
   }, []);
+
   return (
     <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">
       <ParentComponent>
-        <HeadLine title={contact.title} description={contact.subtitle} />
+        <HeadLine title={review.title} description={review.subtitle} />
 
         <div className="relative grid grid-cols-1 md:grid-cols-12">
           <div className="mt-14 md:col-span-11">
@@ -85,7 +85,7 @@ const ReviewSection = ({ contact }) => {
                 setIsEnd(swiper.isEnd);
               }}
             >
-              {review.reviews?.map((item) => (
+              {review.data?.map((item) => (
                 <div key={item._id}>
                   <SwiperSlide>
                     <ReviewCard item={item} />

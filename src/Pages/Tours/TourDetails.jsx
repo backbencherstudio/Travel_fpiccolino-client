@@ -45,17 +45,23 @@ import moment from "moment";
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  console.log(params.id);
+
   const { packageDetails } = useSelector((state) => state.package);
 
   useEffect(() => {
-    dispatch(getPackageDetails("6770be9fad043dab1c66b9df"));
+    dispatch(getPackageDetails(params?.id));
   }, []);
+
+  console.log(packageDetails);
+
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
-    heroImage: blogDetailsImage,
+    image: "http://localhost:3000" + packageDetails?.images[0],
     titleOne: packageDetails?.tourName,
-    descriptionOne: packageDetails?.tourDescription,
   };
+  console.log("heroContent dddd ", heroContent);
+
   const iconMap = {
     MdOutlineBedtime: MdOutlineBedtime,
     MdOutlineCarRental: MdOutlineCarRental,
@@ -90,7 +96,6 @@ const TourDetails = () => {
   ];
 
   const [imagePath, setImagePath] = useState(image3);
-  console.log(packageDetails);
 
   return (
     <div className="text-black">
@@ -108,7 +113,7 @@ const TourDetails = () => {
                     <div className="flex bg-[#E867311A] px-4 py-2 items-center gap-2 rounded-full ">
                       <img
                         className="size-5"
-                        src={`${packageDetails?.imageUrl[0]}`}
+                        src={`${packageDetails?.images[0]}`}
                         alt=""
                       />
                       <h2 className="text-[#E86731]"> {item?.tag} </h2>
@@ -119,31 +124,7 @@ const TourDetails = () => {
               <div>
                 {/* ================================================  Blog Hero Content ==================================== */}
                 <div className="mt-16 mb-20 text-[#72777F]">
-                  <p className="mb-4">
-                    Okay, not to brag: we also take some trips every now and
-                    then. And we can say that in Fuerteventura, we breathed in a
-                    magical atmosphere. Maybe it's the waves of the Atlantic
-                    Ocean crashing on the beach, the wind blowing steadily
-                    through our hair, or the silhouette of Calderon Hondo rising
-                    on the horizon.
-                  </p>
-
-                  <p className="mb-4">
-                    Whatever your travel mood is, Club Fuerteventura will allow
-                    you to experience all of this (and much more) alongside
-                    other young travelers and discover the true essence of the
-                    destination. We won’t force you to walk kilometers under the
-                    sun or wake up at dawn: you can manage your trip in total
-                    freedom according to your own pace and with the experiences
-                    you choose to have (alone or with other Utravelers).
-                  </p>
-
-                  <p className="mb-4">
-                    You will also find a local coach ready to advise you on the
-                    most local spots and share all the secrets of the
-                    destination! They will serve as a link between you and your
-                    travel companions.
-                  </p>
+                  <p className="mb-4">{packageDetails?.tourDescription}</p>
                 </div>
                 {/* ==============================================  Accordion ==============================================    */}
                 <div className="text-[#1C1C1C]">
@@ -216,15 +197,16 @@ const TourDetails = () => {
               {/* ==============================================  Hero Section Right Side Bar ===================================== */}
               <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 ">
                 <div className="mb-10">
-                  <h2 className="text-center text-[#1C1C1C]">Starting from</h2>
-                  <span className="flex justify-center gap-10">
-                    <h2 className="flex items-center font-semibold text-[18px] text-[#25CE50] ">
+                  <h2 className="text-center text-[#1C1C1C]">Package Price</h2>
+                  <span className="flex justify-center gap-10 mt-5">
+                    <h2 className="flex items-center font-semibold text-[24px] text-[#25CE50] ">
                       {" "}
                       <RiMoneyEuroCircleLine /> {packageDetails?.amount}
                     </h2>
-                    <h2 className="flex items-center font-semibold text-[18px] text-[#72777F] line-through ">
+                    <h2 className="flex items-center font-semibold text-[24px] text-[#72777F] line-through ">
                       {" "}
-                      <RiMoneyEuroCircleLine /> 347
+                      <RiMoneyEuroCircleLine />{" "}
+                      {parseInt(packageDetails?.amount * 1.12)}
                     </h2>
                   </span>
                 </div>
@@ -237,18 +219,18 @@ const TourDetails = () => {
                     {packageDetails?.tourDuration?.nights} Nights &{" "}
                     {packageDetails?.tourDuration?.days} Days
                   </h2>
-                  <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
+                  {/* <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
                     Change dates
-                  </h2>
+                  </h2> */}
                   <Link
-                    to="/flight/dd"
+                    to={`/flight/${packageDetails?._id}`}
                     className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
                   >
                     Continue
                   </Link>
                 </div>
               </div>
-              <div className="bg-[#FFFFFF] p-10 rounded-lg ">
+              {/* <div className="bg-[#FFFFFF] p-10 rounded-lg ">
                 <div className="mb-10">
                   <h2 className="text-[#E86731] flex items-center">
                     {" "}
@@ -258,7 +240,7 @@ const TourDetails = () => {
                 <div>
                   <p>Come From Text Editor</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </ParentComponent>
@@ -266,32 +248,21 @@ const TourDetails = () => {
         {/* ====================================================  Hotail Section ============================= */}
         <div className="bg-[#FFFFFF]">
           <ParentComponent>
-            <div className="grid grid-cols-12 pt-20 pb-20 lg:gap-4 xl:gap-14 relative ">
+            <div className="grid grid-cols-12 py-20 lg:gap-4 xl:gap-14 relative ">
               <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
                 <div>
                   <h2 className="uppercase font-bold text-[32px] ">
                     WHERE WILL YOU STAY
                   </h2>
-                  <h2 className="text-[20px] font-semibold ">
-                    MAAR House - or similar
+                  <h2 className="text-[20px] mt-10 font-semibold ">
+                    {packageDetails?.hotelName}
                   </h2>
 
                   <p className="mt-5 text-[#72777F]">
-                    MAAR House is the villa with a pool that you've always
-                    dreamed of: good vibes, new travel companions, a barbecue,
-                    and two common areas to fully enjoy the island vibes!
+                    {packageDetails?.hotelAbout?.slice(0, 150)}
                   </p>
-
-                  <p className="mt-5 text-[#72777F]">
-                    MAAR House is the villa with a pool that you've always
-                    dreamed of: good vibes, new travel companions, a barbecue,
-                    and two common areas to fully enjoy the island vibes!
-                  </p>
-
-                  <p className="mt-5 text-[#72777F]">
-                    MAAR House is the villa with a pool that you've always
-                    dreamed of: good vibes, new travel companions, a barbecue,
-                    and two common areas to fully enjoy the island vibes!
+                  <p className="mt-2 text-[#72777F]">
+                    {packageDetails?.hotelAbout?.slice(150)}
                   </p>
                 </div>
 

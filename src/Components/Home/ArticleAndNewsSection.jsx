@@ -38,13 +38,14 @@ const ArticleAndNewsSection = ({blogSection}) => {
       description: "Discover unique travel tips, guides, and inspiration.",
     },
   ];
+  
   return (
     <div className="bg-[#fff] lg:p-20 lg:pb-0 pt-5">
       <ParentComponent>
 
         <HeadLine
           title={blogSection.title}
-          description={blogSection.subtitle}
+          description={blogSection.description}
         />
 
         <div className="relative mx-4 lg:mx-0">
@@ -107,7 +108,7 @@ const ArticleAndNewsSection = ({blogSection}) => {
                 },
               }}
             >
-              {cardDetails?.map((item) => (
+              {blogSection?.data.map((item) => (
                 <div key={item._id}>
                   <SwiperSlide>
                     <ArticleCard item={item} />
