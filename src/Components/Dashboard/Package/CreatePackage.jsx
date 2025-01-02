@@ -72,10 +72,10 @@ const CreatePackage = () => {
       toast.warn("Please select at least one item not included.");
       return;
     }
-    if (!bookedFlights || bookedFlights.length === 0) {
-      toast.warn("Please provide booked flight details.");
-      return;
-    }
+    // if (!bookedFlights || bookedFlights.length === 0) {
+    //   toast.warn("Please provide booked flight details.");
+    //   return;
+    // }
     if (!insurance || insurance.length === 0) {
       toast.warn("Insurance details are required.");
       return;
@@ -101,10 +101,10 @@ const CreatePackage = () => {
       toast.warn("Please select a country.");
       return;
     }
-    if (!category) {
-      toast.warn("Package category is required.");
-      return;
-    }
+    // if (!category) {
+    //   toast.warn("Package category is required.");
+    //   return;
+    // }
 
     const packageData = {
       ...data,
@@ -505,7 +505,7 @@ const CreatePackage = () => {
                 country={selectedCountry}
                 setCountry={setSelectedCountry}
               />
-              <SelectCategory category={category} setCategory={setCategory} />
+              {/* <SelectCategory category={category} setCategory={setCategory} /> */}
             </div>
           </div>
         </div>

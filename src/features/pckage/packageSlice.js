@@ -112,6 +112,7 @@ export const updatePackage = createAsyncThunk(
       }
 
       // Process images
+
       images.forEach((image) => {
         if (typeof image !== "string") {
           formData.append("images", image);

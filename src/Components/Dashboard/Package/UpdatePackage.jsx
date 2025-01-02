@@ -28,7 +28,7 @@ const UpdatePackage = () => {
   const [bookedFlights, setBookedFlights] = useState([]);
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [insurance, setInsurance] = useState([]);
-  const [category, setCategory] = useState("All inclusive");
+  const [category, setCategory] = useState("");
   const [uploadedImages, setUploadedImages] = useState([]);
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
@@ -95,6 +95,7 @@ const UpdatePackage = () => {
   const onSubmit = (data) => {
     const allImages = [...uploadedImages, ...images];
     const allHotelImages = [...uploadedHotelImages, ...hotelImages];
+
     if (allImages.length < 2) {
       toast.warn("At least 2 images required for this package.");
       return;
@@ -409,7 +410,7 @@ const UpdatePackage = () => {
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteImage(index, true)}
+                        onClick={() => handleDeleteImage(index + 1, true)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -510,11 +511,11 @@ const UpdatePackage = () => {
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
                         src={`${base_url}${img}`} // Use base_url to resolve paths
                         alt={`Uploaded Preview ${index + 1}`}
-                        onClick={() => handleUpdateHotelImage(index, true)}
+                        onClick={() => handleUpdateHotelImage(index + 1, true)}
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteHotelImage(index, true)}
+                        onClick={() => handleDeleteHotelImage(index + 1, true)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -564,7 +565,7 @@ const UpdatePackage = () => {
               country={selectedCountry}
               setCountry={setSelectedCountry}
             />
-            <SelectCategory category={category} setCategory={setCategory} />
+            {/* <SelectCategory category={category} setCategory={setCategory} /> */}
           </div>
         </div>
       </form>
