@@ -21,6 +21,7 @@ const Tours = () => {
     dispatch(getPackage());
   }, []);
   const data = headers?.filter((item) => item.pageName === "tour");
+  console.log(packag);
 
   // const heroContent = {
   //     heroImage: data[0]?.heroImage,

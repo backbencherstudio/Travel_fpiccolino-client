@@ -1,20 +1,17 @@
 /* eslint-disable react/prop-types */
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { GoChevronLeft } from "react-icons/go";
 import "react-range-slider-input/dist/style.css";
 import { useState, useEffect } from "react";
 import flightIcon from "../../assets/icone/flightIcon.png";
-import infoIcon from "../../assets/infoIcon.png";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
-import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackageDetails } from "../../features/pckage/packageSlice";
 import moment from "moment";
 import { TiDeleteOutline } from "react-icons/ti";
+import { createCheckout } from "../../features/checkout/checkoutSlice";
 
 const Flight = () => {
     const dispatch = useDispatch();
@@ -61,16 +58,24 @@ const Flight = () => {
 
     const handleRemoveFlight = () => setAddFlight(false);
 
+    // order/addToCard
     const toureData = {
         toureId: packageDetails?._id,
         tourDate: packageDetails?.tourDate,
-        toureAmount: updateToureAmount,
+        toureAmount: totalToureCost,
         flight: addFlight && highLight,
         flightPrice: addFlight && totalFlightAmount,
-        person
+        person,
+        tureDuration: packageDetails?.tourDuration
     }
+    const navigate = useNavigate()
 
-    console.log(toureData);
+    const addDataFun = () => {
+        dispatch(createCheckout(toureData))
+        localStorage.setItem("toureData", JSON.stringify(toureData));
+        navigate(`/insurance/${packageDetails?._id}`);
+    };
+
 
 
     return (
@@ -194,11 +199,12 @@ const Flight = () => {
                                         <h2 className="text-[#000000] text-[18px] font-bold text-center">
                                             € {totalFlightAmount}
                                         </h2>
-                                        <h2 className="text-center py-2">   { person}  person</h2>
+                                        <h2 className="text-center py-2">   {person}  person</h2>
                                     </div>
                                     <button
                                         onClick={handleAddFlight}
                                         className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded"
+                                        disabled={packageDetails?.bookedFlights.length === 0}
                                     >
                                         Add Flight
                                     </button>
@@ -215,9 +221,7 @@ const Flight = () => {
                                     {packageDetails?.tourDuration.days} Days /{" "}
                                     {packageDetails?.tourDuration.nights} Nights
                                 </p>
-
                                 <div className="border border-b-[#c8c8ce] mt-3"></div>
-
                                 <div className="mt-4">
                                     <span className="flex items-start justify-between mb-3">
                                         {moment(packageDetails?.tourDate)
@@ -255,12 +259,16 @@ const Flight = () => {
                                     </span>
                                 </div>
 
-                                <Link
-                                    to="/insurance/id"
+                                <button
+                                    onClick={() => addDataFun()}
+                                    // to="/insurance/id"
                                     className="text-center block w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded mt-4"
                                 >
                                     Continue
-                                </Link>
+                                </button>
+
+
+
                             </div>
                         </div>
                     </div>

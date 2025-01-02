@@ -11,6 +11,7 @@ import sectionReducer from "../features/sectionTitle/sectionTitleSlice";
 import pageDataRedicer from "../features/pageData/pageDataSlice";
 import reviewReducer from "../features/review/reviewSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
+import checkoutReducer from "../features/checkout/checkoutSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,10 +23,11 @@ export const store = configureStore({
     blog: blogReducer,
     country: countryReducer,
     user: userReducer,
-    package: packageReducer,
+    package: packageReducer, 
     section: sectionReducer,
     pageData: pageDataRedicer,
     review: reviewReducer,
+    checkout : checkoutReducer,
   },
 });
 
