@@ -22,9 +22,7 @@ const Tours = () => {
         dispatch(getHeader());
         dispatch(getPackage())
     }, []);
-    const data = headers?.filter(item => item.pageName === "tour")
-console.log(packag);
-
+    // const data = headers?.filter(item => item.pageName === "tour")
     // const heroContent = {
     //     heroImage: data[0]?.heroImage,
     //     titleOne: data[0]?.titleOne,
