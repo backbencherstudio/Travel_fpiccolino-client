@@ -159,6 +159,10 @@ const CustomTable = ({
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
                 {columns?.action && <TableCell>Action</TableCell>}
+                {columns?.firstName && <TableCell>First Name</TableCell>}
+                {columns?.lastName && <TableCell>Last Name</TableCell>}
+                {columns?.message && <TableCell>Message</TableCell>}
+               
               </TableRow>
             </TableHead>
 
@@ -178,6 +182,7 @@ const CustomTable = ({
                       <TableCell>{item.bookingId}</TableCell>
                     )}
                     {columns?.tourId && <TableCell>{item.bookingId}</TableCell>}
+                    
                     {columns?.name && (
                       <TableCell style={{ minWidth: "200px" }}>
                         <div className="flex items-center gap-3">
@@ -298,6 +303,10 @@ const CustomTable = ({
                         </div>
                       </TableCell>
                     )}
+
+                  {columns?.firstName && <TableCell>{item.firstName}</TableCell>}
+                  {columns?.lastName && <TableCell>{item.lastName}</TableCell>}
+                  {columns?.message && <TableCell>{item.message}</TableCell>}
                   </TableRow>
                 ))}
             </TableBody>

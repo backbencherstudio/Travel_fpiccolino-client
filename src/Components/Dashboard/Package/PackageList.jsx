@@ -7,6 +7,7 @@ import { getPackage } from "../../../features/pckage/packageSlice";
 const PackageList = () => {
   const dispatch = useDispatch();
   const { packag } = useSelector((state) => state.package);
+  console.log(packag);
   useEffect(() => {
     dispatch(getPackage());
   }, []);
