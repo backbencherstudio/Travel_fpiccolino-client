@@ -50,7 +50,7 @@ const InsuranceForm = ({
 
   const handleDelete = (id) => {
     // Remove the insrnce with the given id from the insurance array
-    console.log(id);
+    // console.log(id); 
 
     setInsurance(
       insurance.filter(

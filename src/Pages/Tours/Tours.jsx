@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { cardDetails } from "../../ALLJsonFile/const";
 import TureCard from "../../Components/ToursComponents/TureCard";
 import Videos from "../../Components/ToursComponents/Videos";
@@ -12,9 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getHeader } from "../../features/header/headerSlice";
 import { getPackage } from "../../features/pckage/packageSlice";
-import { get_all_inclusive_TourPagePage } from "../../features/pageData/pageDataSlice";
+import { country_wise_TourPage, get_all_inclusive_TourPagePage } from "../../features/pageData/pageDataSlice";
 
 const Tours = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const { headers } = useSelector((state) => state.header);
   const { packag } = useSelector((state) => state.package);
@@ -23,7 +24,17 @@ const Tours = () => {
     all_inclusive_TourPageLoaging,
     all_inclusive_TourPageError,
     all_inclusive_TourPageData,
+
+    country_wise_TourPageLoaging,
+    country_wise_TourPageError, 
+    country_wise_TourPageData
   } = useSelector((state) => state.pageData);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(country_wise_TourPage(id));
+    }
+  }, [id]);
 
   useEffect(() => {
     // dispatch(getHeader());
@@ -31,13 +42,15 @@ const Tours = () => {
     dispatch(get_all_inclusive_TourPagePage());
   }, []);
   // const data = headers?.filter(item => item.pageName === "tour")
-  console.log(packag);
 
+  console.log(23784623468785, id);
   console.log("all_inclusive_TourPageData", all_inclusive_TourPageData);
+  console.log("country_wise_TourPageData", country_wise_TourPageData);
 
-  const heroContent = all_inclusive_TourPageData?.hero;
-  const packags = all_inclusive_TourPageData?.package;
 
+  const heroContent = id? country_wise_TourPageData?.hero : all_inclusive_TourPageData?.hero;
+  const packags = id? country_wise_TourPageData?.package : all_inclusive_TourPageData?.package;
+   console.log(111111, packags);
   return (
     <div className="">
       {heroContent && <HeroScetion heroContent={heroContent} />}
@@ -45,7 +58,7 @@ const Tours = () => {
       <ParentComponent styles="my-20">
         <HeadLine title={packags?.title} description={packags?.subtitle} />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20">
-          {packag?.map((item) => (
+          {packags?.data?.map((item) => (
             <div key={item._id}>
               <Link to={`/tours/${item._id}`}>
                 <TureCard item={item} />
