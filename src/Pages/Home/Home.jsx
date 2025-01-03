@@ -45,8 +45,8 @@ const Home = () => {
     const titleWithoutContent = homePageData?.titleWithoutContent;
     const review = homePageData?.review;
     const blogSection = homePageData?.blogSection;
-    
-
+    const countryWithoutImage = homePageData?.countryWithImage;
+// console.log(11111111,countryWithoutImage)
     return (
         <div>
             {/* <BannerSection /> */}
@@ -54,12 +54,20 @@ const Home = () => {
                 heroSection &&
                 <HeroScetion heroContent={heroSection} />
             }
-            <SearchBar />
+            {
+              
+                 <SearchBar />
+            }
+            
             {
                 cardDetails &&
                 <AdventureSection cardDetails={cardDetails} />
             }
-            <BlurSliderSection />
+            {
+                countryWithoutImage &&
+                <BlurSliderSection  country={countryWithoutImage} />
+            }
+            
             {
                 countrySection &&
                 <WondersSection countrySection={countrySection} />

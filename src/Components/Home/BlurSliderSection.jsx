@@ -8,13 +8,16 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import banner from "../../assets/eve.jpg";
 import ProgressBars from "../../Shared/ProgressBars";
 
-const BlurSliderSection = () => {
+const BlurSliderSection = ({ country }) => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [progressValue, setProgressValue] = useState(0); // Starting progress value
   const [screenSize, setScreenSize] = useState("mobile"); // Track screen size (mobile, tablet, desktop)
 
+  console.log("BlurSliderSection", country);
+
+  const { title, description, data } = country;
   const cardDetails = [
     {
       image: natureImage,
@@ -151,8 +154,8 @@ const BlurSliderSection = () => {
         {/* Headline Section */}
         <div className="col-span-2 max-w-[450px] z-20 relative mx-auto mb-10 md:lg-0 md:content-center">
           <HeadLine2
-            title="A New Year's Eve to Remember"
-            description="Ring in the New Year with Joyful Celebrations and Lasting Memories"
+            title={title}
+            description={description}
           />
         </div>
         <div className="col-span-1"></div>
@@ -184,15 +187,15 @@ const BlurSliderSection = () => {
               },
             }}
           >
-            {cardDetails.map((item, index) => (
+            {data?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="p-5 rounded-lg bg-transparent shadow-md card_style items-center text-center content-center h-[420px] mx-5 lg:mx-0">
                   <h3 className="lg:text-[48px] text-[28px] font-duera-expanded font-extrabold text-white">
-                    {item.title}
+                    {item?.name}
                   </h3>
                   <div className="flex justify-center">
                     <p className="mr-3 primary_text font-semibold text-[14px] lg:text-[18px]">
-                      €{item.price}
+                      €{item?.lowestAmount}
                     </p>
                     <s className="text-[#E9E9EA] font-semibold text-[14px] lg:text-[18px]">
                       €{item.price}

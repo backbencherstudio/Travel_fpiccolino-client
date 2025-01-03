@@ -2,9 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { base_url } from "../../utils/base_path";
 
-
 axios.defaults.withCredentials = true;
-
 
 // Async action to get all headers
 export const getHomePageData = createAsyncThunk(
@@ -13,7 +11,7 @@ export const getHomePageData = createAsyncThunk(
     try {
       const response = await axios.get(`${base_url}/api/pageData/home`);
       // console.log(5451445454, response);
-      
+
       return response.data;
     } catch (error) {
       console.error("Error fetching headers:", error);
@@ -28,7 +26,7 @@ export const getAboutPageData = createAsyncThunk(
     try {
       const response = await axios.get(`${base_url}/api/pageData/about`);
       // console.log(5451445454, response);
-      
+
       return response.data;
     } catch (error) {
       console.error("Error fetching headers:", error);
@@ -37,18 +35,39 @@ export const getAboutPageData = createAsyncThunk(
   }
 );
 
- 
+export const get_all_inclusive_TourPagePage = createAsyncThunk(
+  "pageDataSlice/all_inclusive_TourPage/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${base_url}/api/pageData/all_inclusive_TourPage`
+      );
+      // console.log(5451445454, response);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching headers:", error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
 // Initial state
 //  ========================= home
 const initialState = {
- homePageLoaging: false,
- homePageError: null,
- homePageData: [],
+  homePageLoaging: false,
+  homePageError: null,
+  homePageData: [],
 
-//  ========================= about
- aboutPageLoaging: false,
- aboutPageError: null,
- aboutPageData: []
+  //  ========================= about
+  aboutPageLoaging: false,
+  aboutPageError: null,
+  aboutPageData: [],
+
+  //  ========================= all_inclusive_TourPage
+  all_inclusive_TourPageLoaging: false,
+  all_inclusive_TourPageError: null,
+  all_inclusive_TourPageData: null,
 };
 
 // Create the slice
@@ -72,9 +91,9 @@ const pageDataSlice = createSlice({
         state.homePageLoaging = false;
         state.homePageError =
           action.payload?.message || "Error fetching headers";
-      })
+      });
 
-      // ============================  about
+    // ============================  about
     builder
       // Handle get headers
       .addCase(getAboutPageData.pending, (state) => {
@@ -90,9 +109,26 @@ const pageDataSlice = createSlice({
         state.aboutPageLoaging = false;
         state.aboutPageError =
           action.payload?.message || "Error fetching headers";
-      })
+      });
 
 
+          // ============================  all_inclusive_TourPage
+    builder
+    // Handle get headers
+    .addCase(get_all_inclusive_TourPagePage.pending, (state) => {
+      state.all_inclusive_TourPageLoaging = true;
+      state.all_inclusive_TourPageError = null;
+    })
+    .addCase(get_all_inclusive_TourPagePage.fulfilled, (state, action) => {
+      state.all_inclusive_TourPageLoaging = false;
+      state.all_inclusive_TourPageError = null;
+      state.all_inclusive_TourPageData = action.payload;
+    })
+    .addCase(get_all_inclusive_TourPagePage.rejected, (state, action) => {
+      state.all_inclusive_TourPageLoaging = false;
+      state.all_inclusive_TourPageError =
+        action.payload?.message || "Error fetching headers";
+    });
   },
 });
 
