@@ -25,7 +25,6 @@ export const getAboutPageData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/api/pageData/about`);
-      // console.log(5451445454, response);
 
       return response.data;
     } catch (error) {
@@ -42,6 +41,22 @@ export const get_all_inclusive_TourPagePage = createAsyncThunk(
       const response = await axios.get(
         `${base_url}/api/pageData/all_inclusive_TourPage`
       );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching headers:", error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const country_wise_TourPage = createAsyncThunk(
+  "pageDataSlice/country_wise_TourPage/get",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${base_url}/api/pageData/country_wise/${id}`
+      );
       // console.log(5451445454, response);
 
       return response.data;
@@ -51,6 +66,7 @@ export const get_all_inclusive_TourPagePage = createAsyncThunk(
     }
   }
 );
+
 
 // Initial state
 //  ========================= home
@@ -68,6 +84,11 @@ const initialState = {
   all_inclusive_TourPageLoaging: false,
   all_inclusive_TourPageError: null,
   all_inclusive_TourPageData: null,
+
+  // ========================== country_wise
+  country_wise_TourPageLoaging: false,
+  country_wise_TourPageError: null,
+  country_wise_TourPageData: null,
 };
 
 // Create the slice
@@ -127,6 +148,24 @@ const pageDataSlice = createSlice({
     .addCase(get_all_inclusive_TourPagePage.rejected, (state, action) => {
       state.all_inclusive_TourPageLoaging = false;
       state.all_inclusive_TourPageError =
+        action.payload?.message || "Error fetching headers";
+    });
+
+    // ============================  country_wise_TourPage
+    builder
+    // Handle get headers
+    .addCase(country_wise_TourPage.pending, (state) => {
+      state.country_wise_TourPageLoaging = true;
+      state.country_wise_TourPageError = null;
+    })
+    .addCase(country_wise_TourPage.fulfilled, (state, action) => {
+      state.country_wise_TourPageLoaging = false;
+      state.country_wise_TourPageError = null;
+      state.country_wise_TourPageData = action.payload;
+    })
+    .addCase(country_wise_TourPage.rejected, (state, action) => {
+      state.country_wise_TourPageLoaging = false;
+      state.country_wise_TourPageError =
         action.payload?.message || "Error fetching headers";
     });
   },
