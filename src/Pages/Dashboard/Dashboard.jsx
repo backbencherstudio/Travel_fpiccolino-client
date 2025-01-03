@@ -197,19 +197,9 @@ const Dashboard = () => {
           </button>
           <div></div>
           <div className="flex">
-            <input
-              type="text"
-              placeholder="Search"
-              className="p-2 border mx-5 rounded-lg bg-no-repeat bg-left pl-10 hidden md:block"
-              style={{
-                backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 24 24" width="20px" height="20px"><path d="M10 2a8 8 0 015.664 13.736l5.316 5.316a1 1 0 01-1.414 1.414l-5.316-5.316A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"></path></svg>')`,
-                backgroundSize: "16px 16px",
-                backgroundPosition: "10px center",
-              }}
-            />
-            <div className=" border mr-5 rounded-full h-10 w-10 flex justify-center items-center text-gray-400 cursor-pointer">
+            {/* <div className=" border mr-5 rounded-full h-10 w-10 flex justify-center items-center text-gray-400 cursor-pointer">
               <FaRegBell />
-            </div>
+            </div> */}
             <div className="flex">
               <div className=" border mr-1 rounded-full h-10 w-10 flex justify-center items-center text-gray-400 cursor-pointer">
                 <img

@@ -20,15 +20,12 @@ const DashboardAnalysis = () => {
   const dispatch = useDispatch();
   const [chartType, setChartType] = useState("Revenue");
   const [timeInterval, setTimeInterval] = useState("monthly");
-  const [tourDateFilter, setTourDateFilter] = useState("all");
   const { packag } = useSelector((state) => state.package);
   const { totalData, radarData } = useSelector((state) => state.dashboard);
   useEffect(() => {
-    Promise.all([
-      dispatch(getPackage({ search: "", startDate: "", endDate: "" })),
+    dispatch(getPackage({ search: "", startDate: "", endDate: "" })),
       dispatch(getDashboardData()),
-      dispatch(getRadarData()),
-    ]);
+      dispatch(getRadarData());
   }, [dispatch]);
   const [columns] = useState({
     date: true,
@@ -187,9 +184,8 @@ const DashboardAnalysis = () => {
 
       <CustomTable
         title={"Tour Package List"}
-        data={packag?.packages}
-        setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}
+        tableType="dashboard"
+        data={packag}
         columns={columns}
       />
     </div>

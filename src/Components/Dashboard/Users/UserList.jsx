@@ -17,7 +17,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        dispatch(getUser());
+        dispatch(getUser({ search: "", startDate: "", endDate: "" }));
       } catch (err) {
         console.log(err);
       }

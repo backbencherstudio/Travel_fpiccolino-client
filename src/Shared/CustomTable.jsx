@@ -91,7 +91,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
         getBlog({ search: e.target.value, startDate: "", endDate: "" })
       );
     }
-    if (tableType === "package") {
+    if (tableType === "package" || tableType === "dashboard") {
       await dispatch(
         getPackage({ search: e.target.value, startDate: "", endDate: "" })
       );
@@ -110,7 +110,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
     if (tableType === "blog") {
       await dispatch(getBlog({ search: searchQuery, startDate, endDate }));
     }
-    if (tableType === "package") {
+    if (tableType === "package" || tableType === "dashboard") {
       await dispatch(getPackage({ search: searchQuery, startDate, endDate }));
     }
     if (tableType === "user") {

@@ -5,14 +5,18 @@ export const getDateRange = (filter) => {
   switch (filter) {
     case "thisWeek":
       const firstDayOfWeek = today.getDate() - today.getDay(); // Sunday
-      startDate = new Date(today.setDate(firstDayOfWeek));
-      endDate = new Date(today.setDate(firstDayOfWeek + 6)); // Saturday
+      startDate = new Date(today);
+      startDate.setDate(firstDayOfWeek);
+      endDate = new Date(today);
+      endDate.setDate(firstDayOfWeek + 6); // Saturday
       break;
     case "lastWeek":
       const lastWeekEnd = today.getDate() - today.getDay(); // Last week's Sunday
       const lastWeekStart = lastWeekEnd - 6; // Last week's Saturday
-      startDate = new Date(today.setDate(lastWeekStart));
-      endDate = new Date(today.setDate(lastWeekEnd));
+      startDate = new Date(today);
+      startDate.setDate(lastWeekStart);
+      endDate = new Date(today);
+      endDate.setDate(lastWeekEnd);
       break;
     case "thisMonth":
       startDate = new Date(today.getFullYear(), today.getMonth(), 1); // First day of the current month
