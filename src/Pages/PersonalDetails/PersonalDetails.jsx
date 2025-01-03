@@ -75,8 +75,7 @@ const PersonalDetails = () => {
             ...data,
             ...checkout
         }
-        console.log(selectedData);
-        
+        console.log(selectedData);      
 
     };
 
@@ -87,7 +86,7 @@ const PersonalDetails = () => {
 
     return (
         <div>
-            <div className="pb-20">
+            <div className="">
                 <ParentComponent>
                     <div className="mt-20 flex">
                         <button onClick={() => removeSession()} className="flex items-center">
