@@ -9,9 +9,19 @@ axios.defaults.withCredentials = true;
 // Get all blogs
 export const getBlog = createAsyncThunk(
   "blog/getBlog",
-  async (_, { rejectWithValue }) => {
+  async ({ search = "", startDate, endDate }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}/api/blogs/allblogs`);
+      const params = {};
+      if (search) {
+        params.search = search;
+      }
+      if (startDate && endDate) {
+        params.startDate = startDate;
+        params.endDate = endDate;
+      }
+      const response = await axios.get(`${base_url}/api/blogs/allblogs`, {
+        params,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");

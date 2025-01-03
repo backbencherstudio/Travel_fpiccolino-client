@@ -66,7 +66,6 @@ const CreateBlog = () => {
           mergedOptions.push(newOption);
         }
       });
-
       return mergedOptions;
     });
   };
@@ -590,7 +589,6 @@ const CreateBlog = () => {
             </div>
           </div>
         </div>
-      
       </div>
 
       <Modal

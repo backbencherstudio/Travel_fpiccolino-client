@@ -23,19 +23,14 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import CustomDashboardButton from "./CustomDashboardButton";
 import { base_url } from "../utils/base_path";
 import { useDispatch } from "react-redux";
-import { deleteBlog } from "../features/blog/blogSlice";
+import { deleteBlog, getBlog } from "../features/blog/blogSlice";
 import moment from "moment";
 import { deletePackage } from "../features/pckage/packageSlice";
+import { getDateRange } from "./CustomDateRange";
 
-const CustomTable = ({
-  tableType = "",
-  title,
-  setDateFilter,
-  dateFilter,
-  data,
-  columns,
-}) => {
+const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [dateFilter, setDateFilter] = useState("all");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -87,7 +82,23 @@ const CustomTable = ({
       }
     }
   };
+  const handleSearch = async (e) => {
+    setSearchQuery(e.target.value);
+    if (tableType === "blog") {
+      await dispatch(
+        getBlog({ search: e.target.value, startDate: "", endDate: "" })
+      );
+    }
+  };
+  const handleDateFilterChange = async (e) => {
+    const selectedFilter = e.target.value;
+    setDateFilter(selectedFilter);
+    const { startDate, endDate } = getDateRange(selectedFilter);
 
+    if (tableType === "blog") {
+      await dispatch(getBlog({ search: searchQuery, startDate, endDate }));
+    }
+  };
   return (
     <div>
       <Paper>
@@ -111,15 +122,14 @@ const CustomTable = ({
               type="text"
               placeholder="Search..."
               className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400 w-full lg:w-[80%]"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearch(e)}
             />
             <FaSearch className="absolute top-3 left-3 text-zinc-400" />
           </div>
           <select
             className="md:col-span-1"
             value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
+            onChange={handleDateFilterChange}
             style={{
               padding: "8px 16px",
               cursor: "pointer",
@@ -130,9 +140,12 @@ const CustomTable = ({
             }}
           >
             <option value="all">All</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-            <option value="yearly">Yearly</option>
+            <option value="thisWeek">This Week</option>
+            <option value="lastWeek">Last Week</option>
+            <option value="thisMonth">This Month</option>
+            <option value="lastMonth">Last Month</option>
+            <option value="thisYear">This Year</option>
+            <option value="lastYear">Last Year</option>
           </select>
         </div>
         <TableContainer sx={{ padding: "16px" }}>
@@ -162,7 +175,6 @@ const CustomTable = ({
                 {columns?.firstName && <TableCell>First Name</TableCell>}
                 {columns?.lastName && <TableCell>Last Name</TableCell>}
                 {columns?.message && <TableCell>Message</TableCell>}
-               
               </TableRow>
             </TableHead>
 
@@ -182,7 +194,7 @@ const CustomTable = ({
                       <TableCell>{item.bookingId}</TableCell>
                     )}
                     {columns?.tourId && <TableCell>{item.bookingId}</TableCell>}
-                    
+
                     {columns?.name && (
                       <TableCell style={{ minWidth: "200px" }}>
                         <div className="flex items-center gap-3">
@@ -304,9 +316,13 @@ const CustomTable = ({
                       </TableCell>
                     )}
 
-                  {columns?.firstName && <TableCell>{item.firstName}</TableCell>}
-                  {columns?.lastName && <TableCell>{item.lastName}</TableCell>}
-                  {columns?.message && <TableCell>{item.message}</TableCell>}
+                    {columns?.firstName && (
+                      <TableCell>{item.firstName}</TableCell>
+                    )}
+                    {columns?.lastName && (
+                      <TableCell>{item.lastName}</TableCell>
+                    )}
+                    {columns?.message && <TableCell>{item.message}</TableCell>}
                   </TableRow>
                 ))}
             </TableBody>
