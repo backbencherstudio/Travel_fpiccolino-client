@@ -27,7 +27,7 @@ const Tours = () => {
 
   useEffect(() => {
     // dispatch(getHeader());
-    dispatch(getPackage());
+    dispatch(getPackage({ search: "", startDate: "", endDate: "" }));
     dispatch(get_all_inclusive_TourPagePage());
   }, []);
   // const data = headers?.filter(item => item.pageName === "tour")

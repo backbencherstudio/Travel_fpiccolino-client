@@ -5,20 +5,27 @@ import { base_url } from "../../utils/base_path";
 axios.defaults.withCredentials = true;
 
 // Async Thunks
-
-// Get all users
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async (_, { rejectWithValue }) => {
+  async ({ search = "", startDate, endDate }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}/users`);
+      const params = {};
+      if (search) {
+        params.search = search;
+      }
+      if (startDate && endDate) {
+        params.startDate = startDate;
+        params.endDate = endDate;
+      }
+      const response = await axios.get(`${base_url}/users`, {
+        params,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
-
 // Get users by category
 export const getUsersByCategory = createAsyncThunk(
   "user/getUsersByCategory",

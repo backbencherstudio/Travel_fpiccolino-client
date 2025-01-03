@@ -6,7 +6,6 @@ import { getUser } from "../../../features/users/userSlice";
 
 const UserList = () => {
   const dispatch = useDispatch();
-  const [tourDateFilter, setTourDateFilter] = useState("all");
   const [columns] = useState({
     username: true,
     phone: true,
@@ -36,8 +35,6 @@ const UserList = () => {
         title={"User List"}
         columns={columns}
         data={users}
-        setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}
       />
     </div>
   );

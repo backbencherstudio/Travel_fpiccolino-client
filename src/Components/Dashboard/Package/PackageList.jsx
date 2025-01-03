@@ -7,16 +7,15 @@ import { getPackage } from "../../../features/pckage/packageSlice";
 const PackageList = () => {
   const dispatch = useDispatch();
   const { packag } = useSelector((state) => state.package);
-  console.log(packag);
   useEffect(() => {
-    dispatch(getPackage());
+    dispatch(getPackage({ search: "", startDate: "", endDate: "" }));
   }, []);
-  const [tourDateFilter, setTourDateFilter] = useState("all");
   const [columns] = useState({
     date: true,
     duration: true,
     destination: true,
     amount: true,
+    country: true,
     action: true,
   });
 
@@ -28,8 +27,6 @@ const PackageList = () => {
         title={"Package List"}
         columns={columns}
         data={packag}
-        setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}
       />
     </div>
   );

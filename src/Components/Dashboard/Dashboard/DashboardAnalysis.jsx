@@ -25,7 +25,7 @@ const DashboardAnalysis = () => {
   const { totalData, radarData } = useSelector((state) => state.dashboard);
   useEffect(() => {
     Promise.all([
-      dispatch(getPackage()),
+      dispatch(getPackage({ search: "", startDate: "", endDate: "" })),
       dispatch(getDashboardData()),
       dispatch(getRadarData()),
     ]);

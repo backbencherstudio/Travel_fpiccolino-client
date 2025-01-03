@@ -40,15 +40,23 @@ export const createPackage = createAsyncThunk(
   }
 );
 
-// Get Package List
 export const getPackage = createAsyncThunk(
-  "package/get",
-  async (_, { rejectWithValue }) => {
+  "package/getPackage",
+  async ({ search = "", startDate, endDate }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}/package`);
+      const params = {};
+      if (search) {
+        params.search = search;
+      }
+      if (startDate && endDate) {
+        params.startDate = startDate;
+        params.endDate = endDate;
+      }
+      const response = await axios.get(`${base_url}/package`, {
+        params,
+      });
       return response.data;
     } catch (error) {
-      console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }

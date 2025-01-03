@@ -1,27 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
-import { userData } from "../../../ALLJsonFile/const";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { getPackage } from "../../../features/pckage/packageSlice";
 
 const OrderList = () => {
-  const [tourDateFilter, setTourDateFilter] = useState("all");
+  const dispatch = useDispatch();
+  const { packag } = useSelector((state) => state.package);
+  useEffect(() => {
+    dispatch(getPackage({ search: "", startDate: "", endDate: "" }));
+  }, []);
   const [columns] = useState({
-    username: true,
-    phone: true,
-    email: true,
+    date: true,
+    duration: true,
+    destination: true,
+    amount: true,
     country: true,
+    action: true,
   });
 
   return (
     <div>
       <CustomHeadingDashboard />
       <CustomTable
-        tableType={"user"}
+        tableType={"package"}
         title={"Order List"}
         columns={columns}
-        data={userData}
-        setDateFilter={setTourDateFilter}
-        dateFilter={tourDateFilter}
+        data={packag}
       />
     </div>
   );

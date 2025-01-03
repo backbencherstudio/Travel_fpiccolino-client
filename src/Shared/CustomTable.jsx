@@ -25,8 +25,10 @@ import { base_url } from "../utils/base_path";
 import { useDispatch } from "react-redux";
 import { deleteBlog, getBlog } from "../features/blog/blogSlice";
 import moment from "moment";
-import { deletePackage } from "../features/pckage/packageSlice";
+
 import { getDateRange } from "./CustomDateRange";
+import { deletePackage, getPackage } from "../features/pckage/packageSlice";
+import { getUser } from "../features/users/userSlice";
 
 const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -89,6 +91,16 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
         getBlog({ search: e.target.value, startDate: "", endDate: "" })
       );
     }
+    if (tableType === "package") {
+      await dispatch(
+        getPackage({ search: e.target.value, startDate: "", endDate: "" })
+      );
+    }
+    if (tableType === "user") {
+      await dispatch(
+        getUser({ search: e.target.value, startDate: "", endDate: "" })
+      );
+    }
   };
   const handleDateFilterChange = async (e) => {
     const selectedFilter = e.target.value;
@@ -97,6 +109,12 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
 
     if (tableType === "blog") {
       await dispatch(getBlog({ search: searchQuery, startDate, endDate }));
+    }
+    if (tableType === "package") {
+      await dispatch(getPackage({ search: searchQuery, startDate, endDate }));
+    }
+    if (tableType === "user") {
+      await dispatch(getUser({ search: searchQuery, startDate, endDate }));
     }
   };
   return (
@@ -164,12 +182,13 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.category && <TableCell>Category</TableCell>}
                 {columns?.email && <TableCell>Email</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
-                {columns?.country && <TableCell>Country</TableCell>}
+
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.duration && <TableCell>Duration</TableCell>}
                 {columns?.date && <TableCell>Date</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
+                {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
                 {columns?.action && <TableCell>Action</TableCell>}
                 {columns?.firstName && <TableCell>First Name</TableCell>}
@@ -250,7 +269,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     )}
                     {columns?.email && <TableCell>{item.email}</TableCell>}
                     {columns?.phone && <TableCell>{item.phone}</TableCell>}
-                    {columns?.country && <TableCell>{item.country}</TableCell>}
+
                     {columns?.traveler && (
                       <TableCell style={{ minWidth: "200px" }}>
                         <div className="flex items-center gap-3">
@@ -290,6 +309,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                       </TableCell>
                     )}
                     {columns?.amount && <TableCell>{item.amount}</TableCell>}
+                    {columns?.country && <TableCell>{item.country}</TableCell>}
                     {columns?.status && <TableCell>{item.status}</TableCell>}
                     {columns?.action && (
                       <TableCell>
