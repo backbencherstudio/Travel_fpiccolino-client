@@ -3,19 +3,20 @@
 // import { base_url } from "../../utils/base_path";
 import ParentComponent from "../ParentComponent/ParentComponent";
 // import image from "../../assets/Images/about.jpg";
-const HeroScetion = ({ heroContent }) => {  
+const HeroScetion = ({ heroContent }) => {
   const {
-    image,
+    heroImage,
     titleOne,
     descriptionOne,
     titleTwo,
     descriptionTwo,
     blogDetailsTitle,
   } = heroContent;
+
   return (
     <div>
       <div className="h-[600px] w-full relative ">
-        <img className="w-full h-full object-cover " src={image} alt="" />
+        <img className="w-full h-full object-cover " src={heroImage} alt="" />
         <div className="absolute w-full h-full  inset-0 bg-gradient-to-t to-[#000000c4] from-transparent "></div>
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full">
           <ParentComponent>
