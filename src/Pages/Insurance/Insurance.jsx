@@ -60,15 +60,11 @@ const Insurance = () => {
         insurance: isSelectInsurance,
         toureAmount: totalAmount
     }
-
     console.log(toureData);
-
 
     const navigate = useNavigate()
 
     const addDataFun = () => {
-        console.log("hit");
-
         dispatch(createCheckout({ ...toureData }))
         navigate(`/personalDetails`);
     };
@@ -137,7 +133,7 @@ const Insurance = () => {
                                     <span className="flex items-start justify-between mb-3">
                                         {moment(checkout?.tourDate).utc().format("DD/MM/YYYY HH:mm")}
                                         <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                                            € {checkout?.totalPackageAmount}
+                                            € = {checkout?.totalPackageAmount}
                                         </h2>
                                     </span>
                                     <span className="flex items-start justify-between mb-3">
@@ -151,7 +147,7 @@ const Insurance = () => {
                                         <span className="flex items-start justify-between mb-3">
                                             <h2 className="flex items-center">Flight Amount</h2>
                                             <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                                                € {checkout?.flightPrice}
+                                                € = {checkout?.flightPrice}
                                             </h2>
                                         </span>
                                     )}
@@ -166,14 +162,14 @@ const Insurance = () => {
                                                 Insurance
                                             </h2>
                                             <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                                                € {isSelectInsurance?.price}
+                                                € = {isSelectInsurance?.price}
                                             </h2>
                                         </span>
                                     )}
 
                                     <span className="flex items-start justify-between mb-3 border-t pt-2">
                                         <h2>Total</h2>
-                                        <h2 className="text-[20px] font-semibold">€ {totalAmount}</h2>
+                                        <h2 className="text-[20px] font-semibold">€ = {totalAmount}</h2>
                                     </span>
 
                                     <span className="pb-5 block">
