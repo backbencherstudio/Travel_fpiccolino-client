@@ -7,8 +7,10 @@ import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import banner from "../../assets/eve.jpg";
 import ProgressBars from "../../Shared/ProgressBars";
+import { useNavigate } from "react-router-dom";
 
 const BlurSliderSection = ({ country }) => {
+  const navigate = useNavigate();
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -18,78 +20,6 @@ const BlurSliderSection = ({ country }) => {
   console.log("BlurSliderSection", country);
 
   const { title, description, data } = country;
-  const cardDetails = [
-    {
-      image: natureImage,
-      title: "Peru ",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage2,
-      title: "Edinburgh",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage,
-      title: "Peru ",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage2,
-      title: "Edinburgh",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage,
-      title: "Peru ",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage2,
-      title: "Edinburgh",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage,
-      title: "Peru ",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage2,
-      title: "Edinburgh",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage,
-      title: "Peru ",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-    {
-      image: natureImage2,
-      title: "Edinburgh",
-      duratioin: "7 night/ 8 day",
-      price: 189,
-      isInclusive: true,
-    },
-  ];
 
   // Check the screen size
   useEffect(() => {
@@ -153,10 +83,7 @@ const BlurSliderSection = ({ country }) => {
       <div className="grid grid-cols-1 lg:grid-cols-9 lg:pl-20">
         {/* Headline Section */}
         <div className="col-span-2 max-w-[450px] z-20 relative mx-auto mb-10 md:lg-0 md:content-center">
-          <HeadLine2
-            title={title}
-            description={description}
-          />
+          <HeadLine2 title={title} description={description} />
         </div>
         <div className="col-span-1"></div>
 
@@ -187,23 +114,31 @@ const BlurSliderSection = ({ country }) => {
               },
             }}
           >
-            {data?.map((item, index) => (
-              <SwiperSlide key={index}>
-                <div className="p-5 rounded-lg bg-transparent shadow-md card_style items-center text-center content-center h-[420px] mx-5 lg:mx-0">
-                  <h3 className="lg:text-[48px] text-[28px] font-duera-expanded font-extrabold text-white">
-                    {item?.name}
-                  </h3>
-                  <div className="flex justify-center">
-                    <p className="mr-3 primary_text font-semibold text-[14px] lg:text-[18px]">
-                      €{item?.lowestAmount}
-                    </p>
-                    <s className="text-[#E9E9EA] font-semibold text-[14px] lg:text-[18px]">
-                      €{item.price}
-                    </s>
+            {data?.map((item, index) => {
+              let lowestAmounts = Math.round(
+                item?.lowestAmount + item?.lowestAmount * 0.1
+              );
+              return (
+                <SwiperSlide key={index}>
+                  <div
+                    onClick={() => navigate(`/tours/country/${item._id}`)}
+                    className="p-5 cursor-pointer rounded-lg bg-transparent shadow-md card_style items-center text-center content-center h-[420px] mx-5 lg:mx-0"
+                  >
+                    <h3 className="lg:text-[48px] text-[28px] font-duera-expanded font-extrabold text-white">
+                      {item?.name}
+                    </h3>
+                    <div className="flex justify-center">
+                      <p className="mr-3 primary_text font-semibold text-[14px] lg:text-[18px]">
+                        €{item?.lowestAmount}
+                      </p>
+                      <s className="text-[#E9E9EA] font-semibold text-[14px] lg:text-[18px]">
+                        €{lowestAmounts}
+                      </s>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
       </div>
