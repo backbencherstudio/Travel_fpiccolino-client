@@ -81,8 +81,6 @@ const Flight = () => {
         navigate(`/insurance/${packageDetails?._id}`);
     };
 
-
-
     return (
         <div>
             <div className="pb-20">
