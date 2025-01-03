@@ -36,12 +36,12 @@ const PersonalDetails = () => {
         setTravler(parseInt())
     }, [checkout])
 
-    // useEffect(() => {
-    //     if (!checkout || Object.keys(checkout).length === 0) {
-    //         console.log("Checkout empty. Redirecting...");
-    //         // navigate("/");
-    //     }
-    // }, [checkout, navigate]);
+    useEffect(() => {
+        if (!checkout || Object.keys(checkout).length === 0) {
+            console.log("Checkout empty. Redirecting...");
+            navigate("/tours");
+        }
+    }, [checkout, navigate]);
 
     const handleChange = (event) => {
         setValue(event.target.value);
