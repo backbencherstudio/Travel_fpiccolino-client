@@ -71,11 +71,11 @@ const PersonalDetails = () => {
 
 
     const onSubmit = (data) => {
-        const selected = {
+        const selectedData = {
             ...data,
             ...checkout
         }
-        console.log(selected);
+        console.log(selectedData);
         
 
     };
