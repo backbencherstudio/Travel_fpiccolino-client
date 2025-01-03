@@ -72,7 +72,6 @@ const Flight = () => {
 
   const addDataFun = () => {
     dispatch(createCheckout(toureData));
-    localStorage.setItem("toureData", JSON.stringify(toureData));
     navigate(`/insurance/${packageDetails?._id}`);
   };
 
