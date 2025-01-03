@@ -28,7 +28,7 @@ const UpdatePackage = () => {
   const [bookedFlights, setBookedFlights] = useState([]);
   const [openInsuranceModal, setOpenInsuranceModal] = useState(false);
   const [insurance, setInsurance] = useState([]);
-  const [category, setCategory] = useState("All inclusive");
+  const [category, setCategory] = useState("");
   const [uploadedImages, setUploadedImages] = useState([]);
   const [images, setImages] = useState([]);
   const [updateImageIndex, setUpdateImageIndex] = useState(null);
@@ -93,6 +93,18 @@ const UpdatePackage = () => {
     fetchData();
   }, [params.id]);
   const onSubmit = (data) => {
+    const allImages = [...uploadedImages, ...images];
+    const allHotelImages = [...uploadedHotelImages, ...hotelImages];
+
+    if (allImages.length < 2) {
+      toast.warn("At least 2 images required for this package.");
+      return;
+    }
+
+    if (allHotelImages.length < 2) {
+      toast.warn("At least 2 hotel images required for this package.");
+      return;
+    }
     const combinedIncludeItems = [
       ...selectedIncludeItems.map((item) => ({
         name: typeof item.name === "object" ? item.name.name : item.name,
@@ -103,16 +115,6 @@ const UpdatePackage = () => {
         text: icon.text || "",
       })),
     ];
-
-    const uniqueIncludeItems = Array.from(
-      new Map(
-        combinedIncludeItems.map((item) => [
-          item.name,
-          { name: item.name, text: item.text },
-        ])
-      ).values()
-    );
-
     const combinedNotIncludeItems = [
       ...selectedNotIncludeItems.map((item) => ({
         name: typeof item.name === "object" ? item.name.name : item.name,
@@ -123,24 +125,15 @@ const UpdatePackage = () => {
         text: icon.text || "",
       })),
     ];
-
-    const uniqueNotIncludeItems = Array.from(
-      new Map(
-        combinedNotIncludeItems.map((item) => [
-          item.name,
-          { name: item.name, text: item.text },
-        ])
-      ).values()
-    );
     const packageData = {
-      includeItems: uniqueIncludeItems,
-      notIncludeItems: uniqueNotIncludeItems,
+      includeItems: combinedIncludeItems,
+      notIncludeItems: combinedNotIncludeItems,
       bookedFlights,
       insurance,
       category,
       country: selectedCountry,
-      images: [...uploadedImages, ...images],
-      hotelImages: [...uploadedHotelImages, ...hotelImages],
+      images: allImages,
+      hotelImages: allHotelImages,
       ...data,
     };
     if (isUpdate) {
@@ -417,7 +410,7 @@ const UpdatePackage = () => {
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteImage(index, true)}
+                        onClick={() => handleDeleteImage(index + 1, true)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -518,11 +511,11 @@ const UpdatePackage = () => {
                         className="h-[100px] w-full object-cover rounded-lg cursor-pointer"
                         src={`${base_url}${img}`} // Use base_url to resolve paths
                         alt={`Uploaded Preview ${index + 1}`}
-                        onClick={() => handleUpdateHotelImage(index, true)}
+                        onClick={() => handleUpdateHotelImage(index + 1, true)}
                       />
                       <button
                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                        onClick={() => handleDeleteHotelImage(index, true)}
+                        onClick={() => handleDeleteHotelImage(index + 1, true)}
                       >
                         <DeleteOutlined />
                       </button>
@@ -572,7 +565,7 @@ const UpdatePackage = () => {
               country={selectedCountry}
               setCountry={setSelectedCountry}
             />
-            <SelectCategory category={category} setCategory={setCategory} />
+            {/* <SelectCategory category={category} setCategory={setCategory} /> */}
           </div>
         </div>
       </form>

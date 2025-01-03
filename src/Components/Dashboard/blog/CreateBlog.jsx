@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
+import { useNavigate } from "react-router-dom";
+
 const CreateBlog = () => {
   const style = {
     position: "absolute",
@@ -51,32 +53,32 @@ const CreateBlog = () => {
   const updateOptions = (apiResponse) => {
     const newOptions = apiResponse.Categories.map((categoryObj) => {
       const value = Object.keys(categoryObj)[0];
-      const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
+      const label =
+        value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
       return { value, label };
     });
-  
+
     setOptions((prevOptions) => {
       const mergedOptions = [...prevOptions];
-  
+
       newOptions.forEach((newOption) => {
         if (!prevOptions.some((option) => option.value === newOption.value)) {
           mergedOptions.push(newOption);
         }
       });
-  
+
       return mergedOptions;
     });
   };
 
-
   useEffect(() => {
     const fetchCategoryCount = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/blogs/categoryCount");
+        const response = await axios.get(`${base_url}/api/blogs/categoryCount`);
         updateOptions(response.data); // Assume the response has the data you need
       } catch (err) {
         setError(err.message || "An error occurred");
-      } 
+      }
     };
 
     fetchCategoryCount();
@@ -255,8 +257,8 @@ const CreateBlog = () => {
         },
       ],
       tag: tagvalue,
-      learn : learnlist.Learn,
-      thought : thoughtlist.thought,
+      learn: learnlist.Learn,
+      thought: thoughtlist.thought,
       category: selectedCategory,
       contentList: contentList.map((content, index) => ({
         headings: content.headings,
@@ -376,31 +378,32 @@ const CreateBlog = () => {
             </div>
           )}
 
-          {contentList && contentList?.map((content, index) => (
-            <div className="border rounded-lg p-4 mb-5" key={index}>
-              <div>
-                {content.image && (
-                  <img
-                    className="rounded-lg"
-                    src={URL.createObjectURL(content.image)}
-                    alt="Content Preview"
-                  />
-                )}
+          {contentList &&
+            contentList?.map((content, index) => (
+              <div className="border rounded-lg p-4 mb-5" key={index}>
+                <div>
+                  {content.image && (
+                    <img
+                      className="rounded-lg"
+                      src={URL.createObjectURL(content.image)}
+                      alt="Content Preview"
+                    />
+                  )}
+                </div>
+                <div className="mt-4">
+                  {content.headings.map((heading, idx) => (
+                    <h3 key={idx} className="text-[#141D2A] font-semibold mb-2">
+                      {heading}
+                    </h3>
+                  ))}
+                  {content.paragraphs.map((paragraph, idx) => (
+                    <p key={idx} className="text-[#141D2A] mb-2">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
-              <div className="mt-4">
-                {content.headings.map((heading, idx) => (
-                  <h3 key={idx} className="text-[#141D2A] font-semibold mb-2">
-                    {heading}
-                  </h3>
-                ))}
-                {content.paragraphs.map((paragraph, idx) => (
-                  <p key={idx} className="text-[#141D2A] mb-2">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
 
           <div className="flex justify-end">
             <button
@@ -430,75 +433,78 @@ const CreateBlog = () => {
             />
           </div> */}
 
-
           {/* ----------------------------------------------------------------------------------------------------- */}
           <div className="border rounded-lg p-4 mb-4">
-          <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
-             Add Learn Basic Local Phrases
+            <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
+              Add Learn Basic Local Phrases
             </h2>
-          
-            {learnlist && learnlist?.Learn.map((sentence, index) => (
-        <div key={index} className="flex items-center gap-4 mb-3">
-          <input
-            type="text"
-            placeholder={`Sentence ${index + 1}`}
-            value={sentence}
-            onChange={(e) => handlesentenceInputChange(e, "sentence", index)}
-            className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            type="button"
-            onClick={() => handleRemoveSentence(index)}
-            className="text-red-500 bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
-          >
-            Remove
-          </button>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={handleAddSentence}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-      >
-        Add Sentence
-      </button>
+
+            {learnlist &&
+              learnlist?.Learn.map((sentence, index) => (
+                <div key={index} className="flex items-center gap-4 mb-3">
+                  <input
+                    type="text"
+                    placeholder={`Sentence ${index + 1}`}
+                    value={sentence}
+                    onChange={(e) =>
+                      handlesentenceInputChange(e, "sentence", index)
+                    }
+                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveSentence(index)}
+                    className="text-red-500 bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            <button
+              type="button"
+              onClick={handleAddSentence}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+            >
+              Add Sentence
+            </button>
           </div>
-{/* ------------------------------------------------------------------------ */}
+          {/* ------------------------------------------------------------------------ */}
           {/* ----------------------------------------------------------------------------------------------------- */}
           <div className="border rounded-lg p-4 mb-4">
-          <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
-             Add Final Thoughts
+            <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
+              Add Final Thoughts
             </h2>
-          
-            {thoughtlist && thoughtlist?.thought.map((sentence, index) => (
-        <div key={index} className="flex items-center gap-4 mb-3">
-          <input
-            type="text"
-            placeholder={`Sentence ${index + 1}`}
-            value={sentence}
-            onChange={(e) => handlethoughtInputChange(e, "sentence", index)}
-            className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            type="button"
-            onClick={() => handleRemovethought(index)}
-            className="text-red-500 bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
-          >
-            Remove
-          </button>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={handleAddthought}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-      >
-        Add Sentence
-      </button>
+
+            {thoughtlist &&
+              thoughtlist?.thought.map((sentence, index) => (
+                <div key={index} className="flex items-center gap-4 mb-3">
+                  <input
+                    type="text"
+                    placeholder={`Sentence ${index + 1}`}
+                    value={sentence}
+                    onChange={(e) =>
+                      handlethoughtInputChange(e, "sentence", index)
+                    }
+                    className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemovethought(index)}
+                    className="text-red-500 bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            <button
+              type="button"
+              onClick={handleAddthought}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+            >
+              Add Sentence
+            </button>
           </div>
-{/* ------------------------------------------------------------------------ */}
-
-
+          {/* ------------------------------------------------------------------------ */}
 
           <div className="border rounded-lg p-4 mb-4">
             <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2">
@@ -584,6 +590,7 @@ const CreateBlog = () => {
             </div>
           </div>
         </div>
+      
       </div>
 
       <Modal

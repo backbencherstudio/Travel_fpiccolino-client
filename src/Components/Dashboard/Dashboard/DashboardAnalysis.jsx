@@ -22,7 +22,7 @@ const DashboardAnalysis = () => {
   const [timeInterval, setTimeInterval] = useState("monthly");
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const { packag } = useSelector((state) => state.package);
-  const { totalData } = useSelector((state) => state.dashboard);
+  const { totalData, radarData } = useSelector((state) => state.dashboard);
   useEffect(() => {
     Promise.all([
       dispatch(getPackage()),
@@ -37,23 +37,11 @@ const DashboardAnalysis = () => {
     amount: true,
     // action: true,
   });
-  const radarData = {
-    categories: [
-      "All inclusive",
-      "USA",
-      "Italy",
-      "Japan",
-      "Thailand",
-      "Africa",
-      "Bali",
-    ],
-    completed: [80, 50, 30, 40, 100, 20, 60],
-    pending: [20, 30, 40, 80, 20, 80, 40],
-  };
+
   const dashboardData = [
     {
       title: "Revenue",
-      amount: "$850,930",
+      amount: "850,930",
       percent: 12,
       bgColor: "bg-teal-50",
       bgColor2: "bg-teal-100",
@@ -62,7 +50,7 @@ const DashboardAnalysis = () => {
       image: revenue,
       revenueData: [
         { x: "Jan", y: 12000 },
-        { x: "Feb", y: 5000 },
+        { x: "Feb", y: 15000 },
         { x: "Mar", y: 17000 },
         { x: "Apr", y: 19000 },
         { x: "May", y: 27000 },
@@ -76,7 +64,7 @@ const DashboardAnalysis = () => {
         { x: "2021", y: 25000 },
         { x: "2022", y: 30000 },
         { x: "2023", y: 35000 },
-        { x: "2024", y: 10000 },
+        { x: "2024", y: 20000 },
         { x: "2025", y: 50000 },
       ],
     },
@@ -94,10 +82,10 @@ const DashboardAnalysis = () => {
         { x: "Feb", y: 15000 },
         { x: "Mar", y: 17000 },
         { x: "Apr", y: 19000 },
-        { x: "May", y: 17000 },
+        { x: "May", y: 27000 },
         { x: "June", y: 17000 },
         { x: "Week 1", y: 1000 },
-        { x: "Week 2", y: 3200 },
+        { x: "Week 2", y: 1200 },
         { x: "Week 3", y: 1100 },
         { x: "Week 4", y: 1400 },
         { x: "Week 5", y: 1100 },
@@ -111,7 +99,7 @@ const DashboardAnalysis = () => {
     },
     {
       title: "Profit",
-      amount: "$80,930",
+      amount: "80,930",
       percent: 6,
       bgColor: "bg-red-50",
       bgColor2: "bg-red-100",
@@ -123,19 +111,19 @@ const DashboardAnalysis = () => {
         { x: "Feb", y: 15000 },
         { x: "Mar", y: 17000 },
         { x: "Apr", y: 19000 },
-        { x: "May", y: 17000 },
+        { x: "May", y: 27000 },
         { x: "June", y: 17000 },
         { x: "Week 1", y: 1000 },
         { x: "Week 2", y: 1200 },
         { x: "Week 3", y: 1100 },
         { x: "Week 4", y: 1400 },
         { x: "Week 5", y: 1100 },
-        { x: "Week 6", y: 800 },
-        { x: "2021", y: 15000 },
+        { x: "Week 6", y: 1800 },
+        { x: "2021", y: 25000 },
         { x: "2022", y: 30000 },
         { x: "2023", y: 35000 },
         { x: "2024", y: 20000 },
-        { x: "2025", y: 10000 },
+        { x: "2025", y: 50000 },
       ],
     },
   ];
@@ -192,7 +180,7 @@ const DashboardAnalysis = () => {
             )}
           </div>
           <div className="md:col-span-1 border my-4 rounded-xl">
-            <RadarChart data={radarData} />
+            <RadarChart data={radarData?.radarData} />
           </div>
         </div>
       </div>

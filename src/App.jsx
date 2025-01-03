@@ -25,6 +25,7 @@ function App() {
       <RouterProvider router={router} />
       <Toaster />
       <ToastContainer />
+      
     </>
   );
 }

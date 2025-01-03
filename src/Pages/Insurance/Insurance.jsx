@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { GoChevronLeft } from "react-icons/go";
@@ -8,19 +8,34 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InsuranceData } from "../../ALLJsonFile/const";
+import { useDispatch, useSelector } from "react-redux";
+import { getCheckout } from "../../features/checkout/checkoutSlice";
 
 const Insurance = () => {
     const [isSelect, setSelectId] = useState("")
+    const { id } = useParams();
 
-    
+    const { checkout } = useSelector(
+        (state) => state.checkout
+    );
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getCheckout())
+    }, [])
+
+    console.log(checkout);
+
+
+
     return (
         <div>
             <div className="pb-20" >
                 <ParentComponent>
                     <div className="mt-20 flex  ">
-                        <Link to="/flight/dd" className="flex items-center">
+                        <Link to={`/flight/${id}`} className="flex items-center">
                             <GoChevronLeft className="text-xl" /> Back to flight
                         </Link>
                     </div>
@@ -46,7 +61,7 @@ const Insurance = () => {
 
 
                                 {
-                                    InsuranceData?.map(item => <div key={item?._id} onClick={()=>setSelectId(item.id)} className="border border-[#E86731] hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer " >
+                                    InsuranceData?.map(item => <div key={item?._id} onClick={() => setSelectId(item.id)} className="border border-[#E86731] hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer " >
                                         <div className=" md:w-[90%] " >
                                             <h2 className="text-[#E86731]  " >{item.title}</h2>
                                             <p className="text-[#141D2A]" >{item.discription}.</p>

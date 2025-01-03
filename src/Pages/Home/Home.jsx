@@ -14,6 +14,7 @@ import { getHomePageData } from '../../features/pageData/pageDataSlice';
 // import { getHeader } from '../../features/header/headerSlice';
 import HeroScetion from '../../Shared/HeroComponent/HeroScetion';
 
+
 const Home = () => {
 
     const dispatch = useDispatch()
@@ -82,6 +83,7 @@ const Home = () => {
             }
             <JourneySection />
             <BottomBannerSection />
+           
         </div>
     );
 };

@@ -7,6 +7,7 @@ import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg";
+import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getHeader } from "../../features/header/headerSlice";
@@ -71,3 +72,4 @@ const Tours = () => {
 };
 
 export default Tours;
+

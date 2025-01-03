@@ -1,17 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import blogDetailsImage from "../../assets/Images/blogDetails.jpg";
 import iconn1 from "../../assets/icone/icone1.png";
 import iconn2 from "../../assets/icone/icone2.png";
 import iconn3 from "../../assets/icone/icone3.png";
 import iconn4 from "../../assets/icone/icone4.png";
 import yes from "../../assets/icone/yes.png";
-import flight from "../../assets/icone/flight.png";
-import image1 from "../../assets/Image1.jpg";
-import image2 from "../../assets/Image2.jpg";
-import image3 from "../../assets/Image3.jpg";
-import image4 from "../../assets/Image4.jpg";
 import { useEffect, useState } from "react";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { reviews } from "../../ALLJsonFile/const";
@@ -42,6 +36,7 @@ import {
 } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
 import moment from "moment";
+import { base_url } from "../../utils/base_path";
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -88,14 +83,7 @@ const TourDetails = () => {
     { icon: iconn1, tag: "Forever summer" },
   ];
 
-  const images = [
-    { image: image1 },
-    { image: image2 },
-    { image: image3 },
-    { image: image4 },
-  ];
-
-  const [imagePath, setImagePath] = useState(image3);
+  const [imagePath, setImagePath] = useState(packageDetails?.hotelImages[0]);
 
   return (
     <div className="text-black">
@@ -267,15 +255,15 @@ const TourDetails = () => {
                 </div>
 
                 <div className="flex flex-wrap justify-center lg:gap-4 py-5 lg:py-0  ">
-                  {images?.map((item) => (
+                  {packageDetails?.hotelImages.slice(0, 4)?.map((img) => (
                     <img
-                      key={item?._id}
-                      src={item.image}
+                      key={img}
+                      src={`${base_url}${img}`}
                       onClick={() => {
-                        setImagePath(item.image);
+                        setImagePath(img);
                       }}
                       className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${
-                        item?.image === imagePath
+                        img === imagePath
                           ? "border-2 border-red-500"
                           : "border-2 border-transparent"
                       } `}
@@ -288,7 +276,9 @@ const TourDetails = () => {
               <div className=" col-span-12 lg:col-span-5 h-[400px] lg:h-[720px] w-[100%]  ">
                 <img
                   className="h-full w-[100%] rounded-xl object-cover "
-                  src={imagePath}
+                  src={`${base_url}${
+                    imagePath ? imagePath : packageDetails?.hotelImages[0]
+                  }`}
                   alt=""
                 />
               </div>
