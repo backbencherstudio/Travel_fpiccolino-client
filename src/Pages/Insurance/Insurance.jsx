@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { InsuranceData } from "../../ALLJsonFile/const";
 import { useDispatch, useSelector } from "react-redux";
 import { getCheckout } from "../../features/checkout/checkoutSlice";
+import moment from "moment";
 
 const Insurance = () => {
     const [isSelect, setSelectId] = useState("")
@@ -61,17 +62,16 @@ const Insurance = () => {
 
 
                                 {
-                                    InsuranceData?.map(item => <div key={item?._id} onClick={() => setSelectId(item.id)} className="border border-[#E86731] hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer " >
+                                    checkout?.insurance?.map(item => <div key={item?._id} onClick={() => setSelectId(item.id)} className="border border-[#E86731] hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer " >
                                         <div className=" md:w-[90%] " >
-                                            <h2 className="text-[#E86731]  " >{item.title}</h2>
-                                            <p className="text-[#141D2A]" >{item.discription}.</p>
+                                            <h2 className="text-[#E86731]  " >{item.insuranceName}</h2>
+                                            <p className="text-[#141D2A]" >{item.description}.</p>
 
                                             <button className="underline text-[#E86731]" >Read more</button>
                                         </div>
-                                        <h2 className=" w-[15%] md:w-[8%] text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded " >+€45</h2>
+                                        <h2 className=" w-[15%] md:w-[8%] text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded " >+€ {item?.price}</h2>
                                     </div>)
                                 }
-
 
 
                             </div>
@@ -84,36 +84,48 @@ const Insurance = () => {
                             <div className=" shadow-lg rounded-lg p-2 md:p-10">
 
                                 <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
-                                <p>8 Days / 7 Nights</p>
+                                <p>{checkout?.tureDuration?.days} Days / {checkout?.tureDuration?.nights} Nights</p>
+                                {/* <p>
+                                    {checkout?.tourDuration.days} Days /{" "}
+                                    {checkout?.tourDuration.nights} Nights
+                                </p> */}
 
                                 <div className="border border-b-[#c8c8ce] mt-3"></div>
 
                                 <div className="mt-4">
-                                    <span className="flex items-start justify-between mb-3 " >
-                                        <h2>April 19 - 26</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ 653 </h2>
+                                    {/* <h2>April 19 - 26</h2>
+                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ 653 </h2> */}
+                                    <span className="flex items-start justify-between mb-3">
+                                        {moment(checkout?.tourDate)
+                                            .utc()
+                                            .format("DD/MM/YYYY HH:mm")}
+                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                                            € {checkout?.totalPackageAmount}
+                                        </h2>
                                     </span>
                                     <span className="flex items-start justify-between mb-3 " >
                                         <h2>Passengers</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >X1 </h2>
-                                    </span>
-                                    <span className="flex items-start justify-between mb-3 " >
-                                        <h2>Room</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >Private Double </h2>
+                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " > {checkout?.person} </h2>
                                     </span>
 
-                                    <span className="flex items-start justify-between mb-3 border-b pb-5 " >
-                                        <h2>Included services</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " > <MdKeyboardArrowDown /> </h2>
-                                    </span>
+                                    {
+                                        checkout?.flightPrice &&
+                                        <span className="flex items-start justify-between mb-3">
+                                            <h2 className="flex items-center ">
+                                                Flight Amount
+                                            </h2>
+                                            <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                                                € {checkout?.flightPrice}
+                                            </h2>
+                                        </span>
+                                    }
 
-                                    <span className="flex items-start justify-between mb-3 " >
+                                    <span className="flex items-start justify-between mb-3 border-t pt-2 " >
                                         <h2>Total</h2>
-                                        <h2 className="text-[20px] font-semibold " >€ 2,345</h2>
+                                        <h2 className="text-[20px] font-semibold " >€ {checkout?.toureAmount} </h2>
                                     </span>
 
                                     <span className=" pb-5 block " >
-                                        <p className="text-[#72777F] xl:pr-10" >or 3 installments of €232.66 interest-free.</p>
                                         <h2 className="flex items-center" ><FaHeart /> <p className="px-1 text-[#272727] font-bold " >scalapay</p> <CiCircleInfo /> </h2>
                                     </span>
 

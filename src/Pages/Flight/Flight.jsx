@@ -58,6 +58,9 @@ const Flight = () => {
 
     const handleRemoveFlight = () => setAddFlight(false);
 
+    console.log(packageDetails);
+    
+
     // order/addToCard
     const toureData = {
         toureId: packageDetails?._id,
@@ -66,13 +69,14 @@ const Flight = () => {
         flight: addFlight && highLight,
         flightPrice: addFlight && totalFlightAmount,
         person,
-        tureDuration: packageDetails?.tourDuration
+        tureDuration: packageDetails?.tourDuration,
+        totalPackageAmount: updateToureAmount,
+        insurance : packageDetails?.insurance
     }
     const navigate = useNavigate()
 
     const addDataFun = () => {
         dispatch(createCheckout(toureData))
-        localStorage.setItem("toureData", JSON.stringify(toureData));
         navigate(`/insurance/${packageDetails?._id}`);
     };
 
@@ -211,7 +215,6 @@ const Flight = () => {
                                     {/* </div> */}
                                 </div>
                             </div>
-
                         </div>
 
                         <div className="col-span-12 lg:col-span-4 mt-5 lg:mt-0">
