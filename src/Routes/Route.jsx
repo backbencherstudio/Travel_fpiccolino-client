@@ -66,6 +66,10 @@ export const router = createBrowserRouter([
         element: <TourDetails />,
       },
       {
+        path: "/tours/country/:id",
+        element: <Tours />,
+      },
+      {
         path: "/blog",
         element: <Blog />,
       },
