@@ -96,17 +96,7 @@ const Dashboard = () => {
             <LuClipboardList />
             <span>Orders</span>
           </button>
-          <button
-            onClick={() => handleNavigation("AddCountry", "addCountry")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "AddCountry"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <BiBookContent />
-            <span>Add Country</span>
-          </button>
+
           <button
             onClick={() => handleNavigation("Package", "package")}
             className={`flex items-center space-x-2 p-2 rounded ${
@@ -141,7 +131,28 @@ const Dashboard = () => {
             <GrArticle />
             <span>Blog</span>
           </button>
-
+          <button
+            onClick={() => handleNavigation("contact", "contact")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "contact"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <IoMdContacts />
+            <span>Contacts</span>
+          </button>
+          <button
+            onClick={() => handleNavigation("AddCountry", "addCountry")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "AddCountry"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <BiBookContent />
+            <span>Add Country</span>
+          </button>
           <button
             onClick={() => handleNavigation("Header", "header")}
             className={`flex items-center space-x-2 p-2 rounded ${
@@ -164,17 +175,6 @@ const Dashboard = () => {
           >
             <BiBookContent />
             <span>Add Content</span>
-          </button>
-          <button
-            onClick={() => handleNavigation("contact", "contact")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "contact"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <IoMdContacts />
-            <span>Contacts</span>
           </button>
         </nav>
         <button className="absolute bottom-5 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]">
