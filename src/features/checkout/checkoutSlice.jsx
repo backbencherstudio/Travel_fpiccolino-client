@@ -17,11 +17,25 @@ export const createCheckout = createAsyncThunk(
     }
   }
 );
+
 export const getCheckout = createAsyncThunk(
   "order/contact/createCheckout/get",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/order/checkout`);
+      return response.data; // Return categories data
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const deleteCheckout = createAsyncThunk(
+  "order/contact/createCheckout/delete",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${base_url}/order/checkout`);
       return response.data; // Return categories data
     } catch (error) {
       console.error(error);

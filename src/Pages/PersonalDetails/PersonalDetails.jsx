@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { GoChevronLeft } from "react-icons/go";
@@ -9,26 +9,58 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import Footer from "../../Shared/Footer";
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Checkbox, Radio, RadioGroup } from "@mui/material";
-import Frame from "../../assets/icone/Frame.png"
-import { useState } from "react";
-
-
+import Frame from "../../assets/icone/Frame.png";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCheckout, getCheckout } from "../../features/checkout/checkoutSlice";
+import moment from "moment";
 
 const PersonalDetails = () => {
-    const inputStyle = "w-full my-3 border border-gray-300 focus:border-[#E86731] focus:ring-[1px] focus:ring-[#E86731] focus:outline-none p-2 rounded-md"
-    const [value, setValue] = useState('female');
+    const [travelerss, setTravler] = useState(1)
+    const inputStyle = "w-full my-3 border border-gray-300 focus:border-[#E86731] focus:ring-[1px] focus:ring-[#E86731] focus:outline-none p-2 rounded-md";
+    const [value, setValue] = useState('I consent');
+    const navigate = useNavigate();
+
+    const { checkout } = useSelector((state) => state.checkout);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCheckout());
+    }, [dispatch]);
+
+    useEffect(() => {
+        setTravler(parseInt())
+    }, [checkout])
+
+    // useEffect(() => {
+    //     if (!checkout || Object.keys(checkout).length === 0) {
+    //         console.log("Checkout empty. Redirecting...");
+    //         // navigate("/");
+    //     }
+    // }, [checkout, navigate]);
+
     const handleChange = (event) => {
         setValue(event.target.value);
     };
-    const label = { inputProps: { 'consent': 'not consent' } };
-    const travelers = 2  
+
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+    const travelers = parseInt(checkout?.person, 10) || 1;  
+
+
     const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            travelers: Array(travelers).fill({ fullName: "", lastName: "", email: "", phone: "", date: "", gender: "" })
+            travelers: Array.from({ length: travelers }).map(() => ({
+                fullName: "",
+                lastName: "",
+                email: "",
+                phone: "",
+                date: "",
+                gender: ""
+            }))
         },
     });
 
@@ -37,20 +69,30 @@ const PersonalDetails = () => {
         name: "travelers",
     });
 
+
     const onSubmit = (data) => {
-        console.log("Submitted Data:", data);
+        const selectedData = {
+            ...data,
+            ...checkout
+        }
+        console.log(selectedData);
+        
+
     };
 
-
+    const removeSession = () => {
+        dispatch(deleteCheckout());
+        navigate(`/flight/${checkout?.toureId}`);
+    };
 
     return (
         <div>
-            <div className="pb-20" >
+            <div className="pb-20">
                 <ParentComponent>
-                    <div className="mt-20 flex  ">
-                        <Link to="/transfers/id" className="flex items-center">
-                            <GoChevronLeft className="text-xl" /> Back to  Transfers
-                        </Link>
+                    <div className="mt-20 flex">
+                        <button onClick={() => removeSession()} className="flex items-center">
+                            <GoChevronLeft className="text-xl" /> Back to Transfers
+                        </button>
                     </div>
                     <div className="mt-10">
                         <HeadLine
@@ -63,22 +105,24 @@ const PersonalDetails = () => {
                 <div className="border border-b-[#A5A5AB] mt-14"></div>
 
                 <ParentComponent>
-                    <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20 grid-cols-reverse ">
-                        <div className=" col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-2 lg:p-10 rounded-lg ">
+                    <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20 grid-cols-reverse">
+                        <div className="col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-2 lg:p-10 rounded-lg">
                             <div>
-                                <div className="border  rounded-lg">
-                                    <h2 className=" p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
+                                <div className="border rounded-lg">
+                                    <h2 className="p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center">
+                                        <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere
+                                    </h2>
                                     <div className="border border-b-[#c8c8ce] mt-3"></div>
                                     <p className="p-5 text-[#72777F] font-[18px]">
-                                        Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
+                                        Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali...
                                     </p>
                                 </div>
+
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <h2 className="text-[#000000] text-[18px] font-[400] mt-5">Dynamic Traveler Form</h2>
                                     {fields.map((field, index) => (
                                         <div key={field.id} className="border-b border-gray-300 pb-4 mt-8">
                                             <h3 className="text-[#141D2A] text-[20px] font-[600] mb-4">Traveler {index + 1}</h3>
-                                            {/* Full Name and Last Name */}
                                             <div className="grid md:grid-cols-2 gap-2">
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.fullName`}>Full Name *</label>
@@ -101,7 +145,6 @@ const PersonalDetails = () => {
                                                     {errors.travelers?.[index]?.lastName && <p className="text-red-500">{errors.travelers[index].lastName.message}</p>}
                                                 </div>
                                             </div>
-                                            {/* Email and Phone Number */}
                                             <div className="grid md:grid-cols-2 gap-2 mt-4">
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.email`}>Email *</label>
@@ -139,7 +182,6 @@ const PersonalDetails = () => {
                                                     {errors.travelers?.[index]?.phone && <p className="text-red-500">{errors.travelers[index].phone.message}</p>}
                                                 </div>
                                             </div>
-                                            {/* Date and Date */}
                                             <div className="grid md:grid-cols-2 gap-2 mt-4">
                                                 <div>
                                                     <label htmlFor={`travelers.${index}.date`}>Date *</label>
@@ -155,7 +197,7 @@ const PersonalDetails = () => {
                                                     <label htmlFor={`travelers.${index}.gender`}>Gender *</label>
                                                     <select
                                                         id={`travelers.${index}.gender`}
-                                                        {...register(`travelers.${index}.gender`, { required: "gender is required" })}
+                                                        {...register(`travelers.${index}.gender`, { required: "Gender is required" })}
                                                         className={inputStyle}
                                                     >
                                                         <option value="">Select</option>
@@ -169,16 +211,12 @@ const PersonalDetails = () => {
                                         </div>
                                     ))}
 
-                                    <div className="my-6" >
+                                    <div className="my-6">
                                         <h2>Special requirements</h2>
-                                        <p>For each person included in this booking, please let us know about allergies, medical conditions, dietary needs, physical issues, and medication intake. If you have any other specific requests, please write them here: this is the place to do it!</p>
-                                        <div className="border rounded-lg my-6" >
-                                            {Array.from({ length: travelers }).map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={`${index === travelers - 1 ? "" : "border-b"
-                                                        } flex justify-between items-center px-3`}
-                                                >
+                                        <p>Please let us know about allergies, dietary needs, etc.</p>
+                                        <div className="border rounded-lg my-6">
+                                            {fields.map((_, index) => (
+                                                <div key={index} className={`${index === travelers - 1 ? "" : "border-b"} flex justify-between items-center px-3`}>
                                                     <span className="flex justify-between items-center w-full">
                                                         <h2>Traveler {index + 1}</h2>
                                                         <div className="flex items-center">
@@ -189,113 +227,77 @@ const PersonalDetails = () => {
                                                 </div>
                                             ))}
                                         </div>
-                                        <div className="border  rounded-lg">
-                                            <h2 className=" p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center "> <img src={Frame} className="mr-2" alt="" /> Leggi bene prima di procedere</h2>
-                                            <div className="border border-b-[#c8c8ce] mt-3"></div>
-                                            <p className="p-5 text-[#72777F] font-[18px]">
-                                                Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali. Questi dati ci serviranno per proseguire con l'acquisto dei servizi e assicurazione di viaggio. Se i dati non corrispondono a quelli dei documenti, WeRoad si astiene da ogni responsabilità. Tutti i dati inseriti devono essere veritieri, in caso contrario, la prenotazione potrebbe essere annullata senza diritto di rimborso.
-                                            </p>
-                                        </div>
-                                        <h2 className="mt-6" >Terms and Conditions and Privacy Policy</h2>
-                                        <span className="flex items-center my-2" >
+                                        <h2 className="mt-6">Terms and Conditions</h2>
+                                        <span className="flex items-center my-2">
                                             <Checkbox {...label} />
-                                            <p>I declare that I have read the <span className="text-[#E86731] font-semibold " >Privacy Policy</span> and accept the <span className="text-[#E86731] font-semibold " >Terms and Conditions</span> for using LA TUA FUGA LOWCOST services.</p>
+                                            <p>I declare that I have read and accept the <span className="text-[#E86731] font-semibold">Privacy Policy</span> and <span className="text-[#E86731] font-semibold">Terms and Conditions</span>.</p>
                                         </span>
-                                        <p>I consent to receive commercial information related to WeRoad and other travel proposals via email, phone, SMS, and instant message.</p>
-
-                                        <div className="h-[50px]" >
-                                            <RadioGroup
-                                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                                name="controlled-radio-buttons-group"
-                                                value={value}
-                                                onChange={handleChange}
-                                                className="flex bg-green-950 relative "
-                                            >
-
-                                                <div className="flex items-center   rounded absolute left-0 top-0">
-                                                    <Radio value="I consent" />
-                                                    <span>I consent</span>
-                                                </div>
-                                                <div className="flex items-center  rounded absolute left-[200px] top-0">
-                                                    <Radio value="I do not consent" />
-                                                    <span>I do not consent</span>
-                                                </div>
-                                            </RadioGroup>
-                                        </div>
-
-                                        <div className="border border-b-[#c8c8ce] mt-3"></div>
-
-                                        <div className="mt-8">
-                                            <ul>
-                                                <li className="flex text-[#72777F] mt-3 items-center" > <span className="size-2 mr-2  bg-red-500 text-transparent block rounded-full " >0</span> Complete personal details</li>
-                                                <li className="flex text-[#72777F] mt-3 items-center" > <span className="size-2 mr-2  bg-green-500 text-transparent block rounded-full " >0</span> Complete special requirements</li>
-                                                <li className="flex text-[#72777F] mt-3 items-center" > <span className="size-2 mr-2  bg-red-500 text-transparent block rounded-full " >0</span> Accept the Terms and Conditions and the Privacy Policy</li>
-                                                <li className="flex text-[#72777F] mt-3 items-center" > <span className="size-2 mr-2  bg-green-500 text-transparent block rounded-full " >0</span> Preferences for commercial communications completed</li>
-                                            </ul>
-                                        </div>
                                     </div>
-                                    <p className="text-[#72777F] mt-10" > <Checkbox {...label} /> I Agree To All Your Terms & condition</p>
-                                    <button type="submit" className="block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#D2D2D5]">
+                                    <button type="submit" className="block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#E86731]">
                                         Submit
                                     </button>
-                                    <p className="mt-6 text-[#72777F]">Write to privacy@latuafuga.it if you wish to revoke the consent previously given for the processing of your Personal Data, to obtain more information about privacy, or to exercise your rights.</p>
                                 </form>
-
                             </div>
-
                         </div>
 
-                        {/* ======================================  Side bar ========================== */}
-
-                        <div className=" col-span-12 lg:col-span-4 mt-5 lg:mt-0 ">
-                            <div className=" shadow-lg rounded-lg p-2 md:p-10">
-
-                                <h2 className="font-bold text-[24px] text-[#E86731] ">Fuerteventura</h2>
-                                <p>8 Days / 7 Nights</p>
-
+                        {/* Sidebar Section */}
+                        <div className="col-span-12 lg:col-span-4 mt-5 lg:mt-0">
+                            <div className="shadow-lg rounded-lg p-2 md:p-10">
+                                <h2 className="font-bold text-[24px] text-[#E86731]">Fuerteventura</h2>
+                                <p>{checkout?.tureDuration?.days} Days / {checkout?.tureDuration?.nights} Nights</p>
                                 <div className="border border-b-[#c8c8ce] mt-3"></div>
-
                                 <div className="mt-4">
-                                    <span className="flex items-start justify-between mb-3 " >
-                                        <h2>April 19 - 26</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >€ 653 </h2>
+                                    <span className="flex items-start justify-between mb-3">
+                                        {moment(checkout?.tourDate).utc().format("DD/MM/YYYY HH:mm")}
+                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                                            € {checkout?.totalPackageAmount}
+                                        </h2>
                                     </span>
-                                    <span className="flex items-start justify-between mb-3 " >
+                                    <span className="flex items-start justify-between mb-3">
                                         <h2>Passengers</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >X1 </h2>
-                                    </span>
-                                    <span className="flex items-start justify-between mb-3 " >
-                                        <h2>Room</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " >Private Double </h2>
+                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                                            {checkout?.person}
+                                        </h2>
                                     </span>
 
-                                    <span className="flex items-start justify-between mb-3 border-b pb-5 " >
-                                        <h2>Included services</h2>
-                                        <h2 className="text-[#000000] text-[18px] font-semibold text-center " > <MdKeyboardArrowDown /> </h2>
-                                    </span>
+                                    {checkout?.flightPrice && (
+                                        <span className="flex items-start justify-between mb-3">
+                                            <h2 className="flex items-center">Flight Amount</h2>
+                                            <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                                                € {checkout?.flightPrice}
+                                            </h2>
+                                        </span>
+                                    )}
+                                    {checkout?.insurance?.price && (
+                                        <span className="flex items-start justify-between mb-3">
+                                            <h2 className="flex items-center">Insurance</h2>
+                                            <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                                                € {checkout?.insurance?.price}
+                                            </h2>
+                                        </span>
+                                    )}
 
-                                    <span className="flex items-start justify-between mb-3 " >
+                                    <span className="flex items-start justify-between mb-3 border-t pt-2">
                                         <h2>Total</h2>
-                                        <h2 className="text-[20px] font-semibold " >€ 2,345</h2>
+                                        <h2 className="text-[20px] font-semibold">€ {checkout?.toureAmount}</h2>
                                     </span>
-
-                                    <span className=" pb-5 block " >
-                                        <p className="text-[#72777F] xl:pr-10" >or 3 installments of €232.66 interest-free.</p>
-                                        <h2 className="flex items-center" ><FaHeart /> <p className="px-1 text-[#272727] font-bold " >scalapay</p> <CiCircleInfo /> </h2>
+                                    <span className="pb-5 block">
+                                        <h2 className="flex items-center">
+                                            <FaHeart />{" "}
+                                            <p className="px-1 text-[#272727] font-bold">scalapay</p>{" "}
+                                            <CiCircleInfo />
+                                        </h2>
                                     </span>
-
                                 </div>
-
-                                <Link to="/personalDetails" className={` block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#D2D2D5] `} >Continue</Link>
-
+                                {/* <button className="block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#E86731]">
+                                    Continue
+                                </button> */}
                             </div>
                         </div>
-
                     </div>
                 </ParentComponent>
+                <Footer />
             </div>
-
-            <Footer />
         </div>
     );
 };
