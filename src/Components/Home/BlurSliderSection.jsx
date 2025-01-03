@@ -153,10 +153,7 @@ const BlurSliderSection = ({ country }) => {
       <div className="grid grid-cols-1 lg:grid-cols-9 lg:pl-20">
         {/* Headline Section */}
         <div className="col-span-2 max-w-[450px] z-20 relative mx-auto mb-10 md:lg-0 md:content-center">
-          <HeadLine2
-            title={title}
-            description={description}
-          />
+          <HeadLine2 title={title} description={description} />
         </div>
         <div className="col-span-1"></div>
 
@@ -187,23 +184,26 @@ const BlurSliderSection = ({ country }) => {
               },
             }}
           >
-            {data?.map((item, index) => (
-              <SwiperSlide key={index}>
-                <div className="p-5 rounded-lg bg-transparent shadow-md card_style items-center text-center content-center h-[420px] mx-5 lg:mx-0">
-                  <h3 className="lg:text-[48px] text-[28px] font-duera-expanded font-extrabold text-white">
-                    {item?.name}
-                  </h3>
-                  <div className="flex justify-center">
-                    <p className="mr-3 primary_text font-semibold text-[14px] lg:text-[18px]">
-                      €{item?.lowestAmount}
-                    </p>
-                    <s className="text-[#E9E9EA] font-semibold text-[14px] lg:text-[18px]">
-                      €{item.price}
-                    </s>
+            {data?.map((item, index) => {
+              let lowestAmounts  = Math.round(item?.lowestAmount + (item?.lowestAmount * 0.10))
+              return (
+                <SwiperSlide key={index}>
+                  <div className="p-5 rounded-lg bg-transparent shadow-md card_style items-center text-center content-center h-[420px] mx-5 lg:mx-0">
+                    <h3 className="lg:text-[48px] text-[28px] font-duera-expanded font-extrabold text-white">
+                      {item?.name}
+                    </h3>
+                    <div className="flex justify-center">
+                      <p className="mr-3 primary_text font-semibold text-[14px] lg:text-[18px]">
+                        €{item?.lowestAmount}
+                      </p>
+                      <s className="text-[#E9E9EA] font-semibold text-[14px] lg:text-[18px]">
+                        €{lowestAmounts}
+                      </s>
+                    </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
       </div>

@@ -6,7 +6,7 @@ import BottomBannerSection from "../../Shared/BottomBannerSection";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg";
+// import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg";
 import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -33,24 +33,17 @@ const Tours = () => {
   // const data = headers?.filter(item => item.pageName === "tour")
   console.log(packag);
 
-  console.log("all_inclusive_TourPageData", all_inclusive_TourPageData)
- 
- 
-  const heroContent =  all_inclusive_TourPageData?.hero
-  const packags = all_inclusive_TourPageData?.package
+  console.log("all_inclusive_TourPageData", all_inclusive_TourPageData);
 
+  const heroContent = all_inclusive_TourPageData?.hero;
+  const packags = all_inclusive_TourPageData?.package;
 
   return (
     <div className="">
-        {
-            heroContent&& <HeroScetion heroContent={heroContent} />
-        }
-      
+      {heroContent && <HeroScetion heroContent={heroContent} />}
+
       <ParentComponent styles="my-20">
-        <HeadLine
-          title={packags?.title}
-          description={packags?.subtitle}
-        />
+        <HeadLine title={packags?.title} description={packags?.subtitle} />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20">
           {packag?.map((item) => (
             <div key={item._id}>
@@ -72,4 +65,3 @@ const Tours = () => {
 };
 
 export default Tours;
-
