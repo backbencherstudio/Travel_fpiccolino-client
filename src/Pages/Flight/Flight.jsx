@@ -17,6 +17,7 @@ const Flight = () => {
     const dispatch = useDispatch();
     const params = useParams();
     const { packageDetails } = useSelector((state) => state.package);
+    
 
     const [flightAmount, setFlightAmount] = useState(0);
     const [totalFlightAmount, totalSetFlightAmount] = useState(0);

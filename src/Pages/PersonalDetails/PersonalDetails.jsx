@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { GoChevronLeft } from "react-icons/go";
@@ -14,18 +14,33 @@ import PhoneInput from 'react-phone-number-input'
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Checkbox, Radio, RadioGroup } from "@mui/material";
 import Frame from "../../assets/icone/Frame.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCheckout, getCheckout } from "../../features/checkout/checkoutSlice";
 
 
 
 const PersonalDetails = () => {
     const inputStyle = "w-full my-3 border border-gray-300 focus:border-[#E86731] focus:ring-[1px] focus:ring-[#E86731] focus:outline-none p-2 rounded-md"
     const [value, setValue] = useState('female');
+
+    const { checkout } = useSelector((state) => state.checkout);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCheckout());
+    }, [dispatch]);
+
+    console.log(checkout);
+
+
+
+
     const handleChange = (event) => {
         setValue(event.target.value);
     };
     const label = { inputProps: { 'consent': 'not consent' } };
-    const travelers = 2  
+    const travelers = 2
     const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             travelers: Array(travelers).fill({ fullName: "", lastName: "", email: "", phone: "", date: "", gender: "" })
@@ -41,16 +56,22 @@ const PersonalDetails = () => {
         console.log("Submitted Data:", data);
     };
 
+    const navigate = useNavigate()
 
+    const removeSession = () => {
+        dispatch(deleteCheckout())
+        navigate(`/flight/${checkout?.toureId}`)
+    }
 
     return (
         <div>
             <div className="pb-20" >
                 <ParentComponent>
                     <div className="mt-20 flex  ">
-                        <Link to="/transfers/id" className="flex items-center">
+                        {/* <Link to={`/tours/${checkout?.toureId}`} className="flex items-center"> */}
+                        <button onClick={() => removeSession()} className="flex items-center">
                             <GoChevronLeft className="text-xl" /> Back to  Transfers
-                        </Link>
+                        </button>
                     </div>
                     <div className="mt-10">
                         <HeadLine
