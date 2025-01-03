@@ -56,10 +56,8 @@ const Flight = () => {
     }, [addFlight, totalFlightAmount, updateToureAmount]);
 
     const handleAddFlight = () => setAddFlight(true);
-
     const handleRemoveFlight = () => setAddFlight(false);
 
-    console.log(packageDetails);
     
 
     // order/addToCard
