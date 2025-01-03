@@ -11,6 +11,8 @@ import { CiLogout } from "react-icons/ci";
 import { IoMdContacts } from "react-icons/io";
 
 import { BiBookContent } from "react-icons/bi";
+import { TiWorldOutline } from "react-icons/ti";
+import { TbArrowAutofitContent } from "react-icons/tb";
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -150,7 +152,7 @@ const Dashboard = () => {
                 : "hover:bg-zinc-300"
             }`}
           >
-            <BiBookContent />
+            <TiWorldOutline />
             <span>Add Country</span>
           </button>
           <button
@@ -173,7 +175,7 @@ const Dashboard = () => {
                 : "hover:bg-zinc-300"
             }`}
           >
-            <BiBookContent />
+            <TbArrowAutofitContent />
             <span>Add Content</span>
           </button>
         </nav>
