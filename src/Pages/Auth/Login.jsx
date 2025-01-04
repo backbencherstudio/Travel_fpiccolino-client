@@ -29,7 +29,7 @@ const Login = () => {
   );
 
   const onSubmit = async (data) => {
-    // console.log(514541, data)
+    console.log(514541, data)
     const responce = await dispatch(loginUser(data));
     console.log(responce);
     if (responce.type === "users/login/fulfilled") {

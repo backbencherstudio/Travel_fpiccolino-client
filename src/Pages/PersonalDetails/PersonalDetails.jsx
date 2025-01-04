@@ -75,6 +75,7 @@ const PersonalDetails = () => {
             ...data,
             ...checkout
         }
+        navigate("/checkout")
         console.log(selectedData);      
 
     };

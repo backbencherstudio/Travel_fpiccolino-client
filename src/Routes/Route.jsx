@@ -36,6 +36,7 @@ import ContactsTable from "../Components/Dashboard/Contact/ContactsTable ";
 import OrderList from "../Components/Dashboard/Orders/OrderList";
 import AddCountry from "../Components/Dashboard/AddCountry/AddCountry";
 import AddContent from "../Components/Dashboard/AddContent/AddContent";
+import Checkout from "../Pages/checkout/Checkout";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -164,6 +165,10 @@ export const router = createBrowserRouter([
         element: <AddContent />,
       },
     ],
+  },
+  {
+    path : "/checkout",
+    element : <Checkout/>
   },
   {
     path: "/flight/:id",
