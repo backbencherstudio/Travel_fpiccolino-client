@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 // import StripeForm from './StripeForm'; // Stripe Form Component
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 // import './Checkout.css';
 import StripeForm from './StripeForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCheckoutNewData } from '../../features/checkout/checkoutSlice';
 
 // Load Stripe Key
 const stripePromise = loadStripe('pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha');
 
 const Checkout = () => {
+    const { checkoutNewData } = useSelector((state) => state.checkout);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCheckoutNewData());
+    }, [dispatch]);
+
+    if (checkoutNewData) {
+        console.log({checkoutNewData});
+    }
+
     const [paymentMethod, setPaymentMethod] = useState('stripe');
 
     const handlePaymentMethodChange = (e) => {

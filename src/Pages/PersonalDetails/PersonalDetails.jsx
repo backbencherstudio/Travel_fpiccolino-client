@@ -16,7 +16,7 @@ import { Checkbox, Radio, RadioGroup } from "@mui/material";
 import Frame from "../../assets/icone/Frame.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCheckout, getCheckout } from "../../features/checkout/checkoutSlice";
+import { createCheckoutWithNewData, deleteCheckout, getCheckout } from "../../features/checkout/checkoutSlice";
 import moment from "moment";
 
 const PersonalDetails = () => {
@@ -48,7 +48,7 @@ const PersonalDetails = () => {
     };
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-    const travelers = parseInt(checkout?.person, 10) || 1;  
+    const travelers = parseInt(checkout?.person, 10) || 1;
 
 
     const { control, register, handleSubmit, formState: { errors } } = useForm({
@@ -71,14 +71,20 @@ const PersonalDetails = () => {
 
 
     const onSubmit = (data) => {
-        const selectedData = {
+        const userUpdateData = {
             ...data,
             ...checkout
         }
+        console.log(userUpdateData);
+        dispatch(createCheckoutWithNewData({ ...userUpdateData }))
         navigate("/checkout")
-        console.log(selectedData);      
-
+        // navigate(`/personalDetails`);
     };
+
+    // const addDataFun = () => {
+    //     dispatch(createCheckout({ ...toureData }))
+    //     navigate(`/personalDetails`);
+    // };
 
     const removeSession = () => {
         dispatch(deleteCheckout());

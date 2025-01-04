@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import {
+    CardNumberElement,
+    CardExpiryElement,
+    CardCvcElement,
+    useStripe,
+    useElements
+} from '@stripe/react-stripe-js';
 import axios from 'axios';
 
 const StripeForm = () => {
@@ -8,16 +14,20 @@ const StripeForm = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+    const [email, setEmail] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
 
-        const cardElement = elements.getElement(CardElement);
+        const cardElement = elements.getElement(CardNumberElement);
 
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement,
+            billing_details: {
+                email,
+            },
         });
 
         if (error) {
@@ -29,7 +39,7 @@ const StripeForm = () => {
         try {
             const { data } = await axios.post('http://localhost:3000/order/stripePayment', {
                 paymentMethodId: paymentMethod.id,
-                amount: 50, // Example amount (10.00 USD)
+                amount: 50, // Example amount (59.99 USD)
             });
 
             console.log(data);
@@ -46,14 +56,14 @@ const StripeForm = () => {
         setLoading(false);
     };
 
-    const cardElementStyle = {
+    const elementStyle = {
         style: {
             base: {
-                fontSize: '18px',
+                fontSize: '16px',
                 color: '#32325d',
                 fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
                 '::placeholder': {
-                    color: '#a0aec0',
+                    color: '#aab7c4',
                 },
                 padding: '10px',
             },
@@ -64,36 +74,75 @@ const StripeForm = () => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto"
-        >
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">
-                Complete Your Payment
-            </h2>
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-8 max-w-lg mx-auto">
+            <h2 className="text-2xl font-bold text-center mb-6">Secure Payment</h2>
 
-            <div className="mb-4 bg-gray-50 p-3 rounded-lg border">
-                <CardElement options={cardElementStyle} />
+            {/* Email Field */}
+            <div className="mb-4">
+                <label className="block text-lg font-semibold mb-2 text-gray-700" htmlFor="email">
+                    Email
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    className="w-full p-3 border rounded-lg focus:ring-blue-500 focus:outline-none"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
             </div>
 
+            {/* Card Number Field */}
+            <div className="mb-4">
+                <label className="block text-lg font-semibold mb-2 text-gray-700">Card Number</label>
+                <div className="p-3 border rounded-lg bg-gray-50">
+                    <CardNumberElement options={elementStyle} />
+                </div>
+            </div>
+
+            {/* Expiration Date and CVC Fields (Side by Side) */}
+            <div className="flex gap-4 mb-4">
+                <div className="w-1/2">
+                    <label className="block text-lg font-semibold mb-2 text-gray-700">Expiration Date</label>
+                    <div className="p-3 border rounded-lg bg-gray-50">
+                        <CardExpiryElement options={elementStyle} />
+                    </div>
+                </div>
+                <div className="w-1/2">
+                    <label className="block text-lg font-semibold mb-2 text-gray-700">CVC</label>
+                    <div className="p-3 border rounded-lg bg-gray-50">
+                        <CardCvcElement options={elementStyle} />
+                    </div>
+                </div>
+            </div>
+
+            {/* Postal Code Field */}
+            {/* <div className="mb-4">
+                <label className="block text-lg font-semibold mb-2 text-gray-700">ZIP / Postal Code</label>
+                <div className="p-3 border rounded-lg bg-gray-50">
+                    <input
+                        type="text"
+                        className="w-full p-3 border-none bg-gray-50 focus:outline-none"
+                        placeholder="Enter ZIP Code"
+                        required
+                    />
+                </div>
+            </div> */}
+
+            {/* Submit Button */}
             <button
                 type="submit"
                 disabled={!stripe || loading}
-                className={`w-full py-3 text-white font-semibold rounded-lg ${
-                    loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-                }`}
+                className={`w-full mt-6 py-3 text-white font-bold rounded-lg ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                    }`}
             >
-                {loading ? 'Processing...' : 'Pay Now'}
+                {loading ? 'Processing...' : `Pay Now $50`}
             </button>
 
-            {error && (
-                <div className="mt-4 text-red-500 font-medium text-center">{error}</div>
-            )}
-            {success && (
-                <div className="mt-4 text-green-500 font-medium text-center">
-                    Payment Successful!
-                </div>
-            )}
+            {/* Error and Success Messages */}
+            {error && <div className="mt-4 text-red-500 font-medium text-center">{error}</div>}
+            {success && <div className="mt-4 text-green-500 font-medium text-center">Payment Successful!</div>}
         </form>
     );
 };
