@@ -36,6 +36,7 @@ import ContactsTable from "../Components/Dashboard/Contact/ContactsTable ";
 import OrderList from "../Components/Dashboard/Orders/OrderList";
 import AddCountry from "../Components/Dashboard/AddCountry/AddCountry";
 import AddContent from "../Components/Dashboard/AddContent/AddContent";
+import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -162,6 +163,10 @@ export const router = createBrowserRouter([
       {
         path: "addContent",
         element: <AddContent />,
+      },
+      {
+        path: "uploadShorts",
+        element: <UploadShorts />,
       },
     ],
   },

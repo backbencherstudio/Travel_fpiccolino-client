@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 
+import { useNavigate } from "react-router-dom";
 import CustomButton from "../../Shared/CustomButton";
 
 const ArticleCard = ({ item }) => {
+  const navigate = useNavigate();
   const { headerImg, header, text, mainHeading } = item?.heroSection[0];
 
   return (
@@ -18,17 +20,18 @@ const ArticleCard = ({ item }) => {
           <h2 className="inline text-[#E86731] bg-[#fff] px-4 py-2 rounded-full ">
             {text}
           </h2>
-          <h2 className="font-semibold text-[20px] text-white mt-5">{header}</h2>
-          <p className="text-[#FFF] text-[16px] font-normal ">
-            {mainHeading}
-          </p>
-
+          <h2 className="font-semibold text-[20px] text-white mt-5">
+            {header}
+          </h2>
+          <p className="text-[#FFF] text-[16px] font-normal ">{mainHeading}</p>
         </div>
         {/* <button className="primary_bg text-white text-[18px] font-medium px-6 py-3 rounded-lg shadow-lg  hover:scale-105 transition-all ease-linear">Read More</button> */}
-        <div className="absolute bottom-8 right-8">
+        <div
+          onClick={() => navigate(`/blog/${item._id}`)}
+          className="absolute bottom-8 right-8"
+        >
           <CustomButton content={"Read More"} />
         </div>
-
       </div>
     </div>
   );

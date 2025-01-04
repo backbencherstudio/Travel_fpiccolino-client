@@ -156,7 +156,19 @@ export const updatePackage = createAsyncThunk(
     }
   }
 );
-
+export const createShorts = createAsyncThunk(
+  "package/createShorts",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}/api/review`, data);
+      console.log("slice", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 // Initial State
 const initialState = {
   packageCreateLoading: false,
@@ -167,6 +179,9 @@ const initialState = {
   packageDetails: null,
   packageDetailsLoading: false,
   packageDetailsError: null,
+  shorts: [],
+  shortsLoading: false,
+  shortsError: null,
 };
 
 // Package Slice
@@ -176,101 +191,101 @@ const packageSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Create Package Pending
+      // Create Package
       .addCase(createPackage.pending, (state) => {
         state.packageCreateLoading = true;
         state.packageCreateError = null;
       })
-      // Create Package Fulfilled
       .addCase(createPackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = null;
-        state.packag = action.payload; // Add the newly created package to the list
+        state.package = action.payload; // Fixed typo "packag" to "package"
       })
-      // Create Package Rejected
       .addCase(createPackage.rejected, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = action.payload?.message ?? null;
       })
 
-      // Get Package Pending
+      // Get Package
       .addCase(getPackage.pending, (state) => {
-        state.packagGetLoading = true;
+        state.packageGetLoading = true;
         state.packageGetError = null;
       })
-      // Get Package Fulfilled
       .addCase(getPackage.fulfilled, (state, action) => {
-        state.packagGetLoading = false;
+        state.packageGetLoading = false;
         state.packageGetError = null;
-        state.packag = action.payload.packages; // Update the package list
+        state.package = action.payload.packages; // Update the package list
       })
-      // Get Package Rejected
       .addCase(getPackage.rejected, (state, action) => {
-        state.packagGetLoading = false;
+        state.packageGetLoading = false;
         state.packageGetError = action.payload?.message ?? null;
       })
 
-      // Get Package Details Pending
+      // Get Package Details
       .addCase(getPackageDetails.pending, (state) => {
         state.packageDetailsLoading = true;
         state.packageDetailsError = null;
       })
-      // Get Package Details Fulfilled
       .addCase(getPackageDetails.fulfilled, (state, action) => {
         state.packageDetailsLoading = false;
         state.packageDetailsError = null;
-        state.packageDetails = action.payload; // Store the package details
+        state.packageDetails = action.payload;
       })
-      // Get Package Details Rejected
       .addCase(getPackageDetails.rejected, (state, action) => {
         state.packageDetailsLoading = false;
         state.packageDetailsError =
           action.payload?.message || "Error fetching package details";
       })
 
-      // Delete Package Fulfilled
+      // Delete Package
       .addCase(deletePackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
-        console.log(state.packag);
-
-        // Ensure packag is an array before filtering
-        if (Array.isArray(state.packag)) {
-          // Create a new array by filtering out the deleted package
-          state.packag = state.packag.filter(
+        if (Array.isArray(state.package)) {
+          state.package = state.package.filter(
             (pkg) => pkg._id !== action.payload
           );
         } else {
-          // If state.packag is a proxy or not an array, log an error
-          console.error("packag is not an array:", state.packag);
+          console.error("package is not an array:", state.package);
         }
-      });
-    builder
-      // Update Package Pending
+      })
+
+      // Update Package
       .addCase(updatePackage.pending, (state) => {
         state.packageCreateLoading = true;
         state.packageCreateError = null;
       })
-      // Update Package Fulfilled
       .addCase(updatePackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = null;
-
-        // Update the package in the packag array
         const updatedPackage = action.payload;
-        if (Array.isArray(state.packag)) {
-          const index = state.packag.findIndex(
+        if (Array.isArray(state.package)) {
+          const index = state.package.findIndex(
             (pkg) => pkg._id === updatedPackage._id
           );
           if (index !== -1) {
-            state.packag[index] = updatedPackage; // Replace the package
+            state.package[index] = updatedPackage;
           }
         }
       })
-      // Update Package Rejected
       .addCase(updatePackage.rejected, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError =
           action.payload?.message || "Error updating package";
+      })
+
+      // Create Shorts
+      .addCase(createShorts.pending, (state) => {
+        state.shortsLoading = true;
+        state.shortsError = null;
+      })
+      .addCase(createShorts.fulfilled, (state, action) => {
+        state.shortsLoading = false;
+        state.shortsError = null;
+        state.shorts = action.payload; // Add the newly created shorts to the state
+      })
+      .addCase(createShorts.rejected, (state, action) => {
+        state.shortsLoading = false;
+        state.shortsError = action.payload?.message ?? null;
       });
   },
 });
