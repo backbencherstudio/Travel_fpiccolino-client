@@ -132,6 +132,58 @@ export const recentOtp = createAsyncThunk(
   }
 );
 
+
+export const request_forgot_password_otp = createAsyncThunk(
+  "users/request_forgot_password_otp",
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}/users/request-forgot-password-otp`,{
+        email: email
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+export const match_forgot_password_otp = createAsyncThunk(
+  "users/match_password_otp",
+  async (otp, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}/users/match-password-otp`,{
+        otp: otp
+      });
+      console.log("response", response);
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// /reset-forgot-password
+
+export const reset_forgot_password = createAsyncThunk(
+  "users/reset_password",
+  async (password, { rejectWithValue }) => {
+
+    try {
+      const response = await axios.patch(`${base_url}/users/reset-forgot-password`,{
+        password: password
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
 const initialState = {
   loginLoading: false,
   signupLoading: false,
@@ -140,7 +192,9 @@ const initialState = {
   userUpdateLoading: false,
   recentOtpLoading: false,
   conformOtpLoading: false,
-
+  request_forgot_password_otpLoading: false,
+  match_forgot_password_otpLoading: false,
+  reset_forgot_passwordLoading: false,
   isAuthenticated: false,
 
   appLoadingError: null,
@@ -151,6 +205,9 @@ const initialState = {
   userUpddateError: null,
   recentOtpError: false,
   conformOtpError: null,
+  request_forgot_password_otpError: null,
+  match_forgot_password_otpError: null,
+  reset_forgot_passwordError: null,
   callCount: 0,
 };
 
@@ -266,6 +323,45 @@ const authSlice = createSlice({
         state.recentOtpError = action.payload?.message ?? null;
       });
 
+      builder
+      .addCase(request_forgot_password_otp.pending, (state) => {
+        state.request_forgot_password_otpLoading = true;
+        state.request_forgot_password_otpError = null;
+      })
+      .addCase(request_forgot_password_otp.fulfilled, (state, action) => {
+        state.request_forgot_password_otpLoading = false;
+        state.request_forgot_password_otpError = null;
+      })
+      .addCase(request_forgot_password_otp.rejected, (state, action) => {
+        state.request_forgot_password_otpLoading = false;
+        state.request_forgot_password_otpError = action.payload?.message ?? null;
+      });
+      builder
+      .addCase(match_forgot_password_otp.pending, (state) => {
+        state.match_forgot_password_otpLoading = true;
+        state.match_forgot_password_otpError = null;
+      })  
+      .addCase(match_forgot_password_otp.fulfilled, (state, action) => {
+        state.match_forgot_password_otpLoading = false;
+        state.match_forgot_password_otpError = null;
+      })
+      .addCase(match_forgot_password_otp.rejected, (state, action) => {
+        state.match_forgot_password_otpLoading = false;
+        state.match_forgot_password_otpError = action.payload?.message ?? null;
+      });
+      builder
+      .addCase(reset_forgot_password.pending, (state) => {
+        state.reset_forgot_passwordLoading = true;
+        state.reset_forgot_passwordError = null;
+      })
+      .addCase(reset_forgot_password.fulfilled, (state, action) => {
+        state.reset_forgot_passwordLoading = false;
+        state.reset_forgot_passwordError = null;
+      })
+      .addCase(reset_forgot_password.rejected, (state, action) => {
+        state.reset_forgot_passwordLoading = false;
+        state.reset_forgot_passwordError = action.payload?.message ?? null;
+      });
     // builder
     // .addCase(recentOtp.pending, (state) => {
     //   state.recentOtpLoading = true;
