@@ -19,9 +19,9 @@ const Checkout = () => {
         dispatch(getCheckoutNewData());
     }, [dispatch]);
 
-    if (checkoutNewData) {
-        console.log({checkoutNewData});
-    }
+    // if (checkoutNewData) {
+    //     console.log({checkoutNewData});
+    // }
 
     const [paymentMethod, setPaymentMethod] = useState('stripe');
 
@@ -44,7 +44,7 @@ const Checkout = () => {
             <div className="payment-form">
                 {paymentMethod === 'stripe' ? (
                     <Elements stripe={stripePromise}>
-                        <StripeForm />
+                        <StripeForm checkoutNewData={checkoutNewData} />
                     </Elements>
                 ) : (
                     <PayPalScriptProvider

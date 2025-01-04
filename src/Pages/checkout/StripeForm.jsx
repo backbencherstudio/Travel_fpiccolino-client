@@ -8,20 +8,19 @@ import {
 } from '@stripe/react-stripe-js';
 import axios from 'axios';
 
-const StripeForm = () => {
+const StripeForm = ({checkoutNewData}) => {
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState(''); 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
 
         const cardElement = elements.getElement(CardNumberElement);
-
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: cardElement,
@@ -29,7 +28,6 @@ const StripeForm = () => {
                 email,
             },
         });
-
         if (error) {
             setError(error.message);
             setLoading(false);
@@ -39,10 +37,10 @@ const StripeForm = () => {
         try {
             const { data } = await axios.post('http://localhost:3000/order/stripePayment', {
                 paymentMethodId: paymentMethod.id,
-                amount: 50, // Example amount (59.99 USD)
+                amount: parseInt(checkoutNewData?.toureAmount), // Example amount (59.99 USD)
             });
 
-            console.log(data);
+            console.log({data});
             
 
             if (data.success) {
@@ -137,7 +135,7 @@ const StripeForm = () => {
                 className={`w-full mt-6 py-3 text-white font-bold rounded-lg ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
                     }`}
             >
-                {loading ? 'Processing...' : `Pay Now $50`}
+                {loading ? 'Processing...' : `Pay Now : ${checkoutNewData?.toureAmount} $`}
             </button>
 
             {/* Error and Success Messages */}
