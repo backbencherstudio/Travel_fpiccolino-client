@@ -105,7 +105,7 @@ const PersonalDetails = () => {
 
                 <ParentComponent>
                     <div className="grid grid-cols-12 mt-20 lg:gap-5 xl:gap-20 grid-cols-reverse">
-                        <div className="col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-2 lg:p-10 rounded-lg">
+                        <div className="col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-2 lg:p-10 rounded-lg mb-10">
                             <div>
                                 <div className="border rounded-lg">
                                     <h2 className="p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center">
@@ -117,7 +117,7 @@ const PersonalDetails = () => {
                                     </p>
                                 </div>
 
-                                <form onSubmit={handleSubmit(onSubmit)}>
+                                <form onSubmit={handleSubmit(onSubmit)} className="" >
                                     <h2 className="text-[#000000] text-[18px] font-[400] mt-5">Dynamic Traveler Form</h2>
                                     {fields.map((field, index) => (
                                         <div key={field.id} className="border-b border-gray-300 pb-4 mt-8">
