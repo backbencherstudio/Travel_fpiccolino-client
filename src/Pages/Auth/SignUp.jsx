@@ -23,7 +23,6 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  
   const onSubmit = async (data) => {
     console.log(data);
     try {
@@ -37,8 +36,6 @@ const SignUp = () => {
     }
   };
 
-
-
   const [showError, setShowError] = useState(!!signupError);
   useEffect(() => {
     if (signupError) {
@@ -50,7 +47,7 @@ const SignUp = () => {
     }
   }, [signupError]);
 
-console.log(signupLoading, signupError )
+  console.log(signupLoading, signupError);
   return (
     <ParentAuthComponent>
       <div className="grid grid-cols-1 md:grid-cols-5 h-full ">
@@ -65,19 +62,18 @@ console.log(signupLoading, signupError )
             </h1>
 
             {showError ? (
-              <div className="errorMessage mt-5">
-                <BsExclamationCircle className="exclamationMark text-red-500 " />
-                {/* <p className="error-message">{signupError}</p> */}
-                <p className="error-message">{signupError}</p>
-              </div>
+              <h5 className="text-red-500 text-[16px] error-message flex items-center mt-5">
+                <BsExclamationCircle className=" text-red-500 mr-2" />
+                {signupError}
+              </h5>
             ) : (
-              <h5 className="text-[#72777F] text-[16px] mt-3">
+              <h5 className="text-[#72777F] text-[16px] mt-5">
                 Please enter your details.
               </h5>
             )}
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <div className="h-24">
                 <p className="text-[18px] font-medium mt-5">Name</p>
                 <input
                   type="text"
@@ -90,7 +86,7 @@ console.log(signupLoading, signupError )
                 )}
               </div>
 
-              <div>
+              <div className="h-24">
                 <p className="text-[18px] font-medium mt-5">Email</p>
                 <input
                   type="text"
@@ -109,7 +105,7 @@ console.log(signupLoading, signupError )
                 )}
               </div>
 
-              <div>
+              <div className="h-24">
                 <p className="text-[18px] font-medium mt-5 ">Password</p>
                 <input
                   type="password"
@@ -144,7 +140,7 @@ console.log(signupLoading, signupError )
                   onClick={() => navigate("/login")}
                   className="primary_text font-semibold cursor-pointer"
                 >
-                  {signupLoading ? "Loading ... " : "Sign Up"} {/*  later on */}
+                  {signupLoading ? "Loading ... " : "Login"} {/*  later on */}
                 </span>
               </div>
             </form>

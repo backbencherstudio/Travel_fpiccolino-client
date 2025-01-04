@@ -12,8 +12,7 @@ import { BsExclamationCircle } from "react-icons/bs";
 import { useEffect, useState } from "react";
 
 const Login = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const {
@@ -22,8 +21,6 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-
-  
   const { loginLoading, loginError } = useSelector(
     (state) => state.authorization
   );
@@ -37,17 +34,16 @@ const Login = () => {
     }
   };
 
-
-      const [showError, setShowError] = useState(!!loginError);
-      useEffect(() => {
-        if (loginError) {
-          setShowError(true);
-          const timer = setTimeout(() => {
-            setShowError(false);
-          }, 5000);
-          return () => clearTimeout(timer);
-        }
-      }, [loginError]);
+  const [showError, setShowError] = useState(!!loginError);
+  useEffect(() => {
+    if (loginError) {
+      setShowError(true);
+      const timer = setTimeout(() => {
+        setShowError(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [loginError]);
 
   return (
     <ParentAuthComponent>
@@ -61,19 +57,18 @@ const Login = () => {
             <img src={logo} alt="" />
             <h1 className="font-extrabold text-[32px] mt-10">Welcome back</h1>
             {showError ? (
-              <div className="errorMessage mt-5">
-                <BsExclamationCircle className="exclamationMark text-red-500 " />
-                {/* <p className="error-message">{signupError}</p> */}
-                <p className="error-message">{loginError}</p>
-              </div>
+              <h5 className="text-red-500 text-[16px] error-message flex items-center mt-5">
+                <BsExclamationCircle className=" text-red-500 mr-2" />
+                {loginError}
+              </h5>
             ) : (
-              <h5 className="text-[#72777F] text-[16px] mt-3">
+              <h5 className="text-[#72777F] text-[16px] mt-5">
                 Welcome back! Please enter your details.
               </h5>
             )}
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <div className="h-24">
                 <p className="text-[18px] font-medium mt-5">Email</p>
                 <input
                   type="text"
@@ -88,11 +83,13 @@ const Login = () => {
                   })}
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                  <p className="text-red-500 text-sm ">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
-              <div>
+              <div className="h-24">
                 <p className="text-[18px] font-medium mt-5 ">Password</p>
                 <input
                   type="password"
