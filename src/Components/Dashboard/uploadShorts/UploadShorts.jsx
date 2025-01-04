@@ -1,21 +1,44 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { createTitle } from "../../../features/sectionTitle/sectionTitleSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createShorts,
+  getShorts,
+  deleteShorts,
+} from "../../../features/pckage/packageSlice";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
-import { createShorts } from "../../../features/pckage/packageSlice";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 const UploadShorts = () => {
   const dispatch = useDispatch();
+
+  const { shorts, shortsLoading, shortsError } = useSelector(
+    (state) => state.package
+  );
+
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    dispatch(getShorts());
+  }, [dispatch]);
+
   const onSubmit = (data) => {
-    dispatch(createShorts(data));
+    dispatch(createShorts(data)).then(() => {
+      reset();
+      dispatch(getShorts());
+      //   window.location.reload();
+    });
   };
+
+  const handleDeleteShort = (shortId) => {
+    dispatch(deleteShorts(shortId)).then(() => dispatch(getShorts()));
+  };
+  const shortsList = Array.isArray(shorts) ? shorts : []; // Ensure it's an array
 
   return (
     <div>
@@ -28,83 +51,23 @@ const UploadShorts = () => {
           Upload Shorts
         </h2>
 
-        {/* URL-1 */}
+        {/* URL Input */}
         <div className="mb-4">
           <label
-            htmlFor="url1"
+            htmlFor="url"
             className="block text-sm font-medium text-gray-700"
           >
-            URL-1
+            URL
           </label>
           <input
-            id="url1"
+            id="url"
             className={`mt-1 block p-1 w-full rounded border ${
-              errors.url1 ? "border-red-500" : "border-gray-300"
+              errors.url ? "border-red-500" : "border-gray-300"
             } focus:ring-blue-500 focus:border-blue-500`}
-            {...register("url1", { required: "URL 1 is required" })}
+            {...register("url", { required: "URL is required" })}
           />
-          {errors.url1 && (
-            <p className="text-red-500 text-sm mt-1">{errors.url1.message}</p>
-          )}
-        </div>
-
-        {/* URL-2 */}
-        <div className="mb-4">
-          <label
-            htmlFor="url2"
-            className="block text-sm font-medium text-gray-700"
-          >
-            URL-2
-          </label>
-          <input
-            id="url2"
-            className={`mt-1 block p-1 w-full rounded border ${
-              errors.url2 ? "border-red-500" : "border-gray-300"
-            } focus:ring-blue-500 focus:border-blue-500`}
-            {...register("url2", { required: "URL 2 is required" })}
-          />
-          {errors.url2 && (
-            <p className="text-red-500 text-sm mt-1">{errors.url2.message}</p>
-          )}
-        </div>
-
-        {/* URL-3 */}
-        <div className="mb-4">
-          <label
-            htmlFor="url3"
-            className="block text-sm font-medium text-gray-700"
-          >
-            URL-3
-          </label>
-          <input
-            id="url3"
-            className={`mt-1 block p-1 w-full rounded border ${
-              errors.url3 ? "border-red-500" : "border-gray-300"
-            } focus:ring-blue-500 focus:border-blue-500`}
-            {...register("url3", { required: "URL 3 is required" })}
-          />
-          {errors.url3 && (
-            <p className="text-red-500 text-sm mt-1">{errors.url3.message}</p>
-          )}
-        </div>
-
-        {/* URL-4 */}
-        <div className="mb-4">
-          <label
-            htmlFor="url4"
-            className="block text-sm font-medium text-gray-700"
-          >
-            URL-4
-          </label>
-          <input
-            id="url4"
-            className={`mt-1 block p-1 w-full rounded border ${
-              errors.url4 ? "border-red-500" : "border-gray-300"
-            } focus:ring-blue-500 focus:border-blue-500`}
-            {...register("url4", { required: "URL 4 is required" })}
-          />
-          {errors.url4 && (
-            <p className="text-red-500 text-sm mt-1">{errors.url4.message}</p>
+          {errors.url && (
+            <p className="text-red-500 text-sm mt-1">{errors.url.message}</p>
           )}
         </div>
 
@@ -115,6 +78,56 @@ const UploadShorts = () => {
           Submit
         </button>
       </form>
+
+      {/* Shorts List Table */}
+      <div className="mt-8 p-6 bg-white rounded shadow-md">
+        <h2 className="text-[24px] font-bold mb-4">Shorts List</h2>
+        {shortsLoading ? (
+          <p className="text-center text-gray-600">Loading shorts...</p>
+        ) : shortsError ? (
+          <p className="text-center text-red-500">{shortsError}</p>
+        ) : shorts?.length === 0 ? (
+          <p className="text-center text-gray-600">No shorts available.</p>
+        ) : (
+          <table className="w-full border-collapse border border-gray-300">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="border border-gray-300 px-4 py-2">#</th>
+                <th className="border border-gray-300 px-4 py-2">URL</th>
+                <th className="border border-gray-300 px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {shorts &&
+                shortsList?.map((short, index) => (
+                  <tr key={short?._id} className="hover:bg-gray-50">
+                    <td className="border border-gray-300 px-4 py-2 text-center">
+                      {index + 1}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      <a
+                        href={short?.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        {short.url}
+                      </a>
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2 text-center">
+                      <button
+                        onClick={() => handleDeleteShort(short?._id)}
+                        className="bg-[tomato] text-white px-3 py-1 rounded hover:bg-red-500"
+                      >
+                        <FaDeleteLeft />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };

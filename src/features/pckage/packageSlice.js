@@ -159,13 +159,36 @@ export const updatePackage = createAsyncThunk(
 export const createShorts = createAsyncThunk(
   "package/createShorts",
   async (data, { rejectWithValue }) => {
+    console.log(data);
+
     try {
-      const response = await axios.post(`${base_url}/api/review`, data);
-      console.log("slice", response.data);
+      const response = await axios.post(`${base_url}/api/shorts`, data);
       return response.data;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const getShorts = createAsyncThunk(
+  "package/getShorts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/shorts`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+export const deleteShorts = createAsyncThunk(
+  "package/deleteShorts",
+  async (shortId, { rejectWithValue }) => {
+    try {
+      await axios.delete(`${base_url}/api/shorts/${shortId}`);
+      return shortId; // Return the deleted short's ID
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Failed to delete short");
     }
   }
 );
@@ -286,6 +309,36 @@ const packageSlice = createSlice({
       .addCase(createShorts.rejected, (state, action) => {
         state.shortsLoading = false;
         state.shortsError = action.payload?.message ?? null;
+      })
+      .addCase(getShorts.pending, (state) => {
+        state.shortsLoading = true;
+        state.shortsError = null;
+      })
+      .addCase(getShorts.fulfilled, (state, action) => {
+        state.shortsLoading = false;
+        state.shortsError = null;
+        state.shorts = action.payload.shorts; // Update the shorts list
+      })
+      .addCase(getShorts.rejected, (state, action) => {
+        state.shortsLoading = false;
+        state.shortsError = action.payload?.message ?? null;
+      })
+
+      // Delete Shorts
+      .addCase(deleteShorts.pending, (state) => {
+        state.shortsLoading = true;
+        state.shortsError = null;
+      })
+      .addCase(deleteShorts.fulfilled, (state, action) => {
+        state.shortsLoading = false;
+        state.shortsError = null;
+        state.shorts = state.shorts.filter(
+          (short) => short._id !== action.payload
+        ); // Remove the deleted short
+      })
+      .addCase(deleteShorts.rejected, (state, action) => {
+        state.shortsLoading = false;
+        state.shortsError = action.payload?.message ?? "Error deleting short";
       });
   },
 });
