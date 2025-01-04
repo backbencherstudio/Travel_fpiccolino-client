@@ -9,36 +9,57 @@ export const createCheckout = createAsyncThunk(
   async (checkoutData, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}/order/checkout`, checkoutData);
-      console.log("slice", response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
 
 export const getCheckout = createAsyncThunk(
-  "order/contact/createCheckout/get",
+  "order/contact/getCheckout",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/order/checkout`);
-      return response.data; // Return categories data
+      return response.data;
     } catch (error) {
-      console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
 
 export const deleteCheckout = createAsyncThunk(
-  "order/contact/createCheckout/delete",
+  "order/contact/deleteCheckout",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.delete(`${base_url}/order/checkout`);
-      return response.data; // Return categories data
+      return response.data;
     } catch (error) {
-      console.error(error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+// New data API calls
+export const createCheckoutWithNewData = createAsyncThunk(
+  "order/contact/createCheckoutNewData",
+  async (userUpdateData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}/order/checkoutWithNewData`, userUpdateData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const getCheckoutNewData = createAsyncThunk(
+  "order/contact/getCheckoutNewData",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/order/checkoutWithNewData`);
+      return response.data;
+    } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
@@ -47,12 +68,17 @@ export const deleteCheckout = createAsyncThunk(
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState: {
-    checkout: {},
-    loading: false,
-    error: null,
+    checkout: [], // Main checkout data
+    loading: false, // Regular data loading
+    error: null, // Regular data error
+
+    checkoutNewData: [], // New data-specific checkout information
+    loadingNewData: false, // New data loading
+    errorNewData: null, // New data error
   },
   reducers: {},
   extraReducers: (builder) => {
+    // Regular checkout actions
     builder
       .addCase(createCheckout.pending, (state) => {
         state.loading = true;
@@ -64,21 +90,46 @@ const checkoutSlice = createSlice({
       })
       .addCase(createCheckout.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
-      });
-    builder
+        state.error = action.payload?.message ?? action.payload ?? "Unknown error";
+      })
       .addCase(getCheckout.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(getCheckout.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
         state.checkout = action.payload;
       })
       .addCase(getCheckout.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message ?? null;
+        state.error = action.payload?.message ?? action.payload ?? "Unknown error";
+      });
+
+    // New data-specific actions
+    builder
+      .addCase(createCheckoutWithNewData.pending, (state) => {
+        state.loadingNewData = true;
+        state.errorNewData = null;
+      })
+      .addCase(createCheckoutWithNewData.fulfilled, (state, action) => {
+        state.loadingNewData = false;
+        state.checkoutNewData.push(action.payload);
+      })
+      .addCase(createCheckoutWithNewData.rejected, (state, action) => {
+        state.loadingNewData = false;
+        state.errorNewData = action.payload?.message ?? action.payload ?? "Unknown error";
+      })
+      .addCase(getCheckoutNewData.pending, (state) => {
+        state.loadingNewData = true;
+        state.errorNewData = null;
+      })
+      .addCase(getCheckoutNewData.fulfilled, (state, action) => {
+        state.loadingNewData = false;
+        state.checkoutNewData = action.payload; // Replace entire array with new data
+      })
+      .addCase(getCheckoutNewData.rejected, (state, action) => {
+        state.loadingNewData = false;
+        state.errorNewData = action.payload?.message ?? action.payload ?? "Unknown error";
       });
   },
 });

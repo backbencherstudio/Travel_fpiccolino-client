@@ -61,8 +61,6 @@ const Insurance = () => {
         insurance: isSelectInsurance,
         toureAmount: totalAmount
     }
-    console.log(toureData);
-
     const navigate = useNavigate()
 
     const addDataFun = () => {
