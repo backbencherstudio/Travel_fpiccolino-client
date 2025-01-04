@@ -8,6 +8,7 @@ import {
 } from "../../../features/pckage/packageSlice";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { FaDeleteLeft } from "react-icons/fa6";
+import { MdDeleteOutline } from "react-icons/md";
 
 const UploadShorts = () => {
   const dispatch = useDispatch();
@@ -90,9 +91,9 @@ const UploadShorts = () => {
           <p className="text-center text-gray-600">No shorts available.</p>
         ) : (
           <table className="w-full border-collapse border border-gray-300">
-            <thead className="bg-gray-200">
+            <thead className="bg-gray-100">
               <tr>
-                <th className="border border-gray-300 px-4 py-2">#</th>
+                <th className="border border-gray-300 px-4 py-2">S/N</th>
                 <th className="border border-gray-300 px-4 py-2">URL</th>
                 <th className="border border-gray-300 px-4 py-2">Actions</th>
               </tr>
@@ -100,7 +101,7 @@ const UploadShorts = () => {
             <tbody>
               {shorts &&
                 shortsList?.map((short, index) => (
-                  <tr key={short?._id} className="hover:bg-gray-50">
+                  <tr key={short?._id} className="hover:bg-[#fdf0ea]">
                     <td className="border border-gray-300 px-4 py-2 text-center">
                       {index + 1}
                     </td>
@@ -114,13 +115,13 @@ const UploadShorts = () => {
                         {short.url}
                       </a>
                     </td>
-                    <td className="border border-gray-300 px-4 py-2 text-center">
-                      <button
+                    <td className="border px-4 py-3 text-center flex justify-center items-center">
+                      <div
                         onClick={() => handleDeleteShort(short?._id)}
-                        className="bg-[tomato] text-white px-3 py-1 rounded hover:bg-red-500"
+                        className="text-[#eb3d4d] border border-[#eb3d4d] hover:bg-[#eb3d4f1e] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center"
                       >
-                        <FaDeleteLeft />
-                      </button>
+                        <MdDeleteOutline />
+                      </div>
                     </td>
                   </tr>
                 ))}

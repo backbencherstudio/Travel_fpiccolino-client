@@ -54,7 +54,12 @@ const Login = () => {
 
         <div className="h-full w-full md:col-span-3">
           <div className="lg:m-20 m-5">
-            <img src={logo} alt="" />
+            <img
+              className="cursor-pointer"
+              onClick={() => navigate("/")}
+              src={logo}
+              alt=""
+            />
             <h1 className="font-extrabold text-[32px] mt-10">Welcome back</h1>
             {showError ? (
               <h5 className="text-red-500 text-[16px] error-message flex items-center mt-5">

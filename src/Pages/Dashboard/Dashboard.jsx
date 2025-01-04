@@ -13,6 +13,7 @@ import { IoMdContacts } from "react-icons/io";
 import { BiBookContent } from "react-icons/bi";
 import { TiWorldOutline } from "react-icons/ti";
 import { TbArrowAutofitContent } from "react-icons/tb";
+import { FiYoutube } from "react-icons/fi";
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,6 +44,10 @@ const Dashboard = () => {
   const handleNavigation = (tab, path) => {
     setSelectedTab(tab);
     navigate(path);
+  };
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
@@ -152,7 +157,7 @@ const Dashboard = () => {
                 : "hover:bg-zinc-300"
             }`}
           >
-            <TiWorldOutline />
+            <TiWorldOutline className="text-[20px]" />
             <span>Add Country</span>
           </button>
           <button
@@ -186,11 +191,14 @@ const Dashboard = () => {
                 : "hover:bg-zinc-300"
             }`}
           >
-            <TbArrowAutofitContent />
+            <FiYoutube />
             <span>Upload Shorts</span>
           </button>
         </nav>
-        <button className="absolute bottom-5 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]">
+        <button
+          onClick={() => handleLogOut()}
+          className="absolute bottom-3 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"
+        >
           <CiLogout className="mt-1" /> Logout
         </button>
       </aside>
