@@ -42,7 +42,7 @@ export const conformRegisterOtp = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "users/login",
   async (userData, { rejectWithValue }) => {
-    console.log(userData);
+    console.log("userData", userData);
     try {
       const response = await axios.post(`${base_url}/users/login`, userData, {
         withCredentials: true,
@@ -236,7 +236,7 @@ const authSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.userUpdateLoading = false;
-        console.log(121, action);
+        console.log(121, action.payload);
         state.user = { ...state.user, ...action.payload };
         state.userUpddateError = null;
       })
