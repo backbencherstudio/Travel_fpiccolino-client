@@ -138,6 +138,7 @@ const Header = () => {
           <option value="about">About</option>
           <option value="blog">Blog</option>
           <option value="contact">Contact</option>
+          <option value="policy">Policy</option>
           <option value="faq">FAQ</option>
         </select>
         {errors.pageName && (

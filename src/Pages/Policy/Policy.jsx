@@ -1,14 +1,34 @@
 /* eslint-disable react/no-unescaped-entities */
+import { useDispatch, useSelector } from "react-redux";
 import blogDetailsImage from "../../assets/Images/blogDetails.jpg"
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
+import { useEffect } from "react";
+import { getHeader } from "../../features/header/headerSlice";
 
 const Policy = () => {
+
+    const dispatch = useDispatch();
+    const { headers } = useSelector((state) => state.header);
+    useEffect(() => {
+        dispatch(getHeader());
+    }, []);
+    const data = headers?.filter(item => item.pageName === "policy")
+
+    console.log(headers);
+    
+
     const heroContent = {
-        heroImage: blogDetailsImage,
-        titleOne: "Privacy policy",
-        descriptionOne: "Your Data, Our Commitment to Transparency and Security",
+        heroImage: data[0]?.heroImage,
+        titleOne: data[0]?.titleOne,
+        descriptionOne: data[0]?.descriptionOne,
     }
+
+    // const heroContent = {
+    //     heroImage: blogDetailsImage,
+    //     titleOne: "Privacy policy",
+    //     descriptionOne: "Your Data, Our Commitment to Transparency and Security",
+    // }
 
     return (
         <div>
