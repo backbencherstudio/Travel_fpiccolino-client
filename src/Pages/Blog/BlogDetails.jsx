@@ -116,16 +116,6 @@ const BlogDetails = () => {
             </div>
           </div>
           <div className="lg:col-span-1">
-            <div className="relative mt-4">
-              <input
-                className="bg-[#fbfbfb] p-3 pr-20 w-full text-[18px] border border-[#f2b8a0] rounded-lg"
-                type="text"
-                placeholder="Search.."
-              />
-              <button className=" primary_text absolute right-1 top-4 px-[10px] py-1 rounded-lg">
-                <FaSearch />
-              </button>
-            </div>
             <div className="mt-8 bg-[#fdf0ea] p-4 border border-[#e86731] rounded-lg overflow-auto">
               <h4 className="text-[20px] font-medium text-[#141D2A] border-b border-[#e86731] pb-2">
                 Categories

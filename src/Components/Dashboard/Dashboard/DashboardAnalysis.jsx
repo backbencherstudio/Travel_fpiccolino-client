@@ -18,7 +18,7 @@ import {
 
 const DashboardAnalysis = () => {
   const dispatch = useDispatch();
-  const [chartType, setChartType] = useState("Revenue");
+  const [chartType, setChartType] = useState("Order");
   const [timeInterval, setTimeInterval] = useState("monthly");
   const { packag } = useSelector((state) => state.package);
   const { totalData, radarData } = useSelector((state) => state.dashboard);
@@ -37,8 +37,8 @@ const DashboardAnalysis = () => {
 
   const dashboardData = [
     {
-      title: "Revenue",
-      amount: "850,930",
+      title: "Order",
+      amount: totalData?.totalOrders,
       percent: 12,
       bgColor: "bg-teal-50",
       bgColor2: "bg-teal-100",
@@ -67,7 +67,7 @@ const DashboardAnalysis = () => {
     },
     {
       title: "Traveler",
-      amount: "8,930",
+      amount: totalData?.totalTravellers,
       percent: 4,
       bgColor: "bg-purple-50",
       bgColor2: "bg-purple-100",
@@ -96,7 +96,7 @@ const DashboardAnalysis = () => {
     },
     {
       title: "Profit",
-      amount: "80,930",
+      amount: totalData?.totalProfit ? totalData?.totalProfit : 0,
       percent: 6,
       bgColor: "bg-red-50",
       bgColor2: "bg-red-100",
@@ -150,9 +150,9 @@ const DashboardAnalysis = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="md:col-span-2">
-            {chartType === "Revenue" ? (
+            {chartType === "Order" ? (
               <Chart
-                title="Revenue"
+                title="Order"
                 color="teal"
                 data={dashboardData[0].revenueData}
                 timeInterval={timeInterval}

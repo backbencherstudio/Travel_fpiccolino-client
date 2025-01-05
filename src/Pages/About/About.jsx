@@ -8,7 +8,6 @@ import BenifitsSliderSection from "../../Components/About/BenifitsSliderSection"
 import WhyChooseUsSection from "../../Components/About/WhyChooseUsSection";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getHeader } from "../../features/header/headerSlice";
 import { getAboutPageData } from "../../features/pageData/pageDataSlice";
 
 const About = () => {

@@ -2,31 +2,32 @@ import { useEffect, useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { getPackage } from "../../../features/pckage/packageSlice";
+import { getOrders } from "../../../features/order/orderSlice";
 
 const OrderList = () => {
   const dispatch = useDispatch();
-  const { packag } = useSelector((state) => state.package);
+  const { orders } = useSelector((state) => state.order);
   useEffect(() => {
-    dispatch(getPackage({ search: "", startDate: "", endDate: "" }));
+    dispatch(getOrders({ search: "", startDate: "", endDate: "" }));
   }, []);
   const [columns] = useState({
+    totalAmount: true,
+    passenger: true,
+    flightAmount: true,
+    packageAmount: true,
     date: true,
-    duration: true,
-    destination: true,
-    amount: true,
-    country: true,
-    action: true,
+    tourDate: true,
   });
+  console.log(orders);
 
   return (
     <div>
       <CustomHeadingDashboard />
       <CustomTable
-        tableType={"package"}
+        tableType={"order"}
         title={"Order List"}
         columns={columns}
-        data={packag}
+        data={orders}
       />
     </div>
   );

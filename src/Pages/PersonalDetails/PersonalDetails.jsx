@@ -69,23 +69,17 @@ const PersonalDetails = () => {
         name: "travelers",
     });
 
+    console.log(checkout);
 
     const onSubmit = (data) => {
         const userUpdateData = {
             ...data,
             ...checkout
         }
-        console.log(userUpdateData);
         dispatch(createCheckoutWithNewData({ ...userUpdateData }))
         navigate("/checkout")
-        // navigate(`/personalDetails`);
     };
-
-    // const addDataFun = () => {
-    //     dispatch(createCheckout({ ...toureData }))
-    //     navigate(`/personalDetails`);
-    // };
-
+    
     const removeSession = () => {
         dispatch(deleteCheckout());
         navigate(`/flight/${checkout?.toureId}`);

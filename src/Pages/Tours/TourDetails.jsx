@@ -8,7 +8,6 @@ import iconn4 from "../../assets/icone/icone4.png";
 import yes from "../../assets/icone/yes.png";
 import { useEffect, useState } from "react";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
-import { reviews } from "../../ALLJsonFile/const";
 import TestimonialCard from "../../Components/Cards/TestimonialCard";
 import { RiMoneyEuroCircleLine } from "react-icons/ri";
 import { Link, useParams } from "react-router-dom";
@@ -37,26 +36,26 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import moment from "moment";
 import { base_url } from "../../utils/base_path";
+import { getReview } from "../../features/review/reviewSlice";
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
   console.log(params.id);
 
   const { packageDetails } = useSelector((state) => state.package);
-
+  const { review } = useSelector((state) => state.review);
   useEffect(() => {
     dispatch(getPackageDetails(params?.id));
+    dispatch(getReview());
   }, []);
 
-  console.log(packageDetails);
+  console.log(review);
 
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
     image: "http://localhost:3000" + packageDetails?.images[0],
     titleOne: packageDetails?.tourName,
   };
-  console.log("heroContent dddd ", heroContent);
-
   const iconMap = {
     MdOutlineBedtime: MdOutlineBedtime,
     MdOutlineCarRental: MdOutlineCarRental,
@@ -296,7 +295,7 @@ const TourDetails = () => {
 
           <ParentComponent>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12 ">
-              {reviews?.map((item) => (
+              {review?.reviews?.map((item) => (
                 <div key={item._id}>
                   <TestimonialCard item={item} />
                 </div>
