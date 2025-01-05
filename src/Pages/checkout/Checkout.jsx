@@ -5,6 +5,7 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import StripeForm from './StripeForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCheckoutNewData } from '../../features/checkout/checkoutSlice';
+import { createOrder } from '../../features/order/orderSlice';
 
 // Load Stripe Key
 const stripePromise = loadStripe('pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha');
@@ -22,15 +23,21 @@ const Checkout = () => {
         setPaymentMethod(e.target.value);
     };
 
-    const getPaypalSuccessDataFun = (data) => {
+    const getPaypalSuccessDataFun = async (data) => {
 
         const orderData = {
             ...checkoutNewData,
             paymentId: data.id,
         };
 
+        if (orderData) {
+            const res = await dispatch(createOrder(orderData))
+            console.log(res);
+        }
 
         console.log('Paypal orderData Data:', orderData);
+
+
     };
 
     const amount = checkoutNewData?.toureAmount

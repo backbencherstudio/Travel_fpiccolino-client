@@ -12,6 +12,7 @@ import pageDataRedicer from "../features/pageData/pageDataSlice";
 import reviewReducer from "../features/review/reviewSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import checkoutReducer from "../features/checkout/checkoutSlice";
+import orderReducer from "../features/order/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     pageData: pageDataRedicer,
     review: reviewReducer,
     checkout : checkoutReducer,
+    order : orderReducer
   },
 });
 

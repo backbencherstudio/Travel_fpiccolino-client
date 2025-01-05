@@ -17,6 +17,11 @@ const Flight = () => {
     const dispatch = useDispatch();
     const params = useParams();
     const { packageDetails } = useSelector((state) => state.package);
+    const { user } = useSelector(
+        (state) => state.authorization
+    );
+
+    console.log(packageDetails);
     
 
     const [flightAmount, setFlightAmount] = useState(0);
@@ -58,20 +63,23 @@ const Flight = () => {
     const handleAddFlight = () => setAddFlight(true);
     const handleRemoveFlight = () => setAddFlight(false);
 
-    
+
+    console.log(user?._id);
 
     // order/addToCard
     const toureData = {
-        toureId: packageDetails?._id,
+        userId: user?._id,
+        packageId: packageDetails?._id,
         tourDate: packageDetails?.tourDate,
         toureAmount: totalToureCost,
-        flight: addFlight && highLight,
-        flightPrice: addFlight && totalFlightAmount,
+        flight: addFlight ? highLight : {} ,
+        flightPrice: addFlight ? totalFlightAmount : false ,
         person,
         tureDuration: packageDetails?.tourDuration,
         totalPackageAmount: updateToureAmount,
-        insurance : packageDetails?.insurance
+        insurance: packageDetails?.insurance
     }
+    
     const navigate = useNavigate()
 
     const addDataFun = () => {

@@ -9,6 +9,8 @@ import {
     useElements
 } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import { createOrder } from '../../features/order/orderSlice';
+import { useDispatch } from 'react-redux';
 
 const StripeForm = ({ checkoutNewData }) => {
     const stripe = useStripe();
@@ -17,13 +19,11 @@ const StripeForm = ({ checkoutNewData }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [email, setEmail] = useState('');
-
+     const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
-
-
 
         const cardElement = elements.getElement(CardNumberElement);
         const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -43,13 +43,18 @@ const StripeForm = ({ checkoutNewData }) => {
                 paymentMethodId: paymentMethod.id,
                 amount: parseInt(checkoutNewData?.toureAmount),
             });
-
             const orderData = {
                 ...checkoutNewData,
                 paymentId: data?.paymentIntent.id
             }
+            if (orderData) {
+                const res = await dispatch(createOrder(orderData))
+                console.log(res);
+            }
 
-           console.log(' Stripe orderData Data:', orderData);
+
+            console.log(' Stripe orderData Data:', orderData);
+
 
             if (data.success) {
                 setSuccess(true);

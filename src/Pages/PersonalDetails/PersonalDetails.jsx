@@ -69,13 +69,13 @@ const PersonalDetails = () => {
         name: "travelers",
     });
 
+    console.log(checkout);
 
     const onSubmit = (data) => {
         const userUpdateData = {
             ...data,
             ...checkout
         }
-        console.log(userUpdateData);
         dispatch(createCheckoutWithNewData({ ...userUpdateData }))
         navigate("/checkout")
         // navigate(`/personalDetails`);
