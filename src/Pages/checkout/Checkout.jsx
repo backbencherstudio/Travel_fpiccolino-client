@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-// import StripeForm from './StripeForm'; // Stripe Form Component
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-// import './Checkout.css';
 import StripeForm from './StripeForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCheckoutNewData } from '../../features/checkout/checkoutSlice';
@@ -14,20 +12,30 @@ const stripePromise = loadStripe('pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3
 const Checkout = () => {
     const { checkoutNewData } = useSelector((state) => state.checkout);
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(getCheckoutNewData());
     }, [dispatch]);
-
-    if (checkoutNewData) {
-        console.log({checkoutNewData});
-    }
 
     const [paymentMethod, setPaymentMethod] = useState('stripe');
 
     const handlePaymentMethodChange = (e) => {
         setPaymentMethod(e.target.value);
     };
+
+    const getPaypalSuccessDataFun = (data) => {
+
+        const orderData = {
+            ...checkoutNewData,
+            paymentId: data.id,
+        };
+
+
+        console.log('Paypal orderData Data:', orderData);
+    };
+
+    const amount = checkoutNewData?.toureAmount
+        ? parseFloat(checkoutNewData?.toureAmount).toFixed(2)
+        : "0.00";
 
     return (
         <div className="checkout-container">
@@ -44,37 +52,55 @@ const Checkout = () => {
             <div className="payment-form">
                 {paymentMethod === 'stripe' ? (
                     <Elements stripe={stripePromise}>
-                        <StripeForm />
+                        <StripeForm checkoutNewData={checkoutNewData} />
                     </Elements>
                 ) : (
-                    <PayPalScriptProvider
-                        options={{
-                            "client-id": "YOUR_PAYPAL_CLIENT_ID_HERE",
-                            currency: 'USD',
-                        }}
-                    >
-                        <PayPalButtons
-                            createOrder={(data, actions) => {
-                                return actions.order.create({
-                                    purchase_units: [
-                                        {
-                                            amount: {
-                                                value: '10.00', // Example Amount
-                                            },
-                                        },
-                                    ],
-                                });
-                            }}
-                            onApprove={(data, actions) => {
-                                return actions.order.capture().then((details) => {
-                                    alert('Payment Approved: ' + details.payer.name.given_name);
-                                });
-                            }}
-                            onError={(err) => {
-                                console.error('PayPal Error:', err);
-                            }}
-                        />
-                    </PayPalScriptProvider>
+                    <div className='bg-green-700 flex justify-center w-full'>
+                        <div style={{ width: "600px" }}>
+                            <PayPalScriptProvider
+                                options={{
+                                    "client-id": "AUHCLLlrN0fUteHTIYiBX7ZOoduVvF0mp4QSDUQOf_m2GohS_kVr6z8CbTJgOMnGNyMAiLsx_EWf8l5C",
+                                    currency: 'USD',
+                                    "disable-funding": "paylater", // Removes "Pay Later" option
+                                }}
+                            >
+                                <PayPalButtons
+                                    style={{
+                                        layout: "vertical", // Change to "horizontal" for side-by-side buttons
+                                        color: "blue",
+                                        shape: "rect",
+                                        label: "checkout",
+                                        height: 50,
+                                    }}
+                                    createOrder={(data, actions) => {
+                                        if (!amount || parseFloat(amount) <= 0) {
+                                            alert("Invalid payment amount");
+                                            return;
+                                        }
+                                        return actions.order.create({
+                                            purchase_units: [
+                                                {
+                                                    amount: {
+                                                        value: amount, // Dynamic Amount Passed
+                                                    },
+                                                },
+                                            ],
+                                        });
+                                    }}
+                                    onApprove={(data, actions) => {
+                                        return actions.order.capture().then((details) => {
+                                            getPaypalSuccessDataFun(details);
+                                            alert('Payment Approved: ' + details.payer.name.given_name);
+                                        });
+                                    }}
+                                    onError={(err) => {
+                                        console.error('PayPal Error:', err);
+                                    }}
+                                    forceReRender={[amount]} // Forces re-render when the amount changes
+                                />
+                            </PayPalScriptProvider>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>
