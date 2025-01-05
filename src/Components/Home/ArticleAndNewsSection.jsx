@@ -7,42 +7,14 @@ import natureImage from "../../assets/natureImage.jpg";
 import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ArticleCard from "./ArticleCard";
-const ArticleAndNewsSection = ({blogSection}) => {
+const ArticleAndNewsSection = ({ blogSection }) => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
-  const cardDetails = [
-    {
-      image: natureImage,
-      title: "Amalfi Coast Escape",
-      tag: "Adventure Awaits",
-      description: "Discover unique travel tips, guides, and inspiration.",
-    },
-    {
-      image: natureImage2,
-      title: "Amalfi Coast Escape",
-      tag: "Adventure Awaits",
-      description: "Discover unique travel tips, guides, and inspiration.",
-    },
-    {
-      image: natureImage,
-      title: "Amalfi Coast Escape",
-      tag: "Adventure Awaits",
-      description: "Discover unique travel tips, guides, and inspiration.",
-    },
-    {
-      image: natureImage2,
-      title: "Amalfi Coast Escape",
-      tag: "Adventure Awaits",
-      description: "Discover unique travel tips, guides, and inspiration.",
-    },
-  ];
-  
   return (
     <div className="bg-[#fff] lg:p-20 lg:pb-0 pt-5">
       <ParentComponent>
-
         <HeadLine
           title={blogSection.title}
           description={blogSection.description}

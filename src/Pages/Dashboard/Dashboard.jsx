@@ -13,6 +13,8 @@ import { IoMdContacts } from "react-icons/io";
 import { BiBookContent } from "react-icons/bi";
 import { TiWorldOutline } from "react-icons/ti";
 import { TbArrowAutofitContent } from "react-icons/tb";
+import { FiYoutube } from "react-icons/fi";
+import { useSelector } from "react-redux";
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,6 +23,10 @@ const Dashboard = () => {
   );
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
+  const { user, appLoading, isAuthenticated } = useSelector(
+    (state) => state.authorization
+  );
+  console.log(user);
 
   useEffect(() => {
     localStorage.setItem("tab", selectedTab);
@@ -43,6 +49,10 @@ const Dashboard = () => {
   const handleNavigation = (tab, path) => {
     setSelectedTab(tab);
     navigate(path);
+  };
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
@@ -152,7 +162,7 @@ const Dashboard = () => {
                 : "hover:bg-zinc-300"
             }`}
           >
-            <TiWorldOutline />
+            <TiWorldOutline className="text-[20px]" />
             <span>Add Country</span>
           </button>
           <button
@@ -178,8 +188,22 @@ const Dashboard = () => {
             <TbArrowAutofitContent />
             <span>Add Content</span>
           </button>
+          <button
+            onClick={() => handleNavigation("uploadShorts", "uploadShorts")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "uploadShorts"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <FiYoutube />
+            <span>Upload Shorts</span>
+          </button>
         </nav>
-        <button className="absolute bottom-5 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]">
+        <button
+          onClick={() => handleLogOut()}
+          className="absolute bottom-3 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"
+        >
           <CiLogout className="mt-1" /> Logout
         </button>
       </aside>
@@ -202,17 +226,29 @@ const Dashboard = () => {
             {/* <div className=" border mr-5 rounded-full h-10 w-10 flex justify-center items-center text-gray-400 cursor-pointer">
               <FaRegBell />
             </div> */}
-            <div className="flex">
-              <div className=" border mr-1 rounded-full h-10 w-10 flex justify-center items-center text-gray-400 cursor-pointer">
-                <img
-                  src={image}
-                  className="h-full w-full rounded-full object-cover"
-                  alt=""
-                />
+
+            <div
+              onClick={() => navigate(`user-list/${user?._id}`)}
+              className="flex cursor-pointer"
+            >
+              <div className=" border border-orange-500 mr-2 rounded-full h-10 w-10 flex justify-center items-center text-gray-400 cursor-pointer">
+                {user?.image_url ? (
+                  <img
+                    src={user.image_url}
+                    alt=""
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                ) : (
+                  <FaRegUser className="primary_text" />
+                )}
               </div>
               <div>
-                <h1 className="font-semibold text-[16px]">Tren bold</h1>
-                <p className="text-[12px] text-[#72777F]">Admin</p>
+                <h1 className="font-semibold text-[18px]">
+                  {user?.name ? user.name : "Admin"}
+                </h1>
+                <p className="text-[12px] text-[#72777F]">
+                  {user?.name && "Admin"}
+                </p>
               </div>
             </div>
           </div>

@@ -1,15 +1,6 @@
 import BlogSections from "../../Components/Blog/BlogSections";
 import calender from "../../assets/icons/calender.svg";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
-import heroImage from "../../assets/Images/about.jpg";
-import natureImage from "../../assets/natureImage.jpg";
-import natureImage2 from "../../assets/natureImage2.jpg";
-import natureImage3 from "../../assets/benifit.jpg";
-import image1 from "../../assets/image1.jpg";
-import image2 from "../../assets/image2.jpg";
-import image3 from "../../assets/image3.jpg";
-import image4 from "../../assets/image4.jpg";
-import image5 from "../../assets/image5.jpg";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { useParams } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
@@ -20,6 +11,7 @@ import {
   getCategoryCount,
 } from "../../features/blog/blogSlice";
 import { base_url } from "../../utils/base_path";
+import moment from "moment";
 const BlogDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -32,11 +24,12 @@ const BlogDetails = () => {
     dispatch(getCategoryCount());
   }, []);
   const heroContent = {
-    heroImage: `/uploads/${blogDetails?.heroSection[0].headerImg}`,
+    image: `${base_url}/uploads/${blogDetails?.heroSection[0].headerImg}`,
     titleOne: "Feel at Home Wherever You Roam",
     descriptionOne:
       "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
   };
+  console.log(heroContent);
   console.log(heroContent);
 
   const relatedBlogs = categoryBlogs?.find(
@@ -118,7 +111,7 @@ const BlogDetails = () => {
               </p>
               <p className="text-18 flex items-center">
                 <img className="h-6 w-6 mr-2" src={calender} alt="" />{" "}
-                {blogDetails?.createdAt}
+                {moment(blogDetails?.createdAt).format("MMM DD, YYYY")}
               </p>
             </div>
           </div>

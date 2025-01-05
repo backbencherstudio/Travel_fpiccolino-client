@@ -27,7 +27,6 @@ import BlogList from "../Components/Dashboard/blog/BlogList";
 import UpdateBlog from "../Components/Dashboard/blog/UpdateBlog";
 import PackageList from "../Components/Dashboard/Package/PackageList";
 import CreatePackage from "../Components/Dashboard/Package/CreatePackage";
-import CreateBlog from "../Components/Dashboard/Blog/CreateBlog";
 import SignupOtp from "../Pages/Auth/SignupOtp";
 import UserProfile from "../Pages/Profile/UserProfile";
 import Header from "../Components/Dashboard/Header/Header";
@@ -37,6 +36,8 @@ import OrderList from "../Components/Dashboard/Orders/OrderList";
 import AddCountry from "../Components/Dashboard/AddCountry/AddCountry";
 import AddContent from "../Components/Dashboard/AddContent/AddContent";
 import Checkout from "../Pages/checkout/Checkout";
+import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
+import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -164,11 +165,15 @@ export const router = createBrowserRouter([
         path: "addContent",
         element: <AddContent />,
       },
+      {
+        path: "uploadShorts",
+        element: <UploadShorts />,
+      },
     ],
   },
   {
-    path : "/checkout",
-    element : <Checkout/>
+    path: "/checkout",
+    element: <Checkout />,
   },
   {
     path: "/flight/:id",

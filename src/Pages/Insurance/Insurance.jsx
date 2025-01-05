@@ -52,6 +52,7 @@ const Insurance = () => {
     };
 
     console.log(checkout);
+    console.log(checkout?.totalPackageAmount);
 
     const { toureAmount, ...data } = checkout
 

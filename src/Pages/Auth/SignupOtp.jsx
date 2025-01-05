@@ -18,9 +18,6 @@ import {
   registerUser,
 } from "../../features/auth/authSlice";
 
-
-
-
 const SignupOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 
@@ -52,16 +49,16 @@ const SignupOtp = () => {
     conformOtpError,
     conformOtpLoading,
   } = useSelector((state) => state.authorization);
-    const [showError, setShowError] = useState(!!conformOtpError);
-    useEffect(() => {
-      if (conformOtpError) {
-        setShowError(true);
-        const timer = setTimeout(() => {
-          setShowError(false);
-        }, 5000);
-        return () => clearTimeout(timer);
-      }
-    }, [conformOtpError]);
+  const [showError, setShowError] = useState(!!conformOtpError);
+  useEffect(() => {
+    if (conformOtpError) {
+      setShowError(true);
+      const timer = setTimeout(() => {
+        setShowError(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [conformOtpError]);
   const handleRecentOtp = async () => {
     let responce = await dispatch(recentOtp());
     if (responce.payload.otp) {
@@ -74,11 +71,10 @@ const SignupOtp = () => {
     navigate(-1);
   };
 
-
   const handleRegisterUser = async () => {
     const responce = await dispatch(conformRegisterOtp(otp.join("")));
-    if(responce.type === 'users/conformRegisterOtp/fulfilled'){
-      navigate("/")
+    if (responce.type === "users/conformRegisterOtp/fulfilled") {
+      navigate("/");
     }
   };
 
@@ -98,15 +94,13 @@ const SignupOtp = () => {
               <FaAngleLeft style={{ fontSize: "20px" }} /> Back
             </p>
 
-      {showError && (
+            {showError && (
               <div className="errorMessage mt-5">
                 <BsExclamationCircle className="exclamationMark text-red-500 " />
                 {/* <p className="error-message">{signupError}</p> */}
                 <p className="error-message">{conformOtpError}</p>
               </div>
             )}
-
-
 
             <h1 className="font-extrabold text-[32px] mt-8">Enter OTP</h1>
             <h5 className="text-[#72777F] text-[16px] mt-3">
@@ -131,10 +125,10 @@ const SignupOtp = () => {
 
             <button
               //   onClick={() => document.getElementById("password_modal").showModal()}
-         onClick={handleRegisterUser}
+              onClick={handleRegisterUser}
               className="primary_bg p-3 w-full rounded-lg text-white text-[16px] font-semibold mt-6 active:opacity-60"
             >
-            {conformOtpLoading ? "Loading" : " Submit OTP"} 
+              {conformOtpLoading ? "Loading" : " Submit OTP"}
             </button>
             <h5 className="text-[#72777F] text-[16px] mt-5">
               If you didn't receive a code!{" "}
@@ -190,8 +184,7 @@ const SignupOtp = () => {
           </h1>
           <p className="py-4">Your otp has been updated successfully</p> */}
 
-
-{recentOtpError ? (
+          {recentOtpError ? (
             recentOtpError === "User data not found!" ? (
               <p className="py-4">
                 {recentOtpError}{" "}
@@ -227,8 +220,6 @@ const SignupOtp = () => {
               {/* recent  */}
             </button>
           )}
-          
-
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>

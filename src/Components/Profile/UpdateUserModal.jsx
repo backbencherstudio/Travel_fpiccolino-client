@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
+  console.log("user", user);
   const [formData, setFormData] = useState({
     name: user?.name || "",
     phone: user?.phone || "",
@@ -11,6 +12,18 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
     image: null, // Added for image upload
   });
 
+  useEffect(() => {
+    setFormData({
+      name: user?.name,
+      phone: user?.phone,
+      address: user?.address,
+      city: user?.city,
+      country: user?.country,
+    })
+  }, [user])
+  
+
+  console.log(formData)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
