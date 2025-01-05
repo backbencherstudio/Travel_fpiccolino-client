@@ -270,7 +270,7 @@ const Flight = () => {
                                 <button
                                     onClick={() => addDataFun()}
                                     // to="/insurance/id"
-                                    className="text-center block w-full bg-[#D2D2D5] text-[#FFFFFF] py-2 rounded mt-4"
+                                    className="text-center block w-full bg-[#E86731] text-[#FFFFFF] py-2 rounded mt-4"
                                 >
                                     Continue
                                 </button>
