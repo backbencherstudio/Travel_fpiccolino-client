@@ -1,0 +1,229 @@
+import React, { useEffect, useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+// import StripeForm from './StripeForm'; // Stripe Form Component
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+// import './Checkout.css';
+import StripeForm from './StripeForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCheckoutNewData } from '../../features/checkout/checkoutSlice';
+
+// Load Stripe Key
+const stripePromise = loadStripe('pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha');
+
+const Checkout = () => {
+    const { checkoutNewData } = useSelector((state) => state.checkout);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getCheckoutNewData());
+    }, [dispatch]);
+
+    if (checkoutNewData) {
+        console.log({ checkoutNewData });
+    }
+    const [paymentMethod, setPaymentMethod] = useState('stripe');
+    const handlePaymentMethodChange = (e) => {
+        setPaymentMethod(e.target.value);
+    };
+
+
+    const getPaypalSuccessDataFun = (data) => {
+        console.log(data);
+        const paymentData = {
+            paymentId: data.id,
+            paymentStatus: data.status,
+            name: data?.payer.name.surname,
+        }
+        console.log(paymentData);
+
+    }
+
+    // const getPaypalSuccessDataFun = async (data) => {
+    //     try {
+    //         const response = await fetch('/api/save-payment', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(data),
+    //         });
+    //         const result = await response.json();
+    //         console.log('Saved to backend:', result);
+    //     } catch (error) {
+    //         console.error('Error saving payment:', error);
+    //     }
+    // };
+
+
+
+    return (
+        <div className="checkout-container">
+            <h2>Checkout Page</h2>
+
+            <div className="payment-method-dropdown">
+                <label>Select Payment Method: </label>
+                <select value={paymentMethod} onChange={handlePaymentMethodChange}>
+                    <option value="stripe">Stripe</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+
+            <div className="payment-form">
+                {paymentMethod === 'stripe' ? (
+                    <Elements stripe={stripePromise}>
+                        <StripeForm checkoutNewData={checkoutNewData} />
+                    </Elements>
+                ) : (
+
+                    // <div className='bg-green-700 flex justify-center w-full ' >
+
+                    //     <PayPalScriptProvider
+                    //     className="w-[600px]"
+                    //         options={{
+                    //             "client-id": "AUHCLLlrN0fUteHTIYiBX7ZOoduVvF0mp4QSDUQOf_m2GohS_kVr6z8CbTJgOMnGNyMAiLsx_EWf8l5C",
+                    //             currency: 'USD',
+                    //         }}
+                    //     >
+                    //         {/* <PayPalButtons
+                    //             createOrder={(data, actions) => {
+                    //                 return actions.order.create({
+                    //                     purchase_units: [
+                    //                         {
+                    //                             amount: {
+                    //                                 value: '10.00', // Example Amount
+                    //                             },
+                    //                         },
+                    //                     ],
+                    //                 });
+                    //             }}
+                    //             onApprove={(data, actions) => {
+                    //                 return actions.order.capture().then((details) => {
+                    //                     alert('Payment Approved: ' + details.payer.name.given_name);
+                    //                 });
+                    //             }}
+                    //             onError={(err) => {
+                    //                 console.error('PayPal Error:', err);
+                    //             }}
+                    //         /> */}
+
+                    //         <PayPalButtons
+                    //             createOrder={(data, actions) => {
+                    //                 return actions.order.create({
+                    //                     purchase_units: [
+                    //                         {
+                    //                             amount: {
+                    //                                 value: '10.00', // Example Amount
+                    //                             },
+                    //                         },
+                    //                     ],
+                    //                 });
+                    //             }}
+                    //             onApprove={(data, actions) => {
+                    //                 return actions.order.capture().then((details) => {
+                    //                     getPaypalSuccessDataFun(details); // Pass the PayPal success details to the function
+                    //                     alert('Payment Approved: ' + details.payer.name.given_name);
+                    //                 });
+                    //             }}
+                    //             onError={(err) => {
+                    //                 console.error('PayPal Error:', err);
+                    //             }}
+                    //         />
+
+                    //     </PayPalScriptProvider>
+
+                    // </div>
+
+                    // <div className='bg-green-700 flex justify-center w-full'>
+                    //     <PayPalScriptProvider
+                    //         className="w-[600px]"
+                    //         options={{
+                    //             "client-id": "AUHCLLlrN0fUteHTIYiBX7ZOoduVvF0mp4QSDUQOf_m2GohS_kVr6z8CbTJgOMnGNyMAiLsx_EWf8l5C",
+                    //             currency: 'USD',
+                    //             "disable-funding": "paylater", // Removes "Pay Later" option
+                    //         }}
+                    //     >
+                    //         <PayPalButtons
+                    //             style={{
+                    //                 layout: "vertical", // Change to "horizontal" for side-by-side
+                    //                 color: "blue",      // Options: "blue", "gold", "silver", "white", "black"
+                    //                 shape: "rect",      // Options: "rect" (rectangle) or "pill"
+                    //                 label: "checkout",  // Options: "paypal", "checkout", "pay", or "buynow"
+                    //                 height: 50,        // Customize the button height
+                    //                 width : 80
+                    //             }}
+                    //             createOrder={(data, actions) => {
+                    //                 return actions.order.create({
+                    //                     purchase_units: [
+                    //                         {
+                    //                             amount: {
+                    //                                 value: '10.00', // Example Amount
+                    //                             },
+                    //                         },
+                    //                     ],
+                    //                 });
+                    //             }}
+                    //             onApprove={(data, actions) => {
+                    //                 return actions.order.capture().then((details) => {
+                    //                     getPaypalSuccessDataFun(details); // Pass the PayPal success details to the function
+                    //                     alert('Payment Approved: ' + details.payer.name.given_name);
+                    //                 });
+                    //             }}
+                    //             onError={(err) => {
+                    //                 console.error('PayPal Error:', err);
+                    //             }}
+                    //         />
+                    //     </PayPalScriptProvider>
+                    // </div>
+
+                    <div className='bg-green-700 flex justify-center w-full'>
+                        <div style={{ width: "600px" }}> {/* Container controls PayPal button width */}
+                            <PayPalScriptProvider
+                                options={{
+                                    "client-id": "AUHCLLlrN0fUteHTIYiBX7ZOoduVvF0mp4QSDUQOf_m2GohS_kVr6z8CbTJgOMnGNyMAiLsx_EWf8l5C",
+                                    currency: 'USD',
+                                    "disable-funding": "paylater",
+                                }}
+                            >
+                                <PayPalButtons
+                                    style={{
+                                        layout: "vertical",  
+                                        color: "blue",       
+                                        shape: "rect",       
+                                        label: "checkout",   
+                                        height: 50,          
+                                    }}
+                                    createOrder={(data, actions) => {
+                                        return actions.order.create({
+                                            purchase_units: [
+                                                {
+                                                    amount: {
+                                                        value: '10.00', 
+                                                    },
+                                                },
+                                            ],
+                                        });
+                                    }}
+                                    onApprove={(data, actions) => {
+                                        return actions.order.capture().then((details) => {
+                                            getPaypalSuccessDataFun(details); 
+                                            alert('Payment Approved: ' + details.payer.name.given_name);
+                                        });
+                                    }}
+                                    onError={(err) => {
+                                        console.error('PayPal Error:', err);
+                                    }}
+                                    forceReRender={[600]}  
+                                />
+                            </PayPalScriptProvider>
+                        </div>
+                    </div>
+
+
+
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default Checkout;

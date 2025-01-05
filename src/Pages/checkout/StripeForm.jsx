@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import {
     CardNumberElement,
     CardExpiryElement,
@@ -8,17 +10,20 @@ import {
 } from '@stripe/react-stripe-js';
 import axios from 'axios';
 
-const StripeForm = ({checkoutNewData}) => {
+const StripeForm = ({ checkoutNewData }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
-    const [email, setEmail] = useState(''); 
+    const [email, setEmail] = useState('');
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+
+
 
         const cardElement = elements.getElement(CardNumberElement);
         const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -33,15 +38,18 @@ const StripeForm = ({checkoutNewData}) => {
             setLoading(false);
             return;
         }
-
         try {
             const { data } = await axios.post('http://localhost:3000/order/stripePayment', {
                 paymentMethodId: paymentMethod.id,
-                amount: parseInt(checkoutNewData?.toureAmount), // Example amount (59.99 USD)
+                amount: parseInt(checkoutNewData?.toureAmount),
             });
 
-            console.log({data});
-            
+            const orderData = {
+                ...checkoutNewData,
+                paymentId: data?.paymentIntent.id
+            }
+
+           console.log(' Stripe orderData Data:', orderData);
 
             if (data.success) {
                 setSuccess(true);
@@ -50,7 +58,6 @@ const StripeForm = ({checkoutNewData}) => {
         } catch (err) {
             setError('Payment failed.');
         }
-
         setLoading(false);
     };
 
@@ -75,7 +82,6 @@ const StripeForm = ({checkoutNewData}) => {
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-8 max-w-lg mx-auto">
             <h2 className="text-2xl font-bold text-center mb-6">Secure Payment</h2>
 
-            {/* Email Field */}
             <div className="mb-4">
                 <label className="block text-lg font-semibold mb-2 text-gray-700" htmlFor="email">
                     Email
@@ -91,7 +97,6 @@ const StripeForm = ({checkoutNewData}) => {
                 />
             </div>
 
-            {/* Card Number Field */}
             <div className="mb-4">
                 <label className="block text-lg font-semibold mb-2 text-gray-700">Card Number</label>
                 <div className="p-3 border rounded-lg bg-gray-50">
@@ -99,7 +104,6 @@ const StripeForm = ({checkoutNewData}) => {
                 </div>
             </div>
 
-            {/* Expiration Date and CVC Fields (Side by Side) */}
             <div className="flex gap-4 mb-4">
                 <div className="w-1/2">
                     <label className="block text-lg font-semibold mb-2 text-gray-700">Expiration Date</label>
@@ -114,21 +118,6 @@ const StripeForm = ({checkoutNewData}) => {
                     </div>
                 </div>
             </div>
-
-            {/* Postal Code Field */}
-            {/* <div className="mb-4">
-                <label className="block text-lg font-semibold mb-2 text-gray-700">ZIP / Postal Code</label>
-                <div className="p-3 border rounded-lg bg-gray-50">
-                    <input
-                        type="text"
-                        className="w-full p-3 border-none bg-gray-50 focus:outline-none"
-                        placeholder="Enter ZIP Code"
-                        required
-                    />
-                </div>
-            </div> */}
-
-            {/* Submit Button */}
             <button
                 type="submit"
                 disabled={!stripe || loading}
@@ -138,7 +127,6 @@ const StripeForm = ({checkoutNewData}) => {
                 {loading ? 'Processing...' : `Pay Now : ${checkoutNewData?.toureAmount} $`}
             </button>
 
-            {/* Error and Success Messages */}
             {error && <div className="mt-4 text-red-500 font-medium text-center">{error}</div>}
             {success && <div className="mt-4 text-green-500 font-medium text-center">Payment Successful!</div>}
         </form>
