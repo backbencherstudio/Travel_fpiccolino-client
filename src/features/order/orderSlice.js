@@ -5,29 +5,50 @@ import { base_url } from "../../utils/base_path";
 
 axios.defaults.withCredentials = true;
 
-// Async action to get all headers
+// Async action to create an order
 export const createOrder = createAsyncThunk(
   "orderCreate/post",
   async (orderData, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}/order`, orderData);
-      // console.log(5451445454, response);
-
       return response.data;
     } catch (error) {
-      console.error("Error fetching headers:", error);
+      console.error("Error creating order:", error);
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 );
 
+// Async action to get orders
+export const getOrders = createAsyncThunk(
+  "order/get",
+  async ({ search = "", startDate, endDate }, { rejectWithValue }) => {
+    try {
+      const params = {};
+      if (search) {
+        params.search = search;
+      }
+      if (startDate && endDate) {
+        params.startDate = startDate;
+        params.endDate = endDate;
+      }
+      const response = await axios.get(`${base_url}/order`, {
+        params,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
 
 // Initial state
-//  ========================= home
 const initialState = {
-    createOrderLoaging: false,
-    createOrderError: null,
-//   homePageData: [],
+  createOrderLoaging: false,
+  createOrderError: null,
+  orders: [],
+  orderLoading: false,
+  orderError: null,
 };
 
 // Create the slice
@@ -37,7 +58,7 @@ const orderDataSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Handle get headers
+      // Handle createOrder actions
       .addCase(createOrder.pending, (state) => {
         state.createOrderLoaging = true;
         state.createOrderError = null;
@@ -49,10 +70,23 @@ const orderDataSlice = createSlice({
       .addCase(createOrder.rejected, (state, action) => {
         state.createOrderLoaging = false;
         state.createOrderError =
-          action.payload?.message || "Error fetching headers";
+          action.payload?.message || "Error creating order";
+      })
+
+      // Handle getOrders actions
+      .addCase(getOrders.pending, (state) => {
+        state.orderLoading = true;
+        state.orderError = null;
+      })
+      .addCase(getOrders.fulfilled, (state, action) => {
+        state.orderLoading = false;
+        state.orders = action.payload.Orders || []; // Set orders data to the state
+        state.orderError = null;
+      })
+      .addCase(getOrders.rejected, (state, action) => {
+        state.orderLoading = false;
+        state.orderError = action.payload?.message || "Error fetching orders";
       });
-
-
   },
 });
 

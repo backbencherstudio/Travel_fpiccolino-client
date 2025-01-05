@@ -222,7 +222,7 @@ const packageSlice = createSlice({
       .addCase(createPackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = null;
-        state.package = action.payload; // Fixed typo "packag" to "package"
+        state.packag = action.payload; // Fixed typo "packag" to "package"
       })
       .addCase(createPackage.rejected, (state, action) => {
         state.packageCreateLoading = false;
@@ -237,7 +237,7 @@ const packageSlice = createSlice({
       .addCase(getPackage.fulfilled, (state, action) => {
         state.packageGetLoading = false;
         state.packageGetError = null;
-        state.package = action.payload.packages; // Update the package list
+        state.packag = action.payload.packages; // Update the package list
       })
       .addCase(getPackage.rejected, (state, action) => {
         state.packageGetLoading = false;
@@ -264,7 +264,7 @@ const packageSlice = createSlice({
       .addCase(deletePackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         if (Array.isArray(state.package)) {
-          state.package = state.package.filter(
+          state.packag = state.package.filter(
             (pkg) => pkg._id !== action.payload
           );
         } else {
@@ -286,7 +286,7 @@ const packageSlice = createSlice({
             (pkg) => pkg._id === updatedPackage._id
           );
           if (index !== -1) {
-            state.package[index] = updatedPackage;
+            state.packag[index] = updatedPackage;
           }
         }
       })

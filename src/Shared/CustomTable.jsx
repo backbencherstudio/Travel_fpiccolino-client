@@ -29,6 +29,7 @@ import moment from "moment";
 import { getDateRange } from "./CustomDateRange";
 import { deletePackage, getPackage } from "../features/pckage/packageSlice";
 import { getUser } from "../features/users/userSlice";
+import { getOrders } from "../features/order/orderSlice";
 
 const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -101,6 +102,11 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
         getUser({ search: e.target.value, startDate: "", endDate: "" })
       );
     }
+    if (tableType === "order") {
+      await dispatch(
+        getOrders({ search: e.target.value, startDate: "", endDate: "" })
+      );
+    }
   };
   const handleDateFilterChange = async (e) => {
     const selectedFilter = e.target.value;
@@ -115,6 +121,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
     }
     if (tableType === "user") {
       await dispatch(getUser({ search: searchQuery, startDate, endDate }));
+    }
+    if (tableType === "order") {
+      await dispatch(getOrders({ search: searchQuery, startDate, endDate }));
     }
   };
   return (
@@ -182,11 +191,16 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.category && <TableCell>Category</TableCell>}
                 {columns?.email && <TableCell>Email</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
-
+                {columns?.tourDate && <TableCell>Tour Date</TableCell>}
+                {columns?.passenger && <TableCell>Passenger</TableCell>}
+                {columns?.packageAmount && <TableCell>Package Price</TableCell>}
+                {columns?.flightAmount && <TableCell>Flight Amount</TableCell>}
+                {columns?.totalAmount && <TableCell>Total </TableCell>}
+                {columns?.phone && <TableCell>Phone</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.duration && <TableCell>Duration</TableCell>}
-                {columns?.date && <TableCell>Date</TableCell>}
+                {columns?.date && <TableCell>CreatedAt</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
@@ -269,6 +283,23 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     )}
                     {columns?.email && <TableCell>{item.email}</TableCell>}
                     {columns?.phone && <TableCell>{item.phone}</TableCell>}
+                    {columns?.tourDate && (
+                      <TableCell>
+                        {moment(item.tourDate).format("DD/MM/yyyy")}
+                      </TableCell>
+                    )}
+                    {columns?.passenger && (
+                      <TableCell>{item?.person}</TableCell>
+                    )}
+                    {columns?.packageAmount && (
+                      <TableCell>{item?.totalPackageAmount}</TableCell>
+                    )}
+                    {columns?.flightAmount && (
+                      <TableCell>{item?.flightPrice}</TableCell>
+                    )}
+                    {columns?.totalAmount && (
+                      <TableCell>{item?.toureAmount}</TableCell>
+                    )}
 
                     {columns?.traveler && (
                       <TableCell style={{ minWidth: "200px" }}>

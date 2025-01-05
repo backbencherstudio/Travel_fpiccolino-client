@@ -18,6 +18,7 @@ const PackageList = () => {
     country: true,
     action: true,
   });
+  console.log(packag);
 
   return (
     <div>
