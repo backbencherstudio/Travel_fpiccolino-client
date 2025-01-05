@@ -5,26 +5,31 @@ import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import heroImage from "../../assets/Images/about.jpg";
 import { getBlogsByCategory } from "../../features/blog/blogSlice";
 import { useEffect } from "react";
+import { getBlogData } from "../../features/pageData/pageDataSlice";
 
 const Blog = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blog.categoryBlogs);
-  console.log(blogs);
+  // console.log(blogs);
+  const { getBlogDataLoaging, getBlogDataError, blogData } = useSelector(
+    (state) => state.pageData
+  );
 
   useEffect(() => {
     dispatch(getBlogsByCategory());
+    dispatch(getBlogData());
+    // dispatch()
   }, [dispatch]);
-  const heroContent = {
-    heroImage: "/uploads/heroImage-1735207035947-125034052.jpg",
-    titleOne: "Feel at Home Wherever You Roam",
-    descriptionOne:
-      "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
-  };
-
+  const heroContent = blogData?.hero
+  // blogData
+  console.log(blogData)
+  if(!heroContent){
+    return
+  }
   return (
     <div>
       <HeroScetion heroContent={heroContent} />
-      {blogs?.map((blog, i) => {
+      {blogData?.categoryLists?.map((blog, i) => {
         return (
           <BlogSections key={i} title={blog.category} blogs={blog.blogs} />
         );

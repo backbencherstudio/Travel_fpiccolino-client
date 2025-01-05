@@ -67,6 +67,19 @@ export const country_wise_TourPage = createAsyncThunk(
   }
 );
 
+export const getBlogData = createAsyncThunk(
+  "pageDataSlice/blogPage/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/pageData/blogPage`);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching headers:", error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
 
 // Initial state
 //  ========================= home
@@ -89,6 +102,11 @@ const initialState = {
   country_wise_TourPageLoaging: false,
   country_wise_TourPageError: null,
   country_wise_TourPageData: null,
+
+  //=========================== getBlogData
+  getBlogDataLoaging: false,
+  getBlogDataError: null,
+  blogData: null,
 };
 
 // Create the slice
@@ -132,42 +150,58 @@ const pageDataSlice = createSlice({
           action.payload?.message || "Error fetching headers";
       });
 
-
-          // ============================  all_inclusive_TourPage
+    // ============================  all_inclusive_TourPage
     builder
-    // Handle get headers
-    .addCase(get_all_inclusive_TourPagePage.pending, (state) => {
-      state.all_inclusive_TourPageLoaging = true;
-      state.all_inclusive_TourPageError = null;
-    })
-    .addCase(get_all_inclusive_TourPagePage.fulfilled, (state, action) => {
-      state.all_inclusive_TourPageLoaging = false;
-      state.all_inclusive_TourPageError = null;
-      state.all_inclusive_TourPageData = action.payload;
-    })
-    .addCase(get_all_inclusive_TourPagePage.rejected, (state, action) => {
-      state.all_inclusive_TourPageLoaging = false;
-      state.all_inclusive_TourPageError =
-        action.payload?.message || "Error fetching headers";
-    });
+      // Handle get headers
+      .addCase(get_all_inclusive_TourPagePage.pending, (state) => {
+        state.all_inclusive_TourPageLoaging = true;
+        state.all_inclusive_TourPageError = null;
+      })
+      .addCase(get_all_inclusive_TourPagePage.fulfilled, (state, action) => {
+        state.all_inclusive_TourPageLoaging = false;
+        state.all_inclusive_TourPageError = null;
+        state.all_inclusive_TourPageData = action.payload;
+      })
+      .addCase(get_all_inclusive_TourPagePage.rejected, (state, action) => {
+        state.all_inclusive_TourPageLoaging = false;
+        state.all_inclusive_TourPageError =
+          action.payload?.message || "Error fetching headers";
+      });
 
     // ============================  country_wise_TourPage
     builder
-    // Handle get headers
-    .addCase(country_wise_TourPage.pending, (state) => {
-      state.country_wise_TourPageLoaging = true;
-      state.country_wise_TourPageError = null;
-    })
-    .addCase(country_wise_TourPage.fulfilled, (state, action) => {
-      state.country_wise_TourPageLoaging = false;
-      state.country_wise_TourPageError = null;
-      state.country_wise_TourPageData = action.payload;
-    })
-    .addCase(country_wise_TourPage.rejected, (state, action) => {
-      state.country_wise_TourPageLoaging = false;
-      state.country_wise_TourPageError =
-        action.payload?.message || "Error fetching headers";
-    });
+      // Handle get headers
+      .addCase(country_wise_TourPage.pending, (state) => {
+        state.country_wise_TourPageLoaging = true;
+        state.country_wise_TourPageError = null;
+      })
+      .addCase(country_wise_TourPage.fulfilled, (state, action) => {
+        state.country_wise_TourPageLoaging = false;
+        state.country_wise_TourPageError = null;
+        state.country_wise_TourPageData = action.payload;
+      })
+      .addCase(country_wise_TourPage.rejected, (state, action) => {
+        state.country_wise_TourPageLoaging = false;
+        state.country_wise_TourPageError =
+          action.payload?.message || "Error fetching headers";
+      });
+
+    //=========================== getBlogData
+    builder
+      .addCase(getBlogData.pending, (state) => {
+        state.getBlogDataLoaging = true;
+        state.getBlogDataError = null;
+      })
+      .addCase(getBlogData.fulfilled, (state, action) => {
+        state.getBlogDataLoaging = false;
+        state.getBlogDataError = null;
+        state.blogData = action.payload;
+      })
+      .addCase(getBlogData.rejected, (state, action) => {
+        state.getBlogDataLoaging = false;
+        state.getBlogDataError =
+          action.payload?.message || "Error fetching headers";
+      });
   },
 });
 
