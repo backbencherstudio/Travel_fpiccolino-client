@@ -1,10 +1,30 @@
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import natureImage from "../../assets/natureImage.jpg";
-import natureImage2 from "../../assets/natureImage2.jpg";
-
 import CustomButton from "../../Shared/CustomButton";
-const JourneySection = ({ blogSection }) => {
-  const { data } = blogSection;
+import { base_url } from "../../utils/base_path";
+import { useEffect, useState } from "react";
+import { getBlog } from "../../features/blog/blogSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+const JourneySection = () => {
+  const dispatch = useDispatch();
+  const { blogs } = useSelector((state) => state.blog);
+  const [randomBlog, setRandomBlog] = useState(null); // State to store the randomly selected blog
+
+  useEffect(() => {
+    dispatch(getBlog({ search: "", startDate: "", endDate: "" }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (blogs.length > 0) {
+      // Generate a random index if the blogs array has elements
+      const randomIndex = Math.floor(Math.random() * blogs.length);
+      setRandomBlog(blogs[randomIndex]); // Set the randomly selected blog
+    }
+  }, [blogs]); // Re-run when blogs array updates
+
+  if (!randomBlog) {
+    return <div>Loading...</div>; // Loading state while blogs are fetched
+  }
 
   return (
     <div className="bg-[#fff] lg:p-20 lg:pt-0">
@@ -17,31 +37,26 @@ const JourneySection = ({ blogSection }) => {
             <div className="lg:col-span-2 h-[600px]">
               <img
                 className="h-full object-cover rounded-[20px]"
-                src={data[0]?.headerImg}
+                src={`${base_url}/uploads/${randomBlog.heroSection[0]?.headerImg}`}
                 alt=""
               />
             </div>
             <div className="lg:col-span-3">
               <p className="text-[18px] w-full">
-                <strong>
-                  At LA TUA FUGA LOWCOST, we believe travel is more than just
-                  visiting new places; it’s about creating unforgettable
-                  experiences, discovering hidden gems,
-                </strong>{" "}
-                and making memories that last a lifetime. As seasoned experts in
-                the travel industry, we’re dedicated to designing personalized
-                adventures that reflect your unique interests and desires.
-                Whether you're seeking serene beaches, vibrant cities, or
-                thrilling expeditions, our team is here to bring your travel
-                dreams to life. Let us handle the details, so you can simply
-                enjoy the journey.
+                {randomBlog.heroSection[0]?.text.slice(0, 200)}
+                <br />
+                {randomBlog.contentList[0]?.paragraphs?.map((para, index) => (
+                  <p key={index} className="my-2">
+                    {para.slice(0, 300)}
+                  </p>
+                ))}
               </p>
               <div className="mt-5 mb-8">
-                <CustomButton content={"Read More"} />
+                {/* <CustomButton content={"Read More"} /> */}
               </div>
               <img
                 className="h-[365px] w-full rounded-[20px] object-cover"
-                src={data[1]?.heroSection[0]?.headerImg}
+                src={`${base_url}/uploads/${randomBlog.contentList[0]?.image}`}
                 alt=""
               />
             </div>

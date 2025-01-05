@@ -43,7 +43,7 @@ const Home = () => {
   const review = homePageData?.review;
   const blogSection = homePageData?.blogSection;
   const countryWithoutImage = homePageData?.countryWithImage;
-  // console.log(11111111,countryWithoutImage)
+
   return (
     <div>
       {/* <BannerSection /> */}
@@ -59,7 +59,7 @@ const Home = () => {
       <ApproachSection titleWithoutContent={titleWithoutContent} />
       {review && <ReviewSection review={review} />}
       {blogSection && <ArticleAndNewsSection blogSection={blogSection} />}
-      {blogSection && <JourneySection blogSection={blogSection} />}
+      <JourneySection />
       <BottomBannerSection />
     </div>
   );

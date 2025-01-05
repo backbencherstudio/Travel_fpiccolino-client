@@ -9,10 +9,6 @@ const TureCard = ({ item }) => {
     category: isInclusive,
   } = item;
 
-  console.log(item);
-  
- 
-
   return (
     <div>
       <div className="relative group">

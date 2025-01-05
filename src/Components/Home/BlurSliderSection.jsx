@@ -16,9 +16,6 @@ const BlurSliderSection = ({ country }) => {
   const [isEnd, setIsEnd] = useState(false);
   const [progressValue, setProgressValue] = useState(0); // Starting progress value
   const [screenSize, setScreenSize] = useState("mobile"); // Track screen size (mobile, tablet, desktop)
-
-  console.log("BlurSliderSection", country);
-
   const { title, description, data } = country;
 
   // Check the screen size
