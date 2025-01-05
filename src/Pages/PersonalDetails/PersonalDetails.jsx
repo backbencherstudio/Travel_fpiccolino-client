@@ -78,14 +78,8 @@ const PersonalDetails = () => {
         }
         dispatch(createCheckoutWithNewData({ ...userUpdateData }))
         navigate("/checkout")
-        // navigate(`/personalDetails`);
     };
-
-    // const addDataFun = () => {
-    //     dispatch(createCheckout({ ...toureData }))
-    //     navigate(`/personalDetails`);
-    // };
-
+    
     const removeSession = () => {
         dispatch(deleteCheckout());
         navigate(`/flight/${checkout?.toureId}`);

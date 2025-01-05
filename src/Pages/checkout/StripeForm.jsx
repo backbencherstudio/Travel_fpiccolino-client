@@ -51,11 +51,7 @@ const StripeForm = ({ checkoutNewData }) => {
                 const res = await dispatch(createOrder(orderData))
                 console.log(res);
             }
-
-
-            console.log(' Stripe orderData Data:', orderData);
-
-
+            
             if (data.success) {
                 setSuccess(true);
                 alert('Payment successful!');
