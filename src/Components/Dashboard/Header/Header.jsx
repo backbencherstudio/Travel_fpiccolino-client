@@ -6,8 +6,10 @@ const Header = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+
   const dispatch = useDispatch();
 
   // Form submission handler
@@ -27,7 +29,10 @@ const Header = () => {
         headerData.append(key, data[key]);
       }
     });
+    console.log("hiiittteee");
+    
     const response = await dispatch(createHeader(headerData));
+    reset()
     console.log("responce", response);
   };
 
@@ -43,7 +48,7 @@ const Header = () => {
       {/* Blog Details Title */}
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Blog Details Title
+          Short Title
         </label>
         <input
           type="text"
@@ -100,7 +105,7 @@ const Header = () => {
         )}
       </div>
 
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           title Two
         </label>
@@ -112,10 +117,7 @@ const Header = () => {
             errors.titleTwo ? "border-red-500" : "border-gray-300"
           }`}
         />
-        {/* {errors.titleTwo && (
-                    <p className="text-red-500 text-xs mt-2">{errors.titleTwo.message}</p>
-                )} */}
-      </div>
+      </div> */}
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -166,7 +168,7 @@ const Header = () => {
       </div>
 
       {/* second  Description */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Second Description
         </label>
@@ -178,10 +180,7 @@ const Header = () => {
           }`}
           rows="4"
         />
-        {/* {errors.descriptionTwo && (
-                    <p className="text-red-500 text-xs mt-2">{errors.descriptionTwo.message}</p>
-                )} */}
-      </div>
+      </div> */}
 
       {/* Submit Button */}
       <div className="text-center">
