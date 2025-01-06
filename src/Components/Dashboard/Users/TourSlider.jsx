@@ -1,55 +1,72 @@
 import { useRef, useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaSearch } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Modal,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Rating,
+  Stack,
+} from "@mui/material";
+import { useDispatch } from "react-redux";
+import { createReview } from "../../../features/review/reviewSlice";
+import { useParams } from "react-router-dom";
 
-const TourSlider = ({ title, userData, id, dateFilter, setDateFilter }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+const TourSlider = ({ userData, title }) => {
+  const dispatch = useDispatch();
   const swiperRef = useRef(null);
+  const { id } = useParams();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(5);
+  const [packageId, setPackageId] = useState("");
+  const [orderId, setOrderId] = useState("");
 
-  // Convert id to a number safely
-  const numericId = Number(id);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
-  // Safely get user tours data
-  const userToursData = userData?.[numericId - 1]?.tourData || [];
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setReview("");
+    setRating(2); // Reset rating to default value
+  };
+
+  const handleReviewSubmit = () => {
+    const reviewData = {
+      userId: id,
+      packageId,
+      comment: review,
+      rating,
+    };
+    console.log(orderId);
+
+    dispatch(createReview({ reviewData, orderId }));
+    closeModal();
+  };
+
+  if (!userData?.length) {
+    return (
+      <div>
+        <h1 className="mt-5 text-[16px] font-medium primary_text">
+          {title} (0)
+        </h1>
+        <div className="my-10 py-10 text-center border border-dashed border-gray-300 rounded-lg">
+          <p className="primary_text">Don't have any {title}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1 className="mt-3 text-[16px] font-medium">
-        {title} {` (${userToursData.length || 0})`}
+      <h1 className="mt-5 text-[16px] primary_text font-medium">
+        {title} {`(${userData?.length})`}
       </h1>
-      <div className="flex justify-between items-center my-4">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <FaSearch className="absolute top-3 left-3 text-zinc-400" />
-        </div>
-        <select
-          className=""
-          value={dateFilter}
-          onChange={(e) => setDateFilter(e.target.value)}
-          style={{
-            padding: "8px 16px",
-            cursor: "pointer",
-            fontSize: "14px",
-            border: "1px solid #e86731",
-            borderRadius: "4px",
-            color: "#e86731",
-          }}
-        >
-          <option value="all">All</option>
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="yearly">Yearly</option>
-        </select>
-      </div>
-
       <div className="mt-5 border-t pt-3">
         <Swiper
           spaceBetween={15}
@@ -86,15 +103,29 @@ const TourSlider = ({ title, userData, id, dateFilter, setDateFilter }) => {
             },
           }}
         >
-          {userToursData.map((item) => (
+          {userData?.map((item) => (
             <div key={item._id}>
               <SwiperSlide>
                 <img
-                  src={item.destinationImg || "default-placeholder.jpg"}
-                  alt={item.destination || "No destination"}
-                  className="w-[172px] h-[120px] rounded-lg"
+                  src={
+                    item?.packageData?.images[0] || "default-placeholder.jpg"
+                  }
+                  alt="package"
+                  className="w-[172px] h-[120px] rounded-lg object-cover"
                 />
-                <p>{item.destination || "Unknown Destination"}</p>
+                <p className="py-2">
+                  {item?.packageData?.destination || "Unknown Destination"}
+                </p>
+                <button
+                  onClick={() => {
+                    openModal();
+                    setPackageId(item?.packageData?._id);
+                    setOrderId(item?.orderId);
+                  }}
+                  className="primary_bg text-white px-3 py-1 rounded hover:opacity-85"
+                >
+                  Add Review
+                </button>
               </SwiperSlide>
             </div>
           ))}
@@ -124,6 +155,68 @@ const TourSlider = ({ title, userData, id, dateFilter, setDateFilter }) => {
           </button>
         </div>
       </div>
+
+      {/* MUI Review Modal */}
+      <Modal
+        open={isModalOpen}
+        onClose={closeModal}
+        aria-labelledby="add-review-modal"
+        aria-describedby="review-form"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "white",
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 3,
+          }}
+        >
+          <Typography id="add-review-modal" variant="h6" component="h2" mb={2}>
+            Add Your Review
+          </Typography>
+
+          <Stack spacing={1}>
+            <Typography variant="body2" mb={1}>
+              Rating (1-5)
+            </Typography>
+            <Rating
+              name="simple-controlled"
+              value={rating}
+              onChange={(_, newRating) => setRating(newRating)}
+            />
+          </Stack>
+
+          <TextField
+            id="review"
+            label="Your Review"
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            sx={{ my: 2 }}
+          />
+
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
+            <Button onClick={closeModal} variant="outlined" color="error">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleReviewSubmit}
+              variant="contained"
+              color="warning"
+            >
+              Submit
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
     </div>
   );
 };

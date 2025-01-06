@@ -6,9 +6,12 @@ axios.defaults.withCredentials = true;
 
 export const createReview = createAsyncThunk(
   "api/contact/createReview",
-  async (reviewData, { rejectWithValue }) => {
+  async ({ reviewData, orderId }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}/api/review`, reviewData);
+      const response = await axios.post(
+        `${base_url}/api/review/createReview/${reviewData?.userId}/${orderId}`,
+        reviewData
+      );
       console.log("slice", response.data);
       return response.data;
     } catch (error) {

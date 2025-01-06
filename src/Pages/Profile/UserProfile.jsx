@@ -16,7 +16,10 @@ const UserProfile = () => {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user, userTureStatus, userTureStatusError } = useSelector((state) => state.authorization);
+  const { user, userTureStatus, userTureStatusError } = useSelector(
+    (state) => state.authorization
+  );
+  console.log("userTureStatus", userTureStatus);
 
   // console.log(41584854, user);
 
@@ -31,14 +34,12 @@ const UserProfile = () => {
     const updatedUserData = { ...user, ...updatedDetails };
     // const updatedUserData = { ...updatedDetails };
     // console.log(updatedDetails);
-    console.log(555, updatedUserData);
     const responce = dispatch(updateUser(updatedUserData));
-    console.log("responce", responce);
   };
 
   useEffect(() => {
     if (user) {
-      dispatch(userStatus(user?._id));
+      dispatch(userStatus("676b7f867ded38768bd6645f"));
     }
   }, [user]);
 
@@ -53,7 +54,7 @@ const UserProfile = () => {
         />
       </div>
       <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
-        <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
+        <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px] pb-10">
           <h2 className="text-[24px] font-semibold mt-8">User Details</h2>
           {user?.image ? (
             <img
@@ -119,15 +120,19 @@ const UserProfile = () => {
         </div>
 
         {/* Tour details */}
-        <TourSlider   
-          title={"Total Tours"}
-          userData={userTureStatus}
-          id={id}
-          dateFilter={tourDateFilter}
-          setDateFilter={setTourDateFilter}
+
+        <TourSlider
+          title={"On Going Tours"}
+          userData={userTureStatus?.tours?.ongoingTours}
         />
-        <TourSlider title={"Completed Tours"} userData={userData} id={id} />
-        <TourSlider title={"Pending Tours"} userData={userData} id={id} />
+        <TourSlider
+          title={"Pending Tours"}
+          userData={userTureStatus?.tours?.pendingTours}
+        />
+        <TourSlider
+          title={"Completed Tours"}
+          userData={userTureStatus?.tours?.completedTours}
+        />
       </div>
 
       {/* Edit Modal */}
