@@ -46,14 +46,17 @@ const Tours = () => {
   }, []);
   // const data = headers?.filter(item => item.pageName === "tour")
 
+  console.log(23784623468785, id);
+  console.log("all_inclusive_TourPageData", all_inclusive_TourPageData);
+  console.log("country_wise_TourPageData", country_wise_TourPageData);
+
   const heroContent = id
     ? country_wise_TourPageData?.hero
     : all_inclusive_TourPageData?.hero;
   const packags = id
     ? country_wise_TourPageData?.package
     : all_inclusive_TourPageData?.package;
-  console.log(heroContent);
-
+  console.log(111111, packags);
   return (
     <div className="">
       {heroContent && <HeroScetion heroContent={heroContent} />}
