@@ -34,12 +34,11 @@ const AddContent = () => {
       { value: "landing6", label: "Article & Blog Section" },
     ],
     about: [
-      { value: "about1", label: "About 1" },
-      { value: "about2", label: "About 2" },
-      { value: "about3", label: "About 3" },
+      { value: "about1", label: "Stay Connect & Explore Section" },
+      { value: "about2", label: "Benifits Slider Section" },
+      { value: "about3", label: "Why Choose Us Section" },
     ],
     tours: [
- 
       { value: "all_inclusive_tour1", label: "all inclusive tour 1" },
       { value: "all_inclusive_tour2", label: "all inclusive tour 2" },
       { value: "country_wise1", label: "country wise content" },

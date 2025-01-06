@@ -26,6 +26,7 @@ const About = () => {
   };
   const aboutWithoutContent = aboutPageData?.aboutWithoutContent;
   const footer_3 = aboutPageData?.footer_3;
+  console.log(aboutPageData);
 
   return (
     <div>

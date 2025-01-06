@@ -6,6 +6,7 @@ import { Avatar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { loginOut, logOut } from "../features/auth/authSlice";
 import { base_url } from "../utils/base_path";
+import { LogoutOutlined } from "@mui/icons-material";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -101,6 +102,8 @@ const Navbar = () => {
   }, [isMenuOpen]);
   const handleLogOut = () => {
     dispatch(logOut());
+    navigate("/");
+    setIsMenuOpen(false);
   };
   return (
     <header className="z-30 fixed w-full nav-style py-2 banner_style">
@@ -296,8 +299,8 @@ const Navbar = () => {
                   <div className="relative">
                     <div className="flex items-center">
                       <button
-                        onClick={toggloginOpen}
-                        className="w-10 h-10 text-lg bg-[#EB5B2A] flex justify-center items-center rounded-full"
+                        onClick={() => navigate(`/profile/${user?._id}`)}
+                        className="w-10 h-10 text-lg border border-orange-500 flex justify-center items-center rounded-full"
                       >
                         {user?.image ? (
                           <img
@@ -312,7 +315,7 @@ const Navbar = () => {
                         )}
                       </button>
                       <div>
-                        <svg
+                        {/* <svg
                           className="-mr-1 size-5 w-6 h-6 text-[#475467]"
                           viewBox="0 0 20 20"
                           fill="currentColor"
@@ -322,17 +325,17 @@ const Navbar = () => {
                             d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z"
                             clipRule="evenodd"
                           />
-                        </svg>
+                        </svg> */}
                       </div>
                     </div>
-                    {isloginOpen && (
+                    {/* {isloginOpen && (
                       <div
                         className={`bg-white p-6 absolute flex flex-col top-full -right-12 mt-2 space-y-1 border rounded shadow popup w-60`}
                         ref={ProfileRef}
                       >
                         <div className="w-4 h-4 bg-white border-t border-l rotate-45 absolute -top-[7px] right-[54px] hidden xl:block"></div>
                         <Link
-                          to={`/profile/${user?._id}`}
+                          to={``}
                           className="text-base xl:text-xl text-zinc-600 hover:text-[#b24b7d] duration-300"
                         >
                           My Account
@@ -344,7 +347,7 @@ const Navbar = () => {
                           Logout
                         </button>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 )}
                 <div className="block lg:hidden">
@@ -369,6 +372,13 @@ const Navbar = () => {
                     </svg>
                   </button>
                 </div>
+                {isAuthenticated ? (
+                  <div onClick={handleLogOut} className="hidden lg:block ml-4">
+                    <LogoutOutlined className="primary_text rounded-full hover:scale-105" />
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
           </div>
@@ -418,7 +428,7 @@ const Navbar = () => {
               <nav className="flex bg-white flex-col p-4 space-y-6 absolute w-full z-20">
                 <ul className="text-lg ">
                   {[
-                    { name: "about", to: "/about" },
+                    { name: "About", to: "/about" },
                     { name: "Tour", to: "/tours" },
                     { name: "Blog", to: "/blog" },
                     { name: "FAQ", to: "/faq" },
@@ -438,20 +448,29 @@ const Navbar = () => {
                     <div className="relative"></div>
                   </li>
                 </ul>
-                <div className="flex flex-col gap-4 mt-6">
-                  <Link
-                    to="login"
-                    className="block px-6 py-3 text-center text-gray-800 bg-white rounded-md z-30 hover:bg-gray-300 border border-orange-500"
+                {!isAuthenticated ? (
+                  <div className="flex flex-col">
+                    <Link
+                      className="rounded-xl primary_text bg-transparent border px-8 py-4 text-[18px] xl:text-sm hover:bg-[#63280141] font-medium m-2 border-orange-600 text-center"
+                      to="/login"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      className="rounded-xl text-[white] primary_bg  px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium m-2 text-center"
+                      to="/signup"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
+                ) : (
+                  <button
+                    className="rounded-xl text-[white] primary_bg  px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2 text-center"
+                    onClick={handleLogOut}
                   >
-                    Login
-                  </Link>
-                  <Link
-                    to="/signup"
-                    className="block px-6 py-3 text-center text-white bg-orange-500 rounded-md hover:bg-orange-600"
-                  >
-                    Sign Up
-                  </Link>
-                </div>
+                    Log Out
+                  </button>
+                )}
               </nav>
             </div>
           </div>

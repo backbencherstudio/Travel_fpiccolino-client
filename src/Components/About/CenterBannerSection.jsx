@@ -14,7 +14,7 @@ const CenterBannerSection = () => {
   };
   return (
     <>
-      <p className="text-[18px] text-center mb-8 text-[#72777F] max-w-[1345px] mx-auto px-1">
+      <p className="text-[18px] text-center mb-8 text-[#72777F] max-w-[1345px] mx-auto px-5 ">
         {bannerDetails.titleTop}
       </p>
       <div
@@ -26,9 +26,11 @@ const CenterBannerSection = () => {
           backgroundRepeat: "no-repeat",
         }}
       ></div>
-      <ul className="text-[#72777F] text-[18px] text-center mt-8 list-disc list-inside max-w-[1350px] mx-auto">
+      <ul className="text-[#72777F] text-[18px] text-center mt-8 list-disc list-inside max-w-[1350px] mx-auto px-5">
         {bannerDetails.description.map((text, index) => (
-          <li className="py-2" key={index}>{text}</li>
+          <li className="py-2" key={index}>
+            {text}
+          </li>
         ))}
       </ul>
     </>
