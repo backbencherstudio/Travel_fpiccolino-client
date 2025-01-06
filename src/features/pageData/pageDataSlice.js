@@ -81,6 +81,48 @@ export const getBlogData = createAsyncThunk(
   }
 );
 
+export const getFaqPageData = createAsyncThunk(
+  "pageDataSlice/faqPageData/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/pageData/faqPage`);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching headers:", error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const getPolicyPageData = createAsyncThunk(
+  "pageDataSlice/PolicyPageData/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/pageData/policyPage`);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching headers:", error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+export const getCiontectPageData = createAsyncThunk(
+  "pageDataSlice/contactPageData/get",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/pageData/contactPage`);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching headers:", error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
 // Initial state
 //  ========================= home
 const initialState = {
@@ -107,6 +149,21 @@ const initialState = {
   getBlogDataLoaging: false,
   getBlogDataError: null,
   blogData: null,
+
+  //========================== faqPageData
+  faqPageDataLoaging: false,
+  faqPageDataError: null,
+  faqPageData: null,
+
+  //========================== policyPage
+  policyPageLoading: false,
+  policyPageError: null,
+  policyPageData: null,
+
+  //========================== contectPage
+  contactPageLoading: false,
+  contactPageError: null,
+  contactPage: null,
 };
 
 // Create the slice
@@ -200,6 +257,59 @@ const pageDataSlice = createSlice({
       .addCase(getBlogData.rejected, (state, action) => {
         state.getBlogDataLoaging = false;
         state.getBlogDataError =
+          action.payload?.message || "Error fetching headers";
+      });
+
+    //=========================== getFaqPageData
+    builder
+      .addCase(getFaqPageData.pending, (state) => {
+        state.faqPageDataLoaging = true;
+        state.faqPageDataError = null;
+      })
+      .addCase(getFaqPageData.fulfilled, (state, action) => {
+        state.faqPageDataLoaging = false;
+        state.faqPageDataError = null;
+        state.faqPageData = action.payload;
+      })
+      .addCase(getFaqPageData.rejected, (state, action) => {
+        state.faqPageDataLoaging = false;
+        state.faqPageDataError =
+          action.payload?.message || "Error fetching headers";
+      });
+
+    //=========================== getFaqPageData
+    builder
+      .addCase(getPolicyPageData.pending, (state) => {
+        state.policyPageLoading = true;
+        state.policyPageError = null;
+      })
+      .addCase(getPolicyPageData.fulfilled, (state, action) => {
+        state.policyPageLoading = false;
+        state.policyPageError = null;
+        state.policyPageData = action.payload;
+        console.log("action.payload", action.payload);
+      })
+      .addCase(getPolicyPageData.rejected, (state, action) => {
+        state.policyPageLoading = false;
+        state.policyPageError =
+          action.payload?.message || "Error fetching headers";
+      });
+
+    //=========================== getContactPage
+    builder
+      .addCase(getCiontectPageData.pending, (state) => {
+        state.contactPageLoading = true;
+        state.contactPageError = null;
+      })
+      .addCase(getCiontectPageData.fulfilled, (state, action) => {
+        state.contactPageLoading = false;
+        state.contactPageError = null;
+        state.contactPage = action.payload;
+        console.log("action.payload", action.payload);
+      })
+      .addCase(getCiontectPageData.rejected, (state, action) => {
+        state.contactPageLoading = false;
+        state.contactPageError =
           action.payload?.message || "Error fetching headers";
       });
   },

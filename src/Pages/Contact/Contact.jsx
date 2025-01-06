@@ -9,12 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../../features/contact/contactSlice";
 import { getHeader } from "../../features/header/headerSlice";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
+import { getCiontectPageData } from "../../features/pageData/pageDataSlice";
 const Contact = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
   const [selectedOption, setSelectedOption] = useState("phone");
   const dispatch = useDispatch();
@@ -27,22 +28,33 @@ const Contact = () => {
     console.log("Submitted Data:", { ...data, contactMethod: selectedOption });
     const contactData = { ...data, contactMethod: selectedOption };
     const res = dispatch(createContact(contactData));
-    console.log('res', res)
-    reset()
+    console.log("res", res);
+    reset();
   };
 
   const { headers } = useSelector((state) => state.header);
+  const { contactPageLoading, contactPageError, contactPage } = useSelector(
+    (state) => state.pageData
+  );
+
   useEffect(() => {
     dispatch(getHeader());
+    dispatch(getCiontectPageData());
   }, []);
 
-  const data = headers?.filter(item => item.pageName === "contact")
-  
-  const heroContent = {
-    heroImage: data[0]?.heroImage,
-    titleOne: data[0]?.titleOne,
-    descriptionOne: data[0]?.descriptionOne,
+  const data = headers?.filter((item) => item.pageName === "contact");
+
+  if (!contactPage) {
+    return;
   }
+
+  const heroContent = contactPage?.hero;
+
+  // {
+  //   heroImage: data[0]?.heroImage,
+  //   titleOne: data[0]?.titleOne,
+  //   descriptionOne: data[0]?.descriptionOne,
+  // };
 
   return (
     <div>
@@ -82,21 +94,26 @@ const Contact = () => {
             </div>
           </div>
 
-
           <div className="p-10 bg-[#effbfb] rounded-xl">
             <h1 className="text-3xl font-bold">Send us a message</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-[18px] font-medium mt-8 mb-3">First Name</p>
+                  <p className="text-[18px] font-medium mt-8 mb-3">
+                    First Name
+                  </p>
                   <input
                     type="text"
                     placeholder="Enter First Name"
                     className="p-3 text-[16px] rounded-md w-full"
-                    {...register("firstName", { required: "First name is required" })}
+                    {...register("firstName", {
+                      required: "First name is required",
+                    })}
                   />
                   {errors.firstName && (
-                    <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors.firstName.message}
+                    </p>
                   )}
                 </div>
                 <div>
@@ -105,14 +122,20 @@ const Contact = () => {
                     type="text"
                     placeholder="Enter Last Name"
                     className="p-3 text-[16px] rounded-md w-full"
-                    {...register("lastName", { required: "Last name is required" })}
+                    {...register("lastName", {
+                      required: "Last name is required",
+                    })}
                   />
                   {errors.lastName && (
-                    <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors.lastName.message}
+                    </p>
                   )}
                 </div>
                 <div>
-                  <p className="text-[18px] font-medium mt-5 mb-3">Email Address</p>
+                  <p className="text-[18px] font-medium mt-5 mb-3">
+                    Email Address
+                  </p>
                   <input
                     type="text"
                     placeholder="Enter Email Address"
@@ -126,11 +149,15 @@ const Contact = () => {
                     })}
                   />
                   {errors.email && (
-                    <p className="text-red-500 text-sm">{errors.email.message}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </p>
                   )}
                 </div>
                 <div>
-                  <p className="text-[18px] font-medium mt-5 mb-3">Phone Number</p>
+                  <p className="text-[18px] font-medium mt-5 mb-3">
+                    Phone Number
+                  </p>
                   <input
                     type="text"
                     placeholder="Enter Phone Number"
@@ -143,7 +170,9 @@ const Contact = () => {
                     })}
                   />
                   {errors.phone && (
-                    <p className="text-red-500 text-sm">{errors.phone.message}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors.phone.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -155,7 +184,9 @@ const Contact = () => {
                   {...register("message", { required: "Message is required" })}
                 />
                 {errors.message && (
-                  <p className="text-red-500 text-sm">{errors.message.message}</p>
+                  <p className="text-red-500 text-sm">
+                    {errors.message.message}
+                  </p>
                 )}
               </div>
               <div>
@@ -175,8 +206,11 @@ const Contact = () => {
                     />
                     <label
                       htmlFor="phone"
-                      className={`text-[16px] ${selectedOption === "phone" ? "primary_text" : "text-zinc-400"
-                        }`}
+                      className={`text-[16px] ${
+                        selectedOption === "phone"
+                          ? "primary_text"
+                          : "text-zinc-400"
+                      }`}
                     >
                       Phone
                     </label>
@@ -193,8 +227,11 @@ const Contact = () => {
                     />
                     <label
                       htmlFor="email"
-                      className={`text-[16px] ${selectedOption === "email" ? "primary_text" : "text-zinc-400"
-                        }`}
+                      className={`text-[16px] ${
+                        selectedOption === "email"
+                          ? "primary_text"
+                          : "text-zinc-400"
+                      }`}
                     >
                       Email
                     </label>
@@ -209,14 +246,11 @@ const Contact = () => {
               </button>
             </form>
           </div>
-
-
         </div>
       </ParentComponent>
       <div className="bg-[#effbfb] mt-20 pt-1 pb-20">
         <ApproachSection />
       </div>
-
     </div>
   );
 };

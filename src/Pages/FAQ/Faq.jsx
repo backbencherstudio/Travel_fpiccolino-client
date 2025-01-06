@@ -7,22 +7,32 @@ import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import heroImage from "../../assets/eve.jpg";
 import { useEffect } from "react";
 import { getHeader } from "../../features/header/headerSlice";
+import { getFaqPageData } from "../../features/pageData/pageDataSlice";
 
 const Faq = () => {
 
     const dispatch = useDispatch();
-    const { headers } = useSelector((state) => state.header);
+    // const { headers } = useSelector((state) => state.header);
+    const {  faqPageDataLoaging,
+        faqPageDataError,
+        faqPageData} = useSelector((state) => state.pageData);
+
+
     useEffect(() => {
-        dispatch(getHeader());
+        // dispatch(getHeader());
+        dispatch(getFaqPageData())
     }, []);
-    const data = headers?.filter(item => item.pageName === "faq")
+    // const data = headers?.filter(item => item.pageName === "faq")
 
-    const heroContent = {
-        heroImage: data[0]?.heroImage,
-        titleOne: data[0]?.titleOne,
-        descriptionOne: data[0]?.descriptionOne,
-    }
+    const heroContent = faqPageData?.hero
+    console.log(heroContent)
+    // {
+    //     heroImage: data[0]?.heroImage,
+    //     titleOne: data[0]?.titleOne,
+    //     descriptionOne: data[0]?.descriptionOne,
+    // }
 
+    console.log(faqPageData)
 
     // const heroContent = {
     //     heroImage,
@@ -33,6 +43,9 @@ const Faq = () => {
 
     // Accordion data
 
+    if(!faqPageData){
+        return
+    }
 
     return (
         <div>

@@ -127,7 +127,7 @@ const UserProfile = () => {
           setDateFilter={setTourDateFilter}
         />
         <TourSlider title={"Completed Tours"} userData={userData} id={id} />
-        <TourSlider title={"Pending Tours"} userData={userData} id={id} />
+        <TourSlider title={"Pending Tours "} userData={userData} id={id} />
       </div>
 
       {/* Edit Modal */}
