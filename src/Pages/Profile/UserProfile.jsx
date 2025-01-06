@@ -119,7 +119,7 @@ const UserProfile = () => {
         </div>
 
         {/* Tour details */}
-        <TourSlider
+        <TourSlider   
           title={"Total Tours"}
           userData={userTureStatus}
           id={id}

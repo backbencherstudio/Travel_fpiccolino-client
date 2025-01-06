@@ -95,7 +95,7 @@ const UserDetails = () => {
         </div>
       </div>
       <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>
-      <TourSlider
+      {/* <TourSlider
         title={"Total Tours"}
         userData={userData}
         id={id}
@@ -103,7 +103,7 @@ const UserDetails = () => {
         setDateFilter={setTourDateFilter}
       />
       <TourSlider title={"Completed Tours"} userData={userData} id={id} />
-      <TourSlider title={"Pending Tours"} userData={userData} id={id} />
+      <TourSlider title={"Pending Tours"} userData={userData} id={id} /> */}
     </div>
   );
 };
