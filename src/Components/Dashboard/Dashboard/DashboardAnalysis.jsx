@@ -136,15 +136,15 @@ const DashboardAnalysis = () => {
             />
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className=" gap-5">
           <div className="md:col-span-2">
-            <Chart
+            {/* <Chart
               title="Order"
               color="teal"
               data={dashboardData[0]?.revenueData}
               timeInterval={timeInterval}
               setTimeInterval={setTimeInterval}
-            />
+            /> */}
             {/* {chartType === "Order" ? (
               <Chart
                 title="Order"
@@ -171,7 +171,7 @@ const DashboardAnalysis = () => {
               />
             )} */}
           </div>
-          <div className="md:col-span-1 border my-4 rounded-xl">
+          <div className=" border my-4 rounded-xl">
             <RadarChart data={radarData?.radarData} />
           </div>
         </div>
