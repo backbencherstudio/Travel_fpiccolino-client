@@ -10,7 +10,21 @@ export const getDashboardData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/dashboard`);
-      return response.data; // Return categories data
+      return response.data; // Return dashboard data
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+// Thunk to get chart data
+export const getChartData = createAsyncThunk(
+  "dashboard/getChartData", // Unique action type
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/dashboard/getRevenueData`);
+      return response.data; // Return chart data (e.g., revenue data)
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -24,7 +38,7 @@ export const getRadarData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/dashboard/getRadarData`);
-      return response.data; // Return categories data
+      return response.data; // Return radar data
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -35,12 +49,15 @@ export const getRadarData = createAsyncThunk(
 const dashboardSlice = createSlice({
   name: "dashboard",
   initialState: {
-    totalData: [],
-    loading: false,
-    error: null,
-    radarData: [],
-    radarLoading: false,
-    radarError: null,
+    totalData: [], // Data for dashboard summary
+    loading: false, // Dashboard loading state
+    error: null, // Error state for dashboard
+    radarData: [], // Radar chart data
+    radarLoading: false, // Radar chart loading state
+    radarError: null, // Error state for radar chart
+    chartData: [], // Data for chart (e.g., revenue data)
+    chartLoading: false, // Chart data loading state
+    chartError: null, // Error state for chart data
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -58,6 +75,21 @@ const dashboardSlice = createSlice({
       .addCase(getDashboardData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message ?? null;
+      })
+
+      // Handle getChartData actions
+      .addCase(getChartData.pending, (state) => {
+        state.chartLoading = true;
+        state.chartError = null;
+      })
+      .addCase(getChartData.fulfilled, (state, action) => {
+        state.chartLoading = false;
+        state.chartError = null;
+        state.chartData = action.payload.revenueData; // Update the state with the chart data
+      })
+      .addCase(getChartData.rejected, (state, action) => {
+        state.chartLoading = false;
+        state.chartError = action.payload?.message ?? null;
       })
 
       // Handle getRadarData actions

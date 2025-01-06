@@ -12,6 +12,7 @@ import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackage } from "../../../features/pckage/packageSlice";
 import {
+  getChartData,
   getDashboardData,
   getRadarData,
 } from "../../../features/dashboard/dashboardSlice";
@@ -21,11 +22,14 @@ const DashboardAnalysis = () => {
   const [chartType, setChartType] = useState("Order");
   const [timeInterval, setTimeInterval] = useState("monthly");
   const { packag } = useSelector((state) => state.package);
-  const { totalData, radarData } = useSelector((state) => state.dashboard);
+  const { totalData, radarData, chartData } = useSelector(
+    (state) => state.dashboard
+  );
   useEffect(() => {
     dispatch(getPackage({ search: "", startDate: "", endDate: "" })),
       dispatch(getDashboardData()),
       dispatch(getRadarData());
+    dispatch(getChartData());
   }, [dispatch]);
   const [columns] = useState({
     date: true,
@@ -34,6 +38,7 @@ const DashboardAnalysis = () => {
     amount: true,
     // action: true,
   });
+  console.log(chartData?.monthly);
 
   const dashboardData = [
     {
@@ -45,25 +50,7 @@ const DashboardAnalysis = () => {
       txColor: "text-teal-500",
       icon: LuChartNoAxesCombined,
       image: revenue,
-      revenueData: [
-        { x: "Jan", y: 12000 },
-        { x: "Feb", y: 15000 },
-        { x: "Mar", y: 17000 },
-        { x: "Apr", y: 19000 },
-        { x: "May", y: 27000 },
-        { x: "June", y: 17000 },
-        { x: "Week 1", y: 1000 },
-        { x: "Week 2", y: 1200 },
-        { x: "Week 3", y: 1100 },
-        { x: "Week 4", y: 1400 },
-        { x: "Week 5", y: 1100 },
-        { x: "Week 6", y: 1800 },
-        { x: "2021", y: 25000 },
-        { x: "2022", y: 30000 },
-        { x: "2023", y: 35000 },
-        { x: "2024", y: 20000 },
-        { x: "2025", y: 50000 },
-      ],
+      revenueData: chartData?.weekly,
     },
     {
       title: "Traveler",
@@ -124,6 +111,7 @@ const DashboardAnalysis = () => {
       ],
     },
   ];
+  console.log(dashboardData[0]?.revenueData);
 
   return (
     <div className="">
@@ -150,7 +138,14 @@ const DashboardAnalysis = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="md:col-span-2">
-            {chartType === "Order" ? (
+            <Chart
+              title="Order"
+              color="teal"
+              data={dashboardData[0]?.revenueData}
+              timeInterval={timeInterval}
+              setTimeInterval={setTimeInterval}
+            />
+            {/* {chartType === "Order" ? (
               <Chart
                 title="Order"
                 color="teal"
@@ -174,7 +169,7 @@ const DashboardAnalysis = () => {
                 timeInterval={timeInterval}
                 setTimeInterval={setTimeInterval}
               />
-            )}
+            )} */}
           </div>
           <div className="md:col-span-1 border my-4 rounded-xl">
             <RadarChart data={radarData?.radarData} />

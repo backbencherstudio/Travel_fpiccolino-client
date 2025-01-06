@@ -2,30 +2,30 @@
 import { LineChart } from "@mui/x-charts";
 
 const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
-  const getFilteredData = () => {
-    switch (timeInterval) {
-      case "weekly":
-        return data.filter((d) => d.x.startsWith("Week"));
-      case "yearly":
-        return data.filter((d) => d.x.length === 4 && !isNaN(d.x));
-      case "monthly":
-      default:
-        return data.filter((d) => {
-          const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-          return months.includes(d.x);
-        });
-    }
-  };
+  // const getFilteredData = () => {
+  //   switch (timeInterval) {
+  //     case "weekly":
+  //       return data.filter((d) => d.x.startsWith("Week"));
+  //     case "yearly":
+  //       return data.filter((d) => d.x.length === 4 && !isNaN(d.x));
+  //     case "monthly":
+  //     default:
+  //       return data.filter((d) => {
+  //         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  //         return months.includes(d.x);
+  //       });
+  //   }
+  // };
 
-  const filteredData = getFilteredData();
-  console.log(filteredData);  // Debugging to check the filtered data
+  // const filteredData = getFilteredData();
+  // console.log(filteredData);  // Debugging to check the filtered data
 
   return (
     <div className="border rounded-xl p-4 my-4">
       {/* Filter buttons */}
       <div className="flex justify-between" style={{ marginBottom: "16px" }}>
         <h1 className="text-[24px] font-semibold">{title} Statistics</h1>
-        <select
+        {/* <select
           value={timeInterval}
           onChange={(e) => setTimeInterval(e.target.value)}
           style={{
@@ -35,13 +35,13 @@ const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
             border: "1px solid #e86731",
             borderRadius: "4px",
             margin: "0 8px",
-            color:'#e86731',
+            color: "#e86731",
           }}
         >
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
           <option value="yearly">Yearly</option>
-        </select>
+        </select> */}
       </div>
 
       {/* LineChart */}
@@ -50,13 +50,13 @@ const Chart = ({ title, color, data, timeInterval, setTimeInterval }) => {
           xAxis={[
             {
               scaleType: "band",
-              data: filteredData.map((data) => data.x),
+              data: data?.map((data) => data.x),
             },
           ]}
           series={[
             {
-              data: filteredData.map((data) => data.y),
-              label: `${title} (in $)`,
+              data: data?.map((data) => data.y),
+              label: `${title}`,
               color: color,
             },
           ]}

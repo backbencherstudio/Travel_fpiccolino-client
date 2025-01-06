@@ -15,10 +15,8 @@ const DashboardCard = ({
 }) => {
   return (
     <div
-      onClick={() => setChartType(title)}
-      className={`${bgColor} p-2 rounded-lg ${
-        chartType === title ? "shadow-lg" : ""
-      }`}
+      // onClick={() => setChartType(title)}
+      className={`${bgColor} p-2 rounded-lg ${chartType === title ? "" : ""}`}
     >
       <div className="flex items-center">
         <div className={`${bgColor2}  inline-block rounded-lg mr-2`}>
