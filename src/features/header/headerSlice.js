@@ -9,12 +9,12 @@ export const createHeader = createAsyncThunk(
   "header/create",
   async (headerData, { rejectWithValue }) => {
     console.log(11, "Hit");
-    console.log(12, {headerData});
-    
+    console.log(12, { headerData });
+
     try {
       const response = await axios.post(`${base_url}/header`, headerData);
       console.log("slice", response.data);
-      return response.data;
+      return response.data; // Assuming the response is a single header object
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -28,7 +28,7 @@ export const getHeader = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/header`);
-      return response.data;
+      return response.data; // Expecting an array of headers
     } catch (error) {
       console.error("Error fetching headers:", error);
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -72,8 +72,8 @@ const headerSlice = createSlice({
       .addCase(createHeader.fulfilled, (state, action) => {
         state.headerCreateLoading = false;
         state.headerCreateLoadingError = null;
-        // Add the new header to the headers array
-        state.headers.push(...action.payload);
+        // Add the new header to the headers array (no spread syntax here)
+        state.headers.push(action.payload); // Assuming action.payload is a single header object
       })
       .addCase(createHeader.rejected, (state, action) => {
         state.headerCreateLoading = false;
@@ -89,7 +89,7 @@ const headerSlice = createSlice({
       .addCase(getHeader.fulfilled, (state, action) => {
         state.headerCreateLoading = false;
         state.headerCreateLoadingError = null;
-        state.headers = action.payload;
+        state.headers = action.payload; // Assuming action.payload is an array
       })
       .addCase(getHeader.rejected, (state, action) => {
         state.headerCreateLoading = false;

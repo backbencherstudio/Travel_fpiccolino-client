@@ -9,7 +9,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ReviewCard from "./ReviewCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../features/review/reviewSlice";
-const ReviewSection = () => {
+const ReviewSection = ({ reviews }) => {
   const dispatch = useDispatch();
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -23,7 +23,7 @@ const ReviewSection = () => {
   return (
     <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">
       <ParentComponent>
-        <HeadLine title={review.title} description={review.subtitle} />
+        <HeadLine title={reviews.title} description={reviews.description} />
 
         <div className="relative grid grid-cols-1 md:grid-cols-12">
           <div className="mt-14 md:col-span-11">

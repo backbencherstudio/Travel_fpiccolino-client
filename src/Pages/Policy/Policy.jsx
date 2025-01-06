@@ -22,15 +22,13 @@ const Policy = () => {
 
   console.log(headers);
 
- 
-  
   // {
   //   heroImage: data[0]?.heroImage,
   //   titleOne: data[0]?.titleOne,
   //   descriptionOne: data[0]?.descriptionOne,
   // };
 
-  console.log("policyPageData", policyPageData)
+  console.log("policyPageData", policyPageData);
 
   // const heroContent = {
   //     heroImage: blogDetailsImage,
@@ -38,12 +36,12 @@ const Policy = () => {
   //     descriptionOne: "Your Data, Our Commitment to Transparency and Security",
   // }
 
-  if(!policyPageData){
-    return
+  if (!policyPageData) {
+    return;
   }
 
-  const heroContent = policyPageData?.hero
-//  console.log(policyPageData?.hero)
+  const heroContent = policyPageData?.hero;
+  console.log(policyPageData?.hero);
 
   return (
     <div>

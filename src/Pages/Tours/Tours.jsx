@@ -12,7 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getHeader } from "../../features/header/headerSlice";
 import { getPackage } from "../../features/pckage/packageSlice";
-import { country_wise_TourPage, get_all_inclusive_TourPagePage } from "../../features/pageData/pageDataSlice";
+import {
+  country_wise_TourPage,
+  get_all_inclusive_TourPagePage,
+} from "../../features/pageData/pageDataSlice";
 
 const Tours = () => {
   const { id } = useParams();
@@ -26,8 +29,8 @@ const Tours = () => {
     all_inclusive_TourPageData,
 
     country_wise_TourPageLoaging,
-    country_wise_TourPageError, 
-    country_wise_TourPageData
+    country_wise_TourPageError,
+    country_wise_TourPageData,
   } = useSelector((state) => state.pageData);
 
   useEffect(() => {
@@ -43,14 +46,14 @@ const Tours = () => {
   }, []);
   // const data = headers?.filter(item => item.pageName === "tour")
 
-  console.log(23784623468785, id);
-  console.log("all_inclusive_TourPageData", all_inclusive_TourPageData);
-  console.log("country_wise_TourPageData", country_wise_TourPageData);
+  const heroContent = id
+    ? country_wise_TourPageData?.hero
+    : all_inclusive_TourPageData?.hero;
+  const packags = id
+    ? country_wise_TourPageData?.package
+    : all_inclusive_TourPageData?.package;
+  console.log(heroContent);
 
-
-  const heroContent = id? country_wise_TourPageData?.hero : all_inclusive_TourPageData?.hero;
-  const packags = id? country_wise_TourPageData?.package : all_inclusive_TourPageData?.package;
-   console.log(111111, packags);
   return (
     <div className="">
       {heroContent && <HeroScetion heroContent={heroContent} />}

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { createHeader } from "../../../features/header/headerSlice";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const {
@@ -29,11 +30,9 @@ const Header = () => {
         headerData.append(key, data[key]);
       }
     });
-    console.log("hiiittteee");
-    
     const response = await dispatch(createHeader(headerData));
-    reset()
-    console.log("responce", response);
+    reset();
+    toast.success("Header Content Added Successfully");
   };
 
   return (
@@ -44,6 +43,32 @@ const Header = () => {
       <h1 className="text-2xl font-bold text-gray-700 mb-6 text-center">
         Hero Content Form
       </h1>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Page Name
+        </label>
+        <select
+          {...register("pageName", { required: "This field is required" })}
+          className={`w-full px-3 py-2 border rounded focus:outline-none ${
+            errors.pageName ? "border-red-500" : "border-gray-300"
+          }`}
+          defaultValue=""
+        >
+          <option value="" disabled>
+            Select a Page
+          </option>
+          <option value="home">Home</option>
+          <option value="tour">Tour</option>
+          <option value="about">About</option>
+          <option value="blog">Blog</option>
+          <option value="contact">Contact</option>
+          <option value="policy">Policy</option>
+          <option value="faq">FAQ</option>
+        </select>
+        {errors.pageName && (
+          <p className="text-red-500 text-xs mt-2">{errors.pageName.message}</p>
+        )}
+      </div>
 
       {/* Blog Details Title */}
       <div className="mb-4">
@@ -52,9 +77,7 @@ const Header = () => {
         </label>
         <input
           type="text"
-          {...register("blogDetailsTitle", {
-            required: "This field is required",
-          })}
+          {...register("blogDetailsTitle", {})}
           placeholder="Title"
           className={`w-full px-3 py-2 border rounded focus:outline-none ${
             errors.blogDetailsTitle ? "border-red-500" : "border-gray-300"
@@ -118,34 +141,6 @@ const Header = () => {
           }`}
         />
       </div> */}
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Page Name
-        </label>
-        <select
-          {...register("pageName", { required: "This field is required" })}
-          className={`w-full px-3 py-2 border rounded focus:outline-none ${
-            errors.pageName ? "border-red-500" : "border-gray-300"
-          }`}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Select a Page
-          </option>
-          <option value="home">Home</option>
-          <option value="tour">Tour</option>
-          <option value="about">About</option>
-          <option value="blog">Blog</option>
-          <option value="contact">Contact</option>
-          <option value="policy">Policy</option>
-          <option value="faq">FAQ</option>
-        </select>
-        {errors.pageName && (
-          <p className="text-red-500 text-xs mt-2">{errors.pageName.message}</p>
-        )}
-      </div>
-
       {/* Description */}
       <div className="mb-6">
         <label className="block text-gray-700 text-sm font-bold mb-2">

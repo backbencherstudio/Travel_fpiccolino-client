@@ -5,6 +5,7 @@ import ParentComponent from "../ParentComponent/ParentComponent";
 // import image from "../../assets/Images/about.jpg";
 const HeroScetion = ({ heroContent }) => {
   const {
+    heroImage,
     image,
     titleOne,
     descriptionOne,
@@ -13,12 +14,22 @@ const HeroScetion = ({ heroContent }) => {
     blogDetailsTitle,
   } = heroContent;
 
-  console.log(heroContent)
   return (
     <div>
       <div className="h-[600px] w-full relative ">
         {image && (
-          <img className="w-full h-full object-cover " src={image} alt="" />
+          <img
+            className="w-full h-full object-cover "
+            src={image ? image : heroImage}
+            alt=""
+          />
+        )}
+        {heroImage && (
+          <img
+            className="w-full h-full object-cover "
+            src={image ? image : heroImage}
+            alt=""
+          />
         )}
 
         <div className="absolute w-full h-full  inset-0 bg-gradient-to-t to-[#000000c4] from-transparent "></div>

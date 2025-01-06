@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { createTitle } from "../../../features/sectionTitle/sectionTitleSlice";
 import { useDispatch } from "react-redux";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
+import { toast } from "react-toastify";
 
 const AddContent = () => {
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ const AddContent = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -17,17 +19,19 @@ const AddContent = () => {
 
   const onSubmit = (data) => {
     dispatch(createTitle(data));
+    reset();
+    toast.success("Content Added Successfully");
   };
 
   // Define options for each page
   const nameOptions = {
     landing: [
-      { value: "landing1", label: "Landing 1" },
-      { value: "landing2", label: "Landing 2" },
-      { value: "landing3", label: "Landing 3" },
-      { value: "landing4", label: "Landing 4" },
-      { value: "landing5", label: "Landing 5" },
-      { value: "landing6", label: "Landing 6" },
+      { value: "landing1", label: "Tour Cards Section" },
+      { value: "landing2", label: "Country Slider Section" },
+      { value: "landing3", label: "Country Grid Section" },
+      { value: "landing4", label: "Stay Connect & Explore Section" },
+      { value: "landing5", label: "Review Section" },
+      { value: "landing6", label: "Article & Blog Section" },
     ],
     about: [
       { value: "about1", label: "About 1" },
@@ -55,49 +59,6 @@ const AddContent = () => {
         className="mx-auto p-6 bg-white rounded shadow-md mt-10"
       >
         <h2 className="text-[28px] font-bold text-center mb-4">Add Content</h2>
-
-        <div className="mb-4">
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Title
-          </label>
-          <input
-            id="title"
-            className={`mt-1 block p-1 w-full rounded border ${
-              errors.title ? "border-red-500" : "border-gray-300"
-            } focus:ring-blue-500 focus:border-blue-500`}
-            {...register("title", { required: "Title is required" })}
-          />
-          {errors.title && (
-            <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            className={`mt-1 block p-1 w-full rounded border ${
-              errors.description ? "border-red-500" : "border-gray-300"
-            } focus:ring-blue-500 focus:border-blue-500`}
-            {...register("description", {
-              required: "Description is required",
-            })}
-          />
-          {errors.description && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.description.message}
-            </p>
-          )}
-        </div>
-
         {/* Page Name Field */}
         <div className="mb-4">
           <label
@@ -150,6 +111,47 @@ const AddContent = () => {
           </select>
           {errors.name && (
             <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Title
+          </label>
+          <input
+            id="title"
+            className={`mt-1 block p-1 w-full rounded border ${
+              errors.title ? "border-red-500" : "border-gray-300"
+            } focus:ring-blue-500 focus:border-blue-500`}
+            {...register("title", { required: "Title is required" })}
+          />
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
+          )}
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            className={`mt-1 block p-1 w-full rounded border ${
+              errors.description ? "border-red-500" : "border-gray-300"
+            } focus:ring-blue-500 focus:border-blue-500`}
+            {...register("description", {
+              required: "Description is required",
+            })}
+          />
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.description.message}
+            </p>
           )}
         </div>
 

@@ -42,7 +42,7 @@ const Home = () => {
   const titleWithoutContent = homePageData?.titleWithoutContent;
   const review = homePageData?.review;
   const blogSection = homePageData?.blogSection;
-  const countryWithoutImage = homePageData?.countryWithImage;
+  const countryWithoutImage = homePageData?.country;
 
   return (
     <div>
@@ -56,8 +56,10 @@ const Home = () => {
       )}
 
       {countrySection && <WondersSection countrySection={countrySection} />}
-      <ApproachSection titleWithoutContent={titleWithoutContent} />
-      {review && <ReviewSection review={review} />}
+      {titleWithoutContent && (
+        <ApproachSection aboutWithoutContent={titleWithoutContent} />
+      )}
+      {review && <ReviewSection reviews={review} />}
       {blogSection && <ArticleAndNewsSection blogSection={blogSection} />}
       <JourneySection />
       <BottomBannerSection />
