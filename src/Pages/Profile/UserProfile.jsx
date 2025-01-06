@@ -12,7 +12,6 @@ import { updateUser, userStatus } from "../../features/auth/authSlice";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const [tourDateFilter, setTourDateFilter] = useState("all");
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -122,14 +121,20 @@ const UserProfile = () => {
         {/* Tour details */}
 
         <TourSlider
+          userType={"user"}
+          id={id}
           title={"On Going Tours"}
           userData={userTureStatus?.tours?.ongoingTours}
         />
         <TourSlider
+          userType={"user"}
+          id={id}
           title={"Pending Tours"}
           userData={userTureStatus?.tours?.pendingTours}
         />
         <TourSlider
+          userType={"user"}
+          id={id}
           title={"Completed Tours"}
           userData={userTureStatus?.tours?.completedTours}
         />

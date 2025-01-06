@@ -15,10 +15,9 @@ import { createReview } from "../../../features/review/reviewSlice";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const TourSlider = ({ userData, title }) => {
+const TourSlider = ({ userData, title, id, userType }) => {
   const dispatch = useDispatch();
   const swiperRef = useRef(null);
-  const { id } = useParams();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +43,6 @@ const TourSlider = ({ userData, title }) => {
       comment: review,
       rating,
     };
-    console.log(orderId);
 
     dispatch(createReview({ reviewData, orderId }));
     toast.success("Review Added Successfully");
@@ -118,16 +116,18 @@ const TourSlider = ({ userData, title }) => {
                 <p className="py-2">
                   {item?.packageData?.destination || "Unknown Destination"}
                 </p>
-                <button
-                  onClick={() => {
-                    openModal();
-                    setPackageId(item?.packageData?._id);
-                    setOrderId(item?.orderId);
-                  }}
-                  className="primary_bg text-white px-3 py-1 rounded hover:opacity-85"
-                >
-                  Add Review
-                </button>
+                {userType === "user" && title === "Pending Tours" && (
+                  <button
+                    onClick={() => {
+                      openModal();
+                      setPackageId(item?.packageData?._id);
+                      setOrderId(item?.orderId);
+                    }}
+                    className="primary_bg text-white px-3 py-1 rounded hover:opacity-85"
+                  >
+                    Add Review
+                  </button>
+                )}
               </SwiperSlide>
             </div>
           ))}

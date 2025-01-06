@@ -7,17 +7,25 @@ import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../../features/users/userSlice";
 import { FaRegUserCircle } from "react-icons/fa";
- 
+import { userStatus } from "../../../features/auth/authSlice";
+import { base_url } from "../../../utils/base_path";
+import axios from "axios";
+
 const UserDetails = () => {
   const dispatch = useDispatch();
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const { id } = useParams();
   const { userDetails } = useSelector((state) => state.user);
-
+  const { user, userTureStatusError } = useSelector(
+    (state) => state.authorization
+  );
+  const [userTureStatus, setUsertourStatus] = useState(null);
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         dispatch(getUserDetails(id));
+        const response = await axios.get(`${base_url}/order/user/${id}/status`);
+        setUsertourStatus(response?.data);
       } catch (err) {
         console.log(err);
       }
@@ -26,7 +34,6 @@ const UserDetails = () => {
     fetchBlogs();
   }, []);
 
- 
   return (
     <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
       <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
@@ -95,15 +102,24 @@ const UserDetails = () => {
         </div>
       </div>
       <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>
-      {/* <TourSlider
-        title={"Total Tours"}
-        userData={userData}
+      <TourSlider
+        userType={"admin"}
         id={id}
-        dateFilter={tourDateFilter}
-        setDateFilter={setTourDateFilter}
+        title={"On Going Tours"}
+        userData={userTureStatus?.tours?.ongoingTours}
       />
-      <TourSlider title={"Completed Tours"} userData={userData} id={id} />
-      <TourSlider title={"Pending Tours"} userData={userData} id={id} /> */}
+      <TourSlider
+        userType={"admin"}
+        id={id}
+        title={"Pending Tours"}
+        userData={userTureStatus?.tours?.pendingTours}
+      />
+      <TourSlider
+        userType={"admin"}
+        id={id}
+        title={"Completed Tours"}
+        userData={userTureStatus?.tours?.completedTours}
+      />
     </div>
   );
 };
