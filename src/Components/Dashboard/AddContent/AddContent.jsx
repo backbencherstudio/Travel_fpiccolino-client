@@ -38,6 +38,7 @@ const AddContent = () => {
       { value: "tours1", label: "Tours 1" },
       { value: "tours2", label: "Tours 2" },
       { value: "tours3", label: "Tours 3" },
+      { value: "country_wise1", label: "country wise content" },
     ],
     contact: [
       { value: "contact1", label: "Contact 1" },
