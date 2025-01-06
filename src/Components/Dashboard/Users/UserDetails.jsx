@@ -7,6 +7,7 @@ import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../../features/users/userSlice";
 import { FaRegUserCircle } from "react-icons/fa";
+ 
 const UserDetails = () => {
   const dispatch = useDispatch();
   const [tourDateFilter, setTourDateFilter] = useState("all");
@@ -24,7 +25,8 @@ const UserDetails = () => {
 
     fetchBlogs();
   }, []);
-  console.log(userDetails);
+
+ 
   return (
     <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
       <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px]">
