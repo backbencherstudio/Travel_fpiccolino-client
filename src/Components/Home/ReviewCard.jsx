@@ -3,14 +3,25 @@ import comma from "../../assets/icons/review.svg";
 import star from "../../assets/icons/star.svg";
 import halfStar from "../../assets/icons/half-star.svg"; // Add half-star image for condition
 import { base_url } from "../../utils/base_path";
+import { FaUser } from "react-icons/fa";
 
 const ReviewCard = ({ item }) => {
-  const { image, title, comment, name, rating, totalReviews, pakageImg } = item;
+  const {
+    image,
+    title,
+    comment,
+    name,
+    rating,
+    totalReviews,
+    pakageImg,
+    country,
+  } = item;
 
   // Helper function to render stars dynamically
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating); // Get the full stars
     const hasHalfStar = rating % 1 !== 0; // Check if there's a half star
+    console.log(item);
 
     let stars = [];
 
@@ -52,12 +63,14 @@ const ReviewCard = ({ item }) => {
               {totalReviews}
               {" Reviews"}
             </p>
-            <div className="xl:p-[60px] p-5 bg-white rounded-2xl">
+            <div className="xl:p-[60px] p-5 bg-white rounded-2xl overflow-auto max-h-[500px]">
               <img src={comma} alt="" />
               <p className="text-[18px] w-full">{comment}</p>
               <div className="mt-5 mb-8">
-                <h1 className="text-[24px] font-bold">{name}</h1>
-                <p className="text-[#72777F] text-[18px]">{title}</p>
+                <h1 className="text-[24px]  font-semibold flex items-center gap-2 primary_text">
+                  <FaUser /> {name}
+                </h1>
+                <p className="text-[#72777F] text-[18px]">{country}</p>
               </div>
             </div>
           </div>

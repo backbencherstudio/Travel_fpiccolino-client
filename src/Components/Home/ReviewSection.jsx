@@ -9,61 +9,16 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ReviewCard from "./ReviewCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../features/review/reviewSlice";
-const ReviewSection = ({ review }) => {
+const ReviewSection = () => {
   const dispatch = useDispatch();
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  // const { review } = useSelector((state) => state.review);
-  const reviews = [
-    {
-      image: natureImage,
-      name: "Esther Howard",
-      title: "World Traveler, Italy",
-      rating: 4.8,
-      review:
-        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
-    },
-    {
-      image: natureImage2,
-      name: "Esther Howard",
-      title: "World Traveler, Italy",
-      rating: 4.8,
-      totalReviews: "2,300",
-      review:
-        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
-    },
-    {
-      image: natureImage2,
-      name: "Esther Howard",
-      title: "World Traveler, Italy",
-      rating: 4.8,
-      totalReviews: "2,300",
-      review:
-        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
-    },
-    {
-      image: natureImage2,
-      name: "Esther Howard",
-      title: "World Traveler, Italy",
-      rating: 4.8,
-      totalReviews: "2,300",
-      review:
-        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
-    },
-    {
-      image: natureImage2,
-      name: "Esther Howard",
-      title: "World Traveler, Italy",
-      rating: 4.8,
-      totalReviews: "2,300",
-      review:
-        "An incredible experience from start to finish! Its curated a trip beyond my expectations. Every detail was thoughtfully planned, from the unique accommodations to the hidden gems only locals know about. I felt immersed in the culture and genuinely cared for throughout. Can’t wait to plan my next adventure with them!",
-    },
-  ];
+  const { review } = useSelector((state) => state.review);
   useEffect(() => {
     dispatch(getReview());
   }, []);
+  console.log(review);
 
   return (
     <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">
@@ -85,7 +40,7 @@ const ReviewSection = ({ review }) => {
                 setIsEnd(swiper.isEnd);
               }}
             >
-              {review.data?.map((item) => (
+              {review.reviews?.map((item) => (
                 <div key={item._id}>
                   <SwiperSlide>
                     <ReviewCard item={item} />

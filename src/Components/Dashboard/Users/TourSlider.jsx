@@ -13,6 +13,7 @@ import {
 import { useDispatch } from "react-redux";
 import { createReview } from "../../../features/review/reviewSlice";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const TourSlider = ({ userData, title }) => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const TourSlider = ({ userData, title }) => {
     console.log(orderId);
 
     dispatch(createReview({ reviewData, orderId }));
+    toast.success("Review Added Successfully");
     closeModal();
   };
 
