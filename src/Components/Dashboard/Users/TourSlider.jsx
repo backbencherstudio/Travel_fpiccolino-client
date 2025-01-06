@@ -4,10 +4,12 @@ import { useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaSearch } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 const TourSlider = ({title, userData, id,dateFilter,setDateFilter }) => {
+  // {title, userData, id,dateFilter,setDateFilter }
     const [searchQuery, setSearchQuery] = useState("");
     const swiperRef = useRef(null);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
+    const [isBeginning, setIsBeginning] = useState(true);
+    const [isEnd, setIsEnd] = useState(false);
+     
   return (
     <div>
         <h1 className="mt-3 text-[16px] font-medium">{title}{ ` (${userData[id-1]?.tourData?.length})`}</h1>

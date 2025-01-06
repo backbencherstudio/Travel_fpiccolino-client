@@ -1,22 +1,23 @@
 import "swiper/css";
 import { useParams } from "react-router-dom";
 import { userData } from "../../ALLJsonFile/const";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TourSlider from "../../Components/Dashboard/Users/TourSlider";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import UpdateUserModal from "../../Components/Profile/UpdateUserModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RxAvatar } from "react-icons/rx";
-import { updateUser } from "../../features/auth/authSlice";
+import { updateUser, userStatus } from "../../features/auth/authSlice";
 
 const UserProfile = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [tourDateFilter, setTourDateFilter] = useState("all");
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useSelector((state) => state.authorization);
+  const { user, userTureStatus, userTureStatusError } = useSelector((state) => state.authorization);
+
   // console.log(41584854, user);
 
   const handleEditClick = () => {
@@ -29,13 +30,20 @@ const UserProfile = () => {
   const handleSubmit = (updatedDetails) => {
     const updatedUserData = { ...user, ...updatedDetails };
     // const updatedUserData = { ...updatedDetails };
-    // console.log(updatedDetails); 
-    console.log(555,updatedUserData)
-    const responce = dispatch(updateUser(updatedUserData))
-    console.log("responce", responce)
-    
+    // console.log(updatedDetails);
+    console.log(555, updatedUserData);
+    const responce = dispatch(updateUser(updatedUserData));
+    console.log("responce", responce);
   };
 
+  useEffect(() => {
+    if (user) {
+      dispatch(userStatus(user?._id));
+    }
+  }, [user]);
+
+  // console.log("userTureStatus", userTureStatus);
+  // console.log(userTureStatusError)
   return (
     <ParentComponent>
       <div className="mt-32 pb-14 mb-14 border-b">
@@ -113,7 +121,7 @@ const UserProfile = () => {
         {/* Tour details */}
         <TourSlider
           title={"Total Tours"}
-          userData={userData}
+          userData={userTureStatus}
           id={id}
           dateFilter={tourDateFilter}
           setDateFilter={setTourDateFilter}

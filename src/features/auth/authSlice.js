@@ -183,6 +183,21 @@ export const reset_forgot_password = createAsyncThunk(
   }
 );
 
+export const userStatus = createAsyncThunk(
+  "users/userStatus",
+  async (id, { rejectWithValue }) => {
+    console.log(id)
+    try {
+      const response = await axios.get(`${base_url}/order/user/${id}/status`);
+      console.log("response", response)
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 
 const initialState = {
   loginLoading: false,
@@ -209,6 +224,10 @@ const initialState = {
   match_forgot_password_otpError: null,
   reset_forgot_passwordError: null,
   callCount: 0,
+
+  userTureStatusLoading: false,
+  userTureStatusError: null,
+  userTureStatus: null
 };
 
 const authSlice = createSlice({
@@ -361,6 +380,22 @@ const authSlice = createSlice({
       .addCase(reset_forgot_password.rejected, (state, action) => {
         state.reset_forgot_passwordLoading = false;
         state.reset_forgot_passwordError = action.payload?.message ?? null;
+      });
+
+      builder
+      .addCase(userStatus.pending, (state) => {
+        state.userTureStatusLoading = true;
+        state.userTureStatusError = null;
+      })
+      .addCase(userStatus.fulfilled, (state, action) => {
+        state.userTureStatusLoading = false;
+        console.log(121, action.payload);
+        state.userTureStatus = action.payload;
+        state.userTureStatusError = null;
+      })
+      .addCase(userStatus.rejected, (state, action) => {
+        state.userTureStatusLoading = false;
+        state.userTureStatusError = action.payload?.message ?? null;
       });
     // builder
     // .addCase(recentOtp.pending, (state) => {
