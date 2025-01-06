@@ -12,7 +12,7 @@ const BlogSections = ({ title, blogs, relatedTitle = "" }) => {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {blogs?.map((blog, index) => (
-            <div key={index}>
+            <div key={index}>       
               <BlogCard item={blog} />
             </div>
           ))}
