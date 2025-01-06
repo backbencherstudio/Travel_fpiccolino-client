@@ -35,9 +35,9 @@ const AddContent = () => {
       { value: "about3", label: "About 3" },
     ],
     tours: [
-      { value: "tours1", label: "Tours 1" },
-      { value: "tours2", label: "Tours 2" },
-      { value: "tours3", label: "Tours 3" },
+ 
+      { value: "all_inclusive_tour1", label: "all inclusive tour 1" },
+      { value: "all_inclusive_tour2", label: "all inclusive tour 2" },
       { value: "country_wise1", label: "country wise content" },
     ],
     contact: [

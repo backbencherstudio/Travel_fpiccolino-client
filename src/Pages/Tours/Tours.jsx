@@ -50,6 +50,7 @@ const Tours = () => {
 
   const heroContent = id? country_wise_TourPageData?.hero : all_inclusive_TourPageData?.hero;
   const packags = id? country_wise_TourPageData?.package : all_inclusive_TourPageData?.package;
+  const shorts = 
    console.log(111111, packags);
   return (
     <div className="">

@@ -32,17 +32,17 @@ const Contact = () => {
     reset();
   };
 
-  const { headers } = useSelector((state) => state.header);
+  // const { headers } = useSelector((state) => state.header);
   const { contactPageLoading, contactPageError, contactPage } = useSelector(
     (state) => state.pageData
   );
 
   useEffect(() => {
-    dispatch(getHeader());
+    // dispatch(getHeader());
     dispatch(getCiontectPageData());
   }, []);
 
-  const data = headers?.filter((item) => item.pageName === "contact");
+  // const data = headers?.filter((item) => item.pageName === "contact");
 
   if (!contactPage) {
     return;
