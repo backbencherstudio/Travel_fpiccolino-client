@@ -38,6 +38,7 @@ import AddContent from "../Components/Dashboard/AddContent/AddContent";
 import Checkout from "../Pages/checkout/Checkout";
 import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
+import CountryList from "../Components/Dashboard/AddCountry/CountryList";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -158,7 +159,11 @@ export const router = createBrowserRouter([
         element: <ContactsTable />,
       },
       {
-        path: "addCountry",
+        path: "country",
+        element: <CountryList />,
+      },
+      {
+        path: "country/create/new",
         element: <AddCountry />,
       },
       {

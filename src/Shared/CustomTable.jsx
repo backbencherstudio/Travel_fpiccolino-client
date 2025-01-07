@@ -131,7 +131,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
       <Paper>
         <div className="flex mt-8 p-5 justify-between flex-wrap">
           <h1 className="font-semibold text-[24px]">{title}</h1>
-          {(tableType === "blog" || tableType === "package") && (
+          {(tableType === "blog" ||
+            tableType === "package" ||
+            tableType === "country") && (
             <CustomDashboardButton
               content={
                 <div className="flex items-center gap-1.5 ">
@@ -143,38 +145,42 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
             />
           )}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5 gap-3 px-4">
-          <div className="relative md:col-span-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400 w-full lg:w-[80%]"
-              onChange={(e) => handleSearch(e)}
-            />
-            <FaSearch className="absolute top-3 left-3 text-zinc-400" />
+        {tableType === "country" || tableType === "contact" ? (
+          <></>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5 gap-3 px-4">
+            <div className="relative md:col-span-2">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400 w-full lg:w-[80%]"
+                onChange={(e) => handleSearch(e)}
+              />
+              <FaSearch className="absolute top-3 left-3 text-zinc-400" />
+            </div>
+            <select
+              className="md:col-span-1"
+              value={dateFilter}
+              onChange={handleDateFilterChange}
+              style={{
+                padding: "8px 16px",
+                cursor: "pointer",
+                fontSize: "14px",
+                border: "1px solid #e86731",
+                borderRadius: "4px",
+                color: "#e86731",
+              }}
+            >
+              <option value="all">All</option>
+              <option value="thisWeek">This Week</option>
+              <option value="lastWeek">Last Week</option>
+              <option value="thisMonth">This Month</option>
+              <option value="lastMonth">Last Month</option>
+              <option value="thisYear">This Year</option>
+              <option value="lastYear">Last Year</option>
+            </select>
           </div>
-          <select
-            className="md:col-span-1"
-            value={dateFilter}
-            onChange={handleDateFilterChange}
-            style={{
-              padding: "8px 16px",
-              cursor: "pointer",
-              fontSize: "14px",
-              border: "1px solid #e86731",
-              borderRadius: "4px",
-              color: "#e86731",
-            }}
-          >
-            <option value="all">All</option>
-            <option value="thisWeek">This Week</option>
-            <option value="lastWeek">Last Week</option>
-            <option value="thisMonth">This Month</option>
-            <option value="lastMonth">Last Month</option>
-            <option value="thisYear">This Year</option>
-            <option value="lastYear">Last Year</option>
-          </select>
-        </div>
+        )}
         <TableContainer sx={{ padding: "16px" }}>
           <Table
             sx={{
@@ -188,6 +194,8 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.name && <TableCell>Customer Name</TableCell>}
                 {columns?.username && <TableCell>User Name</TableCell>}
                 {columns?.blogName && <TableCell>Blog Name</TableCell>}
+                {columns?.countryName && <TableCell>Country</TableCell>}
+                {columns?.title && <TableCell>Title</TableCell>}
                 {columns?.category && <TableCell>Category</TableCell>}
                 {columns?.email && <TableCell>Email</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
@@ -277,6 +285,29 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                           </span>
                         </div>
                       </TableCell>
+                    )}
+                    {columns?.countryName && (
+                      <TableCell
+                      // style={{ width: "400px", textWrap: "break-word" }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="rounded-full"
+                            src={`${item?.image}`}
+                            alt=""
+                            style={{ width: "40px", height: "40px" }}
+                          />
+                          <span
+                            style={{ wordWrap: "break-word" }}
+                            className="mr-10"
+                          >
+                            {item?.name}
+                          </span>
+                        </div>
+                      </TableCell>
+                    )}
+                    {columns?.title && (
+                      <TableCell>{item.contentTitle}</TableCell>
                     )}
                     {columns?.category && (
                       <TableCell>{item.category}</TableCell>

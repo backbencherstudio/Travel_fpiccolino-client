@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { base_url } from '../../../utils/base_path';
-import CustomHeadingDashboard from '../../../Shared/CustomHeadingDashboard';
-import CustomTable from '../../../Shared/CustomTable';
+import React, { useEffect, useState } from "react";
+import { base_url } from "../../../utils/base_path";
+import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
+import CustomTable from "../../../Shared/CustomTable";
 
 const ContactsTable = () => {
   const [contacts, setContacts] = useState([]);
@@ -23,7 +23,7 @@ const ContactsTable = () => {
         setContacts(data);
         console.log(data);
       } catch (error) {
-        console.error('Error fetching contacts:', error);
+        console.error("Error fetching contacts:", error);
       }
     };
 
@@ -87,7 +87,7 @@ const ContactsTable = () => {
     <div>
       <CustomHeadingDashboard />
       <CustomTable
-        tableType={"All Contact"}
+        tableType={"contact"}
         title={"Contact List"}
         columns={columns}
         data={contacts}
