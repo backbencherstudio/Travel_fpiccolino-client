@@ -6,7 +6,7 @@ const TureCard = ({ item }) => {
     tourName: title,
     tourDuration,
     amount: price,
-    category: isInclusive,
+    bookedFlights,
   } = item;
 
   return (
@@ -19,10 +19,9 @@ const TureCard = ({ item }) => {
         />
         <div className="w-full h-full absolute top-0 left-0  rounded-xl group-hover:bg-[#E867311A] duration-300 "></div>
 
-        {isInclusive && (
+        {bookedFlights?.length > 0 && (
           <h2 className="absolute top-4 right-4 border border-[#E86731] text-[#E86731] bg-[#FDF0EA] px-4 py-2 rounded-full ">
-            {" "}
-            {isInclusive[0]}{" "}
+            {"All Inclusive"}
           </h2>
         )}
 

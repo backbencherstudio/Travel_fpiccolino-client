@@ -30,6 +30,7 @@ import { getDateRange } from "./CustomDateRange";
 import { deletePackage, getPackage } from "../features/pckage/packageSlice";
 import { getUser } from "../features/users/userSlice";
 import { getOrders } from "../features/order/orderSlice";
+import { deleteCountry } from "../features/country/countrySlice";
 
 const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -76,6 +77,8 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
           await dispatch(deleteBlog(deleteId));
         } else if (tableType === "package") {
           await dispatch(deletePackage(deleteId));
+        } else if (tableType === "country") {
+          await dispatch(deleteCountry(deleteId));
         } else {
           console.log("Invalid table type:", tableType);
         }
@@ -131,7 +134,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
       <Paper>
         <div className="flex mt-8 p-5 justify-between flex-wrap">
           <h1 className="font-semibold text-[24px]">{title}</h1>
-          {(tableType === "blog" || tableType === "package") && (
+          {(tableType === "blog" ||
+            tableType === "package" ||
+            tableType === "country") && (
             <CustomDashboardButton
               content={
                 <div className="flex items-center gap-1.5 ">
@@ -143,38 +148,42 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
             />
           )}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5 gap-3 px-4">
-          <div className="relative md:col-span-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400 w-full lg:w-[80%]"
-              onChange={(e) => handleSearch(e)}
-            />
-            <FaSearch className="absolute top-3 left-3 text-zinc-400" />
+        {tableType === "country" || tableType === "contact" ? (
+          <></>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5 gap-3 px-4">
+            <div className="relative md:col-span-2">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="py-1.5 pl-10 border border-zinc-300 rounded-md focus:outline-none focus:border-orange-400 w-full lg:w-[80%]"
+                onChange={(e) => handleSearch(e)}
+              />
+              <FaSearch className="absolute top-3 left-3 text-zinc-400" />
+            </div>
+            <select
+              className="md:col-span-1"
+              value={dateFilter}
+              onChange={handleDateFilterChange}
+              style={{
+                padding: "8px 16px",
+                cursor: "pointer",
+                fontSize: "14px",
+                border: "1px solid #e86731",
+                borderRadius: "4px",
+                color: "#e86731",
+              }}
+            >
+              <option value="all">All</option>
+              <option value="thisWeek">This Week</option>
+              <option value="lastWeek">Last Week</option>
+              <option value="thisMonth">This Month</option>
+              <option value="lastMonth">Last Month</option>
+              <option value="thisYear">This Year</option>
+              <option value="lastYear">Last Year</option>
+            </select>
           </div>
-          <select
-            className="md:col-span-1"
-            value={dateFilter}
-            onChange={handleDateFilterChange}
-            style={{
-              padding: "8px 16px",
-              cursor: "pointer",
-              fontSize: "14px",
-              border: "1px solid #e86731",
-              borderRadius: "4px",
-              color: "#e86731",
-            }}
-          >
-            <option value="all">All</option>
-            <option value="thisWeek">This Week</option>
-            <option value="lastWeek">Last Week</option>
-            <option value="thisMonth">This Month</option>
-            <option value="lastMonth">Last Month</option>
-            <option value="thisYear">This Year</option>
-            <option value="lastYear">Last Year</option>
-          </select>
-        </div>
+        )}
         <TableContainer sx={{ padding: "16px" }}>
           <Table
             sx={{
@@ -188,14 +197,17 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.name && <TableCell>Customer Name</TableCell>}
                 {columns?.username && <TableCell>User Name</TableCell>}
                 {columns?.blogName && <TableCell>Blog Name</TableCell>}
+                {columns?.countryName && <TableCell>Country</TableCell>}
+                {columns?.orderUser && <TableCell>User</TableCell>}
+                {columns?.title && <TableCell>Title</TableCell>}
                 {columns?.category && <TableCell>Category</TableCell>}
                 {columns?.email && <TableCell>Email</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
-                {columns?.tourDate && <TableCell>Tour Date</TableCell>}
                 {columns?.passenger && <TableCell>Passenger</TableCell>}
                 {columns?.packageAmount && <TableCell>Package Price</TableCell>}
                 {columns?.flightAmount && <TableCell>Flight Amount</TableCell>}
                 {columns?.totalAmount && <TableCell>Total </TableCell>}
+                {columns?.tourDate && <TableCell>Tour Date</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
@@ -278,16 +290,59 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                         </div>
                       </TableCell>
                     )}
+                    {columns?.countryName && (
+                      <TableCell
+                      // style={{ width: "400px", textWrap: "break-word" }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="rounded-full"
+                            src={`${item?.image}`}
+                            alt=""
+                            style={{ width: "40px", height: "40px" }}
+                          />
+                          <span
+                            style={{ wordWrap: "break-word" }}
+                            className="mr-10"
+                          >
+                            {item?.name}
+                          </span>
+                        </div>
+                      </TableCell>
+                    )}
+                    {columns?.orderUser && (
+                      <TableCell
+                      // style={{ width: "400px", textWrap: "break-word" }}
+                      >
+                        <div className="flex items-center gap-3">
+                          {item?.userId?.image ? (
+                            <img
+                              className="rounded-full"
+                              src={`${item?.userId?.image}`}
+                              alt=""
+                              style={{ width: "40px", height: "40px" }}
+                            />
+                          ) : (
+                            <FaRegUserCircle className="h-9 w-9 primary_text" />
+                          )}
+                          <span
+                            style={{ wordWrap: "break-word" }}
+                            className="mr-10"
+                          >
+                            {item?.userId?.name}
+                          </span>
+                        </div>
+                      </TableCell>
+                    )}
+                    {columns?.title && (
+                      <TableCell>{item.contentTitle}</TableCell>
+                    )}
                     {columns?.category && (
                       <TableCell>{item.category}</TableCell>
                     )}
                     {columns?.email && <TableCell>{item.email}</TableCell>}
                     {columns?.phone && <TableCell>{item.phone}</TableCell>}
-                    {columns?.tourDate && (
-                      <TableCell>
-                        {moment(item.tourDate).format("DD/MM/yyyy")}
-                      </TableCell>
-                    )}
+
                     {columns?.passenger && (
                       <TableCell>{item?.person}</TableCell>
                     )}
@@ -300,7 +355,11 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.totalAmount && (
                       <TableCell>{item?.toureAmount}</TableCell>
                     )}
-
+                    {columns?.tourDate && (
+                      <TableCell>
+                        {moment(item.tourDate).format("DD/MM/yyyy")}
+                      </TableCell>
+                    )}
                     {columns?.traveler && (
                       <TableCell style={{ minWidth: "200px" }}>
                         <div className="flex items-center gap-3">
@@ -345,15 +404,17 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 ">
-                          <div
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`update/${item._id}`);
-                            }}
-                            className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
-                          >
-                            <FiEdit3 />
-                          </div>
+                          {tableType !== "country" && (
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`update/${item._id}`);
+                              }}
+                              className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
+                            >
+                              <FiEdit3 />
+                            </div>
+                          )}
                           <div
                             onClick={(e) => {
                               e.stopPropagation();

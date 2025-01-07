@@ -48,7 +48,7 @@ const Home = () => {
     <div>
       {/* <BannerSection /> */}
       {heroSection && <HeroScetion heroContent={heroSection} />}
-      {<SearchBar />}
+      {countrySection && <SearchBar countries={countrySection} />}
 
       {cardDetails && <AdventureSection cardDetails={cardDetails} />}
       {countryWithoutImage && (

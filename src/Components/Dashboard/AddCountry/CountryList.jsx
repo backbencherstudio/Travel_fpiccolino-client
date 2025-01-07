@@ -2,36 +2,33 @@ import { useEffect, useState } from "react";
 import CustomTable from "../../../Shared/CustomTable";
 import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders } from "../../../features/order/orderSlice";
+import { getCountry } from "../../../features/country/countrySlice";
 
-const OrderList = () => {
+const CountryList = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.order);
+  const { countries } = useSelector((state) => state.country);
   useEffect(() => {
-    dispatch(getOrders({ search: "", startDate: "", endDate: "" }));
+    dispatch(getCountry({ search: "", startDate: "", endDate: "" }));
   }, []);
   const [columns] = useState({
-    orderUser: true,
-    totalAmount: true,
-    passenger: true,
-    flightAmount: true,
-    packageAmount: true,
+    countryName: true,
+    title: true,
     date: true,
-    tourDate: true,
+    action: true,
   });
-  console.log(orders);
+  console.log(countries);
 
   return (
     <div>
       <CustomHeadingDashboard />
       <CustomTable
-        tableType={"order"}
-        title={"Order List"}
+        tableType={"country"}
+        title={"Country List"}
         columns={columns}
-        data={orders}
+        data={countries}
       />
     </div>
   );
 };
 
-export default OrderList;
+export default CountryList;

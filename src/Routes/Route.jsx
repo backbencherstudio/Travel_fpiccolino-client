@@ -38,6 +38,7 @@ import AddContent from "../Components/Dashboard/AddContent/AddContent";
 import Checkout from "../Pages/checkout/Checkout";
 import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
+import CountryList from "../Components/Dashboard/AddCountry/CountryList";
 import { ProtectedAdminRoute, ProtectedRoute } from "./RouteProtection";
 
 export const router = createBrowserRouter([
@@ -183,12 +184,12 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "addCountry",
-        element: (
-          <ProtectedAdminRoute>
-            <AddCountry />
-          </ProtectedAdminRoute>
-        ),
+        path: "country",
+        element: <CountryList />,
+      },
+      {
+        path: "country/create/new",
+        element: <AddCountry />,
       },
       {
         path: "addContent",

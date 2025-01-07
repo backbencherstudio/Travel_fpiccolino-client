@@ -120,7 +120,7 @@ const Dashboard = () => {
             <PiTrolleySuitcase />
             <span>Package</span>
           </button>
-          <button
+          {/* <button
             onClick={() => handleNavigation("Payment", "payment")}
             className={`flex items-center space-x-2 p-2 rounded ${
               selectedTab === "Payment"
@@ -130,7 +130,7 @@ const Dashboard = () => {
           >
             <MdOutlinePayment />
             <span>Payment History</span>
-          </button>
+          </button> */}
 
           <button
             onClick={() => handleNavigation("Blog", "blog-list")}
@@ -155,15 +155,15 @@ const Dashboard = () => {
             <span>Contacts</span>
           </button>
           <button
-            onClick={() => handleNavigation("AddCountry", "addCountry")}
+            onClick={() => handleNavigation("country", "country")}
             className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "AddCountry"
+              selectedTab === "country"
                 ? "bg-[#fdf0ea] primary_text font-semibold"
                 : "hover:bg-zinc-300"
             }`}
           >
             <TiWorldOutline className="text-[20px]" />
-            <span>Add Country</span>
+            <span>Countries</span>
           </button>
           <button
             onClick={() => handleNavigation("Header", "header")}
