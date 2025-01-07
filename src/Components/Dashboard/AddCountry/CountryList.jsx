@@ -14,6 +14,7 @@ const CountryList = () => {
     countryName: true,
     title: true,
     date: true,
+    action: true,
   });
   console.log(countries);
 

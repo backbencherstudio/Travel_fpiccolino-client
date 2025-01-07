@@ -11,6 +11,7 @@ const OrderList = () => {
     dispatch(getOrders({ search: "", startDate: "", endDate: "" }));
   }, []);
   const [columns] = useState({
+    orderUser: true,
     totalAmount: true,
     passenger: true,
     flightAmount: true,

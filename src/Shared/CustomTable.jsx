@@ -30,6 +30,7 @@ import { getDateRange } from "./CustomDateRange";
 import { deletePackage, getPackage } from "../features/pckage/packageSlice";
 import { getUser } from "../features/users/userSlice";
 import { getOrders } from "../features/order/orderSlice";
+import { deleteCountry } from "../features/country/countrySlice";
 
 const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -76,6 +77,8 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
           await dispatch(deleteBlog(deleteId));
         } else if (tableType === "package") {
           await dispatch(deletePackage(deleteId));
+        } else if (tableType === "country") {
+          await dispatch(deleteCountry(deleteId));
         } else {
           console.log("Invalid table type:", tableType);
         }
@@ -195,15 +198,16 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.username && <TableCell>User Name</TableCell>}
                 {columns?.blogName && <TableCell>Blog Name</TableCell>}
                 {columns?.countryName && <TableCell>Country</TableCell>}
+                {columns?.orderUser && <TableCell>User</TableCell>}
                 {columns?.title && <TableCell>Title</TableCell>}
                 {columns?.category && <TableCell>Category</TableCell>}
                 {columns?.email && <TableCell>Email</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
-                {columns?.tourDate && <TableCell>Tour Date</TableCell>}
                 {columns?.passenger && <TableCell>Passenger</TableCell>}
                 {columns?.packageAmount && <TableCell>Package Price</TableCell>}
                 {columns?.flightAmount && <TableCell>Flight Amount</TableCell>}
                 {columns?.totalAmount && <TableCell>Total </TableCell>}
+                {columns?.tourDate && <TableCell>Tour Date</TableCell>}
                 {columns?.phone && <TableCell>Phone</TableCell>}
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
@@ -306,6 +310,30 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                         </div>
                       </TableCell>
                     )}
+                    {columns?.orderUser && (
+                      <TableCell
+                      // style={{ width: "400px", textWrap: "break-word" }}
+                      >
+                        <div className="flex items-center gap-3">
+                          {item?.userId?.image ? (
+                            <img
+                              className="rounded-full"
+                              src={`${item?.userId?.image}`}
+                              alt=""
+                              style={{ width: "40px", height: "40px" }}
+                            />
+                          ) : (
+                            <FaRegUserCircle className="h-9 w-9 primary_text" />
+                          )}
+                          <span
+                            style={{ wordWrap: "break-word" }}
+                            className="mr-10"
+                          >
+                            {item?.userId?.name}
+                          </span>
+                        </div>
+                      </TableCell>
+                    )}
                     {columns?.title && (
                       <TableCell>{item.contentTitle}</TableCell>
                     )}
@@ -314,11 +342,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     )}
                     {columns?.email && <TableCell>{item.email}</TableCell>}
                     {columns?.phone && <TableCell>{item.phone}</TableCell>}
-                    {columns?.tourDate && (
-                      <TableCell>
-                        {moment(item.tourDate).format("DD/MM/yyyy")}
-                      </TableCell>
-                    )}
+
                     {columns?.passenger && (
                       <TableCell>{item?.person}</TableCell>
                     )}
@@ -331,7 +355,11 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.totalAmount && (
                       <TableCell>{item?.toureAmount}</TableCell>
                     )}
-
+                    {columns?.tourDate && (
+                      <TableCell>
+                        {moment(item.tourDate).format("DD/MM/yyyy")}
+                      </TableCell>
+                    )}
                     {columns?.traveler && (
                       <TableCell style={{ minWidth: "200px" }}>
                         <div className="flex items-center gap-3">
@@ -376,15 +404,17 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 ">
-                          <div
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`update/${item._id}`);
-                            }}
-                            className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
-                          >
-                            <FiEdit3 />
-                          </div>
+                          {tableType !== "country" && (
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`update/${item._id}`);
+                              }}
+                              className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
+                            >
+                              <FiEdit3 />
+                            </div>
+                          )}
                           <div
                             onClick={(e) => {
                               e.stopPropagation();
