@@ -15,38 +15,40 @@ const UpdateBlog = () => {
   const [images, setImages] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  
+
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const updateOptions = (apiResponse) => {
     const newOptions = apiResponse.Categories.map((categoryObj) => {
       const value = Object.keys(categoryObj)[0];
-      const label = value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
+      const label =
+        value.charAt(0).toUpperCase() + value.slice(1).replace(/-/g, " ");
       return { value, label };
     });
-  
+
     setOptions((prevOptions) => {
       const mergedOptions = [...prevOptions];
-  
+
       newOptions.forEach((newOption) => {
         if (!prevOptions.some((option) => option.value === newOption.value)) {
           mergedOptions.push(newOption);
         }
       });
-  
+
       return mergedOptions;
     });
   };
 
-  
   useEffect(() => {
     const fetchCategoryCount = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/blogs/categoryCount");
-        updateOptions(response.data); 
+        const response = await axios.get(
+          "http://localhost:3000/api/blogs/categoryCount"
+        );
+        updateOptions(response.data);
       } catch (err) {
         setError(err.message || "An error occurred");
-      } 
+      }
     };
 
     fetchCategoryCount();
@@ -81,7 +83,7 @@ const UpdateBlog = () => {
         setContentList(responseData?.contentList || []);
         setCategory(responseData?.category || "");
         setSentences(responseData?.learn || []);
-        setThought( responseData?.thought || []);
+        setThought(responseData?.thought || []);
       } catch (err) {
         console.error(
           err.message || "Something went wrong while fetching blogs."
@@ -92,7 +94,6 @@ const UpdateBlog = () => {
     fetchBlogs();
   }, []);
 
-  
   const handleHeroEdit = (field, value) => {
     setHeroSection((prevHeroSection) => ({
       ...prevHeroSection,
@@ -134,7 +135,7 @@ const UpdateBlog = () => {
         }
       );
       console.log("Hero Section Deleted", response.data);
-      
+
       toast.success("Content Delete successfully!");
       navigate(`/blog/${id}`);
     } catch (error) {
@@ -142,7 +143,6 @@ const UpdateBlog = () => {
       toast.error("Error deleting blog.");
     }
   };
-
 
   const addParagraph = (event, index) => {
     event.stopPropagation();
@@ -160,7 +160,6 @@ const UpdateBlog = () => {
       })
     );
   };
-
 
   const deleteParagraph = (contentIndex, paragraphIndex) => {
     setContentList((prevContentList) =>
@@ -226,12 +225,9 @@ const UpdateBlog = () => {
 
     if (heroSection?.file) {
       const file = heroSection.file;
-      // console.log(heroSection, "lalala");
       uploadedImages = await UploadimagePath();
 
       setImages([]);
-      // console.log(uploadedImages);
-      // console.log(uploadedImages[0]?.path);
     }
 
     console.log(heroSection);
@@ -255,11 +251,9 @@ const UpdateBlog = () => {
           },
         }
       );
-      console.log("Hero Section Updated", response.data);
       setHeroSection({});
-      
+      window.location.reload();
       toast.success("Hero Section updated successfully!");
-      navigate(`/blog/${id}`);
     } catch (error) {
       console.error("Error updating Hero Section", error);
       toast.error("Error updating blog.");
@@ -313,7 +307,7 @@ const UpdateBlog = () => {
   };
 
   const updateCategory = async () => {
-    const payload = { category : selectedCategory };
+    const payload = { category: selectedCategory };
     console.log(payload);
     try {
       const response = await axios.patch(
@@ -330,27 +324,26 @@ const UpdateBlog = () => {
     }
   };
 
-// --------------------------------------------extra---------------------------------------
-const updateTexContent = async () => {
-  const payload = { 
-    learn : sentences, 
-    thought : thought };
-  console.log(payload);
-  try {
-    const response = await axios.patch(
-      `${base_url}/api/blogs/updateTexContent/${id}`,
-      payload
-    );
-    console.log("Text Updated", response.data);
-    setCategory(response.data.category);
-    toast.success("Text updated successfully!");
-    navigate(`/blog/${id}`);
-  } catch (error) {
-    console.error("Error updating Text", error);
-    toast.error("Error updating blog.");
-   
-  }
-}
+  // --------------------------------------------extra---------------------------------------
+  const updateTexContent = async () => {
+    const payload = {
+      learn: sentences,
+      thought: thought,
+    };
+    console.log(payload);
+    try {
+      const response = await axios.patch(
+        `${base_url}/api/blogs/updateTexContent/${id}`,
+        payload
+      );
+      console.log("Text Updated", response.data);
+      setCategory(response.data.category);
+      toast.success("Text updated successfully!");
+    } catch (error) {
+      console.error("Error updating Text", error);
+      toast.error("Error updating blog.");
+    }
+  };
   const [sentences, setSentences] = useState([]);
   const [newSentence, setNewSentence] = useState("");
   const handleUpdate = (index, updatedText) => {
@@ -458,13 +451,13 @@ const updateTexContent = async () => {
             ></textarea>
           </div>
         </div>
-        <div class="flex justify-end">
-        <button
-          onClick={updateHeroSection}
-          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
-        >
-          Update Hero Section
-        </button>
+        <div className="flex justify-end">
+          <button
+            onClick={updateHeroSection}
+            className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600"
+          >
+            Update Hero Section
+          </button>
         </div>
       </div>
 
@@ -542,114 +535,109 @@ const updateTexContent = async () => {
               Add Paragraph
             </button>
           </div>
-          <div class="flex justify-end">
-          <button
-            onClick={() => updateIndividualContent(index, content._id)}
-            className="bg-orange-500 text-white px-4 py-2  rounded-md hover:bg-orange-600"
-          >
-            Update Content {index + 1}
-          </button>
+          <div className="flex justify-end">
+            <button
+              onClick={() => updateIndividualContent(index, content._id)}
+              className="bg-orange-500 text-white px-4 py-2  rounded-md hover:bg-orange-600"
+            >
+              Update Content {index + 1}
+            </button>
           </div>
         </div>
       ))}
-       <div class="flex justify-end">
-      <button
-        onClick={addNewContent}
-        className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-600"
-      >
-        <RiAddBoxLine /> Add Content
-      </button>
+      <div className="flex justify-end">
+        <button
+          onClick={addNewContent}
+          className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-600"
+        >
+          <RiAddBoxLine /> Add Content
+        </button>
       </div>
 
       {/* --------------------------------------------extra--------------------------------------- */}
       <div className="border rounded-lg p-6 space-y-6 shadow-lg">
-     
-      <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">Learn Basic Local Phrases</h1>
-        <ul className="space-y-2">
-          {sentences.map((sentence, index) => (
-            <li key={index} className="flex items-center space-x-2">
-              <input
-                type="text"
-                value={sentence}
-                onChange={(e) => handleUpdate(index, e.target.value)}
-                className="border rounded px-2 py-1 flex-1"
-              />
-              <button
-                onClick={() => handleDelete(index)}
-                className="text-red-500 px-2  rounded-md bg-red-100 "
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-4">
-          <input
-            type="text"
-            value={newSentence}
-            onChange={(e) => setNewSentence(e.target.value)}
-            placeholder="Add a new sentence"
-            className="border rounded px-2 py-1 mr-2"
-          />
+        <div className="p-4">
+          <h1 className="text-xl font-bold mb-4">Learn Basic Local Phrases</h1>
+          <ul className="space-y-2">
+            {sentences.map((sentence, index) => (
+              <li key={index} className="flex items-center space-x-2">
+                <textarea
+                  type="text"
+                  value={sentence}
+                  onChange={(e) => handleUpdate(index, e.target.value)}
+                  className="border rounded px-2 py-1 flex-1"
+                />
+                <button
+                  onClick={() => handleDelete(index)}
+                  className="text-red-500 px-2  rounded-md bg-red-100 "
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4">
+            <textarea
+              type="text"
+              value={newSentence}
+              onChange={(e) => setNewSentence(e.target.value)}
+              placeholder="Add a new sentence"
+              className="border rounded px-2 py-1 mr-2"
+            />
+            <button
+              onClick={handleAdd}
+              className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            >
+              Add Sentence
+            </button>
+          </div>
+        </div>
+
+        <div className="p-4">
+          <h1 className="text-xl font-bold mb-4">Final Thoughts</h1>
+          <ul className="space-y-2">
+            {thought.map((sentence, index) => (
+              <li key={index} className="flex items-center space-x-2">
+                <textarea
+                  type="text"
+                  value={sentence}
+                  onChange={(e) => handleUpdatee(index, e.target.value)}
+                  className="border rounded px-2 py-1 flex-1"
+                />
+                <button
+                  onClick={() => handleDeletee(index)}
+                  className="text-red-500 px-2  rounded-md bg-red-100 "
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4">
+            <textarea
+              type="text"
+              value={newLearn}
+              onChange={(e) => setNewLearn(e.target.value)}
+              placeholder="Add a new sentence"
+              className="border rounded px-2 py-1 mr-2"
+            />
+            <button
+              onClick={handleAddd}
+              className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            >
+              Add Sentence
+            </button>
+          </div>
+        </div>
+
+        <div className="flex justify-end">
           <button
-            onClick={handleAdd}
-            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            onClick={updateTexContent}
+            className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 mt-4"
           >
-            Add Sentence
+            Update
           </button>
         </div>
-      </div>
-
-
-
-      <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">Final Thoughts</h1>
-        <ul className="space-y-2">
-          {thought.map((sentence, index) => (
-            <li key={index} className="flex items-center space-x-2">
-              <input
-                type="text"
-                value={sentence}
-                onChange={(e) => handleUpdatee(index, e.target.value)}
-                className="border rounded px-2 py-1 flex-1"
-              />
-              <button
-                onClick={() => handleDeletee(index)}
-                className="text-red-500 px-2  rounded-md bg-red-100 "
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-4">
-          <input
-            type="text"
-            value={newLearn}
-            onChange={(e) => setNewLearn(e.target.value)}
-            placeholder="Add a new sentence"
-            className="border rounded px-2 py-1 mr-2"
-          />
-          <button
-            onClick={handleAddd}
-            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
-          >
-            Add Sentence
-          </button>
-        </div>
-      </div>
-
-
-      <div class="flex justify-end">
-        <button
-          onClick={updateTexContent}
-          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 mt-4"
-        >
-          Update
-        </button>
-        </div>
-    
       </div>
 
       {/* Category Section */}
@@ -660,52 +648,52 @@ const updateTexContent = async () => {
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="w-full border rounded p-2"
         >
-         <option value="">Select a category</option>
-                {options &&
-                  options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
+          <option value="">Select a category</option>
+          {options &&
+            options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
         </select>
         <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-                <input
-                  type="text"
-                  value={ newOption  }
-                  onChange={(e) => setNewOption(e.target.value)}
-                  placeholder="Add new category"
-                  style={{
-                    flex: 1,
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                    fontSize: "14px",
-                    backgroundColor: "#f9f9f9",
-                  }}
-                />
-                <button
-                  onClick={handleAddOption}
-                  style={{
-                    padding: "10px 20px",
-                    borderRadius: "4px",
-                    border: "none",
-                    backgroundColor: "#007BFF",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                  }}
-                >
-                  Add
-                </button>
-              </div>
-        <div class="flex justify-end">
-        <button
-          onClick={updateCategory}
-          className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 mt-4"
-        >
-          Update Category
-        </button>
+          <input
+            type="text"
+            value={newOption}
+            onChange={(e) => setNewOption(e.target.value)}
+            placeholder="Add new category"
+            style={{
+              flex: 1,
+              padding: "10px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+              fontSize: "14px",
+              backgroundColor: "#f9f9f9",
+            }}
+          />
+          <button
+            onClick={handleAddOption}
+            style={{
+              padding: "10px 20px",
+              borderRadius: "4px",
+              border: "none",
+              backgroundColor: "#007BFF",
+              color: "#fff",
+              fontWeight: "bold",
+              cursor: "pointer",
+              fontSize: "14px",
+            }}
+          >
+            Add
+          </button>
+        </div>
+        <div className="flex justify-end">
+          <button
+            onClick={updateCategory}
+            className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 mt-4"
+          >
+            Update Category
+          </button>
         </div>
       </div>
     </div>
