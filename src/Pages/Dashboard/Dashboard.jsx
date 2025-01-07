@@ -120,7 +120,7 @@ const Dashboard = () => {
             <PiTrolleySuitcase />
             <span>Package</span>
           </button>
-          <button
+          {/* <button
             onClick={() => handleNavigation("Payment", "payment")}
             className={`flex items-center space-x-2 p-2 rounded ${
               selectedTab === "Payment"
@@ -130,7 +130,7 @@ const Dashboard = () => {
           >
             <MdOutlinePayment />
             <span>Payment History</span>
-          </button>
+          </button> */}
 
           <button
             onClick={() => handleNavigation("Blog", "blog-list")}

@@ -38,7 +38,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (user) {
-      dispatch(userStatus("676b7f867ded38768bd6645f"));
+      dispatch(userStatus(id));
     }
   }, [user]);
 

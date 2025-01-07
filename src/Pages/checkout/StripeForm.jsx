@@ -11,8 +11,10 @@ import {
 import axios from "axios";
 import { createOrder } from "../../features/order/orderSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const StripeForm = ({ checkoutNewData }) => {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -58,6 +60,7 @@ const StripeForm = ({ checkoutNewData }) => {
       if (data.success) {
         setSuccess(true);
         alert("Payment successful!");
+        navigate("/");
       }
     } catch (err) {
       setError("Payment failed.");
