@@ -38,177 +38,185 @@ import AddContent from "../Components/Dashboard/AddContent/AddContent";
 import Checkout from "../Pages/checkout/Checkout";
 import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
+import { ProtectedAdminRoute, ProtectedRoute } from "./RouteProtection";
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/tours",
-        element: <Tours />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/tours",
-        element: <Tours />,
-      },
-      {
-        path: "/faq",
-        element: <Faq />,
-      },
-      {
-        path: "/tours/:id",
-        element: <TourDetails />,
-      },
-      {
-        path: "/tours/country/:id",
-        element: <Tours />,
-      },
-      {
-        path: "/blog",
-        element: <Blog />,
-      },
-      {
-        path: "/blog/:id",
-        element: <BlogDetails />,
-      },
-      {
-        path: "/policy",
-        element: <Policy />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
-        path: "/profile/:id",
-        element: <UserProfile />,
-      },
+      { index: true, element:  <Home /> },
+      { path: "tours", element:  <Tours /> },
+      { path: "about", element: <About /> },
+      { path: "faq", element: <Faq /> },
+      { path: "tours/:id", element: <TourDetails /> },
+      { path: "tours/country/:id", element: <Tours /> },
+      { path: "blog", element: <Blog /> },
+      { path: "blog/:id", element: <BlogDetails /> },
+      { path: "policy", element: <Policy /> },
+      { path: "contact", element: <Contact /> },
+      { path: "profile/:id", element:  <UserProfile /> },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedAdminRoute>
+        <DashboardLayout />
+      </ProtectedAdminRoute>
+    ),
     children: [
       {
         index: true,
-        element: <DashboardAnalysis />,
+        element: (
+          <ProtectedAdminRoute>
+            <DashboardAnalysis />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "tour-list",
-        element: <TourAnalysis />,
+        element: (
+          <ProtectedAdminRoute>
+            <TourAnalysis />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "user-list",
-        element: <UserList />,
+        element: (
+          <ProtectedAdminRoute>
+            <UserList />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "user-list/:id",
-        element: <UserDetails />,
+        element: (
+          <ProtectedAdminRoute>
+            <UserDetails />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "order-list",
-        element: <OrderList />,
+        element: (
+          <ProtectedAdminRoute>
+            <OrderList />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "package",
-        element: <PackageList />,
+        element: (
+          <ProtectedAdminRoute>
+            <PackageList />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "package/update/:id",
-        element: <UpdatePackage />,
+        element: (
+          <ProtectedAdminRoute>
+            <UpdatePackage />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "package/create/new",
-        element: <CreatePackage />,
+        element: (
+          <ProtectedAdminRoute>
+            <CreatePackage />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "payment",
-        element: <PaymentHistory />,
+        element: (
+          <ProtectedAdminRoute>
+            <PaymentHistory />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "blog-list",
-        element: <BlogList />,
+        element: (
+          <ProtectedAdminRoute>
+            <BlogList />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "blog-list/:id",
-        element: <BlogDetails />,
+        element: <ProtectedAdminRoute></ProtectedAdminRoute>,
       },
       {
         path: "blog-list/create/new",
-        element: <CreateBlog />,
+        element: (
+          <ProtectedAdminRoute>
+            <CreateBlog />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "blog-list/update/:id",
-        element: <UpdateBlog />,
+        element: (
+          <ProtectedAdminRoute>
+            <UpdateBlog />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "header",
-        element: <Header />,
+        element: (
+          <ProtectedAdminRoute>
+            <Header />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "contact",
-        element: <ContactsTable />,
+        element: (
+          <ProtectedAdminRoute>
+            <ContactsTable />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "addCountry",
-        element: <AddCountry />,
+        element: (
+          <ProtectedAdminRoute>
+            <AddCountry />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "addContent",
-        element: <AddContent />,
+        element: (
+          <ProtectedAdminRoute>
+            <AddContent />
+          </ProtectedAdminRoute>
+        ),
       },
       {
         path: "uploadShorts",
-        element: <UploadShorts />,
+        element: (
+          <ProtectedAdminRoute>
+            <UploadShorts />
+          </ProtectedAdminRoute>
+        ),
       },
     ],
   },
-  {
-    path: "/checkout",
-    element: <Checkout />,
-  },
-  {
-    path: "/flight/:id",
-    element: <Flight />,
-  },
-  {
-    path: "/insurance/:id",
-    element: <Insurance />,
-  },
-  {
-    path: "/transfers/:id",
-    element: <Transfers />,
-  },
-  {
-    path: "/personalDetails",
-    element: <PersonalDetails />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/otp",
-    element: <OtpScreen />,
-  },
-  {
-    path: "/signotp",
-    element: <SignupOtp />,
-  },
+  { path: "/checkout", element: <Checkout /> },
+  { path: "/flight/:id", element: <Flight /> },
+  { path: "/insurance/:id", element: <Insurance /> },
+  { path: "/transfers/:id", element: <Transfers /> },
+  { path: "/personalDetails", element: <PersonalDetails /> },
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <SignUp /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/otp", element: <OtpScreen /> },
+  { path: "/signotp", element: <SignupOtp /> },
+  // { path: "*", element: <NotFound /> },
 ]);
