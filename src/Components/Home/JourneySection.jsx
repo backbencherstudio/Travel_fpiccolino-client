@@ -4,11 +4,14 @@ import { base_url } from "../../utils/base_path";
 import { useEffect, useState } from "react";
 import { getBlog } from "../../features/blog/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
+import CountUp from "react-countup";
+import { useInView } from "react-intersection-observer";
 
 const JourneySection = () => {
   const dispatch = useDispatch();
   const { blogs } = useSelector((state) => state.blog);
   const [randomBlog, setRandomBlog] = useState(null); // State to store the randomly selected blog
+  const [ref, inView] = useInView({ triggerOnce: true }); // Detect when the numbers are in view
 
   useEffect(() => {
     dispatch(getBlog({ search: "", startDate: "", endDate: "" }));
@@ -62,10 +65,13 @@ const JourneySection = () => {
             </div>
           </div>
         </div>
-        <div className="mt-14 mb-20 lg:mb-0 flex md:flex-row flex-col justify-center lg:gap-40 gap-10">
+        <div
+          ref={ref}
+          className="mt-14 mb-20 lg:mb-0 flex md:flex-row flex-col justify-center lg:gap-40 gap-10"
+        >
           <div className="text-center">
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
-              10+
+              {inView && <CountUp end={10} duration={2} />}+
             </h1>
             <p className="text-[24px] text-[#72777F] mt-2">
               Years of Experience
@@ -74,14 +80,14 @@ const JourneySection = () => {
 
           <div className="text-center">
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
-              500+
+              {inView && <CountUp end={500} duration={2} />}+
             </h1>
             <p className="text-[24px] text-[#72777F] mt-2">Travel Completed</p>
           </div>
 
           <div className="text-center">
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
-              1.5K
+              {inView && <CountUp end={1500} duration={2} />}+
             </h1>
             <p className="text-[24px] text-[#72777F] mt-2">
               Happy Customer Review
@@ -90,7 +96,7 @@ const JourneySection = () => {
 
           <div className="text-center">
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
-              99%
+              {inView && <CountUp end={99} duration={2} />}%
             </h1>
             <p className="text-[24px] text-[#72777F] mt-2">Success Rating</p>
           </div>
