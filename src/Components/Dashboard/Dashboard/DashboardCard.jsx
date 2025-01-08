@@ -4,7 +4,6 @@ import { PiChartLineUpLight } from "react-icons/pi";
 const DashboardCard = ({
   title,
   amount,
-  percent,
   bgColor,
   bgColor2,
   txColor,
@@ -15,8 +14,10 @@ const DashboardCard = ({
 }) => {
   return (
     <div
-      // onClick={() => setChartType(title)}
-      className={`${bgColor} p-2 rounded-lg ${chartType === title ? "" : ""}`}
+      onClick={() => setChartType(title)}
+      className={`${bgColor} p-2 rounded-lg ${
+        chartType === title ? "shadow-lg" : ""
+      }`}
     >
       <div className="flex items-center">
         <div className={`${bgColor2}  inline-block rounded-lg mr-2`}>

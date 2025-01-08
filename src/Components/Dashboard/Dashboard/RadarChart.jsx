@@ -6,11 +6,11 @@ const RadarChart = ({ data }) => {
     series: [
       {
         name: "Completed",
-        data: data?.completed, // Using prop data for Completed
+        data: data?.radarData?.completed, // Using prop data for Completed
       },
       {
         name: "Pending",
-        data: data?.pending, // Using prop data for Pending
+        data: data?.radarData?.pending, // Using prop data for Pending
       },
     ],
     options: {
@@ -45,7 +45,7 @@ const RadarChart = ({ data }) => {
         stepSize: 20,
       },
       xaxis: {
-        categories: data?.destination, // Using prop categories for x-axis
+        categories: data?.radarData?.destination, // Using prop categories for x-axis
       },
       colors: ["#62d3d4", "#e86731"], // Custom colors for Completed and Pending
       legend: {
@@ -68,6 +68,14 @@ const RadarChart = ({ data }) => {
         type="radar"
         height={320}
       />
+      <div className="flex justify-around">
+        <h1 className="text-[#62d3d4] font-semibold">
+          Completed : {parseInt(data?.completedPercentage)}%
+        </h1>
+        <h1 className="primary_text font-semibold">
+          Pending : {parseInt(data?.completedPercentage)}%
+        </h1>
+      </div>
     </div>
   );
 };
