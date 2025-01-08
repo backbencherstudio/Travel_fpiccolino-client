@@ -19,13 +19,13 @@ const Footer = () => {
   const [isAgreed, setIsAgreed] = useState(false);
   const [message, setMessage] = useState(""); // To display success or error message
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { homePageLoaging, homePageError, homePageData } = useSelector(
     (state) => state.pageData
   );
-  
+
   useEffect(() => {
-    dispatch(getHomePageData())
+    dispatch(getHomePageData());
   }, []);
 
   // const { headers } = useSelector((state) => state.header);
@@ -40,13 +40,10 @@ const Footer = () => {
   //   descriptionOne: data[0]?.descriptionOne,
   // }
 
-
   // if (homePageData) {
   //   const contactInfo = homePageData?.footer;
   //   console.log(contactInfo);
   // }
-
-
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -103,10 +100,10 @@ const Footer = () => {
               <h1 className="text-[20px] font-medium mb-6">Contact Us</h1>
               <p>{"We're"} Here to Help with Any Questions or Concerns</p>
               <p className="flex gap-1 mt-4">
-                <img src={call} alt="" /> +01010101010101
+                <img src={call} alt="" /> +393801585075
               </p>
               <p className="flex gap-1 mt-2">
-                <img src={mail} alt="" /> cool@cool.com
+                <img src={mail} alt="" /> clateo.46@example.com
               </p>
             </div>
           </div>

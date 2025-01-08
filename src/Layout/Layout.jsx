@@ -7,7 +7,7 @@ import Draggable from "react-draggable";
 import { useState } from "react";
 
 const Layout = () => {
-  const phoneNumber = "1234567890";
+  const phoneNumber = "+393801585075";
   const message = "Hello, I have a question about your services.";
   const encodedMessage = encodeURIComponent(message);
   const [isDragging, setIsDragging] = useState(false);
