@@ -116,7 +116,6 @@ const CreateBlog = () => {
     subHeading: "",
     Heroheading: "",
     HerosubHeading: "",
-
     image: null,
   });
 
@@ -287,7 +286,6 @@ const CreateBlog = () => {
       }
     } catch (error) {
       console.error("Error uploading blog:", error);
-      alert("An error occurred while uploading the blog.");
     }
   };
 
@@ -345,9 +343,9 @@ const CreateBlog = () => {
         <h2 className="text-[#141D2A] font-semibold text-[24px]">Add Blog</h2>
         <button
           onClick={handleUploadBlog}
-          className="bg-[#E86731] text-[#FFFFFF] px-4 py-2 rounded-md"
+          className="bg-[#E86731] hover:opacity-85 text-[#FFFFFF] px-4 py-2 font-semibold rounded-md flex gap-2 items-center"
         >
-          Upload Blog
+          <RiAddBoxLine /> Create Blog
         </button>
       </div>
 
@@ -407,13 +405,13 @@ const CreateBlog = () => {
           <div className="flex justify-end">
             <button
               onClick={handleMainContentOpen}
-              className="text-[#FFFFFF] bg-[#4CAF50] font-semibold flex items-center gap-2 px-4 py-2 rounded-lg"
+              className="text-[#FFFFFF] primary_bg hover:opacity-85 font-semibold flex items-center gap-2 mx-2 px-4 py-2 rounded-lg"
             >
               <RiAddBoxLine /> Add Main Content
             </button>
             <button
               onClick={handleOpen}
-              className="text-[#FFFFFF] bg-[#E86731] font-semibold flex items-center gap-2 px-4 py-2 rounded-lg"
+              className="text-[#FFFFFF] bg-[#E86731] hover:opacity-85 font-semibold flex items-center gap-2 px-4 py-2 rounded-lg"
             >
               <RiAddBoxLine /> Add Content
             </button>
@@ -462,9 +460,9 @@ const CreateBlog = () => {
             <button
               type="button"
               onClick={handleAddSentence}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+              className="primary_bg text-white px-4 py-2 rounded-md hover:opacity-85 transition flex items-center gap-1"
             >
-              Add Sentence
+              <RiAddBoxLine /> Add Sentence
             </button>
           </div>
           {/* ------------------------------------------------------------------------ */}
@@ -498,9 +496,9 @@ const CreateBlog = () => {
             <button
               type="button"
               onClick={handleAddthought}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+              className="primary_bg text-white px-4 py-2 rounded-md hover:opacity-85 transition flex items-center gap-1"
             >
-              Add Sentence
+              <RiAddBoxLine /> Add Sentence
             </button>
           </div>
           {/* ------------------------------------------------------------------------ */}
@@ -559,23 +557,23 @@ const CreateBlog = () => {
                   }}
                 />
                 <button
+                  className="flex items-center gap-1 primary_bg hover:opacity-85"
                   onClick={handleAddOption}
                   style={{
                     padding: "10px 20px",
                     borderRadius: "4px",
                     border: "none",
-                    backgroundColor: "#007BFF",
                     color: "#fff",
                     fontWeight: "bold",
                     cursor: "pointer",
                     fontSize: "14px",
                   }}
                 >
-                  Add
+                  <RiAddBoxLine /> Add
                 </button>
               </div>
             </div>
-            <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2 mt-5">
+            {/* <h2 className="text-[#141D2A] font-semibold text-[20px] mb-2 mt-5">
               Add Tag
             </h2>
             <div>
@@ -586,7 +584,7 @@ const CreateBlog = () => {
                 placeholder="Enter text"
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -660,7 +658,7 @@ const CreateBlog = () => {
                 <button
                   type="button"
                   onClick={handleAddParagraph}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                  className="primary_bg text-white px-4 py-2 rounded-md hover:opacity-85 transition"
                 >
                   Add Paragraph
                 </button>
@@ -668,7 +666,7 @@ const CreateBlog = () => {
 
               <button
                 onClick={handleSubmitContent}
-                className="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+                className="w-full primary_bg text-white px-4 py-2 rounded-md hover:opacity-85 transition"
               >
                 Submit
               </button>
@@ -689,7 +687,7 @@ const CreateBlog = () => {
               id="transition-modal-title"
               variant="h6"
               component="h2"
-              className="text-lg font-bold text-center mb-4"
+              className="text-lg font-bold text-center mb-4 "
             >
               Add Main Content
             </Typography>
@@ -749,7 +747,7 @@ const CreateBlog = () => {
 
               <button
                 onClick={handleSubmitMainContent}
-                className="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+                className="w-full primary_bg text-white px-4 py-2 rounded-md hover:opacity-85 transition"
               >
                 Submit
               </button>

@@ -419,7 +419,7 @@ const UpdateBlog = () => {
             />
           </div>
           <div>
-            <label className="block mb-2 font-medium">Header Main Text</label>
+            <label className="block mb-2 font-medium">Hero Heading</label>
             <textarea
               value={heroSection.header || ""}
               onChange={(e) => handleHeroEdit("header", e.target.value)}
@@ -427,7 +427,7 @@ const UpdateBlog = () => {
             ></textarea>
           </div>
           <div>
-            <label className="block mb-2 font-medium">Header Text</label>
+            <label className="block mb-2 font-medium">Hero Sub Heading</label>
             <textarea
               value={heroSection.text || ""}
               onChange={(e) => handleHeroEdit("text", e.target.value)}
@@ -443,7 +443,7 @@ const UpdateBlog = () => {
             ></textarea>
           </div>
           <div>
-            <label className="block mb-2 font-medium">Main Subheading</label>
+            <label className="block mb-2 font-medium">Main Sub Heading</label>
             <textarea
               value={heroSection.mainSubHeading || ""}
               onChange={(e) => handleHeroEdit("mainSubHeading", e.target.value)}
@@ -530,7 +530,7 @@ const UpdateBlog = () => {
             ))}
             <button
               onClick={(event) => addParagraph(event, index)}
-              className="bg-blue-500 text-white px-2  mt-5  rounded-md hover:bg-blue-600"
+              className="primary_bg text-white px-2  mt-5  rounded-md hover:opacity-85"
             >
               Add Paragraph
             </button>
@@ -548,7 +548,7 @@ const UpdateBlog = () => {
       <div className="flex justify-end">
         <button
           onClick={addNewContent}
-          className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-600"
+          className="primary_bg text-white px-4 py-2 rounded-md flex items-center gap-2 hover:opacity-85"
         >
           <RiAddBoxLine /> Add Content
         </button>
@@ -586,7 +586,7 @@ const UpdateBlog = () => {
             />
             <button
               onClick={handleAdd}
-              className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+              className="primary_bg text-white px-4 py-1 rounded hover:opacity-85"
             >
               Add Sentence
             </button>
@@ -623,7 +623,7 @@ const UpdateBlog = () => {
             />
             <button
               onClick={handleAddd}
-              className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+              className="primary_bg text-white px-4 py-1 rounded hover:opacity-85"
             >
               Add Sentence
             </button>
@@ -677,7 +677,7 @@ const UpdateBlog = () => {
               padding: "10px 20px",
               borderRadius: "4px",
               border: "none",
-              backgroundColor: "#007BFF",
+              backgroundColor: "#e87316",
               color: "#fff",
               fontWeight: "bold",
               cursor: "pointer",

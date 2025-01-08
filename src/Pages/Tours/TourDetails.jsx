@@ -36,20 +36,18 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import moment from "moment";
 import { base_url } from "../../utils/base_path";
-import { getReview } from "../../features/review/reviewSlice";
+import { getReviewByPackage } from "../../features/review/reviewSlice";
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
   console.log(params.id);
 
   const { packageDetails } = useSelector((state) => state.package);
-  const { review } = useSelector((state) => state.review);
+  const { packageReview } = useSelector((state) => state.review);
   useEffect(() => {
     dispatch(getPackageDetails(params?.id));
-    dispatch(getReview());
+    dispatch(getReviewByPackage(params.id));
   }, []);
-
-  console.log(review);
 
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
@@ -295,7 +293,7 @@ const TourDetails = () => {
 
           <ParentComponent>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12 ">
-              {review?.reviews?.map((item) => (
+              {packageReview?.map((item) => (
                 <div key={item._id}>
                   <TestimonialCard item={item} />
                 </div>

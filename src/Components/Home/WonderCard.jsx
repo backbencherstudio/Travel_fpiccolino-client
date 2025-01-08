@@ -44,9 +44,9 @@ const WonderCard = ({ item }) => {
           </h2>
           <h2 className="font-semibold text-[25px] text-white mt-5">{title}</h2>
           <p className="font-normal text-white  ">{title}</p>
-          <p className="text-[#E86731] text-[18px] font-semibold ">
+          {/* <p className="text-[#E86731] text-[18px] font-semibold ">
             {discription.slice(0, 100)}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

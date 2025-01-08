@@ -5,9 +5,11 @@ import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import Rating from "react-rating";
 import { base_url } from "../../utils/base_path";
+import moment from "moment";
 
 const TestimonialCard = ({ item }) => {
-  const { name, image, date, rating, title, comment } = item;
+  const { createdAt, rating, title, comment } = item.review;
+  const { name, userImg } = item.user;
   return (
     <div
       style={{
@@ -17,16 +19,18 @@ const TestimonialCard = ({ item }) => {
       className="bg-[#FFFFFF] p-6 rounded-xl h-[280px] overflow-auto relative"
     >
       <div className="flex items-center">
-        {image && (
+        {userImg && (
           <img
             className="size-14 object-cover rounded-full mr-3"
-            src={`${base_url}/uploads/${image}`}
+            src={`${base_url}${userImg}`}
             alt=""
           />
         )}
         <span>
           <h2 className="text-[#161824] font-semibold text-[18px]">{name}</h2>
-          <p className="text-[#454650]">{date}</p>
+          <p className="text-[#454650]">
+            {moment(createdAt).format("MMM DD, YYYY")}
+          </p>
         </span>
       </div>
       <Rating
