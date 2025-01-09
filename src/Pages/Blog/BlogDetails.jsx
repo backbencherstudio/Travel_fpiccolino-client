@@ -25,13 +25,9 @@ const BlogDetails = () => {
   }, []);
   const heroContent = {
     image: `${base_url}/uploads/${blogDetails?.heroSection[0].headerImg}`,
-    titleOne: "Feel at Home Wherever You Roam",
-    descriptionOne:
-      "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
+    titleOne: blogDetails?.heroSection[0]?.mainHeading,
+    descriptionOne: blogDetails?.heroSection[0]?.mainSubHeading,
   };
-  console.log(heroContent);
-  console.log(heroContent);
-
   const relatedBlogs = categoryBlogs?.find(
     (categoryObj) => categoryObj.category === blogDetails?.category
   )?.blogs;
@@ -104,7 +100,7 @@ const BlogDetails = () => {
             )}
             <div className="flex mt-12 justify-between">
               <p className="text-[20px] text-[#72777F]">
-                Tag:{" "}
+                Category:{" "}
                 <div className="bg-[#FDF0EA] text-[#E86731] border border-[#E86731] rounded-lg inline-block py-3 text-[16px] px-6 ml-3">
                   {blogDetails?.category}
                 </div>

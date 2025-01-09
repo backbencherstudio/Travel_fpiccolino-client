@@ -85,7 +85,7 @@ const dashboardSlice = createSlice({
       .addCase(getChartData.fulfilled, (state, action) => {
         state.chartLoading = false;
         state.chartError = null;
-        state.chartData = action.payload.revenueData; // Update the state with the chart data
+        state.chartData = action.payload; // Update the state with the chart data
       })
       .addCase(getChartData.rejected, (state, action) => {
         state.chartLoading = false;

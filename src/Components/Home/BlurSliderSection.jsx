@@ -124,14 +124,17 @@ const BlurSliderSection = ({ country }) => {
                     <h3 className="lg:text-[48px] text-[28px] font-duera-expanded font-extrabold text-white">
                       {item?.name}
                     </h3>
-                    <div className="flex justify-center">
+                    {/* <h3 className="lg:text-[20px] text-[14px] font-duera-expanded primary_text">
+                      {item?.contentTitle}
+                    </h3> */}
+                    {/* <div className="flex justify-center">
                       <p className="mr-3 primary_text font-semibold text-[14px] lg:text-[18px]">
                         €{item?.lowestAmount}
                       </p>
                       <s className="text-[#E9E9EA] font-semibold text-[14px] lg:text-[18px]">
                         €{lowestAmounts}
                       </s>
-                    </div>
+                    </div> */}
                   </div>
                 </SwiperSlide>
               );

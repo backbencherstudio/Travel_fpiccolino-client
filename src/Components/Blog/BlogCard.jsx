@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { base_url } from "../../utils/base_path";
 
 const BlogCard = ({ item }) => {
- 
   const { heroSection, category, createdAt, contentList, _id } = item;
   const navigate = useNavigate();
- 
+
   return (
     <div
       onClick={() => navigate(`/blog/${_id}`)}
@@ -32,10 +31,10 @@ const BlogCard = ({ item }) => {
             <div className="mt-10 flex justify-between">
               <div>
                 <p className="text-[#141D2A] text-[16px] font-semibold max-w-[200px]">
-                  {heroSection[0]?.mainSubHeading}
+                  {heroSection[0]?.mainSubHeading.slice(0, 40)}...
                 </p>
                 <p className="font-normal text-[14px] text-[#72777F]  ">
-                  {createdAt}
+                  {moment(createdAt).format("MMM DD , YYYY")}
                 </p>
               </div>
               <button className=" w-10 h-10 flex justify-center items-center primary_bg text-white rounded-full transition-opacity">

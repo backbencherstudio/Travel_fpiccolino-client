@@ -112,7 +112,7 @@ const UserProfile = () => {
           </div>
           <button
             onClick={handleEditClick}
-            className="mt-5 bg-blue-500 text-white py-2 px-4 rounded"
+            className="mt-5 primary_bg hover:opacity-85 text-white py-2 px-4 rounded"
           >
             Edit Details
           </button>

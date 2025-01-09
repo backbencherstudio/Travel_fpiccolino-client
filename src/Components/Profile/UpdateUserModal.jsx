@@ -19,11 +19,10 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
       address: user?.address,
       city: user?.city,
       country: user?.country,
-    })
-  }, [user])
-  
+    });
+  }, [user]);
 
-  console.log(formData)
+  console.log(formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -165,7 +164,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
             </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded"
+              className="primary_bg opacity-85 text-white py-2 px-4 rounded"
             >
               Save Changes
             </button>
