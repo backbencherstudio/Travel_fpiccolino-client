@@ -429,10 +429,10 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     )}
 
                     {columns?.firstName && (
-                      <TableCell>{item.firstName}</TableCell>
+                      <TableCell>{item?.firstName}</TableCell>
                     )}
                     {columns?.lastName && (
-                      <TableCell>{item.lastName}</TableCell>
+                      <TableCell>{item?.lastName}</TableCell>
                     )}
                     {columns?.message && <TableCell>{item.message}</TableCell>}
                   </TableRow>
