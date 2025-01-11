@@ -243,7 +243,10 @@ const Navbar = () => {
                         </button>
                         {user?.role === "admin" && (
                           <button
-                            onClick={() => navigate("/dashboard")}
+                            onClick={() => {
+                              localStorage.setItem("tab", "Dashboard");
+                              navigate("/dashboard");
+                            }}
                             className="flex gap-3 px-4 py-2 w-full hover:bg-[#fdf0ea] text-sm text-gray-700"
                           >
                             <MdOutlineDashboard size={20} /> Dashboard
@@ -262,9 +265,9 @@ const Navbar = () => {
                 </div>
                 <div className="hidden lg:block">
                   {!isAuthenticated && (
-                    <div className="flex xl:gap-6">
+                    <div className="flex xl:gap-3">
                       <Link
-                        className="rounded-xl primary_text bg-transparent border  px-8 py-4 text-[18px] xl:text-sm hover:bg-[#63280141] font-medium mx-2 border-orange-600"
+                        className="rounded-xl primary_text bg-transparent border  px-8 py-3 text-[18px] xl:text-sm hover:bg-[#63280141] font-medium mx-2 border-orange-600"
                         to="/login"
                       >
                         Login
@@ -272,7 +275,7 @@ const Navbar = () => {
 
                       <div className="hidden lg:flex items-center justify-center">
                         <Link
-                          className="rounded-xl text-[white] primary_bg  px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2"
+                          className="rounded-xl text-[white] primary_bg  px-8 py-3 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2"
                           to="/signup"
                         >
                           Sign Up
