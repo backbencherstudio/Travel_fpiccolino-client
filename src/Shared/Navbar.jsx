@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import logo from "../assets/logo.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import ParentComponent from "./ParentComponent/ParentComponent";
-import { Avatar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { loginOut, logOut } from "../features/auth/authSlice";
-import { base_url } from "../utils/base_path";
+import { logOut } from "../features/auth/authSlice";
+import { FaRegUserCircle } from "react-icons/fa";
 import { LogoutOutlined } from "@mui/icons-material";
+import { MdOutlineDashboard } from "react-icons/md";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -16,13 +16,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isloginOpen, setLoginOpen] = useState(false);
 
-  const toggloginOpen = () => {
-    setLoginOpen(!isloginOpen);
-  };
-
-  const { user, appLoading, isAuthenticated } = useSelector(
-    (state) => state.authorization
-  );
+  const { user, isAuthenticated } = useSelector((state) => state.authorization);
 
   const ProfileRef = useRef();
   const menuRef = useRef();
@@ -194,7 +188,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="flex gap-6 xl:gap-[6px] items-center">
+              <div className="flex gap-3 xl:gap-[6px] items-center">
                 {/* Language Dropdown */}
                 <div className="relative inline-block text-left">
                   <button
@@ -238,6 +232,33 @@ const Navbar = () => {
                       </div>
                     </div>
                   )}
+                  {contactDropDown && (
+                    <div className="absolute -right-10 z-10 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black/5">
+                      <div className="py-1">
+                        <button
+                          onClick={() => navigate(`/profile/${user?._id}`)}
+                          className=" px-4 py-2 w-full text-start hover:bg-[#fdf0ea] text-sm text-gray-700 flex items-center gap-3"
+                        >
+                          <FaRegUserCircle size={20} /> Profile
+                        </button>
+                        {user?.role === "admin" && (
+                          <button
+                            onClick={() => navigate("/dashboard")}
+                            className="flex gap-3 px-4 py-2 w-full hover:bg-[#fdf0ea] text-sm text-gray-700"
+                          >
+                            <MdOutlineDashboard size={20} /> Dashboard
+                          </button>
+                        )}
+                        <button
+                          onClick={handleLogOut}
+                          className="flex gap-3 px-4 py-2 w-full hover:bg-[#fdf0ea] text-sm primary_text"
+                        >
+                          <LogoutOutlined size={20} />
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="hidden lg:block">
                   {!isAuthenticated && (
@@ -260,46 +281,12 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-                {/* <div
-                  className="cursor-pointer"
-                  onClick={() => navigate(`/profile/${1}`)}
-                > */}{" "}
-                {/* {isAuthenticated ? (
-                    <Avatar
-                      sx={{ width: 56, height: 56 }}
-                      alt="Travis Howard"
-                      src="https://img.freepik.com/premium-photo/funny-photos-monkeys-taking-selfies_601415-453.jpg?w=360"
-                    />
-                  ) : (
-                    <Avatar
-                      sx={{ width: 56, height: 56 }}
-                      src="/broken-image.jpg"
-                    />
-                  )} */}
-                {/* {isAuthenticated &&
-                    <button
-                      onClick={toggloginOpen}
-                      className="w-10 h-10 text-lg bg-[#EB5B2A] flex justify-center items-center rounded-full"
-                    >
-                      {user?.avatar ? (
-                        <img
-                          src={avatar}
-                          alt="Avatar"
-                          className="w-full h-full object-cover rounded-full"
-                        />
-                      ) : (
-                        <span className="text-white font-bold">
-                          {`${firstName?.[0] ?? ""}${lastName?.[0] ?? ""}`}
-                        </span>
-                      )}
-                    </button>
-                  } */}
-                {/* </div> */}
                 {isAuthenticated && (
                   <div className="relative">
                     <div className="flex items-center">
                       <button
-                        onClick={() => navigate(`/profile/${user?._id}`)}
+                        // onClick={() => navigate(`/profile/${user?._id}`)}
+                        onClick={handleDropdownToggle("contact")}
                         className="w-10 h-10 text-lg border border-orange-500 flex justify-center items-center rounded-full"
                       >
                         {user?.image ? (
@@ -314,40 +301,8 @@ const Navbar = () => {
                           </span>
                         )}
                       </button>
-                      <div>
-                        {/* <svg
-                          className="-mr-1 size-5 w-6 h-6 text-[#475467]"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z"
-                            clipRule="evenodd"
-                          />
-                        </svg> */}
-                      </div>
+                      <div></div>
                     </div>
-                    {/* {isloginOpen && (
-                      <div
-                        className={`bg-white p-6 absolute flex flex-col top-full -right-12 mt-2 space-y-1 border rounded shadow popup w-60`}
-                        ref={ProfileRef}
-                      >
-                        <div className="w-4 h-4 bg-white border-t border-l rotate-45 absolute -top-[7px] right-[54px] hidden xl:block"></div>
-                        <Link
-                          to={``}
-                          className="text-base xl:text-xl text-zinc-600 hover:text-[#b24b7d] duration-300"
-                        >
-                          My Account
-                        </Link>
-                        <button
-                          onClick={handleLogOut}
-                          className="text-base xl:text-xl text-red-400 hover:text-[#b24b7d] duration-300"
-                        >
-                          Logout
-                        </button>
-                      </div>
-                    )} */}
                   </div>
                 )}
                 <div className="block lg:hidden">
@@ -372,13 +327,13 @@ const Navbar = () => {
                     </svg>
                   </button>
                 </div>
-                {isAuthenticated ? (
+                {/* {isAuthenticated ? (
                   <div onClick={handleLogOut} className="hidden lg:block ml-4">
                     <LogoutOutlined className="primary_text rounded-full hover:scale-105" />
                   </div>
                 ) : (
                   <div></div>
-                )}
+                )} */}
               </div>
             </div>
           </div>

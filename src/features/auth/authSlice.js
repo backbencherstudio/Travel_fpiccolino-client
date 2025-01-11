@@ -42,13 +42,14 @@ export const conformRegisterOtp = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "users/login",
   async (userData, { rejectWithValue }) => {
-    console.log("userData", userData);
     try {
       const response = await axios.post(`${base_url}/users/login`, userData, {
         withCredentials: true,
       });
 
-      console.log(response.data);
+      // Save user to localStorage on successful login
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
       return response.data.user;
     } catch (error) {
       console.log(error);
@@ -61,10 +62,16 @@ export const setIsAuthenticated = createAsyncThunk(
   "users/isAuthenticated",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}/users/check`);
-      return response.data;
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (storedUser) {
+        return { user: storedUser };
+      } else {
+        const response = await axios.get(`${base_url}/users/check`);
+        return response.data;
+      }
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
@@ -87,15 +94,18 @@ export const loginOut = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   "users/update",
   async (userData, { rejectWithValue }) => {
-    console.log('slice', userData)
+    console.log("slice", userData);
     try {
-      const response = await axios.patch(`${base_url}/users/update-profile`, userData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-       
-      });
+      const response = await axios.patch(
+        `${base_url}/users/update-profile`,
+        userData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
       console.log("API response:", response);
       return response.data;
     } catch (error) {
@@ -110,7 +120,10 @@ export const logOut = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}/users/logout`);
-      console.log(response.data);
+
+      // Clear the user data from localStorage on logout
+      localStorage.removeItem("user");
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -132,14 +145,16 @@ export const recentOtp = createAsyncThunk(
   }
 );
 
-
 export const request_forgot_password_otp = createAsyncThunk(
   "users/request_forgot_password_otp",
   async (email, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}/users/request-forgot-password-otp`,{
-        email: email
-      });
+      const response = await axios.post(
+        `${base_url}/users/request-forgot-password-otp`,
+        {
+          email: email,
+        }
+      );
       return response.data;
     } catch (error) {
       console.log(error.response.data);
@@ -148,14 +163,16 @@ export const request_forgot_password_otp = createAsyncThunk(
   }
 );
 
-
 export const match_forgot_password_otp = createAsyncThunk(
   "users/match_password_otp",
   async (otp, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}/users/match-password-otp`,{
-        otp: otp
-      });
+      const response = await axios.post(
+        `${base_url}/users/match-password-otp`,
+        {
+          otp: otp,
+        }
+      );
       console.log("response", response);
       return response.data;
     } catch (error) {
@@ -170,11 +187,13 @@ export const match_forgot_password_otp = createAsyncThunk(
 export const reset_forgot_password = createAsyncThunk(
   "users/reset_password",
   async (password, { rejectWithValue }) => {
-
     try {
-      const response = await axios.patch(`${base_url}/users/reset-forgot-password`,{
-        password: password
-      });
+      const response = await axios.patch(
+        `${base_url}/users/reset-forgot-password`,
+        {
+          password: password,
+        }
+      );
       return response.data;
     } catch (error) {
       console.log(error.response.data);
@@ -186,10 +205,10 @@ export const reset_forgot_password = createAsyncThunk(
 export const userStatus = createAsyncThunk(
   "users/userStatus",
   async (id, { rejectWithValue }) => {
-    console.log(id)
+    console.log(id);
     try {
       const response = await axios.get(`${base_url}/order/user/${id}/status`);
-      console.log("response", response)
+      console.log("response", response);
       return response.data;
     } catch (error) {
       console.log(error.response.data);
@@ -197,7 +216,6 @@ export const userStatus = createAsyncThunk(
     }
   }
 );
-
 
 const initialState = {
   loginLoading: false,
@@ -213,7 +231,7 @@ const initialState = {
   isAuthenticated: false,
 
   appLoadingError: null,
-  user: {},
+  user: JSON.parse(localStorage.getItem("user")) || {},
   loginError: null,
   signupError: null,
   otpError: null,
@@ -227,7 +245,7 @@ const initialState = {
 
   userTureStatusLoading: false,
   userTureStatusError: null,
-  userTureStatus: null
+  userTureStatus: null,
 };
 
 const authSlice = createSlice({
@@ -293,7 +311,7 @@ const authSlice = createSlice({
         state.conformOtpError = null;
       })
       .addCase(conformRegisterOtp.fulfilled, (state, action) => {
-        console.log(action.payload)
+        console.log(action.payload);
         state.conformOtpLoading = false;
         state.conformOtpError = null;
         state.user = action.payload;
@@ -342,7 +360,7 @@ const authSlice = createSlice({
         state.recentOtpError = action.payload?.message ?? null;
       });
 
-      builder
+    builder
       .addCase(request_forgot_password_otp.pending, (state) => {
         state.request_forgot_password_otpLoading = true;
         state.request_forgot_password_otpError = null;
@@ -353,13 +371,14 @@ const authSlice = createSlice({
       })
       .addCase(request_forgot_password_otp.rejected, (state, action) => {
         state.request_forgot_password_otpLoading = false;
-        state.request_forgot_password_otpError = action.payload?.message ?? null;
+        state.request_forgot_password_otpError =
+          action.payload?.message ?? null;
       });
-      builder
+    builder
       .addCase(match_forgot_password_otp.pending, (state) => {
         state.match_forgot_password_otpLoading = true;
         state.match_forgot_password_otpError = null;
-      })  
+      })
       .addCase(match_forgot_password_otp.fulfilled, (state, action) => {
         state.match_forgot_password_otpLoading = false;
         state.match_forgot_password_otpError = null;
@@ -368,7 +387,7 @@ const authSlice = createSlice({
         state.match_forgot_password_otpLoading = false;
         state.match_forgot_password_otpError = action.payload?.message ?? null;
       });
-      builder
+    builder
       .addCase(reset_forgot_password.pending, (state) => {
         state.reset_forgot_passwordLoading = true;
         state.reset_forgot_passwordError = null;
@@ -382,7 +401,7 @@ const authSlice = createSlice({
         state.reset_forgot_passwordError = action.payload?.message ?? null;
       });
 
-      builder
+    builder
       .addCase(userStatus.pending, (state) => {
         state.userTureStatusLoading = true;
         state.userTureStatusError = null;

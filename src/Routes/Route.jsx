@@ -39,6 +39,8 @@ import Checkout from "../Pages/checkout/Checkout";
 import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
 import CountryList from "../Components/Dashboard/AddCountry/CountryList";
+import { ProtectedRoute } from "./RouteProtection";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -55,10 +57,6 @@ export const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
-      },
-      {
-        path: "/tours",
-        element: <Tours />,
       },
       {
         path: "/faq",
@@ -96,7 +94,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute role="admin">
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,

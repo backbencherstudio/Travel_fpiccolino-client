@@ -10,7 +10,6 @@ const WondersSection = ({ countrySection }) => {
   useEffect(() => {
     dispatch(getSectionData());
   }, []);
-  console.log(countrySection);
 
   return (
     <div>

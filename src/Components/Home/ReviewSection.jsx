@@ -18,7 +18,6 @@ const ReviewSection = ({ reviews }) => {
   useEffect(() => {
     dispatch(getReview());
   }, []);
-  console.log(review);
 
   return (
     <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">

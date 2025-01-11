@@ -14,8 +14,10 @@ import { BiBookContent } from "react-icons/bi";
 import { TiWorldOutline } from "react-icons/ti";
 import { TbArrowAutofitContent } from "react-icons/tb";
 import { FiYoutube } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../features/auth/authSlice";
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState(
@@ -51,7 +53,7 @@ const Dashboard = () => {
     navigate(path);
   };
   const handleLogOut = () => {
-    localStorage.removeItem("token");
+    dispatch(logOut());
     navigate("/login");
   };
 

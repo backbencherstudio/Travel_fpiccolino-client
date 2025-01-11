@@ -1,11 +1,10 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const ProtectedRoute = ({ children }) => {
+export const ProtectedRoute = ({ children, role }) => {
   const { user } = useSelector((state) => state.authorization);
-  
-  if (!user) {
+
+  if (!user || (role && user.role !== role)) {
     return <Navigate to="/login" />;
   }
 
@@ -13,7 +12,7 @@ export const ProtectedRoute = ({ children }) => {
 };
 
 export const PublicRoute = ({ children }) => {
-  const { user } = useSelector((state) => state.authorization)  ;
+  const { user } = useSelector((state) => state.authorization);
 
   if (user) {
     return <Navigate to="/" />;

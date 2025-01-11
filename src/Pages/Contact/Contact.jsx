@@ -1,4 +1,3 @@
-import BannerSection from "../../Components/Home/BannerSection";
 import ApproachSection from "../../Components/Home/ApproachSection";
 import call from "../../assets/icons/call2.svg";
 import mail from "../../assets/icons/mail2.svg";
@@ -7,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../../features/contact/contactSlice";
-import { getHeader } from "../../features/header/headerSlice";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import { getCiontectPageData } from "../../features/pageData/pageDataSlice";
 const Contact = () => {
@@ -33,9 +31,7 @@ const Contact = () => {
   };
 
   // const { headers } = useSelector((state) => state.header);
-  const { contactPageLoading, contactPageError, contactPage } = useSelector(
-    (state) => state.pageData
-  );
+  const { contactPage } = useSelector((state) => state.pageData);
 
   useEffect(() => {
     // dispatch(getHeader());
@@ -88,7 +84,7 @@ const Contact = () => {
               <div>
                 <p className="text-[16px]">Phone us at</p>
                 <p className="text-[18px] primary_text font-medium">
-                  012-3456-7899
+                  +393801585075
                 </p>
               </div>{" "}
             </div>

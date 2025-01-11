@@ -21,7 +21,6 @@ const ReviewCard = ({ item }) => {
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating); // Get the full stars
     const hasHalfStar = rating % 1 !== 0; // Check if there's a half star
-    console.log(item);
 
     let stars = [];
 
