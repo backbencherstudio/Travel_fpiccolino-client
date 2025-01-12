@@ -74,7 +74,6 @@ const DashboardAnalysis = () => {
       data: chartData?.revenueData,
     },
   ];
-  console.log(chartData);
 
   return (
     <div className="">
