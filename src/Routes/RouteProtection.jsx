@@ -15,7 +15,7 @@ export const PublicRoute = ({ children }) => {
   const { user } = useSelector((state) => state.authorization);
 
   if (user) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" />
   }
 
   return <>{children}</>;
