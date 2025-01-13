@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaRegBell, FaRegUser } from "react-icons/fa";
+import { FaHome, FaRegBell, FaRegUser } from "react-icons/fa";
 import { IoClose, IoGolfOutline, IoMenu } from "react-icons/io5";
 import { LuClipboardList, LuLayoutDashboard } from "react-icons/lu";
 import { PiTrolleySuitcase } from "react-icons/pi";
@@ -28,8 +28,6 @@ const Dashboard = () => {
   const { user, appLoading, isAuthenticated } = useSelector(
     (state) => state.authorization
   );
-  console.log(user);
-
   useEffect(() => {
     localStorage.setItem("tab", selectedTab);
   }, [selectedTab]);
@@ -207,6 +205,12 @@ const Dashboard = () => {
           className="absolute bottom-3 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"
         >
           <CiLogout className="mt-1" /> Logout
+        </button>
+        <button
+          onClick={() => navigate("/")}
+          className="absolute right-0 bottom-3 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"
+        >
+          Home Page <FaHome className="mt-1" />
         </button>
       </aside>
 

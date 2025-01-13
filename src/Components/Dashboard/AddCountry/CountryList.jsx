@@ -21,12 +21,14 @@ const CountryList = () => {
   return (
     <div>
       <CustomHeadingDashboard />
-      <CustomTable
-        tableType={"country"}
-        title={"Country List"}
-        columns={columns}
-        data={countries}
-      />
+      {countries?.length > 0 && (
+        <CustomTable
+          tableType={"country"}
+          title={"Country List"}
+          columns={columns}
+          data={countries}
+        />
+      )}
     </div>
   );
 };

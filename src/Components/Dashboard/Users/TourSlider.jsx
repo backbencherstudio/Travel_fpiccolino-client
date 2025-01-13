@@ -116,7 +116,7 @@ const TourSlider = ({ userData, title, id, userType }) => {
                 <p className="py-2">
                   {item?.packageData?.destination || "Unknown Destination"}
                 </p>
-                {userType === "user" && title === "Pending Tours" && (
+                {userType === "user" && title === "Completed Tours" && (
                   <button
                     onClick={() => {
                       openModal();
