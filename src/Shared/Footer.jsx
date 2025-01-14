@@ -7,6 +7,7 @@ import paypal from "../assets/payment/paypal.svg";
 import epay from "../assets/payment/epay.svg";
 import call from "../assets/icons/call.svg";
 import mail from "../assets/icons/mail.svg";
+import klarna from "../assets/payment/download.png";
 import { base_url } from "../utils/base_path";
 import { toast } from "react-hot-toast"; // Importing the toast function
 import { useDispatch, useSelector } from "react-redux";
@@ -81,7 +82,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="bg-black text-white">
+    <div className="bg-white text-black">
       <ParentComponent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-20 pb-10 lg:gap-0 gap-10">
           <div>
@@ -97,13 +98,13 @@ const Footer = () => {
               <p>Contact</p>
             </div>
             <div className="text-[16px] font-normal max-w-[218px]">
-              <h1 className="text-[20px] font-medium mb-6">Contact Us</h1>
+              <h1 className="text-[20px] font-medium mb-6">Contattaci</h1>
               <p>{"We're"} Here to Help with Any Questions or Concerns</p>
               <p className="flex gap-1 mt-4">
                 <img src={call} alt="" /> +393801585075
               </p>
               <p className="flex gap-1 mt-2">
-                <img src={mail} alt="" /> clateo.46@example.com
+                <img src={mail} alt="" /> info@latuafugalowcost.it
               </p>
             </div>
           </div>
@@ -113,7 +114,7 @@ const Footer = () => {
 
               <form className="relative mt-4" onSubmit={handleSubmit}>
                 <input
-                  className="bg-[#1f1f1f] p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg"
+                  className=" p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg"
                   type="email"
                   placeholder="Your Email address"
                   value={email}
@@ -133,7 +134,7 @@ const Footer = () => {
                     checked={isAgreed}
                     onChange={() => setIsAgreed(!isAgreed)}
                   />
-                  <p>I Agree To All Your Terms & condition</p>
+                  <p>Accetto tutti i termini e le condizioni</p>
                 </div>
               </form>
 
@@ -149,9 +150,14 @@ const Footer = () => {
         <ParentComponent>
           <div className="flex flex-col md:flex-row justify-between py-6 md:gap-0 gap-5">
             <p className="text-[16px]">
-              Copyright © 2024 LA TUA FUGA LOWCOST. All rights reserved.
+              Copyright © 2024 LA TUA FUGA LOWCOST. Tutti i diritti riservati.
             </p>
             <div className="flex gap-2">
+              <img
+                className="bg-white h-7 w-9 rounded"
+                src={klarna}
+                alt="Epay"
+              />
               <img
                 src={stripe}
                 className="bg-white rounded w-9 h-7"
