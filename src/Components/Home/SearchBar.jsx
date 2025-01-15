@@ -64,13 +64,13 @@ const SearchBar = ({ countries }) => {
   };
   return (
     <div className="lg:h-[120px] -mt-[50px] mx-5 lg:mx-0">
-      <div className="max-w-[960px] mx-auto shadow-xl p-5 relative bg-white rounded-lg lg:h-[88px]">
+      <div className="max-w-[960px] mx-auto shadow-xl p-5 relative bg-white rounded-lg lg:rounded-full lg:h-[88px]">
         <div className="flex lg:flex-row w-full">
           <input
             type="text"
             value={searchQuery}
             onChange={handleSearchChange}
-            className="h-12 w-full lg:w-[80%] px-4"
+            className="h-12 w-full lg:w-[80%] px-4 rounded-full focus:border focus:border-orange-500 focus:outline-none"
             placeholder="What's Your Next Destination?"
           />
           {/* <input
@@ -81,9 +81,9 @@ const SearchBar = ({ countries }) => {
         </div>
         <button
           onClick={() => handleNavigateDestination()}
-          className="primary_bg hover:opacity-85 text-white px-6 py-3 lg:top-5 lg:absolute right-5 rounded-lg text-[18px] w-full lg:w-auto mt-5 lg:mt-0"
+          className="primary_bg hover:opacity-85 text-white px-8 py-3 lg:top-5 lg:absolute right-5 rounded-full text-[18px] w-full lg:w-auto mt-5 lg:mt-0"
         >
-          <div className="flex gap-1.5 justify-center">
+          <div className="flex gap-1.5 justify-center ">
             <img src={search} alt="Search" /> Search
           </div>
         </button>

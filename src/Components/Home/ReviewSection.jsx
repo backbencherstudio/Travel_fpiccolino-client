@@ -3,8 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import natureImage from "../../assets/natureImage.jpg";
-import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ReviewCard from "./ReviewCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,11 +16,18 @@ const ReviewSection = ({ reviews }) => {
   useEffect(() => {
     dispatch(getReview());
   }, []);
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.update();
+      setIsBeginning(swiperRef.current.isBeginning);
+      setIsEnd(swiperRef.current.isEnd);
+    }
+  }, [review]);
 
   return (
     <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">
       <ParentComponent>
-        <HeadLine title={reviews.title} description={reviews.description} />
+        <HeadLine title={reviews?.title} description={reviews?.description} />
 
         <div className="relative grid grid-cols-1 md:grid-cols-12">
           <div className="mt-14 md:col-span-11">
@@ -39,7 +44,7 @@ const ReviewSection = ({ reviews }) => {
                 setIsEnd(swiper.isEnd);
               }}
             >
-              {review.reviews?.map((item) => (
+              {review.reviews?.slice(0, 15).map((item) => (
                 <div key={item._id}>
                   <SwiperSlide>
                     <ReviewCard item={item} />

@@ -1,4 +1,7 @@
-import BannerSection from "../../Components/Home/BannerSection";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getHomePageData } from "../../features/pageData/pageDataSlice";
+import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import SearchBar from "../../Components/Home/SearchBar";
 import AdventureSection from "../../Components/Home/AdventureSection";
 import BlurSliderSection from "../../Components/Home/BlurSliderSection";
@@ -8,11 +11,7 @@ import ArticleAndNewsSection from "../../Components/Home/ArticleAndNewsSection";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
 import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getHomePageData } from "../../features/pageData/pageDataSlice";
-// import { getHeader } from '../../features/header/headerSlice';
-import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
+import CookiePolicyModal from "../../Shared/CookiePolicyModal"; // Import Cookie Modal
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,21 +19,22 @@ const Home = () => {
     (state) => state.pageData
   );
 
+  const [showCookieModal, setShowCookieModal] = useState(false); // Show cookie modal state
+
   useEffect(() => {
     dispatch(getHomePageData());
-  }, []);
 
-  // const { headers } = useSelector((state) => state.header);
-  // useEffect(() => {
-  //     dispatch(getHeader());
-  // }, []);
+    // Check sessionStorage for cookie acceptance
+    const cookiesAccepted = sessionStorage.getItem("cookiesAccepted");
+    if (!cookiesAccepted) {
+      setShowCookieModal(true); // Show the modal if not accepted yet
+    }
+  }, [dispatch]);
 
-  // const data = headers?.filter(item => item.pageName === "home")
-  // const heroContent = {
-  //     heroImage: data[0]?.heroImage,
-  //     titleOne: data[0]?.titleOne,
-  //     descriptionOne: data[0]?.descriptionOne,
-  // }
+  const handleAcceptCookies = () => {
+    sessionStorage.setItem("cookiesAccepted", "true"); // Store in sessionStorage
+    setShowCookieModal(false); // Hide the modal
+  };
 
   const heroSection = homePageData?.hero;
   const cardDetails = homePageData?.package;
@@ -46,15 +46,15 @@ const Home = () => {
 
   return (
     <div>
-      {/* <BannerSection /> */}
+      {/* Show Cookie Modal */}
+      {showCookieModal && <CookiePolicyModal onClose={handleAcceptCookies} />}
+
       {heroSection && <HeroScetion heroContent={heroSection} />}
       {countrySection && <SearchBar countries={countrySection} />}
-
       {cardDetails && <AdventureSection cardDetails={cardDetails} />}
       {countryWithoutImage && (
         <BlurSliderSection country={countryWithoutImage} />
       )}
-
       {countrySection && <WondersSection countrySection={countrySection} />}
       {titleWithoutContent && (
         <ApproachSection aboutWithoutContent={titleWithoutContent} />
