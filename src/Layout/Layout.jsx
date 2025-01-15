@@ -2,32 +2,8 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../Shared/Navbar";
 import Footer from "../Shared/Footer";
 import ScrollToTop from "../Shared/ScrollToTop";
-import { FaSquareWhatsapp } from "react-icons/fa6";
-import Draggable from "react-draggable";
-import { useState } from "react";
 
 const Layout = () => {
-  const phoneNumber = "+393801585075";
-  const message = "Hello, I have a question about your services.";
-  const encodedMessage = encodeURIComponent(message);
-  const [isDragging, setIsDragging] = useState(false);
-  const handleClick = () => {
-    if (!isDragging) {
-      window.open(
-        `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
-        "_blank"
-      );
-    }
-  };
-
-  const handleMouseDown = () => {
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />

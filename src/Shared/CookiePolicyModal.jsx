@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import logo from "../assets/logo.svg";
+import { CloseOutlined } from "@mui/icons-material";
 
-const CookiePolicyModal = ({ onClose }) => {
+const CookiePolicyModal = ({ handleAcceptCookies, onClose }) => {
   const [isVisible, setIsVisible] = useState(false); // Controls the visibility with animation
   const [activeTab, setActiveTab] = useState("general"); // Controls the active tab
 
@@ -9,13 +10,6 @@ const CookiePolicyModal = ({ onClose }) => {
     const timer = setTimeout(() => setIsVisible(true), 300); // Small delay for smoother animation
     return () => clearTimeout(timer);
   }, []);
-
-  const handleClose = () => {
-    setIsVisible(false); // Trigger fade-out
-    setTimeout(() => {
-      onClose(); // Close modal after fade-out
-    }, 500); // Match transition duration
-  };
 
   return (
     <div
@@ -28,8 +22,10 @@ const CookiePolicyModal = ({ onClose }) => {
           isVisible ? "scale-100" : "scale-95"
         }`}
       >
-        {/* Header Section */}
-        <div className="flex justify-between items-center border-b-2 p-3">
+        <div onClick={onClose}>
+          <CloseOutlined className="absolute right-1 top-1 primary_text hover:scale-110" />
+        </div>
+        <div className="flex justify-between items-center border-b-2 p-8">
           <img src={logo} alt="" className="w-24" />
           <h2 className="text-xl font-semibold text-gray-500">Cookie Policy</h2>
         </div>
@@ -118,12 +114,18 @@ const CookiePolicyModal = ({ onClose }) => {
         </div>
 
         {/* Footer Section */}
-        <div className="flex justify-end border-t-2 p-5">
+        <div className="flex justify-end border-t-2 p-5 gap-5">
           <button
-            onClick={handleClose}
+            onClick={handleAcceptCookies}
             className="border border-orange-500 hover:text-white hover:bg-orange-500 text-orange-500 font-semibold py-2 px-4 rounded transition-all ease-linear duration-300"
           >
             Accept and Continue
+          </button>
+          <button
+            onClick={onClose}
+            className="border border-red-500 hover:text-white hover:bg-red-500 text-red-500 font-semibold py-2 px-4 rounded transition-all ease-linear duration-300"
+          >
+            Cancel
           </button>
         </div>
       </div>
