@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast"; // Importing the toast function
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageData } from "../features/pageData/pageDataSlice";
 import { getHeader } from "../features/header/headerSlice";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   // State for email input and checkbox
@@ -91,11 +92,21 @@ const Footer = () => {
           <div className="flex justify-between">
             <div className="text-[18px] font-medium">
               <h1 className="text-[20px] font-medium mb-6">Quick Link</h1>
-              <p>About</p>
-              <p>Tour</p>
-              <p>Blog</p>
-              <p>FAQ</p>
-              <p>Contact</p>
+              <Link to="/about">
+                <p>About</p>
+              </Link>
+              <Link to="/tour">
+                <p>Tour</p>
+              </Link>
+              <Link to="/blog">
+                <p>Blog</p>
+              </Link>
+              <Link to="/faq">
+                <p>FAQ</p>
+              </Link>
+              <Link to="/contact">
+                <p>Contact</p>
+              </Link>
             </div>
             <div className="text-[16px] font-normal max-w-[218px]">
               <h1 className="text-[20px] font-medium mb-6">Contattaci</h1>
