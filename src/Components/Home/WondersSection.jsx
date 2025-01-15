@@ -31,7 +31,7 @@ const WondersSection = ({ countrySection }) => {
               </div>
             </div>
           )}
-          {countrySection?.data?.length > 5 && (
+          {countrySection?.data?.length >= 5 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
               {countrySection?.data?.slice(2, 5).map((item, index) => (
                 <div key={index}>
@@ -40,13 +40,13 @@ const WondersSection = ({ countrySection }) => {
               ))}
             </div>
           )}
-          {countrySection?.data?.length > 6 && (
+          {countrySection?.data?.length >= 6 && (
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
               <div className="md:col-span-2">
-                <WonderCard item={countrySection?.data[5]} />
+                <WonderCard item={countrySection?.data[4]} />
               </div>
               <div className="md:col-span-3">
-                <WonderCard item={countrySection?.data[6]} />
+                <WonderCard item={countrySection?.data[5]} />
               </div>
             </div>
           )}
