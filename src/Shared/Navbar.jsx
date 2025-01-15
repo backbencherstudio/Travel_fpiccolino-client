@@ -4,8 +4,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import ParentComponent from "./ParentComponent/ParentComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../features/auth/authSlice";
-import { FaRegUserCircle } from "react-icons/fa";
-import { LogoutOutlined } from "@mui/icons-material";
+import { FaRegUserCircle, FaWhatsapp } from "react-icons/fa";
+import { LogoutOutlined, WhatsApp } from "@mui/icons-material";
 import { MdOutlineDashboard } from "react-icons/md";
 
 const Navbar = () => {
@@ -15,7 +15,9 @@ const Navbar = () => {
   const [languageDropDown, setLanguageDropDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isloginOpen, setLoginOpen] = useState(false);
-
+  const phoneNumber = "+393801585075";
+  const message = "Hello, I have a question about your services.";
+  const encodedMessage = encodeURIComponent(message);
   const { user, isAuthenticated } = useSelector((state) => state.authorization);
 
   const ProfileRef = useRef();
@@ -98,6 +100,12 @@ const Navbar = () => {
     dispatch(logOut());
     navigate("/");
     setIsMenuOpen(false);
+  };
+  const handleClick = () => {
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
+      "_blank"
+    );
   };
   return (
     <header className="z-30 fixed w-full nav-style py-2 banner_style">
@@ -195,40 +203,24 @@ const Navbar = () => {
                     className="inline-flex w-full justify-center gap-x-1.5 rounded-md text-[18px] primary_text mt-2"
                     onClick={handleDropdownToggle("language")}
                   >
-                    EN
-                    <svg
-                      className="-mr-1 size-5 w-6 h-6 text-[#e86731]"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.22 8.22a.75.75 0 011.06 0L10 11.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 9.28a.75.75 0 010-1.06z"
-                        clipRule="evenodd"
+                    <div className="">
+                      <WhatsApp
+                        style={{ fontSize: "36px" }}
+                        className="text-white hover:scale-105"
                       />
-                    </svg>
+                    </div>
                   </button>
                   {languageDropDown && (
-                    <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black/5">
-                      <div className="py-1">
-                        <Link
-                          to="#"
-                          className="block px-4 py-2 text-sm text-gray-700"
+                    <div className="absolute -right-10 top-12 lg:right-0 z-10 mt-2 w-56 rounded-xl bg-white shadow-lg ring-1 ring-black/5">
+                      <div className="py-1 flex justify-center">
+                        <button
+                          onClick={handleClick}
+                          className="flex items-center border border-green-500 text-green-500 hover:bg-green-200 hover:text-black px-8 py-2 my-5 mx-2 w-full rounded-full justify-around
+                          "
                         >
-                          English
-                        </Link>
-                        <Link
-                          to="#"
-                          className="block px-4 py-2 text-sm text-gray-700"
-                        >
-                          Spanish
-                        </Link>
-                        <Link
-                          to="#"
-                          className="block px-4 py-2 text-sm text-gray-700"
-                        >
-                          French
-                        </Link>
+                          {" "}
+                          <FaWhatsapp className="h-6 w-6" /> Start Live Chat
+                        </button>
                       </div>
                     </div>
                   )}

@@ -38,7 +38,7 @@ const Layout = () => {
       <div className="bg-[#061D35]">
         <Footer />
       </div>
-      <Draggable
+      {/* <Draggable
         handle=".whatsapp-handle"
         defaultPosition={{ x: 0, y: 0 }}
         onStart={handleMouseDown}
@@ -54,7 +54,7 @@ const Layout = () => {
             <FaSquareWhatsapp className="text-[green] h-14 w-14 bg-white rounded-lg shadow-lg cursor-pointer transition-transform hover:scale-105" />
           </div>
         </div>
-      </Draggable>
+      </Draggable> */}
     </div>
   );
 };
