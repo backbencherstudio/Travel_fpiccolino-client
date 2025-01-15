@@ -2,6 +2,22 @@
 import ReactApexChart from "react-apexcharts";
 
 const RadarChart = ({ data }) => {
+  const totalCompleted = data?.radarData?.completed.reduce(
+    (acc, val) => acc + val,
+    0
+  );
+  const totalPending = data?.radarData?.pending.reduce(
+    (acc, val) => acc + val,
+    0
+  );
+  const totalOngoing = data?.radarData?.ongoing.reduce(
+    (acc, val) => acc + val,
+    0
+  );
+
+  // Calculate the total tours count (completed + pending)
+  const totalTours = totalCompleted + totalPending + totalOngoing;
+
   const chartData = {
     series: [
       {
@@ -41,7 +57,7 @@ const RadarChart = ({ data }) => {
         size: 4,
       },
       yaxis: {
-        max: 100,
+        max: totalTours,
         stepSize: 20,
       },
       xaxis: {
@@ -54,7 +70,7 @@ const RadarChart = ({ data }) => {
       },
       tooltip: {
         y: {
-          formatter: (val) => `${val}%`,
+          formatter: (val) => `${val}`,
         },
       },
     },
@@ -73,7 +89,7 @@ const RadarChart = ({ data }) => {
           Completed : {parseInt(data?.completedPercentage)}%
         </h1>
         <h1 className="primary_text font-semibold">
-          Pending : {parseInt(data?.completedPercentage)}%
+          Pending : {parseInt(data?.pendingPercentage)}%
         </h1>
       </div>
     </div>
