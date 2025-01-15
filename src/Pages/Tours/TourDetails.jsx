@@ -51,7 +51,7 @@ const TourDetails = () => {
 
   const heroContent = {
     blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
-    image: "http://localhost:3000" + packageDetails?.images[0],
+    image: { base_url } + packageDetails?.images[0],
     titleOne: packageDetails?.tourName,
   };
   const iconMap = {
@@ -285,20 +285,29 @@ const TourDetails = () => {
 
         {/* ==========================================  Testimonial ================================= */}
 
-        <div className="bg-[#EFFBFB] py-20 ">
+        <div className="bg-[#EFFBFB] py-20">
           <HeadLine
             title="WHAT DO PEOPLE WHO HAVE TRAVELED WITH US SAY?"
             description="Real Reviews from Golfers Who Elevate Their Game in Our Apparel"
           />
 
           <ParentComponent>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12 ">
-              {packageReview?.map((item) => (
-                <div key={item._id}>
-                  <TestimonialCard item={item} />
-                </div>
-              ))}
-            </div>
+            {packageReview && packageReview.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12">
+                {packageReview.map((item) => (
+                  <div key={item._id}>
+                    <TestimonialCard item={item} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center text-gray-600 my-5 py-20 border-dashed border">
+                <h2 className="text-lg font-semibold primary_text ">
+                  No Reviews Available
+                </h2>
+                <p>Be the first to share your experience!</p>
+              </div>
+            )}
           </ParentComponent>
         </div>
       </div>
