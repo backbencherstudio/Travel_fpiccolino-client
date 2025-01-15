@@ -1,1 +1,1 @@
-export const base_url = "https://perhaps-safari-captured-states.trycloudflare.com" //"http://localhost:3000";
+export const base_url = "http://localhost:3000";

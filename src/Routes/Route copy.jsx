@@ -38,8 +38,7 @@ import AddContent from "../Components/Dashboard/AddContent/AddContent";
 import Checkout from "../Pages/checkout/Checkout";
 import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
-import CountryList from "../Components/Dashboard/AddCountry/CountryList";
-import { ProtectedAdminRoute, ProtectedRoute } from "./RouteProtection";
+import { ProtectedRoute } from "./RouteProtection";
 
 export const router = createBrowserRouter([
   {
@@ -52,7 +51,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/tours",
-        element: <Tours />,
+        element: (
+          <ProtectedRoute>
+            <Tours />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/about",
@@ -98,163 +101,120 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: (
-      <ProtectedRoute role="admin">
-        <DashboardLayout />
-      </ProtectedRoute>
-    ),
+    element: <DashboardLayout />,
     children: [
       {
         index: true,
-        element: (
-          <ProtectedAdminRoute>
-            <DashboardAnalysis />
-          </ProtectedAdminRoute>
-        ),
+        element: <DashboardAnalysis />,
       },
       {
         path: "tour-list",
-        element: (
-          <ProtectedAdminRoute>
-            <TourAnalysis />
-          </ProtectedAdminRoute>
-        ),
+        element: <TourAnalysis />,
       },
       {
         path: "user-list",
-        element: (
-          <ProtectedAdminRoute>
-            <UserList />
-          </ProtectedAdminRoute>
-        ),
+        element: <UserList />,
       },
       {
         path: "user-list/:id",
-        element: (
-          <ProtectedAdminRoute>
-            <UserDetails />
-          </ProtectedAdminRoute>
-        ),
+        element: <UserDetails />,
       },
       {
         path: "order-list",
-        element: (
-          <ProtectedAdminRoute>
-            <OrderList />
-          </ProtectedAdminRoute>
-        ),
+        element: <OrderList />,
       },
       {
         path: "package",
-        element: (
-          <ProtectedAdminRoute>
-            <PackageList />
-          </ProtectedAdminRoute>
-        ),
+        element: <PackageList />,
       },
       {
         path: "package/update/:id",
-        element: (
-          <ProtectedAdminRoute>
-            <UpdatePackage />
-          </ProtectedAdminRoute>
-        ),
+        element: <UpdatePackage />,
       },
       {
         path: "package/create/new",
-        element: (
-          <ProtectedAdminRoute>
-            <CreatePackage />
-          </ProtectedAdminRoute>
-        ),
+        element: <CreatePackage />,
       },
       {
         path: "payment",
-        element: (
-          <ProtectedAdminRoute>
-            <PaymentHistory />
-          </ProtectedAdminRoute>
-        ),
+        element: <PaymentHistory />,
       },
       {
         path: "blog-list",
-        element: (
-          <ProtectedAdminRoute>
-            <BlogList />
-          </ProtectedAdminRoute>
-        ),
+        element: <BlogList />,
       },
       {
         path: "blog-list/:id",
-        element: <ProtectedAdminRoute></ProtectedAdminRoute>,
+        element: <BlogDetails />,
       },
       {
         path: "blog-list/create/new",
-        element: (
-          <ProtectedAdminRoute>
-            <CreateBlog />
-          </ProtectedAdminRoute>
-        ),
+        element: <CreateBlog />,
       },
       {
         path: "blog-list/update/:id",
-        element: (
-          <ProtectedAdminRoute>
-            <UpdateBlog />
-          </ProtectedAdminRoute>
-        ),
+        element: <UpdateBlog />,
       },
       {
         path: "header",
-        element: (
-          <ProtectedAdminRoute>
-            <Header />
-          </ProtectedAdminRoute>
-        ),
+        element: <Header />,
       },
       {
         path: "contact",
-        element: (
-          <ProtectedAdminRoute>
-            <ContactsTable />
-          </ProtectedAdminRoute>
-        ),
+        element: <ContactsTable />,
       },
       {
-        path: "country",
-        element: <CountryList />,
-      },
-      {
-        path: "country/create/new",
+        path: "addCountry",
         element: <AddCountry />,
       },
       {
         path: "addContent",
-        element: (
-          <ProtectedAdminRoute>
-            <AddContent />
-          </ProtectedAdminRoute>
-        ),
+        element: <AddContent />,
       },
       {
         path: "uploadShorts",
-        element: (
-          <ProtectedAdminRoute>
-            <UploadShorts />
-          </ProtectedAdminRoute>
-        ),
+        element: <UploadShorts />,
       },
     ],
   },
-  { path: "/checkout", element: <Checkout /> },
-  { path: "/flight/:id", element: <Flight /> },
-  { path: "/insurance/:id", element: <Insurance /> },
-  { path: "/transfers/:id", element: <Transfers /> },
-  { path: "/personalDetails", element: <PersonalDetails /> },
-  { path: "/login", element: <Login /> },
-  { path: "/signup", element: <SignUp /> },
-  { path: "/forgot-password", element: <ForgotPassword /> },
-  { path: "/otp", element: <OtpScreen /> },
-  { path: "/signotp", element: <SignupOtp /> },
-  // { path: "*", element: <NotFound /> },
+  {
+    path: "/checkout",
+    element: <Checkout />,
+  },
+  {
+    path: "/flight/:id",
+    element: <Flight />,
+  },
+  {
+    path: "/insurance/:id",
+    element: <Insurance />,
+  },
+  {
+    path: "/transfers/:id",
+    element: <Transfers />,
+  },
+  {
+    path: "/personalDetails",
+    element: <PersonalDetails />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/otp",
+    element: <OtpScreen />,
+  },
+  {
+    path: "/signotp",
+    element: <SignupOtp />,
+  },
 ]);

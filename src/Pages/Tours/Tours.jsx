@@ -56,7 +56,7 @@ const Tours = () => {
   const packags = id
     ? country_wise_TourPageData?.package
     : all_inclusive_TourPageData?.package;
-  console.log(111111, packags);
+  const content = id? country_wise_TourPageData : all_inclusive_TourPageData
   return (
     <div className="">
       {heroContent && <HeroScetion heroContent={heroContent} />}
