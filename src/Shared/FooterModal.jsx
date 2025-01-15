@@ -1,6 +1,7 @@
+import { CloseOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 
-const FooterModal = () => {
+const FooterModal = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -18,6 +19,9 @@ const FooterModal = () => {
           : "translate-y-full lg:translate-x-full"
       }`}
     >
+      <div onClick={onClose} className="flex justify-end">
+        <CloseOutlined />
+      </div>
       <h3 className="text-lg font-semibold">Need Help?</h3>
       <p className="text-gray-600">
         If you need assistance with booking or have any questions, feel free to

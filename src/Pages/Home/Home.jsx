@@ -12,7 +12,7 @@ import BottomBannerSection from "../../Shared/BottomBannerSection";
 import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
 import CookiePolicyModal from "../../Shared/CookiePolicyModal"; // Import Cookie Modal
-import FooterModal from "../../Shared/FooterModal"; // Import Footer Modal
+import FooterModal from "../../Shared/FooterModal";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -53,6 +53,9 @@ const Home = () => {
   const handleRejectCookies = () => {
     setShowCookieModal(false);
   };
+  const handleCloseFooterModal = () => {
+    setShowFooterModal(false);
+  };
 
   const heroSection = homePageData?.hero;
   const cardDetails = homePageData?.package;
@@ -73,7 +76,7 @@ const Home = () => {
       )}
 
       {/* Slide-in Footer Modal */}
-      {showFooterModal && <FooterModal />}
+      {showFooterModal && <FooterModal onClose={handleCloseFooterModal} />}
 
       {heroSection && <HeroScetion heroContent={heroSection} />}
       {countrySection && <SearchBar countries={countrySection} />}
