@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageData } from "../../features/pageData/pageDataSlice";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
@@ -12,6 +12,7 @@ import BottomBannerSection from "../../Shared/BottomBannerSection";
 import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
 import CookiePolicyModal from "../../Shared/CookiePolicyModal"; // Import Cookie Modal
+import FooterModal from "../../Shared/FooterModal";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -19,21 +20,41 @@ const Home = () => {
     (state) => state.pageData
   );
 
-  const [showCookieModal, setShowCookieModal] = useState(false); // Show cookie modal state
+  const [showCookieModal, setShowCookieModal] = useState(false); // Cookie modal state
+  const [showFooterModal, setShowFooterModal] = useState(false); // Footer modal state
+  const footerRef = useRef(null); // Reference to detect the footer
 
   useEffect(() => {
     dispatch(getHomePageData());
 
-    // Check sessionStorage for cookie acceptance
+    // Check cookie policy status
     const cookiesAccepted = sessionStorage.getItem("cookiesAccepted");
     if (!cookiesAccepted) {
-      setShowCookieModal(true); // Show the modal if not accepted yet
+      setShowCookieModal(true);
     }
+
+    // Scroll listener for footer detection
+    const handleScroll = () => {
+      if (footerRef.current) {
+        const rect = footerRef.current.getBoundingClientRect();
+        const isFooterVisible = rect.top < window.innerHeight;
+        setShowFooterModal(isFooterVisible); // Show modal when footer is visible
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [dispatch]);
 
   const handleAcceptCookies = () => {
-    sessionStorage.setItem("cookiesAccepted", "true"); // Store in sessionStorage
-    setShowCookieModal(false); // Hide the modal
+    sessionStorage.setItem("cookiesAccepted", "true");
+    setShowCookieModal(false);
+  };
+  const handleRejectCookies = () => {
+    setShowCookieModal(false);
+  };
+  const handleCloseFooterModal = () => {
+    setShowFooterModal(false);
   };
 
   const heroSection = homePageData?.hero;
@@ -47,7 +68,15 @@ const Home = () => {
   return (
     <div>
       {/* Show Cookie Modal */}
-      {showCookieModal && <CookiePolicyModal onClose={handleAcceptCookies} />}
+      {showCookieModal && (
+        <CookiePolicyModal
+          handleAcceptCookies={handleAcceptCookies}
+          onClose={handleRejectCookies}
+        />
+      )}
+
+      {/* Slide-in Footer Modal */}
+      {showFooterModal && <FooterModal onClose={handleCloseFooterModal} />}
 
       {heroSection && <HeroScetion heroContent={heroSection} />}
       {countrySection && <SearchBar countries={countrySection} />}
@@ -62,7 +91,9 @@ const Home = () => {
       {review && <ReviewSection reviews={review} />}
       {blogSection && <ArticleAndNewsSection blogSection={blogSection} />}
       <JourneySection />
-      <BottomBannerSection />
+      <div ref={footerRef}>
+        <BottomBannerSection />
+      </div>
     </div>
   );
 };
