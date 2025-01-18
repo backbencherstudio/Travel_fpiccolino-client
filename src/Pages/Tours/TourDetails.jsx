@@ -36,15 +36,18 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import moment from "moment";
 import { base_url } from "../../utils/base_path";
-import { getReviewByPackage } from "../../features/review/reviewSlice";
+import {
+  clearPackageReviews,
+  getReviewByPackage,
+} from "../../features/review/reviewSlice";
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  console.log(params.id);
 
   const { packageDetails } = useSelector((state) => state.package);
   const { packageReview } = useSelector((state) => state.review);
   useEffect(() => {
+    dispatch(clearPackageReviews());
     dispatch(getPackageDetails(params?.id));
     dispatch(getReviewByPackage(params.id));
   }, []);

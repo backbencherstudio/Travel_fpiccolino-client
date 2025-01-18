@@ -20,7 +20,7 @@ import {
 const DashboardAnalysis = () => {
   const dispatch = useDispatch();
   const [chartType, setChartType] = useState("Order");
-  const [timeInterval, setTimeInterval] = useState("monthly");
+  const [timeInterval, setTimeInterval] = useState("weekly");
   const { packag } = useSelector((state) => state.package);
   const { totalData, radarData, chartData } = useSelector(
     (state) => state.dashboard

@@ -16,6 +16,7 @@ import {
   country_wise_TourPage,
   get_all_inclusive_TourPagePage,
 } from "../../features/pageData/pageDataSlice";
+import { PiShieldWarningThin } from "react-icons/pi";
 
 const Tours = () => {
   const { id } = useParams();
@@ -56,21 +57,33 @@ const Tours = () => {
   const packags = id
     ? country_wise_TourPageData?.package
     : all_inclusive_TourPageData?.package;
-  console.log(111111, packags);
   return (
     <div className="">
       {heroContent && <HeroScetion heroContent={heroContent} />}
 
       <ParentComponent styles="my-20">
         <HeadLine title={packags?.title} description={packags?.subtitle} />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20">
-          {packags?.data?.map((item) => (
-            <div key={item._id}>
-              <Link to={`/tours/${item._id}`}>
-                <TureCard item={item} />
-              </Link>
+        <div>
+          {packags?.data?.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20">
+              {packags?.data?.map((item) => (
+                <div key={item._id}>
+                  <Link to={`/tours/${item._id}`}>
+                    <TureCard item={item} />
+                  </Link>
+                </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className=" text-center py-20 my-20 rounded-lg text-lg border-dashed border border-orange-400 mx-5">
+              <div className="primary_text justify-center flex text-6xl mb-3 font-bold">
+                <PiShieldWarningThin />
+              </div>
+              <span className="primary_text text-lg font-medium">
+                No Tour Packages are available <br /> For selected country.{" "}
+              </span>
+            </div>
+          )}
         </div>
         <div className="mt-20">
           <Videos />
