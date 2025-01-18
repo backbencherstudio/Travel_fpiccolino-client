@@ -41,6 +41,7 @@ import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
 import CountryList from "../Components/Dashboard/AddCountry/CountryList";
 import { ProtectedRoute } from "./RouteProtection";
 import NewsLetter from "../Components/Dashboard/NewsLetter/NewsLetter";
+import UpdateFooter from "../Components/Dashboard/Footer/UpdateFooter";
 
 export const router = createBrowserRouter([
   {
@@ -180,6 +181,10 @@ export const router = createBrowserRouter([
       {
         path: "uploadShorts",
         element: <UploadShorts />,
+      },
+      {
+        path: "updateFooter",
+        element: <UpdateFooter />,
       },
     ],
   },

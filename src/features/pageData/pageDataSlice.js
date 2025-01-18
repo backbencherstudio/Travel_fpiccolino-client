@@ -122,6 +122,22 @@ export const getCiontectPageData = createAsyncThunk(
     }
   }
 );
+export const updateFooter = createAsyncThunk(
+  "footer/update",
+  async (footerData, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${base_url}/api/footer/footerpost`,
+        footerData
+      ); // Adjust endpoint as needed
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Failed to update footer."
+      );
+    }
+  }
+);
 
 // Initial state
 //  ========================= home

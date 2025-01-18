@@ -211,6 +211,17 @@ const Dashboard = () => {
             <FiYoutube />
             <span>Upload Shorts</span>
           </button>
+          <button
+            onClick={() => handleNavigation("updateFooter", "updateFooter")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "updateFooter"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <FiYoutube />
+            <span>Update Footer</span>
+          </button>
         </nav>
         <button
           onClick={() => handleLogOut()}
