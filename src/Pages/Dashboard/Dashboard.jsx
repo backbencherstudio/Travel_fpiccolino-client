@@ -16,6 +16,7 @@ import { TbArrowAutofitContent } from "react-icons/tb";
 import { FiYoutube } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
+import { RiNewsLine } from "react-icons/ri";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -153,6 +154,17 @@ const Dashboard = () => {
           >
             <IoMdContacts />
             <span>Contacts</span>
+          </button>
+          <button
+            onClick={() => handleNavigation("newsLetter", "newsLetter")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "newsLetter"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <RiNewsLine />
+            <span>News Letters</span>
           </button>
           <button
             onClick={() => handleNavigation("country", "country")}

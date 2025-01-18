@@ -2,14 +2,16 @@ import { CloseOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import img from "../assets/Images/cookie.png";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewsletter } from "../features/newsLetter/newsLetterSlice";
 
 const FooterModal = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.newsletter);
 
   useEffect(() => {
     const footerModalDismissed = localStorage.getItem("footerModalDismissed");
@@ -45,39 +47,17 @@ const FooterModal = ({ onClose }) => {
       return;
     }
 
-    setIsSubmitting(true);
-    setMessage(""); // Clear previous messages
-
-    try {
-      const response = await fetch(
-        "http://localhost:3000/api/newsletter/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email }),
-        }
-      );
-
-      if (response.ok) {
-        setMessage("Thank you for subscribing!");
-        toast.success("Thanks, Email send successfully");
+    dispatch(createNewsletter({ name, email }))
+      .unwrap()
+      .then(() => {
+        toast.success("Thanks, Email sent successfully");
         setEmail("");
-        setErrors({});
-        setName(""); // Clear input fields
+        setName("");
         onClose();
-      } else {
-        const errorData = await response.json();
-        setMessage(
-          errorData.message || "Something went wrong. Please try again."
-        );
-      }
-    } catch (error) {
-      setMessage("Network error. Please try again later.");
-    } finally {
-      setIsSubmitting(false);
-    }
+      })
+      .catch((err) => {
+        toast.error(err.message || "Something went wrong.");
+      });
   };
 
   return (
@@ -136,12 +116,12 @@ const FooterModal = ({ onClose }) => {
             </p>
             <button
               onClick={handleSubscribe}
-              disabled={isSubmitting}
+              disabled={loading}
               className={`bg-orange-500 w-full hover:bg-orange-600 text-white py-2 px-4 rounded-lg my-5 ${
-                isSubmitting && "opacity-50 cursor-not-allowed"
+                loading && "opacity-50 cursor-not-allowed"
               }`}
             >
-              {isSubmitting ? "Submitting..." : "Contact Us"}
+              {loading ? "Submitting..." : "Contact Us"}
             </button>
           </div>
           <div className="primary_bg hidden lg:flex items-center">

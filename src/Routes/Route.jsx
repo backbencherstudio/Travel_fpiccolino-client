@@ -40,6 +40,7 @@ import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
 import CountryList from "../Components/Dashboard/AddCountry/CountryList";
 import { ProtectedRoute } from "./RouteProtection";
+import NewsLetter from "../Components/Dashboard/NewsLetter/NewsLetter";
 
 export const router = createBrowserRouter([
   {
@@ -159,6 +160,10 @@ export const router = createBrowserRouter([
       {
         path: "contact",
         element: <ContactsTable />,
+      },
+      {
+        path: "newsLetter",
+        element: <NewsLetter />,
       },
       {
         path: "country",
