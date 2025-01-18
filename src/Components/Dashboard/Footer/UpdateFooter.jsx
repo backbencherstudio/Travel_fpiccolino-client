@@ -78,7 +78,7 @@ const UpdateFooter = () => {
         {/* Company Name */}
         <div>
           <label htmlFor="companyName" className="block font-medium mb-2">
-            Company Name
+            Banner Title
           </label>
           <input
             type="text"
