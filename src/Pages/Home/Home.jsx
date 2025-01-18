@@ -13,6 +13,7 @@ import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
 import CookiePolicyModal from "../../Shared/CookiePolicyModal"; // Import Cookie Modal
 import FooterModal from "../../Shared/FooterModal";
+import ScrollToTop from "../../Shared/ScrollToTop";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,41 +21,46 @@ const Home = () => {
     (state) => state.pageData
   );
 
-  const [showCookieModal, setShowCookieModal] = useState(false); // Cookie modal state
-  const [showFooterModal, setShowFooterModal] = useState(false); // Footer modal state
-  const footerRef = useRef(null); // Reference to detect the footer
+  const [showCookieModal, setShowCookieModal] = useState(false);
+  const [showFooterModal, setShowFooterModal] = useState(false);
+  const footerRef = useRef(null);
 
   useEffect(() => {
     dispatch(getHomePageData());
-
     // Check cookie policy status
-    const cookiesAccepted = sessionStorage.getItem("cookiesAccepted");
+    const cookiesAccepted = localStorage.getItem("cookiesAccepted");
     if (!cookiesAccepted) {
       setShowCookieModal(true);
     }
 
-    // Scroll listener for footer detection
-    const handleScroll = () => {
-      if (footerRef.current) {
-        const rect = footerRef.current.getBoundingClientRect();
-        const isFooterVisible = rect.top < window.innerHeight;
-        setShowFooterModal(isFooterVisible); // Show modal when footer is visible
-      }
-    };
+    const footerModalDismissed = localStorage.getItem("footerModalDismissed");
+    if (!footerModalDismissed) {
+      const handleScroll = () => {
+        if (footerRef.current) {
+          const rect = footerRef.current.getBoundingClientRect();
+          const isFooterVisible =
+            rect.top >= 0 && rect.top <= window.innerHeight;
+          setShowFooterModal(isFooterVisible);
+        }
+      };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, [dispatch]);
 
   const handleAcceptCookies = () => {
-    sessionStorage.setItem("cookiesAccepted", "true");
+    localStorage.setItem("cookiesAccepted", "true");
     setShowCookieModal(false);
   };
+
   const handleRejectCookies = () => {
     setShowCookieModal(false);
   };
+
   const handleCloseFooterModal = () => {
     setShowFooterModal(false);
+    localStorage.setItem("footerModalDismissed", "true");
   };
 
   const heroSection = homePageData?.hero;
@@ -84,14 +90,18 @@ const Home = () => {
       {countryWithoutImage && (
         <BlurSliderSection country={countryWithoutImage} />
       )}
-      {countrySection && <WondersSection countrySection={countrySection} />}
+      {countrySection && (
+        <div ref={footerRef}>
+          <WondersSection countrySection={countrySection} />
+        </div>
+      )}
       {titleWithoutContent && (
         <ApproachSection aboutWithoutContent={titleWithoutContent} />
       )}
       {review && <ReviewSection reviews={review} />}
       {blogSection && <ArticleAndNewsSection blogSection={blogSection} />}
       <JourneySection />
-      <div ref={footerRef}>
+      <div>
         <BottomBannerSection />
       </div>
     </div>

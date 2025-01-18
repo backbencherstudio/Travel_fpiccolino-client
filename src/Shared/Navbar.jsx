@@ -206,20 +206,21 @@ const Navbar = () => {
                     <div className="">
                       <WhatsApp
                         style={{ fontSize: "36px" }}
-                        className="text-white hover:scale-105"
+                        className="text-white mb-1 hover:scale-105"
                       />
                     </div>
                   </button>
                   {languageDropDown && (
-                    <div className="absolute -right-10 top-12 lg:right-0 z-10 mt-2 w-56 rounded-xl bg-white shadow-lg ring-1 ring-black/5">
-                      <div className="py-1 flex justify-center">
+                    <div className="absolute -right-10 top-12 lg:right-0 z-10 mt-2 w-64 px-3 rounded-xl bg-white shadow-lg ring-1 ring-black/5">
+                      <div className="py-1 flex">
                         <button
                           onClick={handleClick}
-                          className="flex items-center border border-green-500 text-green-500 hover:bg-green-200 hover:text-black px-8 py-2 my-5 mx-2 w-full rounded-full justify-around
+                          className="flex items-center border border-gray-400  hover:bg-gray-50 text-gray-500 px-5 py-2 my-5 mx-2 w-full rounded-full justify-start font-medium text-sm
                           "
                         >
                           {" "}
-                          <FaWhatsapp className="h-6 w-6" /> Start Live Chat
+                          <FaWhatsapp className="h-6 w-6 mr-3" /> Start Live
+                          Chat
                         </button>
                       </div>
                     </div>
