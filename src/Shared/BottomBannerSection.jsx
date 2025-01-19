@@ -8,9 +8,8 @@ import { getHomePageData } from "../features/pageData/pageDataSlice";
 const BottomBannerSection = () => {
   const dispatch = useDispatch();
   const { homePageData } = useSelector((state) => state.pageData);
-  const [loading, setLoading] = useState(true); // Loading state for initial render
-  const phoneNumber = "+393801585075";
-
+  const [loading, setLoading] = useState(true);
+  const footerData = homePageData?.footer?.[0] || {};
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -22,11 +21,8 @@ const BottomBannerSection = () => {
   }, [dispatch]);
 
   const handleClick = () => {
-    window.open(`https://wa.me/${phoneNumber}`, "_blank");
+    window.open(`https://wa.me/${footerData?.contactInfo?.phone}`, "_blank");
   };
-
-  // Handle the case where data is not yet loaded
-  const footerData = homePageData?.footer?.[0] || {};
 
   return (
     <div>

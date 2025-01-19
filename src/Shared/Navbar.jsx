@@ -15,11 +15,12 @@ const Navbar = () => {
   const [languageDropDown, setLanguageDropDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isloginOpen, setLoginOpen] = useState(false);
-  const phoneNumber = "+393801585075";
+  // const phoneNumber = "+393801585075";
   const message = "Hello, I have a question about your services.";
   const encodedMessage = encodeURIComponent(message);
   const { user, isAuthenticated } = useSelector((state) => state.authorization);
-
+  const { homePageData } = useSelector((state) => state.pageData);
+  const footerData = homePageData?.footer?.[0] || {};
   const ProfileRef = useRef();
   const menuRef = useRef();
   const buttonRef = useRef();
@@ -103,7 +104,7 @@ const Navbar = () => {
   };
   const handleClick = () => {
     window.open(
-      `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
+      `https://wa.me/${footerData?.contactInfo?.phone}?text=${encodedMessage}`,
       "_blank"
     );
   };
