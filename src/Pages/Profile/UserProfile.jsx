@@ -96,7 +96,7 @@ const UserProfile = () => {
                 <p className="text-[#72777F] text-[14px]">{user?.country}</p>
               </div>
             </div>
-            <h1 className="mt-5 text-[20px] font-medium">Bank Details</h1>
+            {/* <h1 className="mt-5 text-[20px] font-medium">Bank Details</h1>
             <div className="grid grid-cols-2 mt-3">
               <div>
                 <h1 className="text-[16px]">Bank Card</h1>
@@ -108,7 +108,7 @@ const UserProfile = () => {
                   {user?.paymentSystem}
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
           <button
             onClick={handleEditClick}

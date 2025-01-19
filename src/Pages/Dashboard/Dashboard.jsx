@@ -16,7 +16,7 @@ import { TbArrowAutofitContent } from "react-icons/tb";
 import { FiYoutube } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
-import { RiNewsLine } from "react-icons/ri";
+import { RiLayoutBottom2Line, RiNewsLine } from "react-icons/ri";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -219,7 +219,7 @@ const Dashboard = () => {
                 : "hover:bg-zinc-300"
             }`}
           >
-            <FiYoutube />
+            <RiLayoutBottom2Line />
             <span>Update Footer</span>
           </button>
         </nav>
