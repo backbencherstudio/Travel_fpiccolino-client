@@ -66,7 +66,12 @@ const Footer = () => {
       <ParentComponent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-20 pb-10 lg:gap-0 gap-10">
           <div>
-            <img src={logo} alt="Logo" />
+            {/* <img src={logo} alt="Logo" className=" h-52" /> */}
+            <img
+              src={`${base_url}/${footerData?.logoImg}`}
+              alt=""
+              className="w-[150px] h-[100px] rounded-lg"
+            />
           </div>
           <div className="flex justify-between">
             <div className="text-[18px] font-medium">

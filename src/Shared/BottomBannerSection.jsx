@@ -4,6 +4,7 @@ import HeadLine2 from "./HeadLineComponent/HeadLine2";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getHomePageData } from "../features/pageData/pageDataSlice";
+import { base_url } from "../utils/base_path";
 
 const BottomBannerSection = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,11 @@ const BottomBannerSection = () => {
   const handleClick = () => {
     window.open(`https://wa.me/${footerData?.contactInfo?.phone}`, "_blank");
   };
+  const fullImageUrl = `${base_url.replace(
+    /\/$/,
+    ""
+  )}/${footerData?.bannerImg?.replace(/^\//, "")}`;
+  console.log("Full Image URL:", fullImageUrl);
 
   return (
     <div>
@@ -34,12 +40,18 @@ const BottomBannerSection = () => {
         <div
           className="relative h-[520px]"
           style={{
-            backgroundImage: `url('${banner}')`, // Static URL for the background
+            height: "520px",
+            backgroundImage: `url('${base_url + "/" + footerData?.bannerImg}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}
         >
+          <img
+            src={base_url + "/" + footerData?.bannerImg}
+            alt=""
+            className="w-full h-full object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-t to-[#000000c4] from-transparent"></div>
           <div className="w-full text-center absolute top-[40%]">
             <HeadLine2

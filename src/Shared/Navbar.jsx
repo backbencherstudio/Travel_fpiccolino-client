@@ -7,6 +7,7 @@ import { logOut } from "../features/auth/authSlice";
 import { FaRegUserCircle, FaWhatsapp } from "react-icons/fa";
 import { LogoutOutlined, WhatsApp } from "@mui/icons-material";
 import { MdOutlineDashboard } from "react-icons/md";
+import { base_url } from "../utils/base_path";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -115,7 +116,11 @@ const Navbar = () => {
           <div className="flex lg:gap-6 h-16 items-center justify-between">
             <div className="md:flex md:items-center md:gap-12">
               <Link className="block text-teal-600" to="/">
-                <img src={logo} alt="" className=" w-36" />
+                <img
+                  src={`${base_url}/${footerData?.logoImg}`}
+                  alt=""
+                  className=" w-28 h-16 rounded-xl"
+                />
               </Link>
             </div>
 

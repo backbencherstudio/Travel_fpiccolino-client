@@ -124,16 +124,30 @@ export const getCiontectPageData = createAsyncThunk(
 );
 export const updateFooter = createAsyncThunk(
   "footer/update",
-  async (footerData, { rejectWithValue }) => {
+  async (formDataToSend, { rejectWithValue }) => {
     try {
+      // Debug log to see what's being sent
+      for (let pair of formDataToSend.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
+
       const response = await axios.put(
         `${base_url}/api/footer/footerpost`,
-        footerData
-      ); // Adjust endpoint as needed
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       return response.data;
     } catch (error) {
+      console.error("Full error:", error);
       return rejectWithValue(
-        error.response?.data || "Failed to update footer."
+        error.response?.data || {
+          message: "Failed to update footer",
+          error: error.message,
+        }
       );
     }
   }
