@@ -1,4 +1,3 @@
-import banner from "../assets/footerBanner.jpg";
 import CustomButton from "./CustomButton";
 import HeadLine2 from "./HeadLineComponent/HeadLine2";
 import { useDispatch, useSelector } from "react-redux";

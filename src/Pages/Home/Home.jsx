@@ -13,13 +13,10 @@ import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
 import CookiePolicyModal from "../../Shared/CookiePolicyModal"; // Import Cookie Modal
 import FooterModal from "../../Shared/FooterModal";
-import ScrollToTop from "../../Shared/ScrollToTop";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { homePageLoaging, homePageError, homePageData } = useSelector(
-    (state) => state.pageData
-  );
+  const { homePageData } = useSelector((state) => state.pageData);
 
   const [showCookieModal, setShowCookieModal] = useState(false);
   const [showFooterModal, setShowFooterModal] = useState(false);

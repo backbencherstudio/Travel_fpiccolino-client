@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { CloseOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import img from "../assets/Images/cookie.png";
@@ -11,7 +12,7 @@ const FooterModal = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.newsletter);
+  const { loading } = useSelector((state) => state.newsletter);
 
   useEffect(() => {
     const footerModalDismissed = localStorage.getItem("footerModalDismissed");

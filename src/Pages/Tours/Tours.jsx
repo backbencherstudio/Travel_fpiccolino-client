@@ -1,16 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { cardDetails } from "../../ALLJsonFile/const";
 import TureCard from "../../Components/ToursComponents/TureCard";
 import Videos from "../../Components/ToursComponents/Videos";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-// import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg";
-import heroImage from "../../assets/Images/HeroSection/heroImage2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getHeader } from "../../features/header/headerSlice";
 import { getPackage } from "../../features/pckage/packageSlice";
 import {
   country_wise_TourPage,
@@ -21,18 +17,10 @@ import { PiShieldWarningThin } from "react-icons/pi";
 const Tours = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { headers } = useSelector((state) => state.header);
-  const { packag } = useSelector((state) => state.package);
 
-  const {
-    all_inclusive_TourPageLoaging,
-    all_inclusive_TourPageError,
-    all_inclusive_TourPageData,
-
-    country_wise_TourPageLoaging,
-    country_wise_TourPageError,
-    country_wise_TourPageData,
-  } = useSelector((state) => state.pageData);
+  const { all_inclusive_TourPageData, country_wise_TourPageData } = useSelector(
+    (state) => state.pageData
+  );
 
   useEffect(() => {
     if (id) {

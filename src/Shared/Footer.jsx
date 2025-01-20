@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import logo from "../assets/logo.svg";
+import { useEffect, useState } from "react";
 import ParentComponent from "../Shared/ParentComponent/ParentComponent";
 import stripe from "../assets/payment/stripe.svg";
 import visa from "../assets/payment/visa.svg";
@@ -56,6 +55,7 @@ const Footer = () => {
         toast.error("Something went wrong. Please try again.");
       }
     } catch (error) {
+      console.log(error);
       setMessage("Error connecting to the server. Please try again.");
       toast.error("Error connecting to the server. Please try again.");
     }
