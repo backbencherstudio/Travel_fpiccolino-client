@@ -84,13 +84,11 @@ const AdventureSection = ({ cardDetails }) => {
               }}
             >
               {cardDetails?.data?.map((item) => (
-                <div key={item._id}>
-                  <SwiperSlide>
-                    <Link to={`/tours/${item._id}`}>
-                      <TureCard item={item} />
-                    </Link>
-                  </SwiperSlide>
-                </div>
+                <SwiperSlide key={`adventure-${item._id}`}>
+                  <Link to={`/tours/${item._id}`}>
+                    <TureCard item={item} />
+                  </Link>
+                </SwiperSlide>
               ))}
             </Swiper>
           </div>
