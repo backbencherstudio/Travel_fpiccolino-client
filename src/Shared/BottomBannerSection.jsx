@@ -23,11 +23,6 @@ const BottomBannerSection = () => {
   const handleClick = () => {
     window.open(`https://wa.me/${footerData?.contactInfo?.phone}`, "_blank");
   };
-  const fullImageUrl = `${base_url.replace(
-    /\/$/,
-    ""
-  )}/${footerData?.bannerImg?.replace(/^\//, "")}`;
-  console.log("Full Image URL:", fullImageUrl);
 
   return (
     <div>

@@ -16,7 +16,6 @@ const CountryList = () => {
     date: true,
     action: true,
   });
-  console.log(countries);
 
   return (
     <div>

@@ -21,7 +21,6 @@ const ContactsTable = () => {
         const response = await fetch(`${base_url}/api/contact/AllContact`);
         const data = await response.json();
         setContacts(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching contacts:", error);
       }

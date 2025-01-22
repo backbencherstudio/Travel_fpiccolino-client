@@ -146,7 +146,6 @@ const UpdateFooter = () => {
     dispatch(updateFooter(formDataToSend))
       .unwrap()
       .then((response) => {
-        console.log("Update successful:", response);
         toast.success("Footer updated successfully!");
       })
       .catch((error) => {

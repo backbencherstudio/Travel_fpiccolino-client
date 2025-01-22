@@ -11,24 +11,24 @@ import ArticleAndNewsSection from "../../Components/Home/ArticleAndNewsSection";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
 import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
-import CookiePolicyModal from "../../Shared/CookiePolicyModal"; // Import Cookie Modal
+// import CookiePolicyModal from "../../Shared/CookiePolicyModal";
 import FooterModal from "../../Shared/FooterModal";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { homePageData } = useSelector((state) => state.pageData);
 
-  const [showCookieModal, setShowCookieModal] = useState(false);
+  // const [showCookieModal, setShowCookieModal] = useState(false);
   const [showFooterModal, setShowFooterModal] = useState(false);
   const footerRef = useRef(null);
 
   useEffect(() => {
     dispatch(getHomePageData());
     // Check cookie policy status
-    const cookiesAccepted = localStorage.getItem("cookiesAccepted");
-    if (!cookiesAccepted) {
-      setShowCookieModal(true);
-    }
+    // const cookiesAccepted = localStorage.getItem("cookiesAccepted");
+    // if (!cookiesAccepted) {
+    //   setShowCookieModal(true);
+    // }
 
     const footerModalDismissed = localStorage.getItem("footerModalDismissed");
     if (!footerModalDismissed) {
@@ -46,14 +46,14 @@ const Home = () => {
     }
   }, [dispatch]);
 
-  const handleAcceptCookies = () => {
-    localStorage.setItem("cookiesAccepted", "true");
-    setShowCookieModal(false);
-  };
+  // const handleAcceptCookies = () => {
+  //   localStorage.setItem("cookiesAccepted", "true");
+  //   setShowCookieModal(false);
+  // };
 
-  const handleRejectCookies = () => {
-    setShowCookieModal(false);
-  };
+  // const handleRejectCookies = () => {
+  //   setShowCookieModal(false);
+  // };
 
   const handleCloseFooterModal = () => {
     setShowFooterModal(false);
@@ -72,12 +72,12 @@ const Home = () => {
   return (
     <div>
       {/* Show Cookie Modal */}
-      {showCookieModal && (
+      {/* {showCookieModal && (
         <CookiePolicyModal
           handleAcceptCookies={handleAcceptCookies}
           onClose={handleRejectCookies}
         />
-      )}
+      )} */}
 
       {/* Slide-in Footer Modal */}
       {showFooterModal && <FooterModal onClose={handleCloseFooterModal} />}
