@@ -2,6 +2,7 @@
 
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../Shared/CustomButton";
+import { base_url } from "../../utils/base_path";
 
 const ArticleCard = ({ item }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const ArticleCard = ({ item }) => {
       <div className="relative">
         <img
           className="h-[320px] w-full object-cover rounded-xl "
-          src={`http://localhost:3000/uploads/${headerImg}`}
+          src={`${base_url}/uploads/${headerImg}`}
           alt=""
         />
         {/* <div className="w-full h-full absolute top-0 left-0  rounded-xl group-hover:bg-[#E867311A] duration-300 "></div> */}
