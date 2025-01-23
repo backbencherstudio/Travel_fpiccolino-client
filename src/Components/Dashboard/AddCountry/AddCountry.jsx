@@ -25,7 +25,6 @@ const AddCountry = () => {
       formData.append("image", data.image[0]); // Adding image file
 
       const response = await dispatch(createCountry(formData));
-      console.log("response", response?.payload);
       toast.success(response?.payload?.message);
       reset();
       setImagePreview(null); // Reset image preview after submit

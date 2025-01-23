@@ -3,8 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import natureImage from "../../assets/natureImage.jpg";
-import natureImage2 from "../../assets/natureImage2.jpg";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ArticleCard from "./ArticleCard";
 const ArticleAndNewsSection = ({ blogSection }) => {
@@ -80,12 +78,10 @@ const ArticleAndNewsSection = ({ blogSection }) => {
                 },
               }}
             >
-              {blogSection?.data.map((item) => (
-                <div key={item._id}>
-                  <SwiperSlide>
-                    <ArticleCard item={item} />
-                  </SwiperSlide>
-                </div>
+              {blogSection?.data.map((item, index) => (
+                <SwiperSlide key={`blog-${item._id}`}>
+                  <ArticleCard item={item} />
+                </SwiperSlide>
               ))}
             </Swiper>
           </div>

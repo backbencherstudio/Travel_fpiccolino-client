@@ -10,8 +10,8 @@ import { useInView } from "react-intersection-observer";
 const JourneySection = () => {
   const dispatch = useDispatch();
   const { blogs } = useSelector((state) => state.blog);
-  const [randomBlog, setRandomBlog] = useState(null); // State to store the randomly selected blog
-  const [ref, inView] = useInView({ triggerOnce: true }); // Detect when the numbers are in view
+  const [randomBlog, setRandomBlog] = useState(null);
+  const [ref, inView] = useInView({ triggerOnce: true });
 
   useEffect(() => {
     dispatch(getBlog({ search: "", startDate: "", endDate: "" }));
@@ -19,21 +19,20 @@ const JourneySection = () => {
 
   useEffect(() => {
     if (blogs.length > 0) {
-      // Generate a random index if the blogs array has elements
       const randomIndex = Math.floor(Math.random() * blogs.length);
-      setRandomBlog(blogs[randomIndex]); // Set the randomly selected blog
+      setRandomBlog(blogs[randomIndex]);
     }
-  }, [blogs]); // Re-run when blogs array updates
+  }, [blogs]);
 
   if (!randomBlog) {
-    return <div>Loading...</div>; // Loading state while blogs are fetched
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="bg-[#fff] lg:p-20 lg:pt-0">
       <ParentComponent>
         <div className="mt-[100px]">
-          <h2 className="font-duera-expanded text-[#000000] text-[30px] lg:text-[32px] font-extrabold leading-[41.6px] text-start decoration-skip-ink ">
+          <h2 className="font-duera-expanded text-[#000000] text-[30px] lg:text-[32px] font-extrabold leading-[41.6px] text-start decoration-skip-ink">
             Your Journey, Our Passion
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-[74px] mt-14">
@@ -45,15 +44,15 @@ const JourneySection = () => {
               />
             </div>
             <div className="lg:col-span-3">
-              <p className="text-[18px] w-full">
+              <div className="text-[18px] w-full">
                 {randomBlog.heroSection[0]?.text.slice(0, 200)}
                 <br />
                 {randomBlog.contentList[0]?.paragraphs?.map((para, index) => (
-                  <p key={index} className="my-2">
+                  <div key={`para-${index}`} className="my-2">
                     {para.slice(0, 300)}
-                  </p>
+                  </div>
                 ))}
-              </p>
+              </div>
               <div className="mt-5 mb-8">
                 {/* <CustomButton content={"Read More"} /> */}
               </div>
@@ -73,32 +72,36 @@ const JourneySection = () => {
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
               {inView && <CountUp end={10} duration={2} />}+
             </h1>
-            <p className="text-[24px] text-[#72777F] mt-2">
+            <div className="text-[24px] text-[#72777F] mt-2">
               Years of Experience
-            </p>
+            </div>
           </div>
 
           <div className="text-center">
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
               {inView && <CountUp end={500} duration={2} />}+
             </h1>
-            <p className="text-[24px] text-[#72777F] mt-2">Travel Completed</p>
+            <div className="text-[24px] text-[#72777F] mt-2">
+              Travel Completed
+            </div>
           </div>
 
           <div className="text-center">
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
               {inView && <CountUp end={1500} duration={2} />}+
             </h1>
-            <p className="text-[24px] text-[#72777F] mt-2">
+            <div className="text-[24px] text-[#72777F] mt-2">
               Happy Customer Review
-            </p>
+            </div>
           </div>
 
           <div className="text-center">
             <h1 className="text-[56px] text-[#000000] font-extrabold leading-[41.6px]">
               {inView && <CountUp end={99} duration={2} />}%
             </h1>
-            <p className="text-[24px] text-[#72777F] mt-2">Success Rating</p>
+            <div className="text-[24px] text-[#72777F] mt-2">
+              Success Rating
+            </div>
           </div>
         </div>
       </ParentComponent>

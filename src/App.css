@@ -1,3 +1,6 @@
+body {
+  font-family: "Stapel", sans-serif;
+}
 .primary_text {
   @apply text-[#E86731];
 }
@@ -14,13 +17,12 @@
   border: 1px solid #e9e9ea;
 }
 .loginBG {
-    /* width: 100%; */
-    background-image: 
-      linear-gradient(to right, #e86731 30%, transparent 0%), 
-      linear-gradient(to right, #fdf0ea 100%, transparent 0%);
-    /* background-size: 100% 100%;  */
-    /* background-repeat: no-repeat; */
-  }
-.clamp_text{
+  /* width: 100%; */
+  background-image: linear-gradient(to right, #e86731 30%, transparent 0%),
+    linear-gradient(to right, #fdf0ea 100%, transparent 0%);
+  /* background-size: 100% 100%;  */
+  /* background-repeat: no-repeat; */
+}
+.clamp_text {
   font-size: clamp(1.5rem, 2vw, 3rem);
 }

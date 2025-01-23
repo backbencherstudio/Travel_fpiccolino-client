@@ -1,15 +1,65 @@
+/* eslint-disable react/prop-types */
 import { CloseOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
+import img from "../assets/Images/cookie.png";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewsletter } from "../features/newsLetter/newsLetterSlice";
 
 const FooterModal = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.newsletter);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true); // Show after a small delay
-    }, 200);
-    return () => clearTimeout(timer);
+    const footerModalDismissed = localStorage.getItem("footerModalDismissed");
+    if (!footerModalDismissed) {
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 200);
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  // Validation function
+  const validateForm = () => {
+    const newErrors = {};
+    if (!name.trim()) {
+      newErrors.name = "Name is required.";
+    } else if (name.length < 2) {
+      newErrors.name = "Name must be at least 2 characters.";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubscribe = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    dispatch(createNewsletter({ name, email }))
+      .unwrap()
+      .then(() => {
+        toast.success("Thanks, Email sent successfully");
+        setEmail("");
+        setName("");
+        onClose();
+      })
+      .catch((err) => {
+        toast.error(err.message || "Something went wrong.");
+      });
+  };
 
   return (
     <div
@@ -18,7 +68,7 @@ const FooterModal = ({ onClose }) => {
       }`}
     >
       <div
-        className={`fixed bottom-0 z-50  bg-white shadow-lg  rounded-t-3xl lg:rounded-md  lg:right-5 lg:bottom-5  transform transition-transform duration-300 ${
+        className={`fixed bottom-0 z-50 bg-white shadow-lg rounded-t-3xl lg:rounded-md lg:right-5 lg:bottom-5 transform transition-transform duration-300 ${
           isVisible
             ? "translate-y-0 lg:translate-x-0"
             : "translate-y-full lg:translate-x-full"
@@ -26,7 +76,7 @@ const FooterModal = ({ onClose }) => {
       >
         <div
           onClick={onClose}
-          className="flex justify-end absolute right-2 top-2 bg-white rounded-full"
+          className="flex justify-end absolute right-2 top-2 bg-white rounded-full cursor-pointer"
         >
           <CloseOutlined />
         </div>
@@ -40,22 +90,44 @@ const FooterModal = ({ onClose }) => {
             <input
               type="text"
               placeholder="Name"
-              className="bg-gray-200 w-full  p-2 rounded-lg my-1 mt-5 focus:border focus:border-orange-500 focus:outline-none"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={`bg-gray-200 w-full p-2 rounded-lg my-1 mt-5 focus:border ${
+                errors.name ? "border-red-500" : "border-orange-500"
+              } focus:outline-none`}
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name}</p>
+            )}
             <input
-              type="text"
+              type="email"
               placeholder="Email"
-              className="bg-gray-200 w-full  p-2 rounded-lg my-1 focus:border focus:border-orange-500 focus:outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`bg-gray-200 w-full p-2 rounded-lg my-1 focus:border ${
+                errors.email ? "border-red-500" : "border-orange-500"
+              } focus:outline-none`}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email}</p>
+            )}
             <p className="text-gray-600 my-3 text-md">
               Cliccando su “Iscriviti ora!” esprimi il tuo consenso a ricevere
               la newsletter di Utravel. Leggi l'informativa privacy
             </p>
-            <button className=" bg-orange-500 w-full hover:bg-orange-600 text-white py-2 px-4  rounded-lg my-5">
-              Contact Us
+            <button
+              onClick={handleSubscribe}
+              disabled={loading}
+              className={`bg-orange-500 w-full hover:bg-orange-600 text-white py-2 px-4 rounded-lg my-5 ${
+                loading && "opacity-50 cursor-not-allowed"
+              }`}
+            >
+              {loading ? "Submitting..." : "Contact Us"}
             </button>
           </div>
-          <div className="primary_bg"></div>
+          <div className="primary_bg hidden lg:flex items-center">
+            <img src={img} alt="Footer Modal Illustration" />
+          </div>
         </div>
       </div>
     </div>

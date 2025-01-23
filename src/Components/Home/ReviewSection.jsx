@@ -44,12 +44,10 @@ const ReviewSection = ({ reviews }) => {
                 setIsEnd(swiper.isEnd);
               }}
             >
-              {review.reviews?.slice(0, 15).map((item) => (
-                <div key={item._id}>
-                  <SwiperSlide>
-                    <ReviewCard item={item} />
-                  </SwiperSlide>
-                </div>
+              {review.reviews?.slice(0, 15).map((item, index) => (
+                <SwiperSlide key={`review-${item._id}`}>
+                  <ReviewCard item={item} />
+                </SwiperSlide>
               ))}
             </Swiper>
           </div>

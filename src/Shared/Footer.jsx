@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import logo from "../assets/logo.svg";
+import { useEffect, useState } from "react";
 import ParentComponent from "../Shared/ParentComponent/ParentComponent";
 import stripe from "../assets/payment/stripe.svg";
 import visa from "../assets/payment/visa.svg";
@@ -9,49 +8,29 @@ import call from "../assets/icons/call.svg";
 import mail from "../assets/icons/mail.svg";
 import klarna from "../assets/payment/download.png";
 import { base_url } from "../utils/base_path";
-import { toast } from "react-hot-toast"; // Importing the toast function
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageData } from "../features/pageData/pageDataSlice";
-import { getHeader } from "../features/header/headerSlice";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-  // State for email input and checkbox
   const [email, setEmail] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
-  const [message, setMessage] = useState(""); // To display success or error message
+  const [message, setMessage] = useState("");
 
   const dispatch = useDispatch();
-  const { homePageLoaging, homePageError, homePageData } = useSelector(
-    (state) => state.pageData
-  );
+  const { homePageData } = useSelector((state) => state.pageData);
 
   useEffect(() => {
     dispatch(getHomePageData());
-  }, []);
+  }, [dispatch]);
 
-  // const { headers } = useSelector((state) => state.header);
-  // useEffect(() => {
-  //   dispatch(getHeader());
-  // }, []);
+  const footerData = homePageData?.footer?.[0] || {}; // Default to an empty object to prevent errors
+  const contactInfo = footerData.contactInfo || {}; // Default to an empty object for contact info
 
-  // const data = headers?.filter(item => item.pageName === "home")
-  // const heroContent = {
-  //   heroImage: data[0]?.heroImage,
-  //   titleOne: data[0]?.titleOne,
-  //   descriptionOne: data[0]?.descriptionOne,
-  // }
-
-  // if (homePageData) {
-  //   const contactInfo = homePageData?.footer;
-  //   console.log(contactInfo);
-  // }
-
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if the email is valid and the user has agreed to the terms
     if (!email || !isAgreed) {
       setMessage("Please provide a valid email and agree to the terms.");
       return;
@@ -67,16 +46,16 @@ const Footer = () => {
       });
 
       if (response.status === 200 || response.status === 201) {
-        // Success - Show success toast
         toast.success("Thank you for subscribing! We'll be in touch soon.");
-        setEmail(""); // Clear the input field
-        setIsAgreed(false); // Uncheck the checkbox
-        setMessage(""); // Clear the message
+        setEmail("");
+        setIsAgreed(false);
+        setMessage("");
       } else {
         setMessage("Something went wrong. Please try again.");
         toast.error("Something went wrong. Please try again.");
       }
     } catch (error) {
+      console.log(error);
       setMessage("Error connecting to the server. Please try again.");
       toast.error("Error connecting to the server. Please try again.");
     }
@@ -87,7 +66,12 @@ const Footer = () => {
       <ParentComponent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-20 pb-10 lg:gap-0 gap-10">
           <div>
-            <img src={logo} alt="Logo" />
+            {/* <img src={logo} alt="Logo" className=" h-52" /> */}
+            <img
+              src={`${base_url}/${footerData?.logoImg}`}
+              alt=""
+              className="w-[150px] h-[100px] rounded-lg"
+            />
           </div>
           <div className="flex justify-between">
             <div className="text-[18px] font-medium">
@@ -112,10 +96,10 @@ const Footer = () => {
               <h1 className="text-[20px] font-medium mb-6">Contattaci</h1>
               <p>{"We're"} Here to Help with Any Questions or Concerns</p>
               <p className="flex gap-1 mt-4">
-                <img src={call} alt="" /> +393801585075
+                <img src={call} alt="Call Icon" /> {contactInfo.phone || "N/A"}
               </p>
               <p className="flex gap-1 mt-2">
-                <img src={mail} alt="" /> info@latuafugalowcost.it
+                <img src={mail} alt="Mail Icon" /> {contactInfo.email || "N/A"}
               </p>
             </div>
           </div>
@@ -125,7 +109,7 @@ const Footer = () => {
 
               <form className="relative mt-4" onSubmit={handleSubmit}>
                 <input
-                  className=" p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg"
+                  className="p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg"
                   type="email"
                   placeholder="Your Email address"
                   value={email}
@@ -149,7 +133,6 @@ const Footer = () => {
                 </div>
               </form>
 
-              {/* Display message */}
               {message && (
                 <p className="text-sm text-red-400 mt-3">{message}</p>
               )}
@@ -161,7 +144,7 @@ const Footer = () => {
         <ParentComponent>
           <div className="flex flex-col md:flex-row justify-between py-6 md:gap-0 gap-5">
             <p className="text-[16px]">
-              Copyright © 2024 LA TUA FUGA LOWCOST. Tutti i diritti riservati.
+              Copyright {footerData?.copyright || "N/A"}
             </p>
             <div className="flex gap-2">
               <img

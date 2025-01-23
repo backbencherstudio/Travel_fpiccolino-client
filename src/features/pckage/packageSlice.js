@@ -34,7 +34,6 @@ export const createPackage = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }

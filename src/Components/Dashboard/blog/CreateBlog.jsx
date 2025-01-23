@@ -171,9 +171,6 @@ const CreateBlog = () => {
     // Update deepCopy using state updater
     setDeepCopy((prevDeepCopy) => [...prevDeepCopy, newEntry]);
 
-    console.log(mainContent, "here");
-    console.log(deepCopy, "deepCopy after push");
-
     setMainContent({ heading: "", subHeading: "", image: null });
     handleMainContentClose();
   };
@@ -194,7 +191,6 @@ const CreateBlog = () => {
           },
         }
       );
-      console.log("Image uploaded successfully", response.data);
       setImagePath(response?.data?.images);
       return response.data.images;
     } catch (error) {
@@ -220,7 +216,6 @@ const CreateBlog = () => {
           },
         }
       );
-      console.log("Image uploaded successfully", response.data);
       setMainimagepath(response?.data?.images);
       return response.data.images;
     } catch (error) {
@@ -243,7 +238,6 @@ const CreateBlog = () => {
     if (!uploadMainImage) {
       return;
     }
-    // console.log(deepCopy, "last");
     const body = {
       heroSection: [
         {
@@ -264,8 +258,6 @@ const CreateBlog = () => {
         image: uploadedImages[index] ? uploadedImages[index].path : null,
       })),
     };
-
-    console.log("Blog Data:", body);
 
     try {
       const response = await fetch(`${base_url}/api/blogs/createblog`, {

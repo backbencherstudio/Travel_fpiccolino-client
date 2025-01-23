@@ -4,50 +4,58 @@ import { base_url } from "../../utils/base_path";
 
 axios.defaults.withCredentials = true;
 
+// Centralized API Routes
+const API_ROUTES = {
+  CREATE_REVIEW: (userId, orderId) =>
+    `${base_url}/api/review/createReview/${userId}/${orderId}`,
+  GET_REVIEWS: `${base_url}/api/review/getReviewall`,
+  GET_PACKAGE_REVIEWS: (id) => `${base_url}/api/review/getReviewByPakage/${id}`,
+};
+
 // Thunk for creating a review
 export const createReview = createAsyncThunk(
-  "api/contact/createReview",
+  "review/create",
   async ({ reviewData, orderId }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${base_url}/api/review/createReview/${reviewData?.userId}/${orderId}`,
+        API_ROUTES.CREATE_REVIEW(reviewData?.userId, orderId),
         reviewData
       );
-      console.log("slice", response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data || "Failed to create review."
+      );
     }
   }
 );
 
 // Thunk for fetching all reviews
 export const getReview = createAsyncThunk(
-  "package/get",
+  "review/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${base_url}/api/review/getReviewall`);
-      return response.data; // Return all reviews
+      const response = await axios.get(API_ROUTES.GET_REVIEWS);
+      return response.data;
     } catch (error) {
-      console.error(error);
-      return rejectWithValue(error.response?.data || "Something went wrong");
+      return rejectWithValue(
+        error.response?.data || "Failed to fetch all reviews."
+      );
     }
   }
 );
 
 // Thunk for fetching reviews by package ID
 export const getReviewByPackage = createAsyncThunk(
-  "package/getByPackage",
+  "review/getByPackage",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `${base_url}/api/review/getReviewByPakage/${id}`
-      );
-      return response.data; // Return package-specific reviews
+      const response = await axios.get(API_ROUTES.GET_PACKAGE_REVIEWS(id));
+      return response.data;
     } catch (error) {
-      console.error(error);
-      return rejectWithValue(error.response?.data || "Something went wrong");
+      return rejectWithValue(
+        error.response?.data || "Failed to fetch package reviews."
+      );
     }
   }
 );
@@ -57,13 +65,22 @@ const reviewSlice = createSlice({
   name: "review",
   initialState: {
     review: [], // All reviews
-    loading: false, // Loading state for general reviews
-    error: null, // Error state for general reviews
+    loading: false, // General loading state
+    error: null, // General error state
     packageReview: [], // Package-specific reviews
     packageReviewLoading: false, // Loading state for package reviews
     packageReviewError: null, // Error state for package reviews
   },
-  reducers: {},
+  reducers: {
+    // Reducer to clear all reviews
+    clearReviews: (state) => {
+      state.review = [];
+    },
+    // Reducer to clear package-specific reviews
+    clearPackageReviews: (state) => {
+      state.packageReview = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Handle createReview actions
@@ -88,12 +105,11 @@ const reviewSlice = createSlice({
       })
       .addCase(getReview.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
         state.review = action.payload;
       })
       .addCase(getReview.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message ?? null;
+        state.error = action.payload;
       });
 
     builder
@@ -108,9 +124,13 @@ const reviewSlice = createSlice({
       })
       .addCase(getReviewByPackage.rejected, (state, action) => {
         state.packageReviewLoading = false;
-        state.packageReviewError = action.payload?.message ?? null;
+        state.packageReviewError = action.payload;
       });
   },
 });
 
+// Export Reducers
+export const { clearReviews, clearPackageReviews } = reviewSlice.actions;
+
+// Export Slice Reducer
 export default reviewSlice.reducer;
