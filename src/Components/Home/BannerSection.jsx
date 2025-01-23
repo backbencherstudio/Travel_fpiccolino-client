@@ -14,7 +14,7 @@ const BannerSection = () => {
         {/* <img className="  max-h-[80vh] cover w-full" src={banner} alt="" /> */}
         <div className="absolute inset-0 bg-gradient-to-t to-[#000000c4] from-transparent "></div>
         <div className="w-full text-center absolute top-[40%]">
-          <h3 className="text-[36px] lg:text-[56px] text-white font-sans font-extrabold top-[50%] max-w-[760px] mx-auto leading-[60px]">
+          <h3 className="text-[36px] lg:text-[56px] text-white font-extrabold top-[50%] max-w-[760px] mx-auto leading-[60px]">
             Feel at Home Wherever You Roam
           </h3>
           <p className="text-[18px] max-w-[588px] mx-auto text-[#E9E9EA]">
@@ -23,7 +23,6 @@ const BannerSection = () => {
           </p>
         </div>
       </div>
-
     </>
   );
 };

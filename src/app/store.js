@@ -13,6 +13,7 @@ import reviewReducer from "../features/review/reviewSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import checkoutReducer from "../features/checkout/checkoutSlice";
 import orderReducer from "../features/order/orderSlice";
+import newsLetterReducer from "../features/newsLetter/newsLetterSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,12 +25,13 @@ export const store = configureStore({
     blog: blogReducer,
     country: countryReducer,
     user: userReducer,
-    package: packageReducer, 
+    package: packageReducer,
     section: sectionReducer,
     pageData: pageDataRedicer,
     review: reviewReducer,
-    checkout : checkoutReducer,
-    order : orderReducer
+    checkout: checkoutReducer,
+    order: orderReducer,
+    newsletter: newsLetterReducer,
   },
 });
 

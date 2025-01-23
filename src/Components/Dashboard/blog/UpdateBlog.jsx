@@ -118,7 +118,6 @@ const UpdateBlog = () => {
       ...prevContentList,
       { headings: ["New Heading"], image: "", paragraphs: ["New paragraph"] },
     ]);
-    console.log(contentList);
   };
 
   const deleteContent = async (index) => {
@@ -134,7 +133,6 @@ const UpdateBlog = () => {
           },
         }
       );
-      console.log("Hero Section Deleted", response.data);
 
       toast.success("Content Delete successfully!");
       navigate(`/blog/${id}`);
@@ -210,7 +208,6 @@ const UpdateBlog = () => {
           },
         }
       );
-      console.log("Image uploaded successfully", response.data);
       setImages([]);
       return response.data.images;
     } catch (error) {
@@ -229,8 +226,6 @@ const UpdateBlog = () => {
 
       setImages([]);
     }
-
-    console.log(heroSection);
 
     const body = {
       UpdatedImage: uploadedImages[0]?.path || "",
@@ -266,12 +261,9 @@ const UpdateBlog = () => {
     const formData = new FormData();
     if (content?.file) {
       const file = content?.file;
-      console.log(content);
       uploadedImages = await UploadimagePath();
 
       setImages([]);
-      console.log(uploadedImages);
-      console.log(uploadedImages[0]?.path);
       formData.append("file", content.file);
     }
     const body = {
@@ -282,10 +274,6 @@ const UpdateBlog = () => {
         content?.paragraphs.map((paragraph, pIndex) => paragraph) || [],
     };
 
-    // console.log("this is body", body);
-
-    // console.log(index, "jhljervhbrejvcrewufhe");
-    // console.log(id, index);
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updateContent/${id}/${index}`,
@@ -296,7 +284,7 @@ const UpdateBlog = () => {
           },
         }
       );
-      console.log(`Content ${index + 1} Updated`, response.data);
+
       setContentList([]);
       toast.success("Blog updated successfully!");
       navigate(`/blog/${id}`);
@@ -308,13 +296,12 @@ const UpdateBlog = () => {
 
   const updateCategory = async () => {
     const payload = { category: selectedCategory };
-    console.log(payload);
+
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updatecatagory/${id}`,
         payload
       );
-      console.log("Category Updated", response.data);
       setCategory(response.data.category);
       toast.success("Category updated successfully!");
       navigate(`/blog/${id}`);
@@ -330,13 +317,11 @@ const UpdateBlog = () => {
       learn: sentences,
       thought: thought,
     };
-    console.log(payload);
     try {
       const response = await axios.patch(
         `${base_url}/api/blogs/updateTexContent/${id}`,
         payload
       );
-      console.log("Text Updated", response.data);
       setCategory(response.data.category);
       toast.success("Text updated successfully!");
     } catch (error) {

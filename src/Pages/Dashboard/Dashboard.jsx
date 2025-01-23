@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { FaHome, FaRegBell, FaRegUser } from "react-icons/fa";
-import { IoClose, IoGolfOutline, IoMenu } from "react-icons/io5";
+import { FaHome, FaRegUser } from "react-icons/fa";
+import { IoClose, IoMenu } from "react-icons/io5";
 import { LuClipboardList, LuLayoutDashboard } from "react-icons/lu";
 import { PiTrolleySuitcase } from "react-icons/pi";
-import { MdOutlinePayment } from "react-icons/md";
 import { GrArticle } from "react-icons/gr";
-import image from "../../assets/image1.jpg";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { IoMdContacts } from "react-icons/io";
@@ -16,6 +14,7 @@ import { TbArrowAutofitContent } from "react-icons/tb";
 import { FiYoutube } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
+import { RiLayoutBottom2Line, RiNewsLine } from "react-icons/ri";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,9 +24,7 @@ const Dashboard = () => {
   );
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
-  const { user, appLoading, isAuthenticated } = useSelector(
-    (state) => state.authorization
-  );
+  const { user } = useSelector((state) => state.authorization);
   useEffect(() => {
     localStorage.setItem("tab", selectedTab);
   }, [selectedTab]);
@@ -155,6 +152,17 @@ const Dashboard = () => {
             <span>Contacts</span>
           </button>
           <button
+            onClick={() => handleNavigation("newsLetter", "newsLetter")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "newsLetter"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <RiNewsLine />
+            <span>News Letters</span>
+          </button>
+          <button
             onClick={() => handleNavigation("country", "country")}
             className={`flex items-center space-x-2 p-2 rounded ${
               selectedTab === "country"
@@ -198,6 +206,17 @@ const Dashboard = () => {
           >
             <FiYoutube />
             <span>Upload Shorts</span>
+          </button>
+          <button
+            onClick={() => handleNavigation("updateFooter", "updateFooter")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "updateFooter"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <RiLayoutBottom2Line />
+            <span>Update Footer</span>
           </button>
         </nav>
         <button

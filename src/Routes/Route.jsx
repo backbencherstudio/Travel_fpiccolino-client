@@ -39,7 +39,9 @@ import Checkout from "../Pages/checkout/Checkout";
 import UploadShorts from "../Components/Dashboard/uploadShorts/UploadShorts";
 import CreateBlog from "../Components/Dashboard/blog/CreateBlog";
 import CountryList from "../Components/Dashboard/AddCountry/CountryList";
-import { ProtectedAdminRoute, ProtectedRoute } from "./RouteProtection";
+import { ProtectedRoute } from "./RouteProtection";
+import NewsLetter from "../Components/Dashboard/NewsLetter/NewsLetter";
+import UpdateFooter from "../Components/Dashboard/Footer/UpdateFooter";
 
 export const router = createBrowserRouter([
   {
@@ -214,11 +216,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "contact",
-        element: (
-          <ProtectedAdminRoute>
-            <ContactsTable />
-          </ProtectedAdminRoute>
-        ),
+        element: <ContactsTable />,
+      },
+      {
+        path: "newsLetter",
+        element: <NewsLetter />,
       },
       {
         path: "country",
@@ -238,11 +240,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "uploadShorts",
-        element: (
-          <ProtectedAdminRoute>
-            <UploadShorts />
-          </ProtectedAdminRoute>
-        ),
+        element: <UploadShorts />,
+      },
+      {
+        path: "updateFooter",
+        element: <UpdateFooter />,
       },
     ],
   },

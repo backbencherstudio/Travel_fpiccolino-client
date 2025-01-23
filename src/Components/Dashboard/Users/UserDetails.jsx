@@ -84,7 +84,7 @@ const UserDetails = () => {
               </p>
             </div>
           </div>
-          <h1 className="mt-5 text-[20px] font-medium">Bank Details</h1>
+          {/* <h1 className="mt-5 text-[20px] font-medium">Bank Details</h1>
           <div className="grid grid-cols-2 mt-3">
             <div>
               <h1 className="text-[16px]">Bank Card</h1>
@@ -98,7 +98,7 @@ const UserDetails = () => {
                 {userDetails?.paymentSystem}
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <h1 className="mt-5 text-[20px] font-medium">Tour Details</h1>

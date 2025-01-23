@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import logo from "../assets/logo.svg";
 import { CloseOutlined } from "@mui/icons-material";

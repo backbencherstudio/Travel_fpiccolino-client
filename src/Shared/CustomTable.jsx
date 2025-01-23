@@ -31,6 +31,7 @@ import { deletePackage, getPackage } from "../features/pckage/packageSlice";
 import { getUser } from "../features/users/userSlice";
 import { getOrders } from "../features/order/orderSlice";
 import { deleteCountry } from "../features/country/countrySlice";
+import { deleteNewsletter } from "../features/newsLetter/newsLetterSlice";
 
 const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -79,6 +80,8 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
           await dispatch(deletePackage(deleteId));
         } else if (tableType === "country") {
           await dispatch(deleteCountry(deleteId));
+        } else if (tableType === "newsLetter") {
+          await dispatch(deleteNewsletter(deleteId));
         } else {
           console.log("Invalid table type:", tableType);
         }
@@ -148,7 +151,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
             />
           )}
         </div>
-        {tableType === "country" || tableType === "contact" ? (
+        {tableType === "country" ||
+        tableType === "contact" ||
+        tableType === "newsLetter" ? (
           <></>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 items-center mb-5 gap-3 px-4">
@@ -198,6 +203,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.username && <TableCell>User Name</TableCell>}
                 {columns?.blogName && <TableCell>Blog Name</TableCell>}
                 {columns?.countryName && <TableCell>Country</TableCell>}
+                {columns?.Name && <TableCell>Name</TableCell>}
                 {columns?.orderUser && <TableCell>User</TableCell>}
                 {columns?.title && <TableCell>Title</TableCell>}
                 {columns?.category && <TableCell>Category</TableCell>}
@@ -340,6 +346,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.category && (
                       <TableCell>{item.category}</TableCell>
                     )}
+                    {columns?.Name && <TableCell>{item.name}</TableCell>}
                     {columns?.email && <TableCell>{item.email}</TableCell>}
                     {columns?.phone && <TableCell>{item.phone}</TableCell>}
 
@@ -404,17 +411,18 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 ">
-                          {tableType !== "country" && (
-                            <div
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`update/${item._id}`);
-                              }}
-                              className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
-                            >
-                              <FiEdit3 />
-                            </div>
-                          )}
+                          {tableType !== "country" &&
+                            tableType !== "newsLetter" && (
+                              <div
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`update/${item._id}`);
+                                }}
+                                className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
+                              >
+                                <FiEdit3 />
+                              </div>
+                            )}
                           <div
                             onClick={(e) => {
                               e.stopPropagation();

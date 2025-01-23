@@ -11,50 +11,53 @@ import ArticleAndNewsSection from "../../Components/Home/ArticleAndNewsSection";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
 import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
-import CookiePolicyModal from "../../Shared/CookiePolicyModal"; // Import Cookie Modal
+// import CookiePolicyModal from "../../Shared/CookiePolicyModal";
 import FooterModal from "../../Shared/FooterModal";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { homePageLoaging, homePageError, homePageData } = useSelector(
-    (state) => state.pageData
-  );
+  const { homePageData } = useSelector((state) => state.pageData);
 
-  const [showCookieModal, setShowCookieModal] = useState(false); // Cookie modal state
-  const [showFooterModal, setShowFooterModal] = useState(false); // Footer modal state
-  const footerRef = useRef(null); // Reference to detect the footer
+  // const [showCookieModal, setShowCookieModal] = useState(false);
+  const [showFooterModal, setShowFooterModal] = useState(false);
+  const footerRef = useRef(null);
 
   useEffect(() => {
     dispatch(getHomePageData());
-
     // Check cookie policy status
-    const cookiesAccepted = sessionStorage.getItem("cookiesAccepted");
-    if (!cookiesAccepted) {
-      setShowCookieModal(true);
+    // const cookiesAccepted = localStorage.getItem("cookiesAccepted");
+    // if (!cookiesAccepted) {
+    //   setShowCookieModal(true);
+    // }
+
+    const footerModalDismissed = localStorage.getItem("footerModalDismissed");
+    if (!footerModalDismissed) {
+      const handleScroll = () => {
+        if (footerRef.current) {
+          const rect = footerRef.current.getBoundingClientRect();
+          const isFooterVisible =
+            rect.top >= 0 && rect.top <= window.innerHeight;
+          setShowFooterModal(isFooterVisible);
+        }
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
     }
-
-    // Scroll listener for footer detection
-    const handleScroll = () => {
-      if (footerRef.current) {
-        const rect = footerRef.current.getBoundingClientRect();
-        const isFooterVisible = rect.top < window.innerHeight;
-        setShowFooterModal(isFooterVisible); // Show modal when footer is visible
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, [dispatch]);
 
-  const handleAcceptCookies = () => {
-    sessionStorage.setItem("cookiesAccepted", "true");
-    setShowCookieModal(false);
-  };
-  const handleRejectCookies = () => {
-    setShowCookieModal(false);
-  };
+  // const handleAcceptCookies = () => {
+  //   localStorage.setItem("cookiesAccepted", "true");
+  //   setShowCookieModal(false);
+  // };
+
+  // const handleRejectCookies = () => {
+  //   setShowCookieModal(false);
+  // };
+
   const handleCloseFooterModal = () => {
     setShowFooterModal(false);
+    localStorage.setItem("footerModalDismissed", "true");
   };
 
   const heroSection = homePageData?.hero;
@@ -64,16 +67,17 @@ const Home = () => {
   const review = homePageData?.review;
   const blogSection = homePageData?.blogSection;
   const countryWithoutImage = homePageData?.country;
+  const footerSection = homePageData?.footer;
 
   return (
     <div>
       {/* Show Cookie Modal */}
-      {showCookieModal && (
+      {/* {showCookieModal && (
         <CookiePolicyModal
           handleAcceptCookies={handleAcceptCookies}
           onClose={handleRejectCookies}
         />
-      )}
+      )} */}
 
       {/* Slide-in Footer Modal */}
       {showFooterModal && <FooterModal onClose={handleCloseFooterModal} />}
@@ -84,16 +88,22 @@ const Home = () => {
       {countryWithoutImage && (
         <BlurSliderSection country={countryWithoutImage} />
       )}
-      {countrySection && <WondersSection countrySection={countrySection} />}
+      {countrySection && (
+        <div ref={footerRef}>
+          <WondersSection countrySection={countrySection} />
+        </div>
+      )}
       {titleWithoutContent && (
         <ApproachSection aboutWithoutContent={titleWithoutContent} />
       )}
       {review && <ReviewSection reviews={review} />}
       {blogSection && <ArticleAndNewsSection blogSection={blogSection} />}
       <JourneySection />
-      <div ref={footerRef}>
-        <BottomBannerSection />
-      </div>
+      {footerSection && (
+        <div>
+          <BottomBannerSection footerSection={footerSection} />
+        </div>
+      )}
     </div>
   );
 };
