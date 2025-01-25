@@ -57,7 +57,9 @@ const AddContent = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto p-6 bg-white rounded shadow-md mt-10"
       >
-        <h2 className="text-[28px] font-bold text-center mb-4">Add Content</h2>
+        <h2 className="text-[28px] font-bold text-center mb-4">
+          Section Title
+        </h2>
         {/* Page Name Field */}
         <div className="mb-4">
           <label
