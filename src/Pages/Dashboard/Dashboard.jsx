@@ -194,7 +194,7 @@ const Dashboard = () => {
             }`}
           >
             <TbArrowAutofitContent />
-            <span>Add Content</span>
+            <span>Section Title</span>
           </button>
           <button
             onClick={() => handleNavigation("uploadShorts", "uploadShorts")}

@@ -31,13 +31,11 @@ const Contact = () => {
   };
 
   // const { headers } = useSelector((state) => state.header);
-  const { contactPage } = useSelector((state) => state.pageData);
-
+  const { contactPage, homePageData } = useSelector((state) => state.pageData);
   useEffect(() => {
     // dispatch(getHeader());
     dispatch(getCiontectPageData());
   }, []);
-
   // const data = headers?.filter((item) => item.pageName === "contact");
 
   if (!contactPage) {
@@ -73,7 +71,7 @@ const Contact = () => {
               <div>
                 <p className="text-[16px]">Mail us at</p>
                 <p className="text-[18px] primary_text font-medium">
-                  medicakitservice@gmail.com
+                  {homePageData?.footer[0]?.contactInfo?.email}
                 </p>
               </div>{" "}
             </div>
@@ -84,7 +82,7 @@ const Contact = () => {
               <div>
                 <p className="text-[16px]">Phone us at</p>
                 <p className="text-[18px] primary_text font-medium">
-                  +393801585075
+                  {homePageData?.footer[0]?.contactInfo?.phone}
                 </p>
               </div>{" "}
             </div>
