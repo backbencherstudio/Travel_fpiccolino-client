@@ -43,7 +43,7 @@ const UpdateBlog = () => {
     const fetchCategoryCount = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/blogs/categoryCount"
+          `${base_url}/blogs/categoryCount`
         );
         updateOptions(response.data);
       } catch (err) {
