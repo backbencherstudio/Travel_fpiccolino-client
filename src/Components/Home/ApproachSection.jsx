@@ -1,10 +1,27 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { base_url } from "../../utils/base_path";
 import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import stay from "../../assets/icons/stay.svg";
-import connect from "../../assets/icons/connect.svg";
-import explore from "../../assets/icons/explore.svg";
 
 const ApproachSection = ({ aboutWithoutContent }) => {
+  const [approachData, setApproachData] = useState([]);
+
+  useEffect(() => {
+    const fetchApproachData = async () => {
+      try {
+        const response = await axios.get(`${base_url}/api/approach`);
+        if (response.data && response.data.logos) {
+          setApproachData(response.data.logos);
+        }
+      } catch (error) {
+        console.error("Error fetching approach data:", error);
+      }
+    };
+
+    fetchApproachData();
+  }, []);
+
   return (
     <div>
       <ParentComponent>
@@ -14,34 +31,23 @@ const ApproachSection = ({ aboutWithoutContent }) => {
             description={aboutWithoutContent?.description}
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[60px] mt-14">
-            <div className="text-center">
-              <div className="flex justify-center">
-                <img src={stay} alt="" />
+            {approachData.map((item, index) => (
+              <div key={index} className="text-center">
+                <div className="flex justify-center">
+                  <img
+                    src={`${base_url}/${item.logo}`}
+                    alt={item.name}
+                    className="h-[100px] w-[100px] object-contain"
+                  />
+                </div>
+                <h1 className="primary_text font-bold text-[32px]">
+                  {item.name}
+                </h1>
+                <p className="text-[#72777F] text-[14px] max-w-[375px] mx-auto">
+                  {item.description}
+                </p>
               </div>
-              <h1 className="primary_text font-bold text-[32px]">Stay</h1>
-              <p className="text-[#72777F] text-[14px] max-w-[375px] mx-auto">
-                Uncover a vibrant space where travelers and local communities
-                come together to share and connect.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="flex justify-center">
-                <img src={connect} alt="" />
-              </div>
-              <h1 className="primary_text font-bold text-[32px] ">Connect</h1>
-              <p className="text-[#72777F] text-[14px] max-w-[375px] mx-auto">
-                Forge new connections with people and places, creating memories that will last a lifetime.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="flex justify-center">
-                <img src={explore} alt="" />
-              </div>
-              <h1 className="primary_text font-bold text-[32px]">Explore</h1>
-              <p className="text-[#72777F] text-[14px] max-w-[375px] mx-auto">
-                Turn the world into your home and immerse yourself in authentic experiences everywhere you go.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </ParentComponent>

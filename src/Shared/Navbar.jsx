@@ -135,7 +135,7 @@ const Navbar = () => {
                       }
                     >
                       {" "}
-                      About{" "}
+                      La nostra Filosofia{" "}
                     </NavLink>
                   </li>
 
@@ -147,7 +147,7 @@ const Navbar = () => {
                       }
                     >
                       {" "}
-                      Tour{" "}
+                      l Nostri Viaggi{" "}
                     </NavLink>
                   </li>
                   <li>
@@ -158,7 +158,7 @@ const Navbar = () => {
                       }
                     >
                       {" "}
-                      Blog{" "}
+                      ll Blog LowCost{" "}
                     </NavLink>
                   </li>
 
@@ -174,7 +174,7 @@ const Navbar = () => {
                     </NavLink>
                   </li>
 
-                  <li>
+                  {/* <li>
                     <NavLink
                       to="/policy"
                       className={({ isActive }) =>
@@ -184,7 +184,7 @@ const Navbar = () => {
                       {" "}
                       Policy{" "}
                     </NavLink>
-                  </li>
+                  </li> */}
 
                   <li>
                     <NavLink
@@ -194,7 +194,7 @@ const Navbar = () => {
                       }
                     >
                       {" "}
-                      Contact{" "}
+                      Supporto Live{" "}
                     </NavLink>
                   </li>
                 </ul>
@@ -385,11 +385,11 @@ const Navbar = () => {
               <nav className="flex bg-white flex-col p-4 space-y-6 absolute w-full z-20">
                 <ul className="text-lg ">
                   {[
-                    { name: "About", to: "/about" },
-                    { name: "Tour", to: "/tours" },
-                    { name: "Blog", to: "/blog" },
+                    { name: "La nostra Filosofia", to: "/about" },
+                    { name: "l Nostri Viaggi", to: "/tours" },
+                    { name: "ll Blog LowCost", to: "/blog" },
                     { name: "FAQ", to: "/faq" },
-                    { name: "Contact", to: "/contact" },
+                    { name: "Supporto Live", to: "/contact" },
                   ].map((item, index) => (
                     <li key={index}>
                       <NavLink

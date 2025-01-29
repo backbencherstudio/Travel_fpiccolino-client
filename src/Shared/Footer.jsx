@@ -77,19 +77,22 @@ const Footer = () => {
             <div className="text-[18px] font-medium">
               <h1 className="text-[20px] font-medium mb-6">Quick Link</h1>
               <Link to="/about">
-                <p>About</p>
+                <p>La nostra Filosofia</p>
               </Link>
               <Link to="/tours">
-                <p>Tour</p>
+                <p>l Nostri Viaggi</p>
               </Link>
               <Link to="/blog">
-                <p>Blog</p>
+                <p>ll Blog LowCost</p>
               </Link>
               <Link to="/faq">
                 <p>FAQ</p>
               </Link>
               <Link to="/contact">
-                <p>Contact</p>
+                <p>Supporto Live</p>
+              </Link>
+              <Link to="/policy">
+                <p>Termini e condizioni</p>
               </Link>
             </div>
             <div className="text-[16px] font-normal max-w-[218px]">

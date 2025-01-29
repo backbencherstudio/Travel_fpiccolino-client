@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaHome, FaRegUser } from "react-icons/fa";
+import { FaHome, FaPlusSquare, FaRegUser } from "react-icons/fa";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { LuClipboardList, LuLayoutDashboard } from "react-icons/lu";
 import { PiTrolleySuitcase } from "react-icons/pi";
@@ -217,6 +217,17 @@ const Dashboard = () => {
           >
             <RiLayoutBottom2Line />
             <span>Update Footer</span>
+          </button>
+          <button
+            onClick={() => handleNavigation("updateApproach", "updateApproach")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "updateApproach"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <FaPlusSquare />
+            <span>Update Approach</span>
           </button>
         </nav>
         <button

@@ -42,6 +42,7 @@ import CountryList from "../Components/Dashboard/AddCountry/CountryList";
 import { ProtectedRoute } from "./RouteProtection";
 import NewsLetter from "../Components/Dashboard/NewsLetter/NewsLetter";
 import UpdateFooter from "../Components/Dashboard/Footer/UpdateFooter";
+import UpdateApproach from "../Components/Dashboard/Approach/updateApproach";
 
 export const router = createBrowserRouter([
   {
@@ -185,6 +186,10 @@ export const router = createBrowserRouter([
       {
         path: "updateFooter",
         element: <UpdateFooter />,
+      },
+      {
+        path: "updateApproach",
+        element: <UpdateApproach />,
       },
     ],
   },
