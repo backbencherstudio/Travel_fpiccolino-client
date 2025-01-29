@@ -15,6 +15,7 @@ import { FiYoutube } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
 import { RiLayoutBottom2Line, RiNewsLine } from "react-icons/ri";
+import { Settings } from "@mui/icons-material";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ const Dashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
   const { user } = useSelector((state) => state.authorization);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isContactsOpen, setIsContactsOpen] = useState(false);
+
   useEffect(() => {
     localStorage.setItem("tab", selectedTab);
   }, [selectedTab]);
@@ -58,10 +62,10 @@ const Dashboard = () => {
       <aside
         className={`fixed inset-y-0 left-0 transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform lg:translate-x-0 lg:relative w-[280px] bg-white border p-5 z-50 h-screen`}
+        } transition-transform lg:translate-x-0 lg:relative w-[280px] bg-white border p-5 z-50 h-screen flex flex-col`}
       >
         <h1 className="text-2xl font-bold mb-5">Admin</h1>
-        <nav className="flex flex-col gap-4">
+        <nav className="flex flex-col gap-4 flex-grow overflow-y-auto mb-16">
           <button
             onClick={() => handleNavigation("Dashboard", "")}
             className={`flex items-center space-x-2 p-2 rounded ${
@@ -117,18 +121,6 @@ const Dashboard = () => {
             <PiTrolleySuitcase />
             <span>Package</span>
           </button>
-          {/* <button
-            onClick={() => handleNavigation("Payment", "payment")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "Payment"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <MdOutlinePayment />
-            <span>Payment History</span>
-          </button> */}
-
           <button
             onClick={() => handleNavigation("Blog", "blog-list")}
             className={`flex items-center space-x-2 p-2 rounded ${
@@ -140,28 +132,69 @@ const Dashboard = () => {
             <GrArticle />
             <span>Blog</span>
           </button>
-          <button
-            onClick={() => handleNavigation("contact", "contact")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "contact"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <IoMdContacts />
-            <span>Contacts</span>
-          </button>
-          <button
-            onClick={() => handleNavigation("newsLetter", "newsLetter")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "newsLetter"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <RiNewsLine />
-            <span>News Letters</span>
-          </button>
+          <div>
+            <button
+              onClick={() => setIsContactsOpen(!isContactsOpen)}
+              className={`flex items-center justify-between space-x-2 p-2 rounded w-full ${
+                selectedTab === "contact" || selectedTab === "newsLetter"
+                  ? "bg-[#fdf0ea] primary_text font-semibold"
+                  : "hover:bg-zinc-300"
+              }`}
+            >
+              <div className="flex items-center space-x-2">
+                <IoMdContacts />
+                <span>Contacts</span>
+              </div>
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  isContactsOpen ? "rotate-180" : ""
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            <div
+              className={`ml-4 flex flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out ${
+                isContactsOpen
+                  ? "max-h-[500px] opacity-100 mt-1"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <button
+                onClick={() => handleNavigation("contact", "contact")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "contact"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <IoMdContacts />
+                <span>Contacts</span>
+              </button>
+
+              <button
+                onClick={() => handleNavigation("newsLetter", "newsLetter")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "newsLetter"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <RiNewsLine />
+                <span>News Letters</span>
+              </button>
+            </div>
+          </div>
+
           <button
             onClick={() => handleNavigation("country", "country")}
             className={`flex items-center space-x-2 p-2 rounded ${
@@ -173,75 +206,127 @@ const Dashboard = () => {
             <TiWorldOutline className="text-[20px]" />
             <span>Countries</span>
           </button>
+          <div>
+            <button
+              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+              className={`flex items-center justify-between space-x-2 p-2 rounded w-full ${
+                selectedTab === "uploadShorts" ||
+                selectedTab === "updateFooter" ||
+                selectedTab === "updateApproach" ||
+                selectedTab === "Header" ||
+                selectedTab === "AddContent"
+                  ? "bg-[#fdf0ea] primary_text font-semibold"
+                  : "hover:bg-zinc-300"
+              }`}
+            >
+              <div className="flex items-center space-x-2">
+                <Settings sx={{ fontSize: "20px" }} />
+                <span>Settings</span>
+              </div>
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  isSettingsOpen ? "rotate-180" : ""
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* Settings Dropdown with smooth transition */}
+            <div
+              className={`ml-4 flex flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out ${
+                isSettingsOpen
+                  ? "max-h-[500px] opacity-100 mt-1"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <button
+                onClick={() => handleNavigation("Header", "header")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "Header"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <BiBookContent />
+                <span>Banners</span>
+              </button>
+
+              <button
+                onClick={() => handleNavigation("AddContent", "addContent")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "AddContent"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <TbArrowAutofitContent />
+                <span>Section Title</span>
+              </button>
+
+              <button
+                onClick={() => handleNavigation("uploadShorts", "uploadShorts")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "uploadShorts"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <FiYoutube />
+                <span>Upload Shorts</span>
+              </button>
+
+              <button
+                onClick={() => handleNavigation("updateFooter", "updateFooter")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "updateFooter"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <RiLayoutBottom2Line />
+                <span>Update Footer</span>
+              </button>
+
+              <button
+                onClick={() =>
+                  handleNavigation("updateApproach", "updateApproach")
+                }
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "updateApproach"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <FaPlusSquare />
+                <span>Update Approach</span>
+              </button>
+            </div>
+          </div>
+        </nav>
+        <div className="absolute bottom-0 left-0 right-0 p-3 bg-white border-t flex justify-between">
           <button
-            onClick={() => handleNavigation("Header", "header")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "Header"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
+            onClick={() => handleLogOut()}
+            className="flex gap-3 text-[14px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"
           >
-            <BiBookContent />
-            <span>Banners</span>
+            <CiLogout className="mt-1" /> Logout
           </button>
 
           <button
-            onClick={() => handleNavigation("AddContent", "addContent")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "AddContent"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
+            onClick={() => navigate("/")}
+            className="flex gap-3 text-[14px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-2 rounded-md text-[#72777F]"
           >
-            <TbArrowAutofitContent />
-            <span>Section Title</span>
+            Home Page <FaHome className="mt-1" />
           </button>
-          <button
-            onClick={() => handleNavigation("uploadShorts", "uploadShorts")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "uploadShorts"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <FiYoutube />
-            <span>Upload Shorts</span>
-          </button>
-          <button
-            onClick={() => handleNavigation("updateFooter", "updateFooter")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "updateFooter"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <RiLayoutBottom2Line />
-            <span>Update Footer</span>
-          </button>
-          <button
-            onClick={() => handleNavigation("updateApproach", "updateApproach")}
-            className={`flex items-center space-x-2 p-2 rounded ${
-              selectedTab === "updateApproach"
-                ? "bg-[#fdf0ea] primary_text font-semibold"
-                : "hover:bg-zinc-300"
-            }`}
-          >
-            <FaPlusSquare />
-            <span>Update Approach</span>
-          </button>
-        </nav>
-        <button
-          onClick={() => handleLogOut()}
-          className="absolute bottom-3 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"
-        >
-          <CiLogout className="mt-1" /> Logout
-        </button>
-        <button
-          onClick={() => navigate("/")}
-          className="absolute right-0 bottom-3 flex gap-3 text-[16px] hover:bg-[#fdf0ea] hover:text-[#ec6931] p-2 px-5 rounded-md text-[#72777F]"
-        >
-          Home Page <FaHome className="mt-1" />
-        </button>
+        </div>
       </aside>
 
       {/* Main Content */}
