@@ -43,6 +43,7 @@ import { ProtectedRoute } from "./RouteProtection";
 import NewsLetter from "../Components/Dashboard/NewsLetter/NewsLetter";
 import UpdateFooter from "../Components/Dashboard/Footer/UpdateFooter";
 import UpdateApproach from "../Components/Dashboard/Approach/updateApproach";
+import UpdateFAQ from "../Components/Dashboard/FAQ/updateFAQ";
 
 export const router = createBrowserRouter([
   {
@@ -191,8 +192,13 @@ export const router = createBrowserRouter([
         path: "updateApproach",
         element: <UpdateApproach />,
       },
+      {
+        path: "updateFAQ",
+        element: <UpdateFAQ />,
+      },
     ],
   },
+
   {
     path: "/checkout",
     element: <Checkout />,

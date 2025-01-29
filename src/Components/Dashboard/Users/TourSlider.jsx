@@ -49,14 +49,28 @@ const TourSlider = ({ userData, title, id, userType }) => {
     closeModal();
   };
 
+  // Italian translations for tour status
+  const tourStatusTranslations = {
+    "On Going Tours": "Tour in Corso",
+    "Pending Tours": "Tour in Attesa",
+    "Completed Tours": "Tour Completati",
+  };
+
+  // Function to get Italian translation
+  const getItalianTitle = (englishTitle) => {
+    return tourStatusTranslations[englishTitle] || englishTitle;
+  };
+
   if (!userData?.length) {
     return (
       <div>
         <h1 className="mt-5 text-[16px] font-medium primary_text">
-          {title} (0)
+          {getItalianTitle(title)} (0)
         </h1>
         <div className="my-10 py-10 text-center border border-dashed border-gray-300 rounded-lg">
-          <p className="primary_text">Don't have any {title}</p>
+          <p className="primary_text">
+            Non hai nessun {getItalianTitle(title)}
+          </p>
         </div>
       </div>
     );
@@ -65,7 +79,7 @@ const TourSlider = ({ userData, title, id, userType }) => {
   return (
     <div>
       <h1 className="mt-5 text-[16px] primary_text font-medium">
-        {title} {`(${userData?.length})`}
+        {getItalianTitle(title)} {`(${userData?.length})`}
       </h1>
       <div className="mt-5 border-t pt-3">
         <Swiper
@@ -125,7 +139,7 @@ const TourSlider = ({ userData, title, id, userType }) => {
                     }}
                     className="primary_bg text-white px-3 py-1 rounded hover:opacity-85"
                   >
-                    Add Review
+                    Aggiungi recensione
                   </button>
                 )}
               </SwiperSlide>
@@ -179,7 +193,7 @@ const TourSlider = ({ userData, title, id, userType }) => {
           }}
         >
           <Typography id="add-review-modal" variant="h6" component="h2" mb={2}>
-            Add Your Review
+            Aggiungi la tua recensione
           </Typography>
 
           <Stack spacing={1}>
@@ -207,14 +221,14 @@ const TourSlider = ({ userData, title, id, userType }) => {
 
           <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Button onClick={closeModal} variant="outlined" color="error">
-              Cancel
+              Cancellare
             </Button>
             <Button
               onClick={handleReviewSubmit}
               variant="contained"
               color="warning"
             >
-              Submit
+              Invia
             </Button>
           </Stack>
         </Box>

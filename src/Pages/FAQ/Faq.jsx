@@ -1,181 +1,128 @@
 import { useDispatch, useSelector } from "react-redux";
-import { accordionData } from "../../ALLJsonFile/const";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-
-import heroImage from "../../assets/eve.jpg";
-import { useEffect } from "react";
-import { getHeader } from "../../features/header/headerSlice";
+import { useEffect, useState } from "react";
 import { getFaqPageData } from "../../features/pageData/pageDataSlice";
+import axios from "axios";
+import { base_url } from "../../utils/base_path";
 
 const Faq = () => {
+  const dispatch = useDispatch();
+  const [faqData, setFaqData] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("");
+  // const { headers } = useSelector((state) => state.header);
+  const { faqPageData } = useSelector((state) => state.pageData);
 
-    const dispatch = useDispatch();
-    // const { headers } = useSelector((state) => state.header);
-    const {  faqPageDataLoaging,
-        faqPageDataError,
-        faqPageData} = useSelector((state) => state.pageData);
+  // Italian translations for categories
+  const categoryTranslations = {
+    "Booking and Reservations": "Prenotazioni e Riserve",
+    "Travel Experience and Itinerary": "Esperienza di Viaggio e Itinerario",
+    "Payment and Pricing": "Pagamento e Prezzi",
+    "Travel Insurance and Safety": "Assicurazione Viaggio e Sicurezza",
+  };
 
+  // Function to get Italian translation
+  const getItalianName = (englishName) => {
+    return categoryTranslations[englishName] || englishName;
+  };
 
-    useEffect(() => {
-        // dispatch(getHeader());
-        dispatch(getFaqPageData())
-    }, []);
-    // const data = headers?.filter(item => item.pageName === "faq")
+  useEffect(() => {
+    // dispatch(getHeader());
+    dispatch(getFaqPageData());
+    // Fetch FAQ data
+    const fetchFAQs = async () => {
+      try {
+        const response = await axios.get(`${base_url}/api/faq`);
+        const faqsByCategory = {};
+        response.data.data.forEach((faq) => {
+          faqsByCategory[faq.category] = faq.questions;
+        });
+        setFaqData(faqsByCategory);
+        // Set initial selected category to first category
+        if (Object.keys(faqsByCategory).length > 0) {
+          setSelectedCategory(Object.keys(faqsByCategory)[0]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch FAQs");
+      }
+    };
+    fetchFAQs();
+  }, []);
 
-    const heroContent = faqPageData?.hero
-    console.log(heroContent)
-    // {
-    //     heroImage: data[0]?.heroImage,
-    //     titleOne: data[0]?.titleOne,
-    //     descriptionOne: data[0]?.descriptionOne,
-    // }
+  const heroContent = faqPageData?.hero;
 
-    console.log(faqPageData)
+  if (!faqPageData) {
+    return;
+  }
 
-    // const heroContent = {
-    //     heroImage,
-    //     titleOne: "Feel at Home Wherever You Roam",
-    //     descriptionOne:
-    //         "Discover the warmth of home in every destination, blending comfort, connection, and local charm",
-    // };
+  return (
+    <div>
+      <HeroScetion heroContent={heroContent} />
 
-    // Accordion data
+      <div className="bg-[#EFFBFB] py-20">
+        <ParentComponent>
+          <div className="grid grid-cols-12 lg:gap-5 xl:gap-20 grid-cols-reverse min-h-[80vh]">
+            <div className="col-span-12 lg:col-span-9 lg:order-1 bg-[#EFFBFB] rounded-lg">
+              <div>
+                {/* Show only selected category's FAQs */}
 
-    if(!faqPageData){
-        return
-    }
-
-    return (
-        <div>
-            <HeroScetion heroContent={heroContent} />
-
-            <div className="bg-[#EFFBFB] py-20">
-                <ParentComponent>
-                    <div className="grid grid-cols-12 lg:gap-5 xl:gap-20 grid-cols-reverse">
-                        <div className="col-span-12 lg:col-span-9 lg:order-1 bg-[#EFFBFB] rounded-lg">
-                            <div  >
-                                <h2 className="text-[32px] font-bold text-[#141D2A]">
-                                    Booking and Reservations
-                                </h2>
-
-                                {/* ==============================================  Dynamic Accordion ============================================== */}
-
-                                <div className="text-[#1C1C1C] mt-8 border-b border-[#E86731] pb-2">
-                                    {accordionData.map((item, index) => (
-                                        <div
-                                            key={index}
-                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7  "
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="my-accordion"
-                                                defaultChecked={index === 0}
-                                            />
-                                            <div className="collapse-title text-xl font-medium flex items-center">
-                                                <h2 className="text-[20px] font-semibold">
-                                                    {item.question}
-                                                </h2>
-                                            </div>
-                                            <div className="collapse-content">
-                                                <div>
-                                                    <p>{item.answer}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                </div>
-
-                                {/* ==============================================  Dynamic Accordion ============================================== */}
-
-                                <h2 className="text-[32px] font-bold my-8 text-[#141D2A]">
-                                    Travel Experience and Itinerary
-                                </h2>
-
-                                <div className="text-[#1C1C1C]  border-b border-[#E86731] pb-2">
-                                    {accordionData.map((item, index) => (
-                                        <div
-                                            key={index}
-                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7  "
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="my-accordion"
-                                            />
-                                            <div className="collapse-title text-xl font-medium flex items-center">
-                                                <h2 className="text-[20px] font-semibold">
-                                                    {item.question}
-                                                </h2>
-                                            </div>
-                                            <div className="collapse-content">
-                                                <div>
-                                                    <p>{item.answer}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                </div>
-
-                                {/* ==============================================  Dynamic Accordion ============================================== */}
-
-                                <h2 className="text-[32px] font-bold my-8 text-[#141D2A]">
-                                    Payment and Pricing
-                                </h2>
-
-                                <div className="text-[#1C1C1C]  border-b border-[#E86731] pb-2">
-                                    {accordionData.map((item, index) => (
-                                        <div
-                                            key={index}
-                                            className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7  "
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="my-accordion"
-                                            />
-                                            <div className="collapse-title text-xl font-medium flex items-center">
-                                                <h2 className="text-[20px] font-semibold">
-                                                    {item.question}
-                                                </h2>
-                                            </div>
-                                            <div className="collapse-content">
-                                                <div>
-                                                    <p>{item.answer}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                </div>
-
+                {selectedCategory && (
+                  <div>
+                    <h2 className="text-[32px] font-bold text-[#141D2A]">
+                      {getItalianName(selectedCategory)}
+                    </h2>
+                    <div className="text-[#1C1C1C] mt-8 pb-2">
+                      {faqData[selectedCategory]?.map((item, index) => (
+                        <div
+                          key={index}
+                          className="collapse collapse-arrow bg-[#E86731] text-[#FFFFFF] mb-7"
+                        >
+                          <input
+                            type="radio"
+                            name={`accordion-${selectedCategory}`}
+                            defaultChecked={index === 0}
+                          />
+                          <div className="collapse-title text-xl font-medium flex items-center">
+                            <h2 className="text-[20px] font-semibold">
+                              {item.question}
+                            </h2>
+                          </div>
+                          <div className="collapse-content">
+                            <div>
+                              <p>{item.answer}</p>
                             </div>
+                          </div>
                         </div>
-
-                        {/* ======================================  Side bar ========================== */}
-                        <div className="col-span-12 lg:col-span-3 mt-5 lg:mt-0">
-                            <div className="rounded-lg">
-                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
-                                    Booking and Reservations
-                                </h2>
-                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
-                                    Travel Experience and Itinerary
-                                </h2>
-                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
-                                    Travel Experience and Itinerary
-                                </h2>
-                                <h2 className="font-bold text-[22px] hover:bg-[#FFFFFF] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2">
-                                    Travel Insurance and Safety
-                                </h2>
-                            </div>
-                        </div>
+                      ))}
                     </div>
-                </ParentComponent>
+                  </div>
+                )}
+              </div>
             </div>
-            <BottomBannerSection />
-        </div>
-    );
+
+            {/* Sidebar with Italian category names */}
+            <div className="col-span-12 lg:col-span-3 mt-5 lg:mt-0">
+              <div className="rounded-lg">
+                {Object.keys(faqData).map((category, index) => (
+                  <h2
+                    key={index}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`font-bold text-[22px] cursor-pointer hover:bg-[#cccccc5b] duration-300 text-[#141D2A] py-[16px] px-6 rounded-md mb-2 ${
+                      selectedCategory === category ? "bg-[#fdf0ea]" : ""
+                    }`}
+                  >
+                    {getItalianName(category)}
+                  </h2>
+                ))}
+              </div>
+            </div>
+          </div>
+        </ParentComponent>
+      </div>
+      <BottomBannerSection />
+    </div>
+  );
 };
 
 export default Faq;

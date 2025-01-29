@@ -15,7 +15,7 @@ import { FiYoutube } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
 import { RiLayoutBottom2Line, RiNewsLine } from "react-icons/ri";
-import { Settings } from "@mui/icons-material";
+import { QuestionMark, Settings } from "@mui/icons-material";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -204,6 +204,7 @@ const Dashboard = () => {
                 selectedTab === "updateFooter" ||
                 selectedTab === "updateApproach" ||
                 selectedTab === "Header" ||
+                selectedTab === "updateFAQ" ||
                 selectedTab === "AddContent"
                   ? "bg-[#fdf0ea] primary_text font-semibold"
                   : "hover:bg-zinc-300"
@@ -298,6 +299,17 @@ const Dashboard = () => {
               >
                 <FaPlusSquare />
                 <span>Update Approach</span>
+              </button>
+              <button
+                onClick={() => handleNavigation("updateFAQ", "updateFAQ")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "updateFAQ"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <QuestionMark sx={{ fontSize: "20px" }} />
+                <span>Update FAQ</span>
               </button>
             </div>
           </div>

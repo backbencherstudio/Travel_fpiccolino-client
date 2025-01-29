@@ -60,7 +60,7 @@ const ReviewCard = ({ item }) => {
             <p className="text-[18px] text-right mb-10">
               Trustcore {rating} {" | "}
               {totalReviews}
-              {" Reviews"}
+              {"Recensioni"}
             </p>
             <div className="xl:p-[60px] p-5 bg-white rounded-2xl overflow-auto max-h-[500px]">
               <img src={comma} alt="" />

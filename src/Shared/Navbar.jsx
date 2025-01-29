@@ -221,12 +221,12 @@ const Navbar = () => {
                       <div className="py-1 flex">
                         <button
                           onClick={handleClick}
-                          className="flex items-center border border-gray-400  hover:bg-gray-50 text-gray-500 px-5 py-2 my-5 mx-2 w-full rounded-full justify-start font-medium text-sm
+                          className="flex items-center border border-gray-400  hover:bg-gray-50 text-gray-500 px-5 py-2 my-5 mx-2 w-full rounded-full justify-start font-medium text-sm text-nowrap
                           "
                         >
                           {" "}
-                          <FaWhatsapp className="h-6 w-6 mr-3" /> Start Live
-                          Chat
+                          <FaWhatsapp className="h-6 w-6 mr-3" /> avviare la
+                          chat dal vivo
                         </button>
                       </div>
                     </div>
@@ -238,7 +238,7 @@ const Navbar = () => {
                           onClick={() => navigate(`/profile/${user?._id}`)}
                           className=" px-4 py-2 w-full text-start hover:bg-[#fdf0ea] text-sm text-gray-700 flex items-center gap-3"
                         >
-                          <FaRegUserCircle size={20} /> Profile
+                          <FaRegUserCircle size={20} /> Profilo
                         </button>
                         {user?.role === "admin" && (
                           <button
@@ -248,7 +248,8 @@ const Navbar = () => {
                             }}
                             className="flex gap-3 px-4 py-2 w-full hover:bg-[#fdf0ea] text-sm text-gray-700"
                           >
-                            <MdOutlineDashboard size={20} /> Dashboard
+                            <MdOutlineDashboard size={20} /> Pannello di
+                            controllo
                           </button>
                         )}
                         <button
@@ -256,7 +257,7 @@ const Navbar = () => {
                           className="flex gap-3 px-4 py-2 w-full hover:bg-[#fdf0ea] text-sm primary_text"
                         >
                           <LogoutOutlined size={20} />
-                          Logout
+                          disconnettersi
                         </button>
                       </div>
                     </div>

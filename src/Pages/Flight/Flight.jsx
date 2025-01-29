@@ -89,13 +89,13 @@ const Flight = () => {
               to={`/tours/${packageDetails?._id}`}
               className="flex items-center"
             >
-              <GoChevronLeft className="text-xl" /> Back to Tour Details
+              <GoChevronLeft className="text-xl" /> Torna ai dettagli del tour
             </Link>
           </div>
           <div className="mt-10">
             <HeadLine
-              title="Choose Your Perfect Flight"
-              description="Find the Best Options for Your Journey, All in One Place"
+              title="Scegli il tuo volo perfetto"
+              description="Trova le migliori opzioni per il tuo viaggio, tutto in un unico posto"
             />
           </div>
         </ParentComponent>
@@ -108,11 +108,13 @@ const Flight = () => {
               Fuerteventura
             </h2>
             <p className="text-[#72777F] font-[18px]">
-              Comprehensive Insurance for Worry-Free Travel
+              Assicurazione completa per viaggi senza preoccupazioni
             </p>
 
             <div className="mt-5">
-              <h2 className="text-xl font-semibold italic">Select Person</h2>
+              <h2 className="text-xl font-semibold italic">
+                Seleziona persona
+              </h2>
               <select
                 onChange={(e) => setPerson(e.target.value)}
                 className="w-[20%] my-2 p-1 text-center border rounded"
@@ -138,7 +140,7 @@ const Flight = () => {
                   {packageDetails?.bookedFlights.length === 0 ? (
                     <div className="flex items-center justify-center">
                       <h2 className="text-center text-xl font-semibold text-red-400 my-5 md:mt-20">
-                        Flight Not Available
+                        Volo non disponibile
                       </h2>
                     </div>
                   ) : (
@@ -218,14 +220,14 @@ const Flight = () => {
                     <h2 className="text-[#000000] text-[18px] font-bold text-center">
                       € {totalFlightAmount}
                     </h2>
-                    <h2 className="text-center py-2"> {person} person</h2>
+                    <h2 className="text-center py-2"> {person} persona</h2>
                   </div>
                   <button
                     onClick={handleAddFlight}
                     className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded"
                     disabled={packageDetails?.bookedFlights.length === 0}
                   >
-                    Add Flight
+                    Aggiungi volo
                   </button>
                   {/* </div> */}
                 </div>
@@ -238,8 +240,8 @@ const Flight = () => {
                   Fuerteventura
                 </h2>
                 <p>
-                  {packageDetails?.tourDuration.days} Days /{" "}
-                  {packageDetails?.tourDuration.nights} Nights
+                  {packageDetails?.tourDuration.days} Giorni /{" "}
+                  {packageDetails?.tourDuration.nights} Notti
                 </p>
                 <div className="border border-b-[#c8c8ce] mt-3"></div>
                 <div className="mt-4">
@@ -252,7 +254,7 @@ const Flight = () => {
                     </h2>
                   </span>
                   <span className="flex items-start justify-between mb-3">
-                    <h2>Passengers</h2>
+                    <h2>Passageri</h2>
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
                       {person}
                     </h2>
@@ -260,7 +262,7 @@ const Flight = () => {
                   {addFlight && (
                     <span className="flex items-start justify-between mb-3">
                       <h2 className="flex items-center">
-                        Flight Amount
+                        Importo del volo
                         <TiDeleteOutline
                           className="text-red-600  cursor-pointer  ml-3 text-xl hover:scale-110"
                           onClick={handleRemoveFlight}
@@ -272,7 +274,7 @@ const Flight = () => {
                     </span>
                   )}
                   <span className="flex items-start justify-between mb-3 border-t pt-2 ">
-                    <h2>Total</h2>
+                    <h2>Totale</h2>
                     <h2 className="text-[20px] font-semibold">
                       € {totalToureCost}
                     </h2>
@@ -289,7 +291,7 @@ const Flight = () => {
                         : "bg-gray-300 cursor-not-allowed text-gray-500"
                     }  py-2 rounded mt-4`}
                   >
-                    Continue with Flight
+                    Continua con il volo
                   </button>
 
                   <button
@@ -301,7 +303,7 @@ const Flight = () => {
                         : "bg-gray-300 cursor-not-allowed text-gray-500"
                     }  py-2 rounded mt-4`}
                   >
-                    Continue without Flight
+                    Continua senza volo
                   </button>
                 </div>
               </div>

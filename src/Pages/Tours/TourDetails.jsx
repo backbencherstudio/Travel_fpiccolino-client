@@ -77,10 +77,10 @@ const TourDetails = () => {
   };
 
   const tags = [
-    { icon: iconn4, tag: "Gen Z approved" },
-    { icon: iconn3, tag: "Ride the wave" },
-    { icon: iconn2, tag: "Relaxed vibes" },
-    { icon: iconn1, tag: "Forever summer" },
+    { icon: iconn4, tag: "Nuova generazione" },
+    { icon: iconn3, tag: "Cavalca l'onda" },
+    { icon: iconn2, tag: "Vibrazioni rilassate" },
+    { icon: iconn1, tag: "Estate per sempre" },
   ];
 
   const [imagePath, setImagePath] = useState(packageDetails?.hotelImages[0]);
@@ -93,7 +93,7 @@ const TourDetails = () => {
           <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
             <div className="col-span-12 lg:col-span-8">
               <h2 className="lg:text-[40px] font-bold text-[#0C0C1D] uppercase ">
-                FOR THOSE WHO ALWAYS LOOK TO THE HORIZON
+                PER CHI GUARDA SEMPRE ALL'ORIZZONTE
               </h2>
               <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
                 {tags?.map((item, index) => (
@@ -126,7 +126,7 @@ const TourDetails = () => {
                     <div className="collapse-title text-xl font-medium flex items-center">
                       <img className="mr-2" src={yes} alt="" />
                       <h2 className="text-[20px] font-semibold ">
-                        What's included
+                        Cosa è incluso
                       </h2>
                     </div>
                     <div className="collapse-content">
@@ -157,7 +157,7 @@ const TourDetails = () => {
                     <div className="collapse-title text-xl font-medium flex items-center">
                       <RxCross2 className="mr-2 primary_text" />
                       <h2 className="text-[20px] font-semibold ">
-                        What's Not included
+                        Cosa non è incluso
                       </h2>
                     </div>
 
@@ -190,7 +190,9 @@ const TourDetails = () => {
               {/* ==============================================  Hero Section Right Side Bar ===================================== */}
               <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 ">
                 <div className="mb-10">
-                  <h2 className="text-center text-[#1C1C1C]">Package Price</h2>
+                  <h2 className="text-center text-[#1C1C1C]">
+                    Prezzo del pacchetto
+                  </h2>
                   <span className="flex justify-center gap-10 mt-5">
                     <h2 className="flex items-center font-semibold text-[24px] text-[#25CE50] ">
                       {" "}
@@ -209,9 +211,10 @@ const TourDetails = () => {
                       .utc()
                       .format("DD/MM/YYYY")}{" "}
                     <br />
-                    {packageDetails?.tourDuration?.nights} Nights &{" "}
-                    {packageDetails?.tourDuration?.days} Days
+                    {packageDetails?.tourDuration?.nights} Notti &{" "}
+                    {packageDetails?.tourDuration?.days} Giorni
                   </h2>
+
                   {/* <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
                     Change dates
                   </h2> */}
@@ -219,10 +222,11 @@ const TourDetails = () => {
                     to={`/flight/${packageDetails?._id}`}
                     className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
                   >
-                    Continue
+                    Continua
                   </Link>
                 </div>
               </div>
+
               {/* <div className="bg-[#FFFFFF] p-10 rounded-lg ">
                 <div className="mb-10">
                   <h2 className="text-[#E86731] flex items-center">
@@ -245,7 +249,7 @@ const TourDetails = () => {
               <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
                 <div>
                   <h2 className="uppercase font-bold text-[32px] ">
-                    WHERE WILL YOU STAY
+                    DOVE ALLOGGERAI
                   </h2>
                   <h2 className="text-[20px] mt-10 font-semibold ">
                     {packageDetails?.hotelName}
@@ -295,8 +299,8 @@ const TourDetails = () => {
 
         <div className="bg-[#EFFBFB] py-20">
           <HeadLine
-            title="WHAT DO PEOPLE WHO HAVE TRAVELED WITH US SAY?"
-            description="Real Reviews from Golfers Who Elevate Their Game in Our Apparel"
+            title="COSA DICONO LE PERSONE CHE HANNO VIAGGIATO CON NOI?"
+            description="Recensioni reali di golfisti che migliorano il loro gioco con il nostro abbigliamento"
           />
 
           <ParentComponent>
@@ -311,9 +315,9 @@ const TourDetails = () => {
             ) : (
               <div className="text-center text-gray-600 my-5 py-20 border-dashed border">
                 <h2 className="text-lg font-semibold primary_text ">
-                  No Reviews Available
+                  Nessuna recensione disponibile
                 </h2>
-                <p>Be the first to share your experience!</p>
+                <p>Sii il primo a condividere la tua esperienza!</p>
               </div>
             )}
           </ParentComponent>

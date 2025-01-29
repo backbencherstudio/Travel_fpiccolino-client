@@ -58,10 +58,11 @@ const Contact = () => {
         <div className="mt-20 grid md:grid-cols-2 max-w-[1440px] mx-auto gap-10">
           <div>
             <h1 className="text-[32px] font-extrabold">
-              Let's Connect And <br /> Make Plans
+              Contattaci e <br /> Facciamo i piani
             </h1>
             <p className="text-[#72777F] text-[18px] mt-6">
-              Contact Us Today for a Customized Solution Tailored to Your Needs!
+              Contattaci oggi per una soluzione personalizzata adatta alle tue
+              esigenze!
             </p>
 
             <div className="flex gap-3 mt-10">
@@ -69,7 +70,7 @@ const Contact = () => {
                 <img src={mail} className=" m-2.5" alt="" />
               </div>
               <div>
-                <p className="text-[16px]">Mail us at</p>
+                <p className="text-[16px]">Scrivici a</p>
                 <p className="text-[18px] primary_text font-medium">
                   {homePageData?.footer[0]?.contactInfo?.email}
                 </p>
@@ -80,7 +81,7 @@ const Contact = () => {
                 <img src={call} className=" m-2.5" alt="" />
               </div>
               <div>
-                <p className="text-[16px]">Phone us at</p>
+                <p className="text-[16px]">Contattaci al</p>
                 <p className="text-[18px] primary_text font-medium">
                   {homePageData?.footer[0]?.contactInfo?.phone}
                 </p>
@@ -89,19 +90,17 @@ const Contact = () => {
           </div>
 
           <div className="p-10 bg-[#effbfb] rounded-xl">
-            <h1 className="text-3xl font-bold">Send us a message</h1>
+            <h1 className="text-3xl font-bold">Scrivici un messaggio</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-[18px] font-medium mt-8 mb-3">
-                    First Name
-                  </p>
+                  <p className="text-[18px] font-medium mt-8 mb-3">Nome</p>
                   <input
                     type="text"
-                    placeholder="Enter First Name"
+                    placeholder="Inserisci il nome"
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("firstName", {
-                      required: "First name is required",
+                      required: "Nome è obbligatorio",
                     })}
                   />
                   {errors.firstName && (
@@ -111,13 +110,13 @@ const Contact = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-[18px] font-medium mt-8 mb-3">Last Name</p>
+                  <p className="text-[18px] font-medium mt-8 mb-3">Cognome</p>
                   <input
                     type="text"
-                    placeholder="Enter Last Name"
+                    placeholder="Inserisci il cognome"
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("lastName", {
-                      required: "Last name is required",
+                      required: "Cognome è obbligatorio",
                     })}
                   />
                   {errors.lastName && (
@@ -128,17 +127,17 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-[18px] font-medium mt-5 mb-3">
-                    Email Address
+                    Indirizzo e-mail
                   </p>
                   <input
                     type="text"
-                    placeholder="Enter Email Address"
+                    placeholder="Inserisci l'indirizzo e-mail"
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("email", {
-                      required: "Email address is required",
+                      required: "Indirizzo e-mail è obbligatorio",
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Enter a valid email",
+                        message: "Inserisci un indirizzo e-mail valido",
                       },
                     })}
                   />
@@ -150,16 +149,16 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-[18px] font-medium mt-5 mb-3">
-                    Phone Number
+                    Numero di telefono
                   </p>
                   <input
                     type="text"
-                    placeholder="Enter Phone Number"
+                    placeholder="Inserisci il numero di telefono"
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("phone", {
-                      required: "Phone number is required",
+                      required: "Numero di telefono è obbligatorio",
                       pattern: {
-                        message: "Phone number must be numeric",
+                        message: "Il numero di telefono deve essere numerico",
                       },
                     })}
                   />
@@ -173,7 +172,7 @@ const Contact = () => {
               <div>
                 <p className="text-[18px] font-medium mt-5 mb-3">Message</p>
                 <textarea
-                  placeholder="Enter Message"
+                  placeholder="Inserisci il messaggio"
                   className="p-3 text-[16px] rounded-md w-full"
                   {...register("message", { required: "Message is required" })}
                 />
@@ -185,7 +184,7 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-[18px] font-medium mt-5 mb-3">
-                  Preferred Contact Method
+                  Metodo di contatto preferito
                 </p>
                 <div className="grid grid-cols-2 gap-3 bg-white p-3">
                   <div className="flex items-center">
@@ -206,7 +205,7 @@ const Contact = () => {
                           : "text-zinc-400"
                       }`}
                     >
-                      Phone
+                      Telefono
                     </label>
                   </div>
                   <div className="flex items-center">
@@ -227,7 +226,7 @@ const Contact = () => {
                           : "text-zinc-400"
                       }`}
                     >
-                      Email
+                      E-mail
                     </label>
                   </div>
                 </div>
@@ -236,7 +235,7 @@ const Contact = () => {
                 type="submit"
                 className="p-3 w-full primary_bg text-white font-medium text-[16px] mt-6 rounded-md"
               >
-                Send Message
+                Invia il messaggio
               </button>
             </form>
           </div>

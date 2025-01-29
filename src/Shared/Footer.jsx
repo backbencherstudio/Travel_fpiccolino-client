@@ -75,7 +75,9 @@ const Footer = () => {
           </div>
           <div className="flex justify-between">
             <div className="text-[18px] font-medium">
-              <h1 className="text-[20px] font-medium mb-6">Quick Link</h1>
+              <h1 className="text-[20px] font-medium mb-6">
+                Collegamento rapido
+              </h1>
               <Link to="/about">
                 <p>La nostra Filosofia</p>
               </Link>
@@ -97,7 +99,7 @@ const Footer = () => {
             </div>
             <div className="text-[16px] font-normal max-w-[218px]">
               <h1 className="text-[20px] font-medium mb-6">Contattaci</h1>
-              <p>{"We're"} Here to Help with Any Questions or Concerns</p>
+              <p>Siamo qui per aiutarti con qualsiasi domanda o dubbio</p>
               <p className="flex gap-1 mt-4">
                 <img src={call} alt="Call Icon" /> {contactInfo.phone || "N/A"}
               </p>
@@ -108,13 +110,13 @@ const Footer = () => {
           </div>
           <div className="flex lg:justify-end">
             <div>
-              <h1 className="text-[20px] font-medium w-[330px]">Newsletter</h1>
+              <h1 className="text-[20px] font-medium w-[330px]">Notiziario</h1>
 
               <form className="relative mt-4" onSubmit={handleSubmit}>
                 <input
                   className="p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg"
                   type="email"
-                  placeholder="Your Email address"
+                  placeholder="Il tuo indirizzo di posta elettronica"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -123,7 +125,7 @@ const Footer = () => {
                   type="submit"
                   className="primary_bg text-white absolute right-2 top-2 px-[10px] py-1 rounded-lg text-[14px]"
                 >
-                  Send
+                  Invia
                 </button>
                 <div className="flex gap-2 mt-3">
                   <input

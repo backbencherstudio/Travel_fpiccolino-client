@@ -59,11 +59,11 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg w-[400px]">
-        <h2 className="text-xl font-semibold mb-4">Edit Your Details</h2>
+        <h2 className="text-xl font-semibold mb-4">Modifica i tuoi dettagli</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="image">
-              Image
+              Immagine
             </label>
             <input
               type="file"
@@ -86,7 +86,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="name">
-              Name
+              Nome
             </label>
             <input
               type="text"
@@ -100,7 +100,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="phone">
-              Phone
+              Telefono
             </label>
             <input
               type="text"
@@ -114,7 +114,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="address">
-              Address
+              Indirizzo
             </label>
             <input
               type="text"
@@ -128,7 +128,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="city">
-              City
+              Città
             </label>
             <input
               type="text"
@@ -142,7 +142,7 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
 
           <div className="mb-4">
             <label className="block text-sm font-medium" htmlFor="country">
-              Country
+              Nazione
             </label>
             <input
               type="text"
@@ -160,13 +160,13 @@ const UpdateUserModal = ({ isOpen, onClose, user, onSubmit }) => {
               onClick={onClose}
               className="mr-3 bg-gray-500 text-white py-2 px-4 rounded"
             >
-              Cancel
+              Cancellare
             </button>
             <button
               type="submit"
               className="primary_bg opacity-85 text-white py-2 px-4 rounded"
             >
-              Save Changes
+              Salva modifiche
             </button>
           </div>
         </form>

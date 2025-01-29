@@ -59,7 +59,7 @@ const BottomBannerSection = () => {
               <CustomButton
                 content={
                   <p className="flex gap-1">
-                    Contact Now
+                    Contatta ora
                     <svg
                       className="mt-1"
                       xmlns="http://www.w3.org/2000/svg"

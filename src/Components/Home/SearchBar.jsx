@@ -71,7 +71,7 @@ const SearchBar = ({ countries }) => {
             value={searchQuery}
             onChange={handleSearchChange}
             className="h-12 w-full lg:w-[80%] px-4 rounded-full focus:border focus:border-orange-500 focus:outline-none"
-            placeholder="What's Your Next Destination?"
+            placeholder="Qual è la tua prossima destinazione?"
           />
           {/* <input
             type="text"
@@ -84,7 +84,7 @@ const SearchBar = ({ countries }) => {
           className="primary_bg hover:opacity-85 text-white px-8 py-3 lg:top-5 lg:absolute right-5 rounded-full text-[18px] w-full lg:w-auto mt-5 lg:mt-0"
         >
           <div className="flex gap-1.5 justify-center ">
-            <img src={search} alt="Search" /> Search
+            <img src={search} alt="Search" /> Cerca
           </div>
         </button>
 

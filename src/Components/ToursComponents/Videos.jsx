@@ -22,8 +22,8 @@ const Videos = () => {
   return (
     <div>
       <HeadLine
-        title="Club Vibes Unleashed"
-        description="Feel the Energy, Rhythm, and Magic of Our Unforgettable Nights"
+        title="Vibrazioni da club scatenate"
+        description="Senti l'energia, il ritmo e la magia delle nostre notti indimenticabili"
       />
 
       <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-10 mt-14">
