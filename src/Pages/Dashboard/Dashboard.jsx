@@ -77,16 +77,6 @@ const Dashboard = () => {
             <LuLayoutDashboard />
             <span>Dashboard</span>
           </button>
-          {/* <button
-            onClick={() => handleNavigation("Tour", "tour-list")}
-            className={`flex items-center space-x-2 p-2 rounded ${selectedTab === "Tour"
-              ? "bg-[#fdf0ea] primary_text font-semibold"
-              : "hover:bg-zinc-300"
-              }`}
-          >
-            <IoGolfOutline />
-            <span>Tour</span>
-          </button> */}
           <button
             onClick={() => handleNavigation("Users", "user-list")}
             className={`flex items-center space-x-2 p-2 rounded ${
@@ -344,10 +334,6 @@ const Dashboard = () => {
           </button>
           <div></div>
           <div className="flex">
-            {/* <div className=" border mr-5 rounded-full h-10 w-10 flex justify-center items-center text-gray-400 cursor-pointer">
-              <FaRegBell />
-            </div> */}
-
             <div
               onClick={() => navigate(`user-list/${user?._id}`)}
               className="flex cursor-pointer"
