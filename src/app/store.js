@@ -14,6 +14,7 @@ import dashboardReducer from "../features/dashboard/dashboardSlice";
 import checkoutReducer from "../features/checkout/checkoutSlice";
 import orderReducer from "../features/order/orderSlice";
 import newsLetterReducer from "../features/newsLetter/newsLetterSlice";
+import textsReducer from "../features/texts/textsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     checkout: checkoutReducer,
     order: orderReducer,
     newsletter: newsLetterReducer,
+    texts: textsReducer,
   },
 });
 

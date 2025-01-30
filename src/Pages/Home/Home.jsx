@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageData } from "../../features/pageData/pageDataSlice";
+import { fetchTexts } from "../../features/texts/textsSlice";
+import axios from "axios";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import SearchBar from "../../Components/Home/SearchBar";
 import AdventureSection from "../../Components/Home/AdventureSection";
@@ -17,18 +19,13 @@ import FooterModal from "../../Shared/FooterModal";
 const Home = () => {
   const dispatch = useDispatch();
   const { homePageData } = useSelector((state) => state.pageData);
-
-  // const [showCookieModal, setShowCookieModal] = useState(false);
+  const { texts, isLoading } = useSelector((state) => state.texts);
   const [showFooterModal, setShowFooterModal] = useState(false);
   const footerRef = useRef(null);
 
   useEffect(() => {
     dispatch(getHomePageData());
-    // Check cookie policy status
-    // const cookiesAccepted = localStorage.getItem("cookiesAccepted");
-    // if (!cookiesAccepted) {
-    //   setShowCookieModal(true);
-    // }
+    dispatch(fetchTexts());
 
     const footerModalDismissed = localStorage.getItem("footerModalDismissed");
     if (!footerModalDismissed) {
@@ -45,6 +42,8 @@ const Home = () => {
       return () => window.removeEventListener("scroll", handleScroll);
     }
   }, [dispatch]);
+
+  // const [showCookieModal, setShowCookieModal] = useState(false);
 
   // const handleAcceptCookies = () => {
   //   localStorage.setItem("cookiesAccepted", "true");
@@ -83,7 +82,13 @@ const Home = () => {
       {showFooterModal && <FooterModal onClose={handleCloseFooterModal} />}
 
       {heroSection && <HeroScetion heroContent={heroSection} />}
-      {countrySection && <SearchBar countries={countrySection} />}
+      {countrySection && (
+        <SearchBar
+          countries={countrySection}
+          texts={texts}
+          isLoading={isLoading}
+        />
+      )}
       {cardDetails && <AdventureSection cardDetails={cardDetails} />}
       {countryWithoutImage && (
         <BlurSliderSection country={countryWithoutImage} />
