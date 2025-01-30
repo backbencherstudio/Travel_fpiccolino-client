@@ -77,7 +77,7 @@ const TourDetails = () => {
   };
 
   const tags = [
-    { icon: iconn4, tag: "Nuova generazione" },
+    { icon: iconn4, tag: "A prova di GEN Z" },
     { icon: iconn3, tag: "Cavalca l'onda" },
     { icon: iconn2, tag: "Vibrazioni rilassate" },
     { icon: iconn1, tag: "Estate per sempre" },
@@ -243,57 +243,59 @@ const TourDetails = () => {
         </ParentComponent>
 
         {/* ====================================================  Hotail Section ============================= */}
-        <div className="bg-[#FFFFFF]">
-          <ParentComponent>
-            <div className="grid grid-cols-12 py-20 lg:gap-4 xl:gap-14 relative ">
-              <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
-                <div>
-                  <h2 className="uppercase font-bold text-[32px] ">
-                    DOVE ALLOGGERAI
-                  </h2>
-                  <h2 className="text-[20px] mt-10 font-semibold ">
-                    {packageDetails?.hotelName}
-                  </h2>
+        {packageDetails?.hotelImages?.length > 0 && (
+          <div className="bg-[#FFFFFF]">
+            <ParentComponent>
+              <div className="grid grid-cols-12 py-20 lg:gap-4 xl:gap-14 relative ">
+                <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
+                  <div>
+                    <h2 className="uppercase font-bold text-[32px] ">
+                      DOVE ALLOGGERAI
+                    </h2>
+                    <h2 className="text-[20px] mt-10 font-semibold ">
+                      {packageDetails?.hotelName}
+                    </h2>
 
-                  <p className="mt-5 text-[#72777F]">
-                    {packageDetails?.hotelAbout?.slice(0, 150)}
-                  </p>
-                  <p className="mt-2 text-[#72777F]">
-                    {packageDetails?.hotelAbout?.slice(150)}
-                  </p>
+                    <p className="mt-5 text-[#72777F]">
+                      {packageDetails?.hotelAbout?.slice(0, 150)}
+                    </p>
+                    <p className="mt-2 text-[#72777F]">
+                      {packageDetails?.hotelAbout?.slice(150)}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap justify-center lg:gap-4 py-5 lg:py-0  ">
+                    {packageDetails?.hotelImages.slice(0, 4)?.map((img) => (
+                      <img
+                        key={img}
+                        src={`${base_url}${img}`}
+                        onClick={() => {
+                          setImagePath(img);
+                        }}
+                        className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${
+                          img === imagePath
+                            ? "border-2 border-red-500"
+                            : "border-2 border-transparent"
+                        } `}
+                        alt=""
+                      />
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flex flex-wrap justify-center lg:gap-4 py-5 lg:py-0  ">
-                  {packageDetails?.hotelImages.slice(0, 4)?.map((img) => (
-                    <img
-                      key={img}
-                      src={`${base_url}${img}`}
-                      onClick={() => {
-                        setImagePath(img);
-                      }}
-                      className={` size-20 xl:size-40 rounded-lg object-cover cursor-pointer  duration-300 ${
-                        img === imagePath
-                          ? "border-2 border-red-500"
-                          : "border-2 border-transparent"
-                      } `}
-                      alt=""
-                    />
-                  ))}
+                <div className=" col-span-12 lg:col-span-5 h-[400px] lg:h-[720px] w-[100%]  ">
+                  <img
+                    className="h-full w-[100%] rounded-xl object-cover "
+                    src={`${base_url}${
+                      imagePath ? imagePath : packageDetails?.hotelImages[0]
+                    }`}
+                    alt=""
+                  />
                 </div>
               </div>
-
-              <div className=" col-span-12 lg:col-span-5 h-[400px] lg:h-[720px] w-[100%]  ">
-                <img
-                  className="h-full w-[100%] rounded-xl object-cover "
-                  src={`${base_url}${
-                    imagePath ? imagePath : packageDetails?.hotelImages[0]
-                  }`}
-                  alt=""
-                />
-              </div>
-            </div>
-          </ParentComponent>
-        </div>
+            </ParentComponent>
+          </div>
+        )}
 
         {/* ==========================================  Testimonial ================================= */}
 

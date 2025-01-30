@@ -76,27 +76,27 @@ const CreatePackage = () => {
     //   toast.warn("Please provide booked flight details.");
     //   return;
     // }
-    if (!insurance || insurance.length === 0) {
-      toast.warn("Insurance details are required.");
-      return;
-    }
+    // if (!insurance || insurance.length === 0) {
+    //   toast.warn("Insurance details are required.");
+    //   return;
+    // }
 
     if (!images || images.length === 0) {
       toast.warn("Please upload at least one image.");
       return;
     }
-    if (!hotelName) {
-      toast.warn("Hotel name is required.");
-      return;
-    }
-    if (!hotelAbout) {
-      toast.warn("Please provide a description of the hotel.");
-      return;
-    }
-    if (!hotelImages || hotelImages.length === 0) {
-      toast.warn("Please upload hotel images.");
-      return;
-    }
+    // if (!hotelName) {
+    //   toast.warn("Hotel name is required.");
+    //   return;
+    // }
+    // if (!hotelAbout) {
+    //   toast.warn("Please provide a description of the hotel.");
+    //   return;
+    // }
+    // if (!hotelImages || hotelImages.length === 0) {
+    //   toast.warn("Please upload hotel images.");
+    //   return;
+    // }
     if (!selectedCountry) {
       toast.warn("Please select a country.");
       return;

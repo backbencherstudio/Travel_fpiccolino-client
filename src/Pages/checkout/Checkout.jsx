@@ -48,7 +48,7 @@ const Checkout = () => {
     <div>
       <ParentComponent>
         <Link to={`/personalDetails`} className="flex items-center mt-20">
-          <GoChevronLeft className="text-xl" /> Back to Tour Details
+          <GoChevronLeft className="text-xl" /> Torniamo ai dettagli del tour
         </Link>
 
         <div className="my-20 flex items-center justify-center">
@@ -56,16 +56,16 @@ const Checkout = () => {
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* Left Section - Order Summary */}
               <div className="primary_bg p-8 text-white">
-                <h1 className="text-3xl font-semibold mb-6">Order Summary</h1>
+                <h1 className="text-3xl font-semibold mb-6">
+                  Riepilogo ordine
+                </h1>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center border-b border-white pb-4">
-                    <span className="text-white">Amount Due</span>
+                    <span className="text-white">Importo dovuto</span>
                     <span className="text-2xl">${amount}</span>
                   </div>
                   <div className="pt-4">
-                    <p className="text-sm text-white">
-                      Secure Payment Processing
-                    </p>
+                    <p className="text-sm text-white">Pagamento sicuro</p>
                   </div>
                 </div>
               </div>
@@ -82,7 +82,7 @@ const Checkout = () => {
                           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                       }`}
                     >
-                      Credit Card
+                      Carta di credito
                     </button>
                     <button
                       onClick={() => handlePaymentMethodChange("paypal")}
@@ -120,7 +120,7 @@ const Checkout = () => {
                           }}
                           createOrder={(data, actions) => {
                             if (!amount || parseFloat(amount) <= 0) {
-                              alert("Invalid payment amount");
+                              alert("Importo non valido");
                               return;
                             }
                             return actions.order.create({
@@ -137,13 +137,13 @@ const Checkout = () => {
                             return actions.order.capture().then((details) => {
                               getPaypalSuccessDataFun(details);
                               alert(
-                                "Payment Approved: " +
+                                "Pagamento approvato: " +
                                   details.payer.name.given_name
                               );
                             });
                           }}
                           onError={(err) => {
-                            console.error("PayPal Error:", err);
+                            console.error("Errore PayPal:", err);
                           }}
                           forceReRender={[amount]}
                         />

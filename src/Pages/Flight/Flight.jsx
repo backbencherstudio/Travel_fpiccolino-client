@@ -105,10 +105,10 @@ const Flight = () => {
         <ParentComponent>
           <div className="mt-20">
             <h2 className="text-[#141D2A] text-[32px] font-bold">
-              Fuerteventura
+              {packageDetails?.tourName}
             </h2>
             <p className="text-[#72777F] font-[18px]">
-              Assicurazione completa per viaggi senza preoccupazioni
+              {packageDetails?.destination}
             </p>
 
             <div className="mt-5">
@@ -237,7 +237,7 @@ const Flight = () => {
             <div className="col-span-12 lg:col-span-4 mt-5 lg:mt-0">
               <div className="shadow-lg rounded-lg p-2 md:p-10">
                 <h2 className="font-bold text-[24px] text-[#E86731]">
-                  Fuerteventura
+                  {packageDetails?.tourName}
                 </h2>
                 <p>
                   {packageDetails?.tourDuration.days} Giorni /{" "}

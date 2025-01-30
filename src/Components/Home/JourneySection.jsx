@@ -33,7 +33,7 @@ const JourneySection = () => {
       <ParentComponent>
         <div className="mt-[100px]">
           <h2 className="font-duera-expanded text-[#000000] text-[30px] lg:text-[32px] font-extrabold leading-[41.6px] text-start decoration-skip-ink">
-            Your Journey, Our Passion
+            Il tuo viaggio, la nostra passione
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-[74px] mt-14">
             <div className="lg:col-span-2 h-[600px]">
@@ -73,7 +73,7 @@ const JourneySection = () => {
               {inView && <CountUp end={10} duration={2} />}+
             </h1>
             <div className="text-[24px] text-[#72777F] mt-2">
-              Years of Experience
+              Anni di esperienza
             </div>
           </div>
 
@@ -82,7 +82,7 @@ const JourneySection = () => {
               {inView && <CountUp end={500} duration={2} />}+
             </h1>
             <div className="text-[24px] text-[#72777F] mt-2">
-              Travel Completed
+              Viaggio completato
             </div>
           </div>
 
@@ -91,7 +91,7 @@ const JourneySection = () => {
               {inView && <CountUp end={1500} duration={2} />}+
             </h1>
             <div className="text-[24px] text-[#72777F] mt-2">
-              Happy Customer Review
+              Recensioni felici
             </div>
           </div>
 
@@ -100,7 +100,7 @@ const JourneySection = () => {
               {inView && <CountUp end={99} duration={2} />}%
             </h1>
             <div className="text-[24px] text-[#72777F] mt-2">
-              Success Rating
+              Valutazione di successo
             </div>
           </div>
         </div>

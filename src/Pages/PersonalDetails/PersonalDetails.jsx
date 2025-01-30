@@ -31,6 +31,7 @@ const PersonalDetails = () => {
   const navigate = useNavigate();
 
   const { checkout } = useSelector((state) => state.checkout);
+  const { packageDetails } = useSelector((state) => state.package);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -103,7 +104,7 @@ const PersonalDetails = () => {
               onClick={() => removeSession()}
               className="flex items-center"
             >
-              <GoChevronLeft className="text-xl" /> Back to Transfers
+              <GoChevronLeft className="text-xl" /> Torniamo ai trasferimenti
             </button>
           </div>
           <div className="mt-10">
@@ -135,7 +136,7 @@ const PersonalDetails = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)} className="">
                   <h2 className="text-[#000000] text-[18px] font-[400] mt-5">
-                    Dynamic Traveler Form
+                    Modulo viaggiatore dinamico
                   </h2>
                   {fields.map((field, index) => (
                     <div
@@ -143,19 +144,19 @@ const PersonalDetails = () => {
                       className="border-b border-gray-300 pb-4 mt-8"
                     >
                       <h3 className="text-[#141D2A] text-[20px] font-[600] mb-4">
-                        Traveler {index + 1}
+                        Viaggiatore {index + 1}
                       </h3>
                       <div className="grid md:grid-cols-2 gap-2">
                         <div>
                           <label htmlFor={`travelers.${index}.fullName`}>
-                            Full Name *
+                            Nome e cognome *
                           </label>
                           <input
                             id={`travelers.${index}.fullName`}
                             {...register(`travelers.${index}.fullName`, {
-                              required: "Full Name is required",
+                              required: "Nome e cognome è obbligatorio",
                             })}
-                            placeholder="Enter Full Name"
+                            placeholder="Inserisci il tuo nome e cognome"
                             className={inputStyle}
                           />
                           {errors.travelers?.[index]?.fullName && (
@@ -166,14 +167,14 @@ const PersonalDetails = () => {
                         </div>
                         <div>
                           <label htmlFor={`travelers.${index}.lastName`}>
-                            Last Name *
+                            Cognome *
                           </label>
                           <input
                             id={`travelers.${index}.lastName`}
                             {...register(`travelers.${index}.lastName`, {
-                              required: "Last Name is required",
+                              required: "Cognome è obbligatorio",
                             })}
-                            placeholder="Enter Last Name"
+                            placeholder="Inserisci il tuo cognome"
                             className={inputStyle}
                           />
                           {errors.travelers?.[index]?.lastName && (
@@ -186,19 +187,19 @@ const PersonalDetails = () => {
                       <div className="grid md:grid-cols-3 gap-2 mt-4">
                         <div>
                           <label htmlFor={`travelers.${index}.email`}>
-                            Email *
+                            E-mail *
                           </label>
                           <input
                             id={`travelers.${index}.email`}
                             {...register(`travelers.${index}.email`, {
-                              required: "Email is required",
+                              required: "Email è obbligatorio",
                               pattern: {
                                 value:
                                   /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                                message: "Invalid email address",
+                                message: "E-mail non valida",
                               },
                             })}
-                            placeholder="Enter Email"
+                            placeholder="Inserisci il tuo email"
                             className={inputStyle}
                           />
                           {errors.travelers?.[index]?.email && (
@@ -209,17 +210,17 @@ const PersonalDetails = () => {
                         </div>
                         <div>
                           <label htmlFor={`travelers.${index}.phone`}>
-                            Phone *
+                            Telefono *
                           </label>
                           <Controller
                             name={`travelers.${index}.phone`}
                             control={control}
-                            rules={{ required: "Phone is required" }}
+                            rules={{ required: "Telefono è obbligatorio" }}
                             render={({ field }) => (
                               <PhoneInput
                                 {...field}
                                 id={`travelers.${index}.phone`}
-                                placeholder="Enter Phone Number"
+                                placeholder="Inserisci il tuo telefono"
                                 className={inputStyle}
                                 international
                                 defaultCountry="US"
@@ -234,19 +235,19 @@ const PersonalDetails = () => {
                         </div>
                         <div>
                           <label htmlFor={`travelers.${index}.gender`}>
-                            Gender *
+                            Genere *
                           </label>
                           <select
                             id={`travelers.${index}.gender`}
                             {...register(`travelers.${index}.gender`, {
-                              required: "Gender is required",
+                              required: "Genere è obbligatorio",
                             })}
                             className={inputStyle}
                           >
-                            <option value="">Select</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            <option value="">Seleziona</option>
+                            <option value="male">Maschio</option>
+                            <option value="female">Femmina</option>
+                            <option value="other">Altro</option>
                           </select>
                           {errors.travelers?.[index]?.gender && (
                             <p className="text-red-500">
@@ -259,9 +260,10 @@ const PersonalDetails = () => {
                   ))}
 
                   <div className="my-6">
-                    <h2>Special requirements</h2>
+                    <h2>Requisiti speciali</h2>
                     <p>
-                      Please let us know about allergies, dietary needs, etc.
+                      Per favore, informaci delle tue allergie, necessità
+                      dietetiche, ecc.
                     </p>
                     <div className="border rounded-lg my-6">
                       {fields.map((_, index) => (
@@ -272,26 +274,26 @@ const PersonalDetails = () => {
                           } flex justify-between items-center px-3`}
                         >
                           <span className="flex justify-between items-center w-full">
-                            <h2>Traveler {index + 1}</h2>
+                            <h2>Viaggiatore {index + 1}</h2>
                             <div className="flex items-center">
-                              <Checkbox {...label} /> Yes
+                              <Checkbox {...label} /> Si
                               <Checkbox {...label} /> No
                             </div>
                           </span>
                         </div>
                       ))}
                     </div>
-                    <h2 className="mt-6">Terms and Conditions</h2>
+                    <h2 className="mt-6">Termini e Condizioni</h2>
                     <span className="flex items-center my-2">
                       <Checkbox {...label} />
                       <p>
-                        I declare that I have read and accept the{" "}
+                        Dichiaro di aver letto e accettato la{" "}
                         <span className="text-[#E86731] font-semibold">
-                          Privacy Policy
+                          politica sulla riservatezza
                         </span>{" "}
-                        and{" "}
+                        e{" "}
                         <span className="text-[#E86731] font-semibold">
-                          Terms and Conditions
+                          Termini e Condizioni
                         </span>
                         .
                       </p>
@@ -301,7 +303,7 @@ const PersonalDetails = () => {
                     type="submit"
                     className="block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#E86731]"
                   >
-                    Submit
+                    Invia
                   </button>
                 </form>
               </div>
@@ -311,7 +313,7 @@ const PersonalDetails = () => {
             <div className="col-span-12 lg:col-span-4 mt-5 lg:mt-0">
               <div className="shadow-lg rounded-lg p-2 md:p-10">
                 <h2 className="font-bold text-[24px] text-[#E86731]">
-                  Fuerteventura
+                  {packageDetails?.tourName}
                 </h2>
                 <p>
                   {checkout?.tureDuration?.days} Days /{" "}

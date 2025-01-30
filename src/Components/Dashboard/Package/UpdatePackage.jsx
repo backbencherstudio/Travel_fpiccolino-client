@@ -101,10 +101,10 @@ const UpdatePackage = () => {
       return;
     }
 
-    if (allHotelImages.length < 2) {
-      toast.warn("At least 2 hotel images required for this package.");
-      return;
-    }
+    // if (allHotelImages.length < 2) {
+    //   toast.warn("At least 2 hotel images required for this package.");
+    //   return;
+    // }
     const combinedIncludeItems = [
       ...selectedIncludeItems.map((item) => ({
         name: typeof item.name === "object" ? item.name.name : item.name,
