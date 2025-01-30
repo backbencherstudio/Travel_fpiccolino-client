@@ -1,13 +1,16 @@
 import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import HeadLine2 from "../../Shared/HeadLineComponent/HeadLine2";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaEdit } from "react-icons/fa";
 import ProgressBars from "../../Shared/ProgressBars";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { updateText } from "../../features/texts/textsSlice";
 
-const BlurSliderSection = ({ country }) => {
+const BlurSliderSection = ({ country, texts }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.authorization);
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -16,6 +19,13 @@ const BlurSliderSection = ({ country }) => {
   const [currentBackgroundImage, setCurrentBackgroundImage] = useState("");
   const [contentTitle, setContentTitle] = useState("");
   const { title, description, data } = country;
+
+  const [editModal, setEditModal] = useState({
+    show: false,
+    key: "",
+    value: "",
+    originalValue: "",
+  });
 
   // Check the screen size
   useEffect(() => {
@@ -43,7 +53,7 @@ const BlurSliderSection = ({ country }) => {
     setIsEnd(swiper.isEnd);
 
     // Update background image to the active slide's image
-    const activeSlide = data[activeIndex % data.length]; // Avoid index out of bounds
+    const activeSlide = data[activeIndex % data.length];
     setCurrentBackgroundImage(activeSlide?.image);
     setContentTitle(activeSlide?.contentTitle);
 
@@ -56,6 +66,36 @@ const BlurSliderSection = ({ country }) => {
       progress = ((activeIndex + 1) / totalSlides) * 100;
     }
     setProgressValue(progress);
+  };
+
+  const handleEditClick = (key, value) => {
+    setEditModal({
+      show: true,
+      key,
+      value: texts[key] || value,
+      originalValue: texts[key] || value,
+    });
+  };
+
+  const handleTextUpdate = async () => {
+    try {
+      await dispatch(
+        updateText({
+          key: editModal.key,
+          value: editModal.value,
+        })
+      ).unwrap();
+
+      setEditModal({
+        show: false,
+        key: "",
+        value: "",
+        originalValue: "",
+      });
+    } catch (error) {
+      console.error("Error updating text:", error);
+      alert("Failed to update text. Please try again.");
+    }
   };
 
   return (
@@ -72,10 +112,43 @@ const BlurSliderSection = ({ country }) => {
       <div className="grid grid-cols-1 lg:grid-cols-9 lg:pl-20">
         {/* Headline Section */}
         <div className="col-span-2 max-w-[450px] z-20 relative mx-auto mb-10 md:lg-0 md:content-center">
-          <HeadLine2
-            title={title}
-            description={contentTitle ? contentTitle : description}
-          />
+          <div>
+            <h2 className="font-duera-expanded text-[#ffffff] text-[30px] lg:text-[32px] font-extrabold leading-[41.6px] text-center decoration-skip-ink  mx-auto relative group">
+              {texts["blur.slider.title"] || title}
+              {user?.role === "admin" && (
+                <button
+                  className=" ml-3 text-gray-200 opacity-0 group-hover:opacity-100 hover:text-orange-400"
+                  onClick={() =>
+                    handleEditClick(
+                      "blur.slider.title",
+                      texts["blur.slider.title"] || title
+                    )
+                  }
+                >
+                  <FaEdit size={16} />
+                </button>
+              )}
+            </h2>
+
+            <div className="flex justify-center items-center group gap-5">
+              <p className="font-poppins text-[#edeef0] text-[18px] font-normal leading-[27px] text-center decoration-skip-ink mt-2">
+                {texts["blur.slider.description"] || description}
+              </p>
+              {user?.role === "admin" && (
+                <button
+                  className=" text-gray-200 opacity-0 group-hover:opacity-100 hover:text-orange-400"
+                  onClick={() =>
+                    handleEditClick(
+                      "blur.slider.description",
+                      texts["blur.slider.description"] || description
+                    )
+                  }
+                >
+                  <FaEdit size={16} />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
         <div className="col-span-1"></div>
 
@@ -89,7 +162,6 @@ const BlurSliderSection = ({ country }) => {
               swiperRef.current = swiper;
               setIsBeginning(swiper.isBeginning);
               setIsEnd(swiper.isEnd);
-              // Set initial background to the first slide's image
               if (data.length > 0) setCurrentBackgroundImage(data[0].image);
             }}
             onSlideChange={handleSlideChange}
@@ -147,6 +219,40 @@ const BlurSliderSection = ({ country }) => {
           <ProgressBars value={progressValue} />
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {editModal.show && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
+          <div className="bg-white p-6 rounded-lg w-96 relative">
+            <h3 className="text-lg font-semibold mb-4">Edit Text</h3>
+            <input
+              type="text"
+              value={editModal.value}
+              onChange={(e) =>
+                setEditModal((prev) => ({ ...prev, value: e.target.value }))
+              }
+              className="w-full p-2 border rounded mb-4"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() =>
+                  setEditModal({ show: false, key: "", value: "" })
+                }
+                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleTextUpdate}
+                className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

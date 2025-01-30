@@ -16,7 +16,7 @@ const About = () => {
   useEffect(() => {
     dispatch(getAboutPageData());
   }, []);
-
+  const texts = useSelector((state) => state.texts);
   const heroSection = aboutPageData?.hero;
   // ============================================ Hero section
   const heroContent = {
@@ -32,7 +32,10 @@ const About = () => {
     <div>
       {aboutPageData?.hero && <HeroScetion heroContent={heroContent} />}
       {aboutWithoutContent && (
-        <ApproachSection aboutWithoutContent={aboutWithoutContent} />
+        <ApproachSection
+          aboutWithoutContent={aboutWithoutContent}
+          texts={texts}
+        />
       )}
       <JourneySection />
       <CenterBannerSection />

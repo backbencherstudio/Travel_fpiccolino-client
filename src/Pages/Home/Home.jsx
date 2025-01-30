@@ -43,17 +43,6 @@ const Home = () => {
     }
   }, [dispatch]);
 
-  // const [showCookieModal, setShowCookieModal] = useState(false);
-
-  // const handleAcceptCookies = () => {
-  //   localStorage.setItem("cookiesAccepted", "true");
-  //   setShowCookieModal(false);
-  // };
-
-  // const handleRejectCookies = () => {
-  //   setShowCookieModal(false);
-  // };
-
   const handleCloseFooterModal = () => {
     setShowFooterModal(false);
     localStorage.setItem("footerModalDismissed", "true");
@@ -70,15 +59,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* Show Cookie Modal */}
-      {/* {showCookieModal && (
-        <CookiePolicyModal
-          handleAcceptCookies={handleAcceptCookies}
-          onClose={handleRejectCookies}
-        />
-      )} */}
-
-      {/* Slide-in Footer Modal */}
       {showFooterModal && <FooterModal onClose={handleCloseFooterModal} />}
 
       {heroSection && <HeroScetion heroContent={heroSection} />}
@@ -89,21 +69,28 @@ const Home = () => {
           isLoading={isLoading}
         />
       )}
-      {cardDetails && <AdventureSection cardDetails={cardDetails} />}
+      {cardDetails && (
+        <AdventureSection cardDetails={cardDetails} texts={texts} />
+      )}
       {countryWithoutImage && (
-        <BlurSliderSection country={countryWithoutImage} />
+        <BlurSliderSection country={countryWithoutImage} texts={texts} />
       )}
       {countrySection && (
         <div ref={footerRef}>
-          <WondersSection countrySection={countrySection} />
+          <WondersSection countrySection={countrySection} texts={texts} />
         </div>
       )}
       {titleWithoutContent && (
-        <ApproachSection aboutWithoutContent={titleWithoutContent} />
+        <ApproachSection
+          aboutWithoutContent={titleWithoutContent}
+          texts={texts}
+        />
       )}
-      {review && <ReviewSection reviews={review} />}
-      {blogSection && <ArticleAndNewsSection blogSection={blogSection} />}
-      <JourneySection />
+      {review && <ReviewSection reviews={review} texts={texts} />}
+      {blogSection && (
+        <ArticleAndNewsSection blogSection={blogSection} texts={texts} />
+      )}
+      <JourneySection texts={texts} />
       {footerSection && (
         <div>
           <BottomBannerSection footerSection={footerSection} />
