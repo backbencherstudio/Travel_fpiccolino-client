@@ -22,9 +22,11 @@ import {
   getCheckout,
 } from "../../features/checkout/checkoutSlice";
 import moment from "moment";
+import EditableHeading from "../../Components/Common/EditableHeading";
 
 const PersonalDetails = () => {
   const [travelerss, setTravler] = useState(1);
+  const { texts } = useSelector((state) => state.texts);
   const inputStyle =
     "w-full my-3 border border-gray-300 focus:border-[#E86731] focus:ring-[1px] focus:ring-[#E86731] focus:outline-none p-2 rounded-md";
   const [value, setValue] = useState("I consent");
@@ -104,13 +106,20 @@ const PersonalDetails = () => {
               onClick={() => removeSession()}
               className="flex items-center"
             >
-              <GoChevronLeft className="text-xl" /> Torniamo ai trasferimenti
+              <GoChevronLeft className="text-xl" />
             </button>
+            <EditableHeading
+              titleKey="personalDetails.back"
+              defaultTitle="Back to transfers"
+              customTitleClass="text-md"
+            />
           </div>
           <div className="mt-10">
-            <HeadLine
-              title="Your Personal Details"
-              description="Provide Your Information to Complete Your Booking Securely"
+            <EditableHeading
+              titleKey="personalDetailsTitle"
+              subtitleKey="personalDetailsDescription"
+              defaultTitle="Your Personal Details"
+              defaultSubtitle="Provide Your Information to Complete Your Booking Securely"
             />
           </div>
         </ParentComponent>
@@ -122,41 +131,64 @@ const PersonalDetails = () => {
             <div className="col-span-12 lg:col-span-8 lg:order-1 bg-[#EFFBFB] p-2 lg:p-10 rounded-lg mb-10">
               <div>
                 <div className="border rounded-lg">
-                  <h2 className="p-2 lg:p-5 text-[#141D2A] text-[20px] md:text-[28px] lg:text-[32px] font-bold flex items-center">
-                    <img src={Frame} className="mr-2" alt="" /> Leggi bene prima
-                    di procedere
+                  <h2 className="p-2 lg:p-5 text-[#141D2A] flex items-center">
+                    <EditableHeading
+                      titleKey="personalDetailsTitle"
+                      defaultTitle="Leggi bene prima di procedere"
+                      customTitleClass="text-[20px] md:text-[28px] lg:text-[32px]"
+                    />
                   </h2>
+
                   <div className="border border-b-[#c8c8ce] mt-3"></div>
-                  <p className="p-5 text-[#72777F] font-[18px]">
-                    Inserisci il tuo nome e cognome in versione completa come
-                    riportato nei documenti, inclusi secondi nomi e/o
-                    iniziali...
+                  <p className="p-5 text-[#72777F] ">
+                    <EditableHeading
+                      titleKey="personalDetailsDescription"
+                      defaultTitle="Inserisci il tuo nome e cognome in versione completa come riportato nei documenti, inclusi secondi nomi e/o iniziali..."
+                      customTitleClass="text-[18px] font-[18px]"
+                    />
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="">
                   <h2 className="text-[#000000] text-[18px] font-[400] mt-5">
-                    Modulo viaggiatore dinamico
+                    <EditableHeading
+                      titleKey="personalDetailsTitle2"
+                      defaultTitle="Modulo viaggiatore dinamico"
+                      customTitleClass="text-[18px] font-[18px]"
+                    />
                   </h2>
+
                   {fields.map((field, index) => (
                     <div
                       key={field.id}
                       className="border-b border-gray-300 pb-4 mt-8"
                     >
-                      <h3 className="text-[#141D2A] text-[20px] font-[600] mb-4">
-                        Viaggiatore {index + 1}
+                      <h3 className="text-[#141D2A] text-[20px]  mb-4 flex">
+                        <EditableHeading
+                          titleKey="personalDetailsTitle3"
+                          defaultTitle="Viaggiatore"
+                          customTitleClass="text-[18px] font-[18px] font-bold"
+                        />
+                        {index + 1}
                       </h3>
                       <div className="grid md:grid-cols-2 gap-2">
                         <div>
                           <label htmlFor={`travelers.${index}.fullName`}>
-                            Nome e cognome *
+                            <EditableHeading
+                              titleKey="fullNameLabel"
+                              defaultTitle="Nome e cognome *"
+                              customTitleClass="text-sm"
+                            />
                           </label>
                           <input
                             id={`travelers.${index}.fullName`}
                             {...register(`travelers.${index}.fullName`, {
                               required: "Nome e cognome è obbligatorio",
                             })}
-                            placeholder="Inserisci il tuo nome e cognome"
+                            placeholder={
+                              texts["fullNamePlaceholder"] ||
+                              "Inserisci il tuo nome e cognome"
+                            }
                             className={inputStyle}
                           />
                           {errors.travelers?.[index]?.fullName && (
@@ -167,14 +199,21 @@ const PersonalDetails = () => {
                         </div>
                         <div>
                           <label htmlFor={`travelers.${index}.lastName`}>
-                            Cognome *
+                            <EditableHeading
+                              titleKey="lastNameLabel"
+                              defaultTitle="Cognome *"
+                              customTitleClass="text-sm"
+                            />
                           </label>
                           <input
                             id={`travelers.${index}.lastName`}
                             {...register(`travelers.${index}.lastName`, {
                               required: "Cognome è obbligatorio",
                             })}
-                            placeholder="Inserisci il tuo cognome"
+                            placeholder={
+                              texts["lastNamePlaceholder"] ||
+                              "Inserisci il tuo cognome"
+                            }
                             className={inputStyle}
                           />
                           {errors.travelers?.[index]?.lastName && (
@@ -187,7 +226,11 @@ const PersonalDetails = () => {
                       <div className="grid md:grid-cols-3 gap-2 mt-4">
                         <div>
                           <label htmlFor={`travelers.${index}.email`}>
-                            E-mail *
+                            <EditableHeading
+                              titleKey="emailLabel"
+                              defaultTitle="E-mail *"
+                              customTitleClass="text-sm"
+                            />
                           </label>
                           <input
                             id={`travelers.${index}.email`}
@@ -199,7 +242,10 @@ const PersonalDetails = () => {
                                 message: "E-mail non valida",
                               },
                             })}
-                            placeholder="Inserisci il tuo email"
+                            placeholder={
+                              texts["emailPlaceholder"] ||
+                              "Inserisci il tuo email"
+                            }
                             className={inputStyle}
                           />
                           {errors.travelers?.[index]?.email && (
@@ -210,7 +256,11 @@ const PersonalDetails = () => {
                         </div>
                         <div>
                           <label htmlFor={`travelers.${index}.phone`}>
-                            Telefono *
+                            <EditableHeading
+                              titleKey="phoneLabel"
+                              defaultTitle="Telefono *"
+                              customTitleClass="text-sm"
+                            />
                           </label>
                           <Controller
                             name={`travelers.${index}.phone`}
@@ -220,7 +270,10 @@ const PersonalDetails = () => {
                               <PhoneInput
                                 {...field}
                                 id={`travelers.${index}.phone`}
-                                placeholder="Inserisci il tuo telefono"
+                                placeholder={
+                                  texts["phonePlaceholder"] ||
+                                  "Inserisci il tuo telefono"
+                                }
                                 className={inputStyle}
                                 international
                                 defaultCountry="US"
@@ -235,7 +288,11 @@ const PersonalDetails = () => {
                         </div>
                         <div>
                           <label htmlFor={`travelers.${index}.gender`}>
-                            Genere *
+                            <EditableHeading
+                              titleKey="genderLabel"
+                              defaultTitle="Genere *"
+                              customTitleClass="text-sm"
+                            />
                           </label>
                           <select
                             id={`travelers.${index}.gender`}
@@ -244,10 +301,18 @@ const PersonalDetails = () => {
                             })}
                             className={inputStyle}
                           >
-                            <option value="">Seleziona</option>
-                            <option value="male">Maschio</option>
-                            <option value="female">Femmina</option>
-                            <option value="other">Altro</option>
+                            <option value="">
+                              {texts["genderSelectPlaceholder"] || "Seleziona"}
+                            </option>
+                            <option value="male">
+                              {texts["genderMale"] || "Maschio"}
+                            </option>
+                            <option value="female">
+                              {texts["genderFemale"] || "Femmina"}
+                            </option>
+                            <option value="other">
+                              {texts["genderOther"] || "Altro"}
+                            </option>
                           </select>
                           {errors.travelers?.[index]?.gender && (
                             <p className="text-red-500">
@@ -260,11 +325,19 @@ const PersonalDetails = () => {
                   ))}
 
                   <div className="my-6">
-                    <h2>Requisiti speciali</h2>
+                    <EditableHeading
+                      titleKey="personalDetailsTitle9"
+                      defaultTitle="Requisiti speciali"
+                      customTitleClass="text-[18px] font-[18px]"
+                    />
                     <p>
-                      Per favore, informaci delle tue allergie, necessità
-                      dietetiche, ecc.
+                      <EditableHeading
+                        titleKey="personalDetailsTitle10"
+                        defaultTitle="Per favore, informaci delle tue allergie, necessità dietetiche, ecc."
+                        customTitleClass="text-[16px] font-[16px]"
+                      />
                     </p>
+
                     <div className="border rounded-lg my-6">
                       {fields.map((_, index) => (
                         <div
@@ -274,7 +347,15 @@ const PersonalDetails = () => {
                           } flex justify-between items-center px-3`}
                         >
                           <span className="flex justify-between items-center w-full">
-                            <h2>Viaggiatore {index + 1}</h2>
+                            <h2 className="flex items-center">
+                              {" "}
+                              <EditableHeading
+                                titleKey="personalDetailsTitle3"
+                                defaultTitle="Viaggiatore"
+                                customTitleClass="text-[18px] font-[18px]"
+                              />
+                              {index + 1}
+                            </h2>
                             <div className="flex items-center">
                               <Checkbox {...label} /> Si
                               <Checkbox {...label} /> No
@@ -283,25 +364,43 @@ const PersonalDetails = () => {
                         </div>
                       ))}
                     </div>
-                    <h2 className="mt-6">Termini e Condizioni</h2>
+                    <h2 className="mt-6">
+                      <EditableHeading
+                        titleKey="personalDetailsTitle11"
+                        defaultTitle="Termini e Condizioni"
+                        customTitleClass="text-[18px] font-[18px]"
+                      />
+                    </h2>
                     <span className="flex items-center my-2">
                       <Checkbox {...label} />
-                      <p>
-                        Dichiaro di aver letto e accettato la{" "}
-                        <span className="text-[#E86731] font-semibold">
-                          politica sulla riservatezza
-                        </span>{" "}
-                        e{" "}
-                        <span className="text-[#E86731] font-semibold">
-                          Termini e Condizioni
-                        </span>
+                      <p className="flex gap-0">
+                        <EditableHeading
+                          titleKey="personalDetailsTitle12"
+                          defaultTitle="Dichiaro di aver letto e accettato la"
+                          customTitleClass="text-[16px] font-[16px]"
+                        />
+                        <EditableHeading
+                          titleKey="personalDetailsTitle13"
+                          defaultTitle="politica sulla riservatezza"
+                          customTitleClass="text-[16px] font-[16px] text-[#E86731]"
+                        />
+                        <EditableHeading
+                          titleKey="e"
+                          defaultTitle="e"
+                          customTitleClass="text-[16px] font-[16px]"
+                        />
+                        <EditableHeading
+                          titleKey="personalDetailsTitle13"
+                          defaultTitle="Termini e Condizioni"
+                          customTitleClass="text-[16px] font-[16px] text-[#E86731]"
+                        />
                         .
                       </p>
                     </span>
                   </div>
                   <button
                     type="submit"
-                    className="block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#E86731]"
+                    className="block text-center w-full duration-300 text-[#FFFFFF] py-2 rounded mt-4 bg-[#E86731] hover:bg-[#E86731]/80"
                   >
                     Invia
                   </button>

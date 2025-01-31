@@ -2,6 +2,7 @@ import { FaEdit } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { updateText } from "../../features/texts/textsSlice";
+import toast from "react-hot-toast";
 
 const EditableHeading = ({
   titleKey,
@@ -21,7 +22,9 @@ const EditableHeading = ({
     originalValue: "",
   });
 
-  const handleEditClick = (key, value) => {
+  const handleEditClick = (e, key, value) => {
+    e.preventDefault(); // Prevent form submission
+    e.stopPropagation(); // Stop event bubbling
     setEditModal({
       show: true,
       key,
@@ -30,7 +33,9 @@ const EditableHeading = ({
     });
   };
 
-  const handleTextUpdate = async () => {
+  const handleTextUpdate = async (e) => {
+    e.preventDefault(); // Prevent form submission
+    e.stopPropagation(); // Stop event bubbling
     try {
       await dispatch(
         updateText({
@@ -38,7 +43,7 @@ const EditableHeading = ({
           value: editModal.value,
         })
       ).unwrap();
-
+      toast.success("Text updated successfully");
       setEditModal({
         show: false,
         key: "",
@@ -60,8 +65,8 @@ const EditableHeading = ({
           {texts[titleKey] || defaultTitle}
           {user?.role === "admin" && (
             <button
-              className="ml-5 text-gray-500 opacity-0 group-hover:opacity-100 hover:text-orange-400"
-              onClick={() => handleEditClick(titleKey, texts[titleKey])}
+              className="ml-1 text-gray-500 opacity-0 group-hover:opacity-100 hover:text-orange-400"
+              onClick={(e) => handleEditClick(e, titleKey, texts[titleKey])}
             >
               <FaEdit size={16} />
             </button>
@@ -75,7 +80,9 @@ const EditableHeading = ({
             {user?.role === "admin" && (
               <button
                 className="text-gray-500 opacity-0 group-hover:opacity-100 hover:text-orange-400"
-                onClick={() => handleEditClick(subtitleKey, texts[subtitleKey])}
+                onClick={(e) =>
+                  handleEditClick(e, subtitleKey, texts[subtitleKey])
+                }
               >
                 <FaEdit size={16} />
               </button>
@@ -86,23 +93,40 @@ const EditableHeading = ({
 
       {/* Edit Modal */}
       {editModal.show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
-          <div className="bg-white p-6 rounded-lg w-96 relative">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setEditModal({ show: false, key: "", value: "" });
+          }}
+        >
+          <div
+            className="bg-white p-6 rounded-lg lg:w-[30%] w-[75%] relative"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
             <h3 className="text-lg font-semibold mb-4">Edit Text</h3>
-            <input
+            <textarea
               type="text"
               value={editModal.value}
-              onChange={(e) =>
-                setEditModal((prev) => ({ ...prev, value: e.target.value }))
-              }
-              className="w-full p-2 border rounded mb-4"
+              onChange={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setEditModal((prev) => ({ ...prev, value: e.target.value }));
+              }}
+              className="w-full p-2 border rounded mb-4 "
               autoFocus
             />
             <div className="flex justify-end gap-2">
               <button
-                onClick={() =>
-                  setEditModal({ show: false, key: "", value: "" })
-                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setEditModal({ show: false, key: "", value: "" });
+                }}
                 className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
               >
                 Cancel

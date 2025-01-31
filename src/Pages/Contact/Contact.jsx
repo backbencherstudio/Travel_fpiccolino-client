@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../../features/contact/contactSlice";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import { getCiontectPageData } from "../../features/pageData/pageDataSlice";
+import EditableHeading from "../../Components/Common/EditableHeading";
 const Contact = () => {
   const {
     register,
@@ -32,10 +33,12 @@ const Contact = () => {
 
   // const { headers } = useSelector((state) => state.header);
   const { contactPage, homePageData } = useSelector((state) => state.pageData);
+  const { texts } = useSelector((state) => state.texts);
   useEffect(() => {
     // dispatch(getHeader());
     dispatch(getCiontectPageData());
   }, []);
+
   // const data = headers?.filter((item) => item.pageName === "contact");
 
   if (!contactPage) {
@@ -57,12 +60,19 @@ const Contact = () => {
       <ParentComponent>
         <div className="mt-20 grid md:grid-cols-2 max-w-[1440px] mx-auto gap-10">
           <div>
-            <h1 className="text-[32px] font-extrabold">
-              Contattaci e <br /> Facciamo i piani
+            <h1 className="">
+              <EditableHeading
+                titleKey="contact.title"
+                defaultTitle="Contattaci e Facciamo i piani"
+                customTitleClass="text-[#000000] text-[32px] font-extrabold"
+              />
             </h1>
             <p className="text-[#72777F] text-[18px] mt-6">
-              Contattaci oggi per una soluzione personalizzata adatta alle tue
-              esigenze!
+              <EditableHeading
+                titleKey="contact.description"
+                defaultTitle="Contattaci oggi per una soluzione personalizzata adatta alle tue esigenze!"
+                customTitleClass="text-[#72777F] text-[18px] mt-6"
+              />
             </p>
 
             <div className="flex gap-3 mt-10">
@@ -70,7 +80,14 @@ const Contact = () => {
                 <img src={mail} className=" m-2.5" alt="" />
               </div>
               <div>
-                <p className="text-[16px]">Scrivici a</p>
+                <p className="">
+                  {" "}
+                  <EditableHeading
+                    titleKey="contact.service"
+                    defaultTitle="Scrivici a"
+                    customTitleClass="text-[16px]"
+                  />{" "}
+                </p>
                 <p className="text-[18px] primary_text font-medium">
                   {homePageData?.footer[0]?.contactInfo?.email}
                 </p>
@@ -81,7 +98,13 @@ const Contact = () => {
                 <img src={call} className=" m-2.5" alt="" />
               </div>
               <div>
-                <p className="text-[16px]">Contattaci al</p>
+                <p className="text-[16px]">
+                  <EditableHeading
+                    titleKey="contact.phone"
+                    defaultTitle="Contattaci al"
+                    customTitleClass="text-[16px]"
+                  />
+                </p>
                 <p className="text-[18px] primary_text font-medium">
                   {homePageData?.footer[0]?.contactInfo?.phone}
                 </p>
@@ -90,11 +113,23 @@ const Contact = () => {
           </div>
 
           <div className="p-10 bg-[#effbfb] rounded-xl">
-            <h1 className="text-3xl font-bold">Scrivici un messaggio</h1>
+            <h1 className="">
+              <EditableHeading
+                titleKey="contact.message"
+                defaultTitle="Scrivici un messaggio"
+                customTitleClass="text-3xl font-bold"
+              />
+            </h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-[18px] font-medium mt-8 mb-3">Nome</p>
+                  <p className="text-[18px] font-medium mt-8 mb-3">
+                    <EditableHeading
+                      titleKey="contact.name"
+                      defaultTitle="Nome"
+                      customTitleClass="text-[18px] font-medium mt-8 mb-3"
+                    />
+                  </p>
                   <input
                     type="text"
                     placeholder="Inserisci il nome"
@@ -110,7 +145,13 @@ const Contact = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-[18px] font-medium mt-8 mb-3">Cognome</p>
+                  <p className="text-[18px] font-medium mt-8 mb-3">
+                    <EditableHeading
+                      titleKey="contact.lastName"
+                      defaultTitle="Cognome"
+                      customTitleClass="text-[18px] font-medium mt-8 mb-3"
+                    />
+                  </p>
                   <input
                     type="text"
                     placeholder="Inserisci il cognome"
@@ -127,7 +168,11 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-[18px] font-medium mt-5 mb-3">
-                    Indirizzo e-mail
+                    <EditableHeading
+                      titleKey="contact.email"
+                      defaultTitle="Indirizzo e-mail"
+                      customTitleClass="text-[18px] font-medium mt-5 mb-3"
+                    />
                   </p>
                   <input
                     type="text"
@@ -149,7 +194,11 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-[18px] font-medium mt-5 mb-3">
-                    Numero di telefono
+                    <EditableHeading
+                      titleKey="contact.phone"
+                      defaultTitle="Numero di telefono"
+                      customTitleClass="text-[18px] font-medium mt-5 mb-3"
+                    />
                   </p>
                   <input
                     type="text"
@@ -170,7 +219,13 @@ const Contact = () => {
                 </div>
               </div>
               <div>
-                <p className="text-[18px] font-medium mt-5 mb-3">Message</p>
+                <p className="text-[18px] font-medium mt-5 mb-3">
+                  <EditableHeading
+                    titleKey="contact.message"
+                    defaultTitle="Message"
+                    customTitleClass="text-[18px] font-medium mt-5 mb-3"
+                  />
+                </p>
                 <textarea
                   placeholder="Inserisci il messaggio"
                   className="p-3 text-[16px] rounded-md w-full"
@@ -184,7 +239,11 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-[18px] font-medium mt-5 mb-3">
-                  Metodo di contatto preferito
+                  <EditableHeading
+                    titleKey="contact.preferredMethod"
+                    defaultTitle="Metodo di contatto preferito"
+                    customTitleClass="text-[18px] font-medium mt-5 mb-3"
+                  />
                 </p>
                 <div className="grid grid-cols-2 gap-3 bg-white p-3">
                   <div className="flex items-center">
@@ -205,7 +264,11 @@ const Contact = () => {
                           : "text-zinc-400"
                       }`}
                     >
-                      Telefono
+                      <EditableHeading
+                        titleKey="contact.phone"
+                        defaultTitle="Telefono"
+                        customTitleClass="text-[16px]"
+                      />
                     </label>
                   </div>
                   <div className="flex items-center">
@@ -226,23 +289,28 @@ const Contact = () => {
                           : "text-zinc-400"
                       }`}
                     >
-                      E-mail
+                      <EditableHeading
+                        titleKey="contact.email"
+                        defaultTitle="E-mail"
+                        customTitleClass="text-[16px]"
+                      />
                     </label>
                   </div>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="p-3 w-full primary_bg text-white font-medium text-[16px] mt-6 rounded-md"
-              >
-                Invia il messaggio
+              <button type="submit" className="w-full  ">
+                <EditableHeading
+                  titleKey="contact.sendMessage"
+                  defaultTitle="Invia il messaggio"
+                  customTitleClass="text-[16px] primary_bg text-white font-medium text-[16px] p-3 mt-6 rounded-md"
+                />
               </button>
             </form>
           </div>
         </div>
       </ParentComponent>
       <div className="bg-[#effbfb] mt-20 pt-1 pb-20">
-        <ApproachSection />
+        <ApproachSection texts={texts} />
       </div>
     </div>
   );

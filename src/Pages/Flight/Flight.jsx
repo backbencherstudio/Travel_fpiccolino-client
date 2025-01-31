@@ -86,12 +86,17 @@ const Flight = () => {
       <div className="pb-20">
         <ParentComponent>
           <div className="mt-20 flex">
-            <Link
-              to={`/tours/${packageDetails?._id}`}
+            <button
+              onClick={() => navigate(`/tours/${packageDetails?._id}`)}
               className="flex items-center"
             >
-              <GoChevronLeft className="text-xl" /> Torna ai dettagli del tour
-            </Link>
+              <GoChevronLeft className="text-xl" />
+            </button>
+            <EditableHeading
+              titleKey="flight.back"
+              defaultTitle=" Torna ai dettagli del tour"
+              customTitleClass="text-md"
+            />
           </div>
           <div className="mt-10">
             <EditableHeading
@@ -115,8 +120,12 @@ const Flight = () => {
             </p>
 
             <div className="mt-5">
-              <h2 className="text-xl font-semibold italic">
-                Seleziona persona
+              <h2 className="text-xl italic">
+                <EditableHeading
+                  titleKey="flight.person"
+                  defaultTitle="Seleziona persona"
+                  customTitleClass="text-md"
+                />
               </h2>
               <select
                 onChange={(e) => setPerson(e.target.value)}
@@ -159,7 +168,7 @@ const Flight = () => {
                         } duration-300`}
                       >
                         <h2 className="text-center text-[14px] text-[#000000]">
-                          1 Stop -{" "}
+                          1 Fermare -{" "}
                           {moment(item.breakTime, "HH:mm").format("hh:mm A")}
                         </h2>
                         <div>
@@ -223,14 +232,25 @@ const Flight = () => {
                     <h2 className="text-[#000000] text-[18px] font-bold text-center">
                       € {totalFlightAmount}
                     </h2>
-                    <h2 className="text-center py-2"> {person} persona</h2>
+                    <h2 className="text-center py-2 flex items-center gap-2 ml-8">
+                      {person}
+                      <EditableHeading
+                        titleKey="flight.personcount"
+                        defaultTitle="Persona"
+                        customTitleClass="text-md"
+                      />
+                    </h2>
                   </div>
                   <button
                     onClick={handleAddFlight}
-                    className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded"
+                    className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded pl-8"
                     disabled={packageDetails?.bookedFlights.length === 0}
                   >
-                    Aggiungi volo
+                    <EditableHeading
+                      titleKey="flight.add"
+                      defaultTitle="Aggiungi volo"
+                      customTitleClass="text-md"
+                    />
                   </button>
                   {/* </div> */}
                 </div>
@@ -257,7 +277,11 @@ const Flight = () => {
                     </h2>
                   </span>
                   <span className="flex items-start justify-between mb-3">
-                    <h2>Passageri</h2>
+                    <EditableHeading
+                      titleKey="flight.passenger"
+                      defaultTitle="Passageri"
+                      customTitleClass="text-md"
+                    />
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
                       {person}
                     </h2>
@@ -265,7 +289,11 @@ const Flight = () => {
                   {addFlight && (
                     <span className="flex items-start justify-between mb-3">
                       <h2 className="flex items-center">
-                        Importo del volo
+                        <EditableHeading
+                          titleKey="flight.flight"
+                          defaultTitle="Importo del volo"
+                          customTitleClass="text-md"
+                        />
                         <TiDeleteOutline
                           className="text-red-600  cursor-pointer  ml-3 text-xl hover:scale-110"
                           onClick={handleRemoveFlight}
@@ -277,7 +305,11 @@ const Flight = () => {
                     </span>
                   )}
                   <span className="flex items-start justify-between mb-3 border-t pt-2 ">
-                    <h2>Totale</h2>
+                    <EditableHeading
+                      titleKey="flight.total"
+                      defaultTitle="Totale"
+                      customTitleClass="text-md"
+                    />
                     <h2 className="text-[20px] font-semibold">
                       € {totalToureCost}
                     </h2>
@@ -285,29 +317,41 @@ const Flight = () => {
                 </div>
 
                 <div>
-                  <button
-                    onClick={() => addDataFun()}
-                    disabled={!addFlight}
-                    className={`text-center block w-full ${
-                      addFlight
-                        ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
-                        : "bg-gray-300 cursor-not-allowed text-gray-500"
-                    }  py-2 rounded mt-4`}
-                  >
-                    Continua con il volo
-                  </button>
+                  <div className="group relative inline-block w-full">
+                    <button
+                      className={`text-center block w-full rounded mt-4`}
+                      onClick={() => addDataFun()}
+                      disabled={!addFlight}
+                    >
+                      <EditableHeading
+                        titleKey="buttons.continue2"
+                        defaultTitle="Continua con il volo"
+                        customTitleClass={` ${
+                          addFlight
+                            ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
+                            : "bg-gray-300 cursor-not-allowed text-gray-500"
+                        } py-2 rounded `}
+                      />
+                    </button>
+                  </div>
 
-                  <button
-                    onClick={() => addDataFun()}
-                    disabled={addFlight}
-                    className={`text-center block w-full ${
-                      !addFlight
-                        ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
-                        : "bg-gray-300 cursor-not-allowed text-gray-500"
-                    }  py-2 rounded mt-4`}
-                  >
-                    Continua senza volo
-                  </button>
+                  <div className="group relative inline-block w-full">
+                    <button
+                      className={`text-center block w-full py-2 rounded mt-4`}
+                      onClick={() => addDataFun()}
+                      disabled={addFlight}
+                    >
+                      <EditableHeading
+                        titleKey="buttons.continue3"
+                        defaultTitle="Continua senza volo"
+                        customTitleClass={` ${
+                          !addFlight
+                            ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
+                            : "bg-gray-300 cursor-not-allowed text-gray-500"
+                        }  py-2 rounded `}
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

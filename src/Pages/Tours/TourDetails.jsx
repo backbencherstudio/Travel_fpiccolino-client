@@ -224,12 +224,18 @@ const TourDetails = () => {
                   {/* <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
                     Change dates
                   </h2> */}
-                  <button
-                    className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
-                    onClick={() => navigate(`/flight/${packageDetails?._id}`)}
-                  >
-                    {texts?.buttons?.continue || "Continua"}
-                  </button>
+                  <div className="group relative inline-block w-full">
+                    <button
+                      className="text-center block border rounded-lg bg-[#E86731] px-8 py-4 mb-4 w-full"
+                      onClick={() => navigate(`/flight/${packageDetails?._id}`)}
+                    >
+                      <EditableHeading
+                        titleKey="buttons.continue"
+                        defaultTitle="Continua"
+                        customTitleClass="text-white"
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

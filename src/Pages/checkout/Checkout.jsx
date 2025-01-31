@@ -10,6 +10,7 @@ import Footer from "../../Shared/Footer";
 import { GoChevronLeft } from "react-icons/go";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { Link } from "react-router-dom";
+import EditableHeading from "../../Components/Common/EditableHeading";
 
 const stripePromise = loadStripe(
   "pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha"
@@ -47,25 +48,47 @@ const Checkout = () => {
   return (
     <div>
       <ParentComponent>
-        <Link to={`/personalDetails`} className="flex items-center mt-20">
-          <GoChevronLeft className="text-xl" /> Torniamo ai dettagli del tour
-        </Link>
-
+        <div className="mt-20 flex items-center">
+          <Link to={`/personalDetails`} className="flex items-center">
+            <GoChevronLeft className="text-xl" />
+          </Link>{" "}
+          <EditableHeading
+            titleKey="checkout.back"
+            defaultTitle="Torna ai dettagli del tour"
+            customTitleClass="text-md"
+          />
+        </div>
         <div className="my-20 flex items-center justify-center">
           <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* Left Section - Order Summary */}
-              <div className="primary_bg p-8 text-white">
+              <div className="primary_bg p-8 ">
                 <h1 className="text-3xl font-semibold mb-6">
-                  Riepilogo ordine
+                  <EditableHeading
+                    titleKey="checkout.orderSummary"
+                    defaultTitle="Riepilogo ordine"
+                    customTitleClass="text-3xl text-white "
+                  />
                 </h1>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center border-b border-white pb-4">
-                    <span className="text-white">Importo dovuto</span>
-                    <span className="text-2xl">${amount}</span>
+                    <span className="text-white">
+                      <EditableHeading
+                        titleKey="checkout.amountDue"
+                        defaultTitle="Importo dovuto"
+                        customTitleClass="text-sm"
+                      />
+                    </span>
+                    <span className="text-2xl text-white">${amount}</span>
                   </div>
                   <div className="pt-4">
-                    <p className="text-sm text-white">Pagamento sicuro</p>
+                    <p className="text-sm">
+                      <EditableHeading
+                        titleKey="checkout.securePayment"
+                        defaultTitle="Pagamento sicuro"
+                        customTitleClass="text-sm text-white"
+                      />
+                    </p>
                   </div>
                 </div>
               </div>

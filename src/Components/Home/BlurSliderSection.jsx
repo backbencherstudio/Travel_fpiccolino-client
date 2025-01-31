@@ -223,9 +223,9 @@ const BlurSliderSection = ({ country, texts }) => {
       {/* Edit Modal */}
       {editModal.show && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
-          <div className="bg-white p-6 rounded-lg w-96 relative">
+          <div className="bg-white p-6 rounded-lg lg:w-[30%] w-[75%] relative">
             <h3 className="text-lg font-semibold mb-4">Edit Text</h3>
-            <input
+            <textarea
               type="text"
               value={editModal.value}
               onChange={(e) =>

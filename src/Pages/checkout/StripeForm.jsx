@@ -12,6 +12,7 @@ import axios from "axios";
 import { createOrder } from "../../features/order/orderSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import EditableHeading from "../../Components/Common/EditableHeading";
 
 const StripeForm = ({ checkoutNewData }) => {
   const navigate = useNavigate();
@@ -90,20 +91,30 @@ const StripeForm = ({ checkoutNewData }) => {
       onSubmit={handleSubmit}
       className="bg-white shadow-md rounded-lg px-3 max-w-lg mx-auto"
     >
-      <h2 className="text-2xl font-bold text-center mb-2">Secure Payment</h2>
+      <h2 className="text-2xl font-bold text-center mb-2">
+        <EditableHeading
+          titleKey="checkout.securePayment"
+          defaultTitle="Secure Payment"
+          customTitleClass="text-2xl font-bold text-center mb-2"
+        />
+      </h2>
 
       <div className="mb-2">
         <label
           className="block text-lg font-semibold mb-2 text-gray-700"
           htmlFor="email"
         >
-          Email
+          <EditableHeading
+            titleKey="checkout.email"
+            defaultTitle="Email"
+            customTitleClass="text-lg font-semibold mb-2 text-gray-700"
+          />
         </label>
         <input
           type="email"
           id="email"
           className="w-full p-3 border rounded-lg focus:ring-blue-500 focus:outline-none"
-          placeholder="Enter your email"
+          placeholder="inserisci la tua email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -112,7 +123,11 @@ const StripeForm = ({ checkoutNewData }) => {
 
       <div className="mb-2">
         <label className="block text-lg font-semibold mb-2 text-gray-700">
-          Card Number
+          <EditableHeading
+            titleKey="checkout.cardNumber"
+            defaultTitle="Card Number"
+            customTitleClass="text-lg font-semibold mb-2 text-gray-700"
+          />
         </label>
         <div className="p-3 border rounded-lg bg-gray-50">
           <CardNumberElement options={elementStyle} />
@@ -122,7 +137,11 @@ const StripeForm = ({ checkoutNewData }) => {
       <div className="flex gap-4 mb-2">
         <div className="w-1/2">
           <label className="block text-lg font-semibold mb-2 text-gray-700">
-            Expiration Date
+            <EditableHeading
+              titleKey="checkout.expirationDate"
+              defaultTitle="Expiration Date"
+              customTitleClass="text-lg font-semibold mb-2 text-gray-700"
+            />
           </label>
           <div className="p-3 border rounded-lg bg-gray-50">
             <CardExpiryElement options={elementStyle} />
@@ -130,7 +149,11 @@ const StripeForm = ({ checkoutNewData }) => {
         </div>
         <div className="w-1/2">
           <label className="block text-lg font-semibold mb-2 text-gray-700">
-            CVC
+            <EditableHeading
+              titleKey="checkout.cvc"
+              defaultTitle="CVC"
+              customTitleClass="text-lg font-semibold mb-2 text-gray-700"
+            />
           </label>
           <div className="p-3 border rounded-lg bg-gray-50">
             <CardCvcElement options={elementStyle} />
