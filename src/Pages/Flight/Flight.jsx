@@ -12,6 +12,7 @@ import { getPackageDetails } from "../../features/pckage/packageSlice";
 import moment from "moment";
 import { TiDeleteOutline } from "react-icons/ti";
 import { createCheckout } from "../../features/checkout/checkoutSlice";
+import EditableHeading from "../../Components/Common/EditableHeading";
 
 const Flight = () => {
   const dispatch = useDispatch();
@@ -93,9 +94,11 @@ const Flight = () => {
             </Link>
           </div>
           <div className="mt-10">
-            <HeadLine
-              title="Scegli il tuo volo perfetto"
-              description="Trova le migliori opzioni per il tuo viaggio, tutto in un unico posto"
+            <EditableHeading
+              titleKey="flight.title"
+              subtitleKey="flight.description"
+              defaultTitle="Scegli il tuo volo perfetto"
+              defaultSubtitle="Trova le migliori opzioni per il tuo viaggio, tutto in un unico posto"
             />
           </div>
         </ParentComponent>

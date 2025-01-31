@@ -14,11 +14,13 @@ import {
   get_all_inclusive_TourPagePage,
 } from "../../features/pageData/pageDataSlice";
 import { PiShieldWarningThin } from "react-icons/pi";
+import { FaEdit } from "react-icons/fa";
+import EditableHeading from "../../Components/Common/EditableHeading";
 
 const Tours = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const texts = useSelector((state) => state.texts);
+  const { texts } = useSelector((state) => state.texts);
   const { user } = useSelector((state) => state.authorization);
   const { all_inclusive_TourPageData, country_wise_TourPageData } = useSelector(
     (state) => state.pageData
@@ -84,7 +86,13 @@ const Tours = () => {
       {heroContent && <HeroScetion heroContent={heroContent} />}
 
       <ParentComponent styles="my-20">
-        <HeadLine title={packags?.title} description={packags?.subtitle} />
+        <EditableHeading
+          titleKey="tour.title"
+          subtitleKey="tour.subtitle"
+          defaultTitle="Explore Our Amazing Tours"
+          defaultSubtitle="Discover our handpicked selection of amazing tours and adventures"
+          customTitleClass="text-[16px] text-[#1C1C1C] text-center ml-[10%]"
+        />
         <div>
           {packags?.data?.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20">
@@ -118,40 +126,6 @@ const Tours = () => {
       <div className="mt-20">
         <BottomBannerSection />
       </div>
-
-      {/* Edit Modal */}
-      {editModal.show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
-          <div className="bg-white p-6 rounded-lg w-96 relative">
-            <h3 className="text-lg font-semibold mb-4">Edit Text</h3>
-            <input
-              type="text"
-              value={editModal.value}
-              onChange={(e) =>
-                setEditModal((prev) => ({ ...prev, value: e.target.value }))
-              }
-              className="w-full p-2 border rounded mb-4"
-              autoFocus
-            />
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={() =>
-                  setEditModal({ show: false, key: "", value: "" })
-                }
-                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleTextUpdate}
-                className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

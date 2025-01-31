@@ -7,6 +7,7 @@ import { FaAngleLeft, FaAngleRight, FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateText } from "../../features/texts/textsSlice";
+import EditableHeading from "../Common/EditableHeading";
 
 const AdventureSection = ({ cardDetails, texts }) => {
   const dispatch = useDispatch();
@@ -55,44 +56,12 @@ const AdventureSection = ({ cardDetails, texts }) => {
     <div className="bg-[#EFFBFB] lg:p-20 p-5 ">
       <ParentComponent>
         <div className="text-center mb-14">
-          <div>
-            <h2 className="font-duera-expanded text-[#000000] text-[30px] lg:text-[32px] font-extrabold leading-[41.6px] text-center decoration-skip-ink md:w-[70%] lg:w-[45%] xl:w-[35%] mx-auto flex justify-center items-center group gap-5">
-              {texts["home.adventure.title"] || "Adventure Tours Here"}
-              {user?.role === "admin" && (
-                <button
-                  className=" text-gray-500 opacity-0 group-hover:opacity-100 hover:text-orange-400"
-                  onClick={() =>
-                    handleEditClick(
-                      "home.adventure.title",
-                      texts["home.adventure.title"]
-                    )
-                  }
-                >
-                  <FaEdit size={16} />
-                </button>
-              )}
-            </h2>
-
-            <div className="flex justify-center items-center group gap-5">
-              <p className="font-poppins text-[#72777F] text-[18px] font-normal leading-[27px] text-center decoration-skip-ink mt-2">
-                {texts["home.adventure.description"] ||
-                  "Explore the world with our adventure tours. From hiking in the mountains to snorkeling in the sea, we have something for everyone."}
-              </p>
-              {user?.role === "admin" && (
-                <button
-                  className=" text-gray-500 opacity-0 group-hover:opacity-100 hover:text-orange-400"
-                  onClick={() =>
-                    handleEditClick(
-                      "home.adventure.description",
-                      texts["home.adventure.description"]
-                    )
-                  }
-                >
-                  <FaEdit size={16} />
-                </button>
-              )}
-            </div>
-          </div>
+          <EditableHeading
+            titleKey="home.adventure.title"
+            subtitleKey="home.adventure.description"
+            defaultTitle="Adventure Tours Here"
+            defaultSubtitle="Explore the world with our adventure tours. From hiking in the mountains to snorkeling in the sea, we have something for everyone."
+          />
         </div>
         <div className="relative">
           <div className="mb-4">

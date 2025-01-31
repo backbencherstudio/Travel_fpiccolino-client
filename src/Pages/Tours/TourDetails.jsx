@@ -7,10 +7,9 @@ import iconn3 from "../../assets/icone/icone3.png";
 import iconn4 from "../../assets/icone/icone4.png";
 import yes from "../../assets/icone/yes.png";
 import { useEffect, useState } from "react";
-import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import TestimonialCard from "../../Components/Cards/TestimonialCard";
 import { RiMoneyEuroCircleLine } from "react-icons/ri";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackageDetails } from "../../features/pckage/packageSlice";
 import {
@@ -40,10 +39,13 @@ import {
   clearPackageReviews,
   getReviewByPackage,
 } from "../../features/review/reviewSlice";
+import EditableHeading from "../../Components/Common/EditableHeading";
+
 const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
-
+  const navigate = useNavigate();
+  const { texts } = useSelector((state) => state.texts);
   const { packageDetails } = useSelector((state) => state.package);
   const { packageReview } = useSelector((state) => state.review);
   useEffect(() => {
@@ -92,9 +94,11 @@ const TourDetails = () => {
         <ParentComponent>
           <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
             <div className="col-span-12 lg:col-span-8">
-              <h2 className="lg:text-[40px] font-bold text-[#0C0C1D] uppercase ">
-                PER CHI GUARDA SEMPRE ALL'ORIZZONTE
-              </h2>
+              <EditableHeading
+                titleKey="tourdetails.title"
+                defaultTitle="PER CHI GUARDA SEMPRE ALL'ORIZZONTE"
+                customTitleClass="uppercase font-bold text-[40px]  md:w-full text-start"
+              />
               <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
                 {tags?.map((item, index) => (
                   <div key={item?._id}>
@@ -190,9 +194,11 @@ const TourDetails = () => {
               {/* ==============================================  Hero Section Right Side Bar ===================================== */}
               <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 ">
                 <div className="mb-10">
-                  <h2 className="text-center text-[#1C1C1C]">
-                    Prezzo del pacchetto
-                  </h2>
+                  <EditableHeading
+                    titleKey="tourdetails.price"
+                    defaultTitle="Prezzo del pacchetto"
+                    customTitleClass="text-[16px] text-[#1C1C1C] text-center ml-[10%]"
+                  />
                   <span className="flex justify-center gap-10 mt-5">
                     <h2 className="flex items-center font-semibold text-[24px] text-[#25CE50] ">
                       {" "}
@@ -218,26 +224,14 @@ const TourDetails = () => {
                   {/* <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
                     Change dates
                   </h2> */}
-                  <Link
-                    to={`/flight/${packageDetails?._id}`}
+                  <button
                     className="text-center block border rounded-lg bg-[#E86731] text-[#FFFFFF] px-8 py-4 mb-4 w-full"
+                    onClick={() => navigate(`/flight/${packageDetails?._id}`)}
                   >
-                    Continua
-                  </Link>
+                    {texts?.buttons?.continue || "Continua"}
+                  </button>
                 </div>
               </div>
-
-              {/* <div className="bg-[#FFFFFF] p-10 rounded-lg ">
-                <div className="mb-10">
-                  <h2 className="text-[#E86731] flex items-center">
-                    {" "}
-                    <img src={flight} alt="" /> Add flight
-                  </h2>
-                </div>
-                <div>
-                  <p>Come From Text Editor</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </ParentComponent>
@@ -249,9 +243,11 @@ const TourDetails = () => {
               <div className="grid grid-cols-12 py-20 lg:gap-4 xl:gap-14 relative ">
                 <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
                   <div>
-                    <h2 className="uppercase font-bold text-[32px] ">
-                      DOVE ALLOGGERAI
-                    </h2>
+                    <EditableHeading
+                      titleKey="accommodation.title"
+                      defaultTitle="DOVE ALLOGGERAI"
+                      customTitleClass="uppercase font-bold text-[32px]  md:w-full text-start"
+                    />
                     <h2 className="text-[20px] mt-10 font-semibold ">
                       {packageDetails?.hotelName}
                     </h2>
@@ -300,9 +296,11 @@ const TourDetails = () => {
         {/* ==========================================  Testimonial ================================= */}
 
         <div className="bg-[#EFFBFB] py-20">
-          <HeadLine
-            title="COSA DICONO LE PERSONE CHE HANNO VIAGGIATO CON NOI?"
-            description="Recensioni reali di golfisti che migliorano il loro gioco con il nostro abbigliamento"
+          <EditableHeading
+            titleKey="testimonial.title"
+            subtitleKey="testimonial.description"
+            defaultTitle="WHAT DO PEOPLE WHO TRAVELED WITH US SAY?"
+            defaultSubtitle="Real reviews from golfers who improve their game with our apparel"
           />
 
           <ParentComponent>
@@ -316,10 +314,13 @@ const TourDetails = () => {
               </div>
             ) : (
               <div className="text-center text-gray-600 my-5 py-20 border-dashed border">
-                <h2 className="text-lg font-semibold primary_text ">
-                  Nessuna recensione disponibile
-                </h2>
-                <p>Sii il primo a condividere la tua esperienza!</p>
+                <EditableHeading
+                  titleKey="reviews.empty.title"
+                  subtitleKey="reviews.empty.description"
+                  defaultTitle="No reviews available"
+                  defaultSubtitle="Be the first to share your experience!"
+                  customTitleClass="text-lg font-semibold text-[#E86731]"
+                />
               </div>
             )}
           </ParentComponent>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import { useDispatch, useSelector } from "react-redux";
 import { getShorts } from "../../features/pckage/packageSlice";
+import EditableHeading from "../Common/EditableHeading";
 
 const Videos = () => {
   const dispatch = useDispatch();
@@ -21,9 +21,11 @@ const Videos = () => {
 
   return (
     <div>
-      <HeadLine
-        title="Vibrazioni da club scatenate"
-        description="Senti l'energia, il ritmo e la magia delle nostre notti indimenticabili"
+      <EditableHeading
+        titleKey="shorts.title"
+        subtitleKey="shorts.subtitle"
+        defaultTitle="Unleashed Club Vibes"
+        defaultSubtitle="Feel the energy, rhythm, and magic of our unforgettable nights"
       />
 
       <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-10 mt-14">
