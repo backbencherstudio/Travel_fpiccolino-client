@@ -116,7 +116,7 @@ const Footer = () => {
   }
 
   return (
-    <div className="bg-white text-black">
+    <div className="bg-white text-black px-4">
       <ParentComponent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-20 pb-10 lg:gap-0 gap-10">
           <div>
@@ -235,7 +235,7 @@ const Footer = () => {
               <form className="relative mt-4" onSubmit={handleSubscribe}>
                 <div className="relative group">
                   <input
-                    className="p-3 pr-20 w-[327px] h-11 border border-[#626262] rounded-lg"
+                    className="p-3 pr-20 max-w-[327px] h-11 border border-[#626262] rounded-lg"
                     type="email"
                     placeholder={
                       texts["footer.emailPlaceholder"] || "Enter your email"
@@ -334,23 +334,14 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between py-6 md:gap-0 gap-5">
             <p className="text-[16px]">Copyright {footerData.copyright}</p>
             <div className="flex gap-2">
-              <img
-                className="bg-white h-7 w-9 rounded"
-                src={klarna}
-                alt="Epay"
-              />
-              <img
-                src={stripe}
-                className="bg-white rounded w-9 h-7"
-                alt="Stripe"
-              />
-              <img src={visa} alt="Visa" className="bg-white rounded w-9 h-7" />
-              <img
-                className="bg-white h-7 w-9 rounded"
-                src={paypal}
-                alt="PayPal"
-              />
-              <img className="bg-white h-7 w-9 rounded" src={epay} alt="Epay" />
+              {footerData?.paymentLogos?.map((logo, index) => (
+                <img
+                  key={index}
+                  src={`${base_url}/${logo}`}
+                  alt={`Logo ${index + 1}`}
+                  className="bg-white h-10 w-12 rounded"
+                />
+              ))}
             </div>
           </div>
         </ParentComponent>

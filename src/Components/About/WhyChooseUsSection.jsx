@@ -98,7 +98,7 @@ const WhyChooseUsSection = ({ footer_3 }) => {
           <EditableHeading
             titleKey="why_choose_us_company_name"
             defaultTitle="Il Nostro Partner di Fiducia nel Viaggio"
-            customTitleClass="font-extrabold text-[20px] md:text-[40px] text-white text-center lg:text-start max-w-[450px]"
+            customTitleClass="font-extrabold text-[32px] text-white text-center lg:text-start max-w-[450px]"
           />
         </div>
 

@@ -205,6 +205,7 @@ const Dashboard = () => {
                 selectedTab === "updateApproach" ||
                 selectedTab === "Header" ||
                 selectedTab === "updateFAQ" ||
+                selectedTab === "updateWhyUs" ||
                 selectedTab === "AddContent"
                   ? "bg-[#fdf0ea] primary_text font-semibold"
                   : "hover:bg-zinc-300"

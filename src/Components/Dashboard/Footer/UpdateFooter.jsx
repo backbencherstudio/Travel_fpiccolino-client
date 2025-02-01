@@ -4,7 +4,7 @@ import {
   getHomePageData,
   updateFooter,
 } from "../../../features/pageData/pageDataSlice";
-import { FaPlusSquare } from "react-icons/fa";
+import { FaPlusSquare, FaTrash } from "react-icons/fa";
 import { base_url } from "../../../utils/base_path";
 import { toast } from "react-toastify";
 
@@ -25,6 +25,8 @@ const UpdateFooter = () => {
     },
     copyright: "",
   });
+  const [paymentLogos, setPaymentLogos] = useState([]);
+  const [existingPaymentLogos, setExistingPaymentLogos] = useState([]);
 
   // Fetch footer data
   useEffect(() => {
@@ -63,6 +65,15 @@ const UpdateFooter = () => {
             : `${base_url}/${footerData.bannerImg}`
         );
       }
+
+      // Set existing payment logos if they exist
+      if (footerData.paymentLogos && Array.isArray(footerData.paymentLogos)) {
+        setExistingPaymentLogos(
+          footerData.paymentLogos.map((logo) =>
+            logo.startsWith("http") ? logo : `${base_url}/${logo}`
+          )
+        );
+      }
     }
   }, [homePageData]);
 
@@ -97,6 +108,22 @@ const UpdateFooter = () => {
     if (file) {
       setBannerImg(file);
     }
+  };
+
+  // Add handler for payment logos upload
+  const handlePaymentLogoUpload = (e) => {
+    e.stopPropagation();
+    const files = Array.from(e.target.files);
+    setPaymentLogos((prev) => [...prev, ...files]);
+  };
+
+  // Add handler to remove payment logo
+  const removePaymentLogo = (index) => {
+    setPaymentLogos((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeExistingPaymentLogo = (index) => {
+    setExistingPaymentLogos((prev) => prev.filter((_, i) => i !== index));
   };
 
   // Submit the form
@@ -137,6 +164,17 @@ const UpdateFooter = () => {
     if (bannerImg) {
       formDataToSend.append("bannerImg", bannerImg);
     }
+
+    // Append payment logos
+    paymentLogos.forEach((logo, index) => {
+      formDataToSend.append(`paymentLogos`, logo);
+    });
+
+    // Append existing payment logos that weren't removed
+    formDataToSend.append(
+      "existingPaymentLogos",
+      JSON.stringify(existingPaymentLogos)
+    );
 
     // Debug log
     for (let pair of formDataToSend.entries()) {
@@ -304,6 +342,63 @@ const UpdateFooter = () => {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded"
             />
+          </div>
+        </div>
+
+        {/* Add this before the Submit Button */}
+        <div className="space-y-4 grid grid-cols-1 lg:grid-cols-8 gap-4">
+          <div className="relative col-span-2">
+            <label htmlFor="paymentLogos" className="block font-medium mb-2">
+              Payment System Logos
+            </label>
+            <input
+              type="file"
+              id="paymentLogos"
+              accept="image/*"
+              multiple
+              onChange={handlePaymentLogoUpload}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center">
+              <FaPlusSquare className="primary_text h-6 w-6 mx-auto mb-2" />
+              <p>Click to upload payment system logos</p>
+            </div>
+          </div>
+
+          {/* Display uploaded and existing payment logos */}
+          <div className="grid grid-cols-3 lg:grid-cols-6 gap-4 col-span-6 ">
+            {paymentLogos.map((logo, index) => (
+              <div key={index} className="relative my-auto">
+                <img
+                  src={URL.createObjectURL(logo)}
+                  alt={`Payment Logo ${index + 1}`}
+                  className="h-20 w-full object-contain border rounded-lg"
+                />
+                <button
+                  type="button"
+                  onClick={() => removePaymentLogo(index)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+                >
+                  <FaTrash className="text-white" />
+                </button>
+              </div>
+            ))}
+            {existingPaymentLogos.map((logo, index) => (
+              <div key={`existing-${index}`} className="relative my-auto">
+                <img
+                  src={logo}
+                  alt={`Existing Payment Logo ${index + 1}`}
+                  className="h-20 w-full object-contain border rounded-lg"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeExistingPaymentLogo(index)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+                >
+                  <FaTrash className="text-white" />
+                </button>
+              </div>
+            ))}
           </div>
         </div>
 
