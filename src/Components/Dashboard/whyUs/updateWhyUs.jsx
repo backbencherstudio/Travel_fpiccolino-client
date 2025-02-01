@@ -10,9 +10,12 @@ const UpdateWhyUs = () => {
     logos: Array(3).fill({ logo: null, name: "", description: "" }),
     bannerImage: null,
     bannerOriginalPath: null,
+    sideImage: null,
+    sideImageOriginalPath: null,
   });
   const [existingLogos, setExistingLogos] = useState(Array(3).fill(null));
   const [existingBanner, setExistingBanner] = useState(null);
+  const [existingSideImage, setExistingSideImage] = useState(null);
 
   useEffect(() => {
     const fetchWhyUsData = async () => {
@@ -53,6 +56,15 @@ const UpdateWhyUs = () => {
             setWhyUsData((prev) => ({
               ...prev,
               bannerOriginalPath: response.data.bannerImage,
+            }));
+          }
+
+          // Set side image data
+          if (response.data.sideImage) {
+            setExistingSideImage(`${base_url}/${response.data.sideImage}`);
+            setWhyUsData((prev) => ({
+              ...prev,
+              sideImageOriginalPath: response.data.sideImage,
             }));
           }
         }
@@ -102,6 +114,17 @@ const UpdateWhyUs = () => {
     }
   };
 
+  const handleSideImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setWhyUsData((prev) => ({
+        ...prev,
+        sideImage: file,
+        sideImageOriginalPath: prev.sideImageOriginalPath,
+      }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -128,6 +151,15 @@ const UpdateWhyUs = () => {
     if (whyUsData.bannerOriginalPath) {
       formData.append("originalBannerImage", whyUsData.bannerOriginalPath);
       formData.append("existingBannerImage", whyUsData.bannerOriginalPath);
+    }
+
+    // Add side image data
+    if (whyUsData.sideImage instanceof File) {
+      formData.append("sideImage", whyUsData.sideImage);
+    }
+    if (whyUsData.sideImageOriginalPath) {
+      formData.append("originalSideImage", whyUsData.sideImageOriginalPath);
+      formData.append("existingSideImage", whyUsData.sideImageOriginalPath);
     }
 
     try {
@@ -164,32 +196,64 @@ const UpdateWhyUs = () => {
     return existingBanner;
   };
 
+  const getSideImageSource = () => {
+    if (whyUsData.sideImage instanceof File) {
+      return URL.createObjectURL(whyUsData.sideImage);
+    }
+    return existingSideImage;
+  };
+
   return (
     <div className="p-6 bg-gray-100">
       <h2 className="text-xl font-bold mb-4">Update Why Us Section</h2>
-
+      <h3 className="text-lg font-semibold mb-4">Banner Image</h3>
+      <div className="relative mb-4">
+        <label className="block font-medium mb-2">Upload Banner</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleBannerUpload}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        />
+        <div className="h-96 w-full flex items-center justify-center border rounded-lg relative">
+          {getBannerImageSource() ? (
+            <img
+              src={getBannerImageSource()}
+              alt="Banner"
+              className="h-full w-full object-cover rounded-lg"
+            />
+          ) : (
+            <div className="flex flex-col items-center">
+              <FaPlusSquare className="text-gray-400 h-8 w-8 mb-2" />
+              <span className="text-gray-500">Click to upload banner</span>
+            </div>
+          )}
+        </div>
+      </div>
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-4">
         <div className="mb-6 border p-4 rounded-lg bg-white col-span-2">
-          <h3 className="text-lg font-semibold mb-4">Banner Image</h3>
+          <h3 className="text-lg font-semibold mb-4">Side Image</h3>
           <div className="relative mb-4">
-            <label className="block font-medium mb-2">Upload Banner</label>
+            <label className="block font-medium mb-2">Upload Side Image</label>
             <input
               type="file"
               accept="image/*"
-              onChange={handleBannerUpload}
+              onChange={handleSideImageUpload}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
             />
             <div className="h-96 w-full flex items-center justify-center border rounded-lg relative">
-              {getBannerImageSource() ? (
+              {getSideImageSource() ? (
                 <img
-                  src={getBannerImageSource()}
-                  alt="Banner"
+                  src={getSideImageSource()}
+                  alt="Side"
                   className="h-full w-full object-cover rounded-lg"
                 />
               ) : (
                 <div className="flex flex-col items-center">
                   <FaPlusSquare className="text-gray-400 h-8 w-8 mb-2" />
-                  <span className="text-gray-500">Click to upload banner</span>
+                  <span className="text-gray-500">
+                    Click to upload side image
+                  </span>
                 </div>
               )}
             </div>

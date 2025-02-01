@@ -79,10 +79,50 @@ const TourDetails = () => {
   };
 
   const tags = [
-    { icon: iconn4, tag: "A prova di GEN Z" },
-    { icon: iconn3, tag: "Cavalca l'onda" },
-    { icon: iconn2, tag: "Vibrazioni rilassate" },
-    { icon: iconn1, tag: "Estate per sempre" },
+    {
+      icon: iconn4,
+      titleKey: "tags.genz",
+      tag: (
+        <EditableHeading
+          titleKey="tags.genz"
+          defaultTitle="A prova di GEN Z"
+          customTitleClass="text-[#E86731]"
+        />
+      ),
+    },
+    {
+      icon: iconn3,
+      titleKey: "tags.wave",
+      tag: (
+        <EditableHeading
+          titleKey="tags.wave"
+          defaultTitle="Cavalca l'onda"
+          customTitleClass="text-[#E86731]"
+        />
+      ),
+    },
+    {
+      icon: iconn2,
+      titleKey: "tags.relax",
+      tag: (
+        <EditableHeading
+          titleKey="tags.relax"
+          defaultTitle="Vibrazioni rilassate"
+          customTitleClass="text-[#E86731]"
+        />
+      ),
+    },
+    {
+      icon: iconn1,
+      titleKey: "tags.summer",
+      tag: (
+        <EditableHeading
+          titleKey="tags.summer"
+          defaultTitle="Estate per sempre"
+          customTitleClass="text-[#E86731]"
+        />
+      ),
+    },
   ];
 
   const [imagePath, setImagePath] = useState(packageDetails?.hotelImages[0]);
@@ -106,14 +146,13 @@ const TourDetails = () => {
                       <img
                         className="size-8 object-cover rounded-lg"
                         src={
-                          packageDetails?.images[index] // Current image
+                          packageDetails?.images[index]
                             ? `${base_url}${packageDetails?.images[index]}`
                             : `${base_url}${packageDetails?.images[0]}`
                         }
                         alt="Package Preview"
                       />
-
-                      <h2 className="text-[#E86731]"> {item?.tag} </h2>
+                      {item?.tag}
                     </div>
                   </div>
                 ))}

@@ -31,8 +31,19 @@ const WhyChooseUsSection = ({ footer_3 }) => {
 
   return (
     <div>
+      <div className="relative h-[520px] mt-5">
+        <img
+          src={
+            whyUsData.bannerImage
+              ? `${base_url}/${whyUsData.bannerImage}`
+              : natureImage2
+          }
+          className="h-full w-full object-cover"
+          alt=""
+        />
+      </div>
       <ParentComponent>
-        <div className="mt-[80px] lg:mb-0 lg:px-20 px-5">
+        <div className="mt-10 lg:mb-0 lg:px-20 px-5">
           <EditableHeading
             titleKey="why_choose_us_title"
             subtitleKey="why_choose_us_subtitle"
@@ -43,8 +54,8 @@ const WhyChooseUsSection = ({ footer_3 }) => {
             <div className="col-span-2 h-[520px] max-w-[720px] ">
               <img
                 src={
-                  whyUsData.bannerImage
-                    ? `${base_url}/${whyUsData.bannerImage}`
+                  whyUsData.sideImage
+                    ? `${base_url}/${whyUsData.sideImage}`
                     : natureImage2
                 }
                 className="h-full w-full rounded-2xl object-cover"

@@ -39,13 +39,6 @@ const CenterBannerSection = ({ bannerImage }) => {
           </li>
         ))}
       </ul>
-      <div className="relative h-[520px]">
-        <img
-          src={bannerImage}
-          alt="banner"
-          className="w-full h-full object-cover"
-        />
-      </div>
     </>
   );
 };
