@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaHome, FaPlusSquare, FaRegUser } from "react-icons/fa";
+import { FaHome, FaPlusSquare, FaQuora, FaRegUser } from "react-icons/fa";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { LuClipboardList, LuLayoutDashboard } from "react-icons/lu";
 import { PiTrolleySuitcase } from "react-icons/pi";
@@ -308,7 +308,7 @@ const Dashboard = () => {
                     : "hover:bg-zinc-300"
                 }`}
               >
-                <FaPlusSquare />
+                <QuestionMark sx={{ fontSize: "18px" }} />
                 <span>Update Why Us</span>
               </button>
               <button
@@ -319,7 +319,7 @@ const Dashboard = () => {
                     : "hover:bg-zinc-300"
                 }`}
               >
-                <QuestionMark sx={{ fontSize: "20px" }} />
+                <FaQuora />
                 <span>Update FAQ</span>
               </button>
             </div>

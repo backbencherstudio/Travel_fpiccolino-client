@@ -16,33 +16,39 @@ const BenifitsSliderSection = () => {
   const cardDetails = [
     {
       title: "Empowering Through Training and Growth ",
-     description:"At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
+      description:
+        "At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
     },
     {
       title: "Empowering Through Training and Growth ",
-     description:"At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
+      description:
+        "At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
     },
     {
       title: "Empowering Through Training and Growth ",
-     description:"At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
+      description:
+        "At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
     },
     {
       title: "Empowering Through Training and Growth ",
-     description:"At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
+      description:
+        "At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
     },
     {
       title: "Empowering Through Training and Growth ",
-     description:"At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
+      description:
+        "At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
     },
     {
       title: "Empowering Through Training and Growth ",
-     description:"At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
+      description:
+        "At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
     },
     {
       title: "Empowering Through Training and Growth ",
-     description:"At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
+      description:
+        "At LA TUA FUGA LOWCOST, we believe in investing in our people’s potential. Our comprehensive training programs are designed to foster both personal and professional growth. Whether you're starting your journey with us or looking to take your skills to the next level",
     },
-  
   ];
 
   // Check the screen size
@@ -108,8 +114,8 @@ const BenifitsSliderSection = () => {
         {/* Headline Section */}
         <div className="col-span-2 max-w-[450px] z-20 relative mx-auto mb-10 md:lg-0 md:content-center">
           <HeadLine2
-            title="Discover the Benefits of Working with Us"
-            description="Unlock Exceptional Service, Expertise, and Tailored Travel Experiences"
+            title="Scopri i Vantaggi di Lavorare con Noi"
+            description="Sblocca un servizio eccezionale, competenza e esperienze di viaggio personalizzate"
           />
         </div>
         <div className="col-span-1"></div>
@@ -151,7 +157,6 @@ const BenifitsSliderSection = () => {
                     <p className=" text-[14px] lg:text-[16px] text-white">
                       €{item.description}
                     </p>
-                 
                   </div>
                 </div>
               </SwiperSlide>

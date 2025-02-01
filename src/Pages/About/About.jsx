@@ -38,8 +38,8 @@ const About = () => {
         />
       )}
       <JourneySection texts={texts} />
-      <CenterBannerSection />
-      <BenifitsSliderSection />
+      <CenterBannerSection bannerImage={heroSection?.image} />
+      {/* <BenifitsSliderSection /> */}
       {footer_3 && <WhyChooseUsSection footer_3={footer_3} />}
       <BottomBannerSection />
     </div>
