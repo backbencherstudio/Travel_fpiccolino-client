@@ -132,7 +132,7 @@ const Contact = () => {
                   </p>
                   <input
                     type="text"
-                    placeholder="Inserisci il nome"
+                    placeholder={texts["contact.name"] || "Inserisci il nome"}
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("firstName", {
                       required: "Nome è obbligatorio",
@@ -154,7 +154,9 @@ const Contact = () => {
                   </p>
                   <input
                     type="text"
-                    placeholder="Inserisci il cognome"
+                    placeholder={
+                      texts["contact.lastName"] || "Inserisci il cognome"
+                    }
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("lastName", {
                       required: "Cognome è obbligatorio",
@@ -176,7 +178,9 @@ const Contact = () => {
                   </p>
                   <input
                     type="text"
-                    placeholder="Inserisci l'indirizzo e-mail"
+                    placeholder={
+                      texts["contact.email"] || "Inserisci l'indirizzo e-mail"
+                    }
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("email", {
                       required: "Indirizzo e-mail è obbligatorio",
@@ -196,13 +200,18 @@ const Contact = () => {
                   <p className="text-[18px] font-medium mt-5 mb-3">
                     <EditableHeading
                       titleKey="contact.phone"
-                      defaultTitle="Numero di telefono"
+                      defaultTitle={
+                        texts["contact.phone"] || "Numero di telefono"
+                      }
                       customTitleClass="text-[18px] font-medium mt-5 mb-3"
                     />
                   </p>
                   <input
                     type="text"
-                    placeholder="Inserisci il numero di telefono"
+                    placeholder={
+                      texts["contact.phone"] ||
+                      "Inserisci il numero di telefono"
+                    }
                     className="p-3 text-[16px] rounded-md w-full"
                     {...register("phone", {
                       required: "Numero di telefono è obbligatorio",
@@ -222,12 +231,14 @@ const Contact = () => {
                 <p className="text-[18px] font-medium mt-5 mb-3">
                   <EditableHeading
                     titleKey="contact.message"
-                    defaultTitle="Message"
+                    defaultTitle={texts["contact.message"] || "Message"}
                     customTitleClass="text-[18px] font-medium mt-5 mb-3"
                   />
                 </p>
                 <textarea
-                  placeholder="Inserisci il messaggio"
+                  placeholder={
+                    texts["contact.message"] || "Inserisci il messaggio"
+                  }
                   className="p-3 text-[16px] rounded-md w-full"
                   {...register("message", { required: "Message is required" })}
                 />
@@ -241,7 +252,10 @@ const Contact = () => {
                 <p className="text-[18px] font-medium mt-5 mb-3">
                   <EditableHeading
                     titleKey="contact.preferredMethod"
-                    defaultTitle="Metodo di contatto preferito"
+                    defaultTitle={
+                      texts["contact.preferredMethod"] ||
+                      "Metodo di contatto preferito"
+                    }
                     customTitleClass="text-[18px] font-medium mt-5 mb-3"
                   />
                 </p>
@@ -266,7 +280,7 @@ const Contact = () => {
                     >
                       <EditableHeading
                         titleKey="contact.phone"
-                        defaultTitle="Telefono"
+                        defaultTitle={texts["contact.phone"] || "Telefono"}
                         customTitleClass="text-[16px]"
                       />
                     </label>
@@ -291,7 +305,7 @@ const Contact = () => {
                     >
                       <EditableHeading
                         titleKey="contact.email"
-                        defaultTitle="E-mail"
+                        defaultTitle={texts["contact.email"] || "E-mail"}
                         customTitleClass="text-[16px]"
                       />
                     </label>
@@ -301,7 +315,9 @@ const Contact = () => {
               <button type="submit" className="w-full  ">
                 <EditableHeading
                   titleKey="contact.sendMessage"
-                  defaultTitle="Invia il messaggio"
+                  defaultTitle={
+                    texts["contact.sendMessage"] || "Invia il messaggio"
+                  }
                   customTitleClass="text-[16px] primary_bg text-white font-medium text-[16px] p-3 mt-6 rounded-md"
                 />
               </button>

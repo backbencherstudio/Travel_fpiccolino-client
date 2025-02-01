@@ -12,12 +12,14 @@ import {
 } from "../../features/blog/blogSlice";
 import { base_url } from "../../utils/base_path";
 import moment from "moment";
+import EditableHeading from "../../Components/Common/EditableHeading";
 const BlogDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { blogDetails, categoryCount, categoryBlogs } = useSelector(
     (state) => state.blog
   );
+  const { texts } = useSelector((state) => state.texts);
 
   useEffect(() => {
     dispatch(getBlogDetails(params.id));
@@ -74,7 +76,8 @@ const BlogDetails = () => {
                   {index === 0 && blogDetails?.learn?.length > 0 && (
                     <div>
                       <h1 className="text-[32px] font-medium my-6">
-                        Learn Basic Local Phrases
+                        {texts["blog.learnBasicLocalPhrases"] ||
+                          "Impara le frasi locali di base"}
                       </h1>
                       {blogDetails?.learn.map((th, i) => (
                         <p key={i} className="text-[18px] mt-4">
@@ -89,7 +92,7 @@ const BlogDetails = () => {
             {blogDetails?.thought.length > 0 && (
               <div>
                 <h1 className="text-[32px] font-medium mt-12">
-                  Final Thoughts
+                  {texts["blog.finalThoughts"] || "Considerazioni finali"}
                 </h1>
                 {blogDetails?.thought.map((th, i) => (
                   <p key={i} className="text-[18px] mt-4">
@@ -100,7 +103,7 @@ const BlogDetails = () => {
             )}
             <div className="flex mt-12 justify-between">
               <p className="text-[20px] text-[#72777F]">
-                Category:{" "}
+                {texts["blog.category"] || "Categoria:"}
                 <div className="bg-[#FDF0EA] text-[#E86731] border border-[#E86731] rounded-lg inline-block py-3 text-[16px] px-6 ml-3">
                   {blogDetails?.category}
                 </div>
@@ -113,9 +116,11 @@ const BlogDetails = () => {
           </div>
           <div className="lg:col-span-1">
             <div className="mt-8 bg-[#fdf0ea] p-4 border border-[#e86731] rounded-lg overflow-auto">
-              <h4 className="text-[20px] font-medium text-[#141D2A] border-b border-[#e86731] pb-2">
-                Categories
-              </h4>
+              <EditableHeading
+                titleKey="blog.categories"
+                defaultTitle={texts["blog.categories"] || "Categorie"}
+                customTitleClass="text-[20px] font-medium text-[#141D2A] border-b border-[#e86731] pb-2"
+              />
               <div className="mt-4">
                 {/* Loop through the array of category objects */}
                 {categoryCount?.Categories &&
@@ -138,7 +143,13 @@ const BlogDetails = () => {
                   ))}
               </div>
             </div>
-            <h3 className="text-[24px] font-bold my-8">Popular Articles</h3>
+            <EditableHeading
+              titleKey="blog.popularArticles"
+              defaultTitle={
+                texts["blog.popularArticles"] || "Articoli popolari"
+              }
+              customTitleClass="text-[24px] font-bold my-8"
+            />
             {/* {blogs.slice(0, 3).map((blog, index) => (
               <div
                 key={index}
@@ -160,7 +171,7 @@ const BlogDetails = () => {
           </div>
         </div>
         <BlogSections
-          relatedTitle={"Related Articles"}
+          relatedTitle={texts["blog.relatedArticles"] || "Articoli correlati"}
           title={blogDetails?.category}
           blogs={relatedBlogs?.slice(1, 4)}
         />

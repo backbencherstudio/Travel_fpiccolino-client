@@ -91,7 +91,6 @@ const Tours = () => {
           subtitleKey="tour.subtitle"
           defaultTitle="Explore Our Amazing Tours"
           defaultSubtitle="Discover our handpicked selection of amazing tours and adventures"
-          customTitleClass="text-[16px] text-[#1C1C1C] text-center ml-[10%]"
         />
         <div>
           {packags?.data?.length > 0 ? (
@@ -113,9 +112,13 @@ const Tours = () => {
               <div className="primary_text justify-center flex text-6xl mb-3 font-bold">
                 <PiShieldWarningThin />
               </div>
-              <span className="primary_text text-lg font-medium">
-                No Tour Packages are available <br /> For selected country.{" "}
-              </span>
+              <EditableHeading
+                titleKey="tour.no_tour_packages"
+                subtitleKey="tour.no_tour_packages2"
+                defaultTitle="No Tour Packages are available"
+                defaultSubtitle="For selected country"
+                customTitleClass="primary_text text-lg font-medium "
+              />
             </div>
           )}
         </div>

@@ -301,6 +301,17 @@ const Dashboard = () => {
                 <span>Update Approach</span>
               </button>
               <button
+                onClick={() => handleNavigation("updateWhyUs", "updateWhyUs")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "updateWhyUs"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <FaPlusSquare />
+                <span>Update Why Us</span>
+              </button>
+              <button
                 onClick={() => handleNavigation("updateFAQ", "updateFAQ")}
                 className={`flex items-center space-x-2 p-2 rounded ${
                   selectedTab === "updateFAQ"

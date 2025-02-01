@@ -4,14 +4,17 @@ import experience from "../../assets/icons/experience.svg";
 import support from "../../assets/icons/support.svg";
 import connection from "../../assets/icons/connection.svg";
 import natureImage2 from "../../assets/natureImage2.jpg";
-const WhyChooseUsSection = ({footer_3}) => {
+import EditableHeading from "../Common/EditableHeading";
+const WhyChooseUsSection = ({ footer_3 }) => {
   return (
     <div>
       <ParentComponent>
         <div className="mt-[80px] lg:mb-0 lg:px-20 px-5">
-          <HeadLine
-            title={footer_3.title}
-            description={footer_3.description}
+          <EditableHeading
+            titleKey="why_choose_us_title"
+            subtitleKey="why_choose_us_subtitle"
+            defaultTitle="Why Choose Us"
+            defaultSubtitle="When you travel with us, you’re embarking on more than just a trip—you’re stepping into an experience crafted with care, passion, and dedication to your unique desires"
           />
           <div className="grid lg:grid-cols-5 grid-cols-1 lg:gap-14 mt-14">
             <div className="col-span-2 h-[520px] max-w-[720px] ">
@@ -59,29 +62,32 @@ const WhyChooseUsSection = ({footer_3}) => {
                 </p>
               </div>
             </div>
-
           </div>
         </div>
       </ParentComponent>
 
       <div className="mt-20 py-[60px] px-20 text-start bg-[#469697] grid lg:grid-cols-2">
-
         <div>
-          <p className="font-extrabold text-[20px] md:text-[40px] text-white text-center lg:text-start ">Our Trusted Partner <br /> in Travel</p>
+          <p className="font-extrabold text-[20px] md:text-[40px] text-white text-center lg:text-start ">
+            Our Trusted Partner <br /> in Travel
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 text-white ">
-          <p className="font-semibold text-[30px] md:text-[52px] italic text-center">Maven</p>
-          <p className="font-semibold text-[30px] md:text-[52px] text-center">intuit</p>
+          <p className="font-semibold text-[30px] md:text-[52px] italic text-center">
+            Maven
+          </p>
+          <p className="font-semibold text-[30px] md:text-[52px] text-center">
+            intuit
+          </p>
           <p className="text-[30px] md:text-[52px] text-center">memSQL</p>
           <p className="text-[30px] md:text-[52px] text-center">maze</p>
-          <p className="text-[30px] md:text-[52px] font-extrabold italic text-center">venmo</p>
+          <p className="text-[30px] md:text-[52px] font-extrabold italic text-center">
+            venmo
+          </p>
           <p className="text-[32px] font-[300] text-center">tapcart</p>
         </div>
-
       </div>
-
-
     </div>
   );
 };

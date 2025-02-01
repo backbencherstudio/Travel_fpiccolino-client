@@ -44,6 +44,7 @@ import NewsLetter from "../Components/Dashboard/NewsLetter/NewsLetter";
 import UpdateFooter from "../Components/Dashboard/Footer/UpdateFooter";
 import UpdateApproach from "../Components/Dashboard/Approach/updateApproach";
 import UpdateFAQ from "../Components/Dashboard/FAQ/updateFAQ";
+import UpdateWhyUs from "../Components/Dashboard/WhyUs/UpdateWhyUs";
 
 export const router = createBrowserRouter([
   {
@@ -187,6 +188,10 @@ export const router = createBrowserRouter([
       {
         path: "updateFooter",
         element: <UpdateFooter />,
+      },
+      {
+        path: "updateWhyUs",
+        element: <UpdateWhyUs />,
       },
       {
         path: "updateApproach",

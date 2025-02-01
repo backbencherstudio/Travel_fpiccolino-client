@@ -10,6 +10,7 @@ const BottomBannerSection = () => {
   const { homePageData } = useSelector((state) => state.pageData);
   const [loading, setLoading] = useState(true);
   const footerData = homePageData?.footer?.[0] || {};
+  const { texts } = useSelector((state) => state.texts);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -59,7 +60,7 @@ const BottomBannerSection = () => {
               <CustomButton
                 content={
                   <p className="flex gap-1">
-                    Contatta ora
+                    {texts["footer.helpText"] || "Contact Us"}
                     <svg
                       className="mt-1"
                       xmlns="http://www.w3.org/2000/svg"

@@ -37,7 +37,7 @@ const About = () => {
           texts={texts}
         />
       )}
-      <JourneySection />
+      <JourneySection texts={texts} />
       <CenterBannerSection />
       <BenifitsSliderSection />
       {footer_3 && <WhyChooseUsSection footer_3={footer_3} />}
