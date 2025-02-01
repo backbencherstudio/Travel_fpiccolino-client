@@ -91,7 +91,7 @@ const SignupOtp = () => {
               onClick={() => navigate(-1)}
               className="text-[16px] cursor-pointer mt-10 flex items-center"
             >
-              <FaAngleLeft style={{ fontSize: "20px" }} /> Back
+              <FaAngleLeft style={{ fontSize: "20px" }} /> Indietro
             </p>
 
             {showError && (
@@ -102,9 +102,9 @@ const SignupOtp = () => {
               </div>
             )}
 
-            <h1 className="font-extrabold text-[32px] mt-8">Enter OTP</h1>
+            <h1 className="font-extrabold text-[32px] mt-8">Inserisci OTP</h1>
             <h5 className="text-[#72777F] text-[16px] mt-3">
-              We have share a code of your registered email address
+              Abbiamo condiviso un codice con la tua e-mail registrata
             </h5>
             <div className="flex justify-between mt-8">
               {otp.map((digit, index) => (
@@ -131,14 +131,14 @@ const SignupOtp = () => {
               {conformOtpLoading ? "Loading" : " Submit OTP"}
             </button>
             <h5 className="text-[#72777F] text-[16px] mt-5">
-              If you didn't receive a code!{" "}
+              Se non hai ricevuto un codice!{" "}
               <span
                 className="text-orange-600 font-medium cursor-pointer hover:underline hover:text-orange-600"
                 onClick={() =>
                   document.getElementById("success_modal").showModal()
                 }
               >
-                Resend
+                Invia di nuovo
               </span>
             </h5>
           </div>
@@ -193,14 +193,14 @@ const SignupOtp = () => {
                   onClick={handleReFillData}
                 >
                   {" "}
-                  refill data
+                  riempi i dati
                 </span>
               </p>
             ) : (
               <p className="py-4">{recentOtpError}</p>
             )
           ) : (
-            <p className="py-4">Would you like to resend your OTP?</p>
+            <p className="py-4">Vuoi inviare di nuovo il tuo OTP?</p>
           )}
           {recentOtpError === "User data not found!" ? (
             ""
@@ -214,7 +214,7 @@ const SignupOtp = () => {
                   <CircularProgress size={30} color="#fff" />
                 </Box>
               ) : (
-                "recent"
+                "Invia di nuovo"
               )}
               {/* Back to Login */}
               {/* recent  */}
@@ -222,7 +222,7 @@ const SignupOtp = () => {
           )}
         </div>
         <form method="dialog" className="modal-backdrop">
-          <button>close</button>
+          <button>Chiudi</button>
         </form>
       </dialog>
     </ParentAuthComponent>

@@ -198,7 +198,7 @@ const TourSlider = ({ userData, title, id, userType }) => {
 
           <Stack spacing={1}>
             <Typography variant="body2" mb={1}>
-              Rating (1-5)
+              Valutazione (1-5)
             </Typography>
             <Rating
               name="simple-controlled"
@@ -209,7 +209,7 @@ const TourSlider = ({ userData, title, id, userType }) => {
 
           <TextField
             id="review"
-            label="Your Review"
+            label="La tua recensione"
             multiline
             rows={4}
             variant="outlined"

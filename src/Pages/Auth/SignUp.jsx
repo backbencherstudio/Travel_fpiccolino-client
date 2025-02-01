@@ -63,7 +63,7 @@ const SignUp = () => {
               alt=""
             />
             <h1 className="font-extrabold text-[32px] mt-10">
-              Create New Account
+              Crea un nuovo account
             </h1>
 
             {showError ? (
@@ -73,16 +73,16 @@ const SignUp = () => {
               </h5>
             ) : (
               <h5 className="text-[#72777F] text-[16px] mt-5">
-                Please enter your details.
+                Per favore, inserisci i tuoi dettagli.
               </h5>
             )}
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="h-24">
-                <p className="text-[18px] font-medium mt-5">Name</p>
+                <p className="text-[18px] font-medium mt-5">Nome</p>
                 <input
                   type="text"
-                  placeholder="Enter Your Name"
+                  placeholder="Inserisci il tuo nome"
                   className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
                   {...register("name", { required: "Name is required" })}
                 />
@@ -95,7 +95,7 @@ const SignUp = () => {
                 <p className="text-[18px] font-medium mt-5">Email</p>
                 <input
                   type="text"
-                  placeholder="Enter Your Email"
+                  placeholder="Inserisci la tua e-mail"
                   className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
                   {...register("email", {
                     required: "Email is required",
@@ -114,7 +114,7 @@ const SignUp = () => {
                 <p className="text-[18px] font-medium mt-5 ">Password</p>
                 <input
                   type="password"
-                  placeholder="Enter Your Password"
+                  placeholder="Inserisci la tua password"
                   className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
                   {...register("password", {
                     required: "Password is required",
@@ -128,7 +128,7 @@ const SignUp = () => {
 
               <div className="mt-1 flex justify-between">
                 <p className="inline text-[14px]">
-                  Must be at least 8 characters
+                  Deve essere almeno 8 caratteri
                 </p>
               </div>
 
@@ -136,16 +136,17 @@ const SignUp = () => {
                 type="submit"
                 className="primary_bg p-3 w-full rounded-lg text-white text-[16px] font-semibold mt-6"
               >
-                Sign Up
+                Registrati
               </button>
 
               <div className="text-[#475467] mt-8 text-center">
-                Already have an account?{" "}
+                Hai già un account?{" "}
                 <span
                   onClick={() => navigate("/login")}
                   className="primary_text font-semibold cursor-pointer"
                 >
-                  {signupLoading ? "Loading ... " : "Login"} {/*  later on */}
+                  {signupLoading ? "Caricamento ... " : "Accedi"}{" "}
+                  {/*  later on */}
                 </span>
               </div>
             </form>

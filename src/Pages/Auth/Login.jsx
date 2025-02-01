@@ -26,7 +26,7 @@ const Login = () => {
   );
 
   const onSubmit = async (data) => {
-    console.log(514541, data)
+    console.log(514541, data);
     const responce = await dispatch(loginUser(data));
     console.log(responce);
     if (responce.type === "users/login/fulfilled") {
@@ -60,7 +60,7 @@ const Login = () => {
               src={logo}
               alt=""
             />
-            <h1 className="font-extrabold text-[32px] mt-10">Welcome back</h1>
+            <h1 className="font-extrabold text-[32px] mt-10">Bentornato</h1>
             {showError ? (
               <h5 className="text-red-500 text-[16px] error-message flex items-center mt-5">
                 <BsExclamationCircle className=" text-red-500 mr-2" />
@@ -68,22 +68,22 @@ const Login = () => {
               </h5>
             ) : (
               <h5 className="text-[#72777F] text-[16px] mt-5">
-                Welcome back! Please enter your details.
+                Benvenuto! Per favore, inserisci i tuoi dettagli.
               </h5>
             )}
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="h-24">
-                <p className="text-[18px] font-medium mt-5">Email</p>
+                <p className="text-[18px] font-medium mt-5">E-mail</p>
                 <input
                   type="text"
-                  placeholder="Enter Your Email"
+                  placeholder="Inserisci la tua e-mail"
                   className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
                       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Enter a valid email",
+                      message: "Inserisci una e-mail valida",
                     },
                   })}
                 />
@@ -98,13 +98,13 @@ const Login = () => {
                 <p className="text-[18px] font-medium mt-5 ">Password</p>
                 <input
                   type="password"
-                  placeholder="Enter Your Password"
+                  placeholder="Inserisci la tua password"
                   className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
                       value: 8,
-                      message: "Password must be at least 8 characters",
+                      message: "La password deve essere almeno 8 caratteri",
                     },
                   })}
                 />
@@ -117,18 +117,18 @@ const Login = () => {
 
               <div className="mt-6 flex justify-between">
                 <div>
-                  <input
+                  {/* <input
                     type="checkbox"
                     className="mr-2"
                     {...register("rememberMe")}
                   />
-                  <p className="inline text-[14px]">Remember for 30 days</p>
+                  <p className="inline text-[14px]">Ricordami per 30 giorni</p> */}
                 </div>
                 <p
                   onClick={() => navigate("/forgot-password")}
                   className="primary_text font-semibold cursor-pointer"
                 >
-                  Forgot Password
+                  Password dimenticata
                 </p>
               </div>
 
@@ -143,17 +143,17 @@ const Login = () => {
                     <CircularProgress size={30} color="#fff" />
                   </Box>
                 ) : (
-                  "Log in"
+                  "Accedi"
                 )}
               </button>
 
               <div className="text-[#475467] mt-8 text-center">
-                {"Don't"} have an account?{" "}
+                Non hai un account?{" "}
                 <span
                   onClick={() => navigate("/signup")}
                   className="primary_text font-semibold cursor-pointer"
                 >
-                  Sign up
+                  Registrati
                 </span>
               </div>
             </form>

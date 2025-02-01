@@ -9,6 +9,7 @@ import UpdateUserModal from "../../Components/Profile/UpdateUserModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RxAvatar } from "react-icons/rx";
 import { updateUser, userStatus } from "../../features/auth/authSlice";
+import EditableHeading from "../../Components/Common/EditableHeading";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -47,18 +48,20 @@ const UserProfile = () => {
   return (
     <ParentComponent>
       <div className="mt-32 pb-14 mb-14 border-b">
-        <HeadLine
-          // title={"Welcome to Your Profile"}
-          title={"Benvenuto nel tuo profilo"}
-          // description={"Access and Manage Your Travel Details Seamlessly"}
-          description={
-            "Accedi e gestisci i dettagli del tuo viaggio senza problemi"
-          }
+        <EditableHeading
+          titleKey="profile_title"
+          subtitleKey="profile_subtitle"
+          defaultTitle="Benvenuto nel tuo profilo"
+          defaultSubtitle="Accedi e gestisci i dettagli del tuo viaggio senza problemi"
         />
       </div>
       <div className="xl:max-w-[1400px] lg:max-w-[1112px]">
         <div className="max-w-[370px] md:max-w-[640px] lg:max-w-[1112px] pb-10">
-          <h2 className="text-[24px] font-semibold mt-8">Dettagli utente</h2>
+          <EditableHeading
+            titleKey="profile_title2"
+            defaultTitle="Dettagli utente"
+            customTitleClass="text-[24px] font-semibold mt-8"
+          />
           {user?.image ? (
             <img
               src={user?.image_url}
@@ -68,36 +71,64 @@ const UserProfile = () => {
           ) : (
             <RxAvatar className=" w-[120px] h-[120px] mt-5" />
           )}
-          <h1 className="mt-5 text-[20px] font-medium">Dettagli personali</h1>
+          <EditableHeading
+            titleKey="profile_title3"
+            defaultTitle="Dettagli personali"
+            customTitleClass="mt-5 text-[20px] font-medium"
+          />
           <div className="mt-3 max-w-[680px]">
             <div className="grid grid-cols-2">
               <div>
-                <h1 className="text-[16px]">Nome</h1>
+                <EditableHeading
+                  titleKey="profile_title4"
+                  defaultTitle="Nome"
+                  customTitleClass="text-[16px]"
+                />
                 <p className="text-[#72777F] text-[14px]">{user?.name}</p>
               </div>
               <div>
-                <h1 className="text-[16px]">E-mail</h1>
+                <EditableHeading
+                  titleKey="profile_title5"
+                  defaultTitle="E-mail"
+                  customTitleClass="text-[16px]"
+                />
                 <p className="text-[#72777F] text-[14px]">{user?.email}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 mt-3">
               <div>
-                <h1 className="text-[16px]">Telefono</h1>
+                <EditableHeading
+                  titleKey="profile_title6"
+                  defaultTitle="Telefono"
+                  customTitleClass="text-[16px]"
+                />
                 <p className="text-[#72777F] text-[14px]">{user?.phone}</p>
               </div>
               <div>
-                <h1 className="text-[16px]">Indirizzo</h1>
+                <EditableHeading
+                  titleKey="profile_title7"
+                  defaultTitle="Indirizzo"
+                  customTitleClass="text-[16px]"
+                />
                 <p className="text-[#72777F] text-[14px]">{user?.address}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 mt-3">
               <div>
-                <h1 className="text-[16px]">Città</h1>
+                <EditableHeading
+                  titleKey="profile_title8"
+                  defaultTitle="Città"
+                  customTitleClass="text-[16px]"
+                />
                 <p className="text-[#72777F] text-[14px]">{user?.city}</p>
               </div>
               <div>
-                <h1 className="text-[16px]">Nazione</h1>
+                <EditableHeading
+                  titleKey="profile_title9"
+                  defaultTitle="Nazione"
+                  customTitleClass="text-[16px]"
+                />
                 <p className="text-[#72777F] text-[14px]">{user?.country}</p>
               </div>
             </div>
@@ -118,9 +149,14 @@ const UserProfile = () => {
           </div>
           <button
             onClick={handleEditClick}
-            className="mt-5 primary_bg hover:opacity-85 text-white py-2 px-4 rounded"
+            className="mt-5 primary_bg hover:opacity-85  py-2 px-4 rounded"
           >
-            Modifica dettagli
+            <EditableHeading
+              titleKey="profile_title10"
+              defaultTitle="Modifica dettagli"
+              customTitleClass="text-white"
+              customButtonClass="mt-5  hover:opacity-85 text-white"
+            />
           </button>
         </div>
 

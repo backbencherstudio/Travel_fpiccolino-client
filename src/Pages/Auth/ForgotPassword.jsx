@@ -60,7 +60,7 @@ const ForgotPassword = () => {
               onClick={() => navigate("/login")}
               className="text-[16px] cursor-pointer mt-10 flex items-center"
             >
-              <FaAngleLeft style={{ fontSize: "20px" }} /> Back
+              <FaAngleLeft style={{ fontSize: "20px" }} /> Indietro
             </p>
             {showError && (
               <h5 className="text-red-500 text-[16px] mt-5 flex items-center">
@@ -68,19 +68,21 @@ const ForgotPassword = () => {
                 {request_forgot_password_otpError}
               </h5>
             )}
-            <h1 className="font-extrabold text-[32px] mt-8">Forgot Password</h1>
+            <h1 className="font-extrabold text-[32px] mt-8">
+              Password dimenticata
+            </h1>
             <h5 className="text-[#72777F] text-[16px] mt-3">
-              Enter your registered email address. We’ll send you a code to
-              reset your password.
+              Inserisci la tua e-mail registrata. Ti invieremo un codice per
+              reimpostare la tua password.
             </h5>
             <div>
               <p className="text-[14px] font-medium mt-5">
-                Email Address or Phone Number
+                E-mail o numero di telefono
               </p>
               <input
                 type="text"
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter Email or Phone Number"
+                placeholder="Inserisci la tua e-mail o numero di telefono"
                 className="p-3 text-[16px] rounded-md w-full border border-[#D0D5DD]"
               />
             </div>
@@ -95,7 +97,7 @@ const ForgotPassword = () => {
                   <CircularProgress size={30} color="#fff" />
                 </Box>
               ) : (
-                "Send OTP"
+                "Invia OTP"
               )}
             </button>
           </div>
