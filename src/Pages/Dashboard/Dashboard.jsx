@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
 import { RiLayoutBottom2Line, RiNewsLine } from "react-icons/ri";
 import { QuestionMark, Settings } from "@mui/icons-material";
+import { MdOutlinePolicy } from "react-icons/md";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -322,6 +323,17 @@ const Dashboard = () => {
               >
                 <FaQuora />
                 <span>Update FAQ</span>
+              </button>
+              <button
+                onClick={() => handleNavigation("updatePolicy", "updatePolicy")}
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "updatePolicy"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <MdOutlinePolicy />
+                <span>Update Policy</span>
               </button>
             </div>
           </div>
