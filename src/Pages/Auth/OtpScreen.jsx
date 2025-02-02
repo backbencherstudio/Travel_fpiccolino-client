@@ -12,12 +12,14 @@ import {
 } from "../../features/auth/authSlice";
 import { Box, CircularProgress } from "@mui/material";
 import { BsExclamationCircle } from "react-icons/bs";
+import { base_url } from "../../utils/base_path";
+import axios from "axios";
 
 const OtpScreen = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [otpBanner, setOtpBanner] = useState(null);
   const handleOtpChange = (index, value, event) => {
     if (value.length > 1) return; // Allow only one character
 
@@ -33,6 +35,20 @@ const OtpScreen = () => {
     setOtp(newOtp);
   };
 
+  useEffect(() => {
+    const fetchBanner = async () => {
+      try {
+        const response = await axios.get(`${base_url}/api/auth-banners`);
+        if (response.data && response.data.otpBanner) {
+          setOtpBanner(`${base_url}/${response.data.otpBanner}`);
+        }
+      } catch (error) {
+        console.error("Error fetching banner:", error);
+      }
+    };
+
+    fetchBanner();
+  }, []);
   const { match_forgot_password_otpLoading, match_forgot_password_otpError } =
     useSelector((state) => state.authorization);
 
@@ -61,9 +77,9 @@ const OtpScreen = () => {
     // route.patch("/reset-forgot-password
 
     const responce = await dispatch(reset_forgot_password(password));
-    console.log(responce)
+    console.log(responce);
     if (responce.payload.success === true) {
-      document.getElementById("success_modal")?.showModal()
+      document.getElementById("success_modal")?.showModal();
     }
   };
 
@@ -73,7 +89,7 @@ const OtpScreen = () => {
         <div className="md:col-span-2 hidden md:block">
           <img
             className="h-full w-full object-cover"
-            src={heroImage}
+            src={otpBanner || heroImage}
             alt="Hero"
           />
         </div>

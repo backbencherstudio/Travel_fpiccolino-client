@@ -207,6 +207,7 @@ const Dashboard = () => {
                 selectedTab === "Header" ||
                 selectedTab === "updateFAQ" ||
                 selectedTab === "updateWhyUs" ||
+                selectedTab === "updatePolicy" ||
                 selectedTab === "AddContent"
                   ? "bg-[#fdf0ea] primary_text font-semibold"
                   : "hover:bg-zinc-300"
@@ -334,6 +335,19 @@ const Dashboard = () => {
               >
                 <MdOutlinePolicy />
                 <span>Update Policy</span>
+              </button>
+              <button
+                onClick={() =>
+                  handleNavigation("updateAuthBanners", "updateAuthBanners")
+                }
+                className={`flex items-center space-x-2 p-2 rounded ${
+                  selectedTab === "updateAuthBanners"
+                    ? "bg-[#fdf0ea] primary_text font-semibold"
+                    : "hover:bg-zinc-300"
+                }`}
+              >
+                <MdOutlinePolicy />
+                <span>Update Auth Banners</span>
               </button>
             </div>
           </div>

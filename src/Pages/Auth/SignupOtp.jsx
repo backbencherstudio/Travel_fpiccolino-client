@@ -17,10 +17,27 @@ import {
   recentOtp,
   registerUser,
 } from "../../features/auth/authSlice";
+import { base_url } from "../../utils/base_path";
+import axios from "axios";
 
 const SignupOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [otpBanner, setOtpBanner] = useState(null);
 
+  useEffect(() => {
+    const fetchBanner = async () => {
+      try {
+        const response = await axios.get(`${base_url}/api/auth-banners`);
+        if (response.data && response.data.otpBanner) {
+          setOtpBanner(`${base_url}/${response.data.otpBanner}`);
+        }
+      } catch (error) {
+        console.error("Error fetching banner:", error);
+      }
+    };
+
+    fetchBanner();
+  }, []);
   const handleOtpChange = (index, value, event) => {
     if (value.length > 1) return; // Allow only one character
 
@@ -82,7 +99,11 @@ const SignupOtp = () => {
     <ParentAuthComponent>
       <div className="grid grid-cols-1 md:grid-cols-5 h-full ">
         <div className="md:col-span-2 hidden md:block">
-          <img className="h-full w-full object-cover" src={heroImage} alt="" />
+          <img
+            className="h-full w-full object-cover"
+            src={otpBanner || heroImage}
+            alt="OTP Banner"
+          />
         </div>
         <div className="h-full w-full md:col-span-3">
           <div className="my-40 lg:mx-20 m-5">

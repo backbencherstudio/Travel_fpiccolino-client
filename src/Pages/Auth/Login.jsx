@@ -10,10 +10,28 @@ import Box from "@mui/material/Box";
 import "./style.css";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { base_url } from "../../utils/base_path";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loginBanner, setLoginBanner] = useState(null);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      try {
+        const response = await axios.get(`${base_url}/api/auth-banners`);
+        if (response.data && response.data.loginBanner) {
+          setLoginBanner(`${base_url}/${response.data.loginBanner}`);
+        }
+      } catch (error) {
+        console.error("Error fetching banner:", error);
+      }
+    };
+
+    fetchBanner();
+  }, []);
 
   const {
     register,
@@ -47,9 +65,13 @@ const Login = () => {
 
   return (
     <ParentAuthComponent>
-      <div className="grid grid-cols-1 md:grid-cols-5 h-full ">
+      <div className="grid grid-cols-1 md:grid-cols-5 h-full">
         <div className="md:col-span-2 hidden md:block">
-          <img className="h-full w-full object-cover" src={heroImage} alt="" />
+          <img
+            className="h-full w-full object-cover"
+            src={loginBanner || heroImage}
+            alt="Login Banner"
+          />
         </div>
 
         <div className="h-full w-full md:col-span-3">
@@ -63,7 +85,7 @@ const Login = () => {
             <h1 className="font-extrabold text-[32px] mt-10">Bentornato</h1>
             {showError ? (
               <h5 className="text-red-500 text-[16px] error-message flex items-center mt-5">
-                <BsExclamationCircle className=" text-red-500 mr-2" />
+                <BsExclamationCircle className="text-red-500 mr-2" />
                 {loginError}
               </h5>
             ) : (

@@ -8,6 +8,7 @@ import { getHeader } from "../../features/header/headerSlice";
 import { getPolicyPageData } from "../../features/pageData/pageDataSlice";
 import axios from "axios";
 import { base_url } from "../../utils/base_path";
+import EditableHeading from "../../Components/Common/EditableHeading";
 
 const Policy = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,20 @@ const Policy = () => {
   );
   const [policyData, setPolicyData] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  // Add this translation map
+  const categoryTranslations = {
+    "Candidate information": "Informazioni sul candidato",
+    "Newsletter information": "Informazioni sulla newsletter",
+    "Website privacy policy": "Informativa sulla privacy del sito web",
+    "Purchase information": "Informazioni sull'acquisto",
+    "Categories responsible for processing":
+      "Categorie responsabili del trattamento",
+    "Privacy Area": "Area Privacy",
+    "Appointment Request Information":
+      "Informazioni sulla richiesta di appuntamento",
+    "Gift Card Information": "Informazioni sulla carta regalo",
+  };
 
   useEffect(() => {
     dispatch(getHeader());
@@ -76,12 +91,16 @@ const Policy = () => {
             <div className="col-span-12 lg:col-span-9 lg:order-1 lg:pl-16 border-[#62D3D4] lg:border-l">
               {Object.keys(policyData).length === 0 ? (
                 <div className="text-center py-10">
-                  <h2 className="text-2xl font-semibold text-gray-600">
-                    No policy information available yet.
-                  </h2>
-                  <p className="text-gray-500 mt-2">
-                    Please check back later for updates.
-                  </p>
+                  <EditableHeading
+                    titleKey="no_policy_title"
+                    defaultTitle="Nessuna informazione sulla politica disponibile."
+                    customTitleClass="text-2xl font-semibold text-gray-600"
+                  />
+                  <EditableHeading
+                    titleKey="no_policy_subtitle"
+                    defaultTitle="Controlla più tardi per gli aggiornamenti."
+                    customTitleClass="text-gray-500 mt-2"
+                  />
                 </div>
               ) : (
                 selectedCategory && (
@@ -108,12 +127,12 @@ const Policy = () => {
                           : ""
                       }`}
                     >
-                      {category}
+                      {categoryTranslations[category] || category}
                     </h2>
                   ))
                 ) : (
                   <div className="text-gray-500 p-4">
-                    No policy categories available
+                    Nessuna categoria disponibile
                   </div>
                 )}
               </div>

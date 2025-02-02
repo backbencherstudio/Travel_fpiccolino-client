@@ -46,6 +46,7 @@ import UpdateApproach from "../Components/Dashboard/Approach/updateApproach";
 import UpdateFAQ from "../Components/Dashboard/FAQ/updateFAQ";
 import UpdateWhyUs from "../Components/Dashboard/WhyUs/UpdateWhyUs";
 import UpdatePolicy from "../Components/Dashboard/Policy/updatePolicy";
+import UpdateAuthBanners from "../Components/Dashboard/auth/UpdateAuthBanners";
 
 export const router = createBrowserRouter([
   {
@@ -205,6 +206,10 @@ export const router = createBrowserRouter([
       {
         path: "updatePolicy",
         element: <UpdatePolicy />,
+      },
+      {
+        path: "updateAuthBanners",
+        element: <UpdateAuthBanners />,
       },
     ],
   },

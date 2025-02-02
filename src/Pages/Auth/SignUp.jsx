@@ -7,11 +7,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
+import axios from "axios";
+import { base_url } from "../../utils/base_path";
 
 const SignUp = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const [signupBanner, setSignupBanner] = useState(null);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      const response = await axios.get(`${base_url}/api/auth-banners`);
+      setSignupBanner(`${base_url}/${response.data.registerBanner}`);
+    };
+    fetchBanner();
+  }, []);
 
   const { signupLoading, signupError } = useSelector(
     (state) => state.authorization
@@ -52,7 +63,11 @@ const SignUp = () => {
     <ParentAuthComponent>
       <div className="grid grid-cols-1 md:grid-cols-5 h-full ">
         <div className="md:col-span-2 hidden md:block">
-          <img className="h-full w-full object-cover" src={heroImage} alt="" />
+          <img
+            className="h-full w-full object-cover"
+            src={signupBanner || heroImage}
+            alt=""
+          />
         </div>
         <div className="h-full w-full md:col-span-3">
           <div className="lg:m-20 m-5">
