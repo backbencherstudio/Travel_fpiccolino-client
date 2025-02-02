@@ -22,7 +22,7 @@ const TureCard = ({ item, texts, handleEditClick }) => {
         />
         <div className="w-full h-full absolute top-0 left-0  rounded-xl group-hover:bg-[#E867311A] duration-300 "></div>
 
-        {bookedFlights?.length > 0 && item?.hotelImages?.length > 0 && (
+        {bookedFlights?.length > 0 && item?.hotelName && (
           <div className="absolute top-4 right-4">
             <div className="relative group">
               <h2 className="border border-[#E86731] text-[#E86731] bg-[#FDF0EA] px-4 py-2 rounded-full">
