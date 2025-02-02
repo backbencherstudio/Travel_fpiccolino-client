@@ -30,7 +30,7 @@ const ArticleCard = ({ item }) => {
           onClick={() => navigate(`/blog/${item._id}`)}
           className="absolute bottom-8 right-8"
         >
-          <CustomButton content={"Read More"} />
+          <CustomButton content={"vedere di più"} />
         </div>
       </div>
     </div>

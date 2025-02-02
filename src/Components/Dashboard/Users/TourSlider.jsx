@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { createReview } from "../../../features/review/reviewSlice";
-import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const TourSlider = ({ userData, title, id, userType }) => {
