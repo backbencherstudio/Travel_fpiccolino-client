@@ -127,7 +127,7 @@ const AdventureSection = ({ cardDetails, texts }) => {
                 },
               }}
             >
-              {cardDetails?.data?.map((item) => (
+              {cardDetails?.data?.slice(0, 10).map((item) => (
                 <SwiperSlide key={`adventure-${item._id}`}>
                   <Link to={`/tours/${item._id}`}>
                     <TureCard
