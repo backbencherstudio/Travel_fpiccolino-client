@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import TureCard from "../../Components/ToursComponents/TureCard";
 import Videos from "../../Components/ToursComponents/Videos";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
-import HeadLine from "../../Shared/HeadLineComponent/HeadLine";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,14 +13,12 @@ import {
   get_all_inclusive_TourPagePage,
 } from "../../features/pageData/pageDataSlice";
 import { PiShieldWarningThin } from "react-icons/pi";
-import { FaEdit } from "react-icons/fa";
 import EditableHeading from "../../Components/Common/EditableHeading";
 
-const Tours = () => {
+const AllCountries = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { texts } = useSelector((state) => state.texts);
-  const { user } = useSelector((state) => state.authorization);
   const { all_inclusive_TourPageData, country_wise_TourPageData } = useSelector(
     (state) => state.pageData
   );
@@ -74,6 +71,18 @@ const Tours = () => {
     }
   };
 
+  // Add this function to group packages by country
+  const groupPackagesByCountry = (packages) => {
+    return packages?.reduce((acc, pkg) => {
+      const country = pkg.country || "Other";
+      if (!acc[country]) {
+        acc[country] = [];
+      }
+      acc[country].push(pkg);
+      return acc;
+    }, {});
+  };
+
   const heroContent = id
     ? country_wise_TourPageData?.hero
     : all_inclusive_TourPageData?.hero;
@@ -81,38 +90,42 @@ const Tours = () => {
     ? country_wise_TourPageData?.package
     : all_inclusive_TourPageData?.package;
 
+  // Group the packages by country
+  const groupedPackages = groupPackagesByCountry(packags?.data);
+
   return (
     <div className="">
       {heroContent && <HeroScetion heroContent={heroContent} />}
 
       <ParentComponent styles="my-20">
-        {id ? (
-          <EditableHeading
-            titleKey="tour.title"
-            subtitleKey="tour.subtitle"
-            defaultTitle="Explore Our Amazing Tours"
-            defaultSubtitle="Discover our handpicked selection of amazing tours and adventures"
-          />
-        ) : (
-          <EditableHeading
-            titleKey="titleByCountry"
-            subtitleKey="subtitleByCountry"
-            defaultTitle="Explore Our Amazing Tours"
-            defaultSubtitle="Discover our handpicked selection of amazing tours and adventures"
-          />
-        )}
+        <EditableHeading
+          titleKey="allcountries"
+          subtitleKey="allcountriesDescription"
+          defaultTitle="All Countries"
+          defaultSubtitle="Find our amazing tours in all countries"
+        />
+
         <div>
           {packags?.data?.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-20">
-              {packags?.data?.map((item) => (
-                <div key={item._id}>
-                  <Link to={`/tours/${item._id}`}>
-                    <TureCard
-                      item={item}
-                      texts={texts}
-                      handleEditClick={handleEditClick}
-                    />
-                  </Link>
+            <div className="space-y-12 mt-20">
+              {Object.entries(groupedPackages).map(([country, packages]) => (
+                <div key={country} className="space-y-6  rounded-lg p-5">
+                  <h2 className="text-[36px] font-bold primary_text">
+                    {country}
+                  </h2>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+                    {packages.map((item) => (
+                      <div key={item._id}>
+                        <Link to={`/tours/${item._id}`}>
+                          <TureCard
+                            item={item}
+                            texts={texts}
+                            handleEditClick={handleEditClick}
+                          />
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -131,9 +144,6 @@ const Tours = () => {
             </div>
           )}
         </div>
-        <div className="mt-20">
-          <Videos />
-        </div>
       </ParentComponent>
       <div className="mt-20">
         <BottomBannerSection />
@@ -142,4 +152,4 @@ const Tours = () => {
   );
 };
 
-export default Tours;
+export default AllCountries;

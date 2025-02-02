@@ -153,6 +153,7 @@ const Footer = () => {
               {[
                 { key: "footer.philosophy", to: "/about" },
                 { key: "footer.ourTours", to: "/tours" },
+                { key: "footer.countries", to: "/countries" },
                 { key: "footer.blog", to: "/blog" },
                 { key: "footer.faq", to: "/faq" },
                 { key: "footer.support", to: "/contact" },

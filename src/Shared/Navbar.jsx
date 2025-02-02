@@ -238,6 +238,7 @@ const Navbar = () => {
                               texts["nav.tour"] || "l Nostri Viaggi"
                             )}
                           </NavLink>
+
                           {user?.role === "admin" && (
                             <button
                               className="absolute right-0 top-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 hover:text-orange-400 transition-opacity duration-200"
@@ -248,6 +249,45 @@ const Navbar = () => {
                                   "nav.tour",
                                   texts["nav.tour"],
                                   texts["nav.tour_id"]
+                                );
+                              }}
+                            >
+                              <FaEdit size={16} />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div
+                        className="relative group"
+                        onMouseEnter={() => handleTextHover("nav.countries")}
+                        onMouseLeave={() => handleTextLeave("nav.countries")}
+                      >
+                        <div className="flex items-center pr-8">
+                          <NavLink
+                            to="/countries"
+                            className={({ isActive }) =>
+                              isActive ? "active" : "text-[#ffffff]"
+                            }
+                          >
+                            {isLoading ? (
+                              <span className="animate-pulse">Loading...</span>
+                            ) : (
+                              texts["nav.countries"] || "Le nostre destinazioni"
+                            )}
+                          </NavLink>
+
+                          {user?.role === "admin" && (
+                            <button
+                              className="absolute right-0 top-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 hover:text-orange-400 transition-opacity duration-200"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleEditClick(
+                                  "nav.countries",
+                                  texts["nav.countries"],
+                                  texts["nav.countries_id"]
                                 );
                               }}
                             >
@@ -647,6 +687,7 @@ const Navbar = () => {
                     {[
                       { key: "nav.about", to: "/about" },
                       { key: "nav.tour", to: "/tours" },
+                      { key: "nav.countries", to: "/countries" },
                       { key: "nav.blog", to: "/blog" },
                       { key: "nav.faq", to: "/faq" },
                       { key: "nav.contact", to: "/contact" },
