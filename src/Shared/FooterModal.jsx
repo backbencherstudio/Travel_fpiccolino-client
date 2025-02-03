@@ -5,6 +5,7 @@ import img from "../assets/Images/cookie.png";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewsletter } from "../features/newsLetter/newsLetterSlice";
+import EditableHeading from "../Components/Common/EditableHeading";
 
 const FooterModal = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -82,11 +83,17 @@ const FooterModal = ({ onClose }) => {
         </div>
         <div className="grid lg:grid-cols-2 max-w-[800px] gap-5">
           <div className="m-5">
-            <h3 className="text-lg font-semibold">Hai bisogno di aiuto?</h3>
-            <p className="text-gray-600">
-              Se hai bisogno di aiuto con la prenotazione o hai qualsiasi
-              domanda, non esitare a contattarci!
-            </p>
+            <EditableHeading
+              titleKey="modal_footer_title"
+              defaultTitle="Hai bisogno di aiuto?"
+              customTitleClass="text-lg font-semibold"
+            />
+            <EditableHeading
+              titleKey="modal_footer_title1"
+              defaultTitle=" Se hai bisogno di aiuto con la prenotazione o hai qualsiasi
+              domanda, non esitare a contattarci!"
+              customTitleClass="text-gray-600 my-3 text-md"
+            />
             <input
               type="text"
               placeholder="Nome"
@@ -111,10 +118,11 @@ const FooterModal = ({ onClose }) => {
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email}</p>
             )}
-            <p className="text-gray-600 my-3 text-md">
-              Cliccando su “Iscriviti ora!” esprimi il tuo consenso a ricevere
-              la newsletter di Utravel. Leggi l'informativa privacy
-            </p>
+            <EditableHeading
+              titleKey="modal_footer_title2"
+              defaultTitle="Cliccando su “Iscriviti ora!” esprimi il tuo consenso a ricevere la newsletter di Utravel. Leggi l'informativa privacy"
+              customTitleClass="text-gray-600 my-3 text-md"
+            />
             <button
               onClick={handleSubscribe}
               disabled={loading}
@@ -122,7 +130,7 @@ const FooterModal = ({ onClose }) => {
                 loading && "opacity-50 cursor-not-allowed"
               }`}
             >
-              {loading ? "Submitting..." : "Contact Us"}
+              {loading ? "Invia..." : "Contattaci"}
             </button>
           </div>
           <div className="primary_bg hidden lg:flex items-center">
