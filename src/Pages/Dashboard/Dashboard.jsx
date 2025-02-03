@@ -10,7 +10,7 @@ import { IoMdContacts } from "react-icons/io";
 
 import { BiBookContent } from "react-icons/bi";
 import { TiWorldOutline } from "react-icons/ti";
-import { TbArrowAutofitContent } from "react-icons/tb";
+import { SiGnuprivacyguard } from "react-icons/si";
 import { FiYoutube } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
@@ -346,7 +346,7 @@ const Dashboard = () => {
                     : "hover:bg-zinc-300"
                 }`}
               >
-                <MdOutlinePolicy />
+                <SiGnuprivacyguard />
                 <span>Update Auth Banners</span>
               </button>
             </div>

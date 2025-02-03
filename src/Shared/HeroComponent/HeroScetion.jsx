@@ -40,7 +40,7 @@ const HeroScetion = ({ heroContent }) => {
                 <p className="text-18px font-semibold">{blogDetailsTitle}</p>
               )}
               {titleOne && (
-                <h2 className="font-duera-expanded  text-[30px] md:text-[40px] xl:text-[56px] font-bold leading-[56px] text-center decoration-skip-ink">
+                <h2 className=" text-[30px] md:text-[40px] xl:text-[56px] font-bold leading-[56px] text-center decoration-skip-ink">
                   {titleOne}
                 </h2>
               )}

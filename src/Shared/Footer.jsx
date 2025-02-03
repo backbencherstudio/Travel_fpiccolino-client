@@ -209,6 +209,22 @@ const Footer = () => {
               <p className="flex gap-1 mt-2">
                 <img src={mail} alt="Mail Icon" /> {contactInfo.email || "N/A"}
               </p>
+              <div className="flex gap-2 mt-2 flex-wrap">
+                {footerData?.socialLinks?.map((item, index) => (
+                  <p
+                    key={index}
+                    className="flex gap-1 mt-3 text-xs italic text-blue-500 underline"
+                  >
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.name}
+                    </a>
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
           <div className="flex lg:justify-end">

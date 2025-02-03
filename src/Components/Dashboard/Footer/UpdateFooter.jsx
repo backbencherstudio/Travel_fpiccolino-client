@@ -27,6 +27,7 @@ const UpdateFooter = () => {
   });
   const [paymentLogos, setPaymentLogos] = useState([]);
   const [existingPaymentLogos, setExistingPaymentLogos] = useState([]);
+  const [socialLinks, setSocialLinks] = useState([]);
 
   // Fetch footer data
   useEffect(() => {
@@ -74,6 +75,9 @@ const UpdateFooter = () => {
           )
         );
       }
+
+      // Set social links if they exist
+      setSocialLinks(footerData.socialLinks || []);
     }
   }, [homePageData]);
 
@@ -126,6 +130,21 @@ const UpdateFooter = () => {
     setExistingPaymentLogos((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Add handler for social links
+  const handleAddSocialLink = () => {
+    setSocialLinks([...socialLinks, { name: "", url: "" }]);
+  };
+
+  const handleRemoveSocialLink = (index) => {
+    setSocialLinks(socialLinks.filter((_, i) => i !== index));
+  };
+
+  const handleSocialLinkChange = (index, field, value) => {
+    const updatedLinks = [...socialLinks];
+    updatedLinks[index][field] = value;
+    setSocialLinks(updatedLinks);
+  };
+
   // Submit the form
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -175,6 +194,9 @@ const UpdateFooter = () => {
       "existingPaymentLogos",
       JSON.stringify(existingPaymentLogos)
     );
+
+    // Append social links
+    formDataToSend.append("socialLinks", JSON.stringify(socialLinks));
 
     // Debug log
     for (let pair of formDataToSend.entries()) {
@@ -400,6 +422,54 @@ const UpdateFooter = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Add this before the Submit Button */}
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <label className="block font-medium">Social Links</label>
+            <button
+              type="button"
+              onClick={handleAddSocialLink}
+              className="px-4 py-2 primary_bg text-white rounded hover:opacity-90"
+            >
+              Add Social Link
+            </button>
+          </div>
+
+          {socialLinks.map((link, index) => (
+            <div key={index} className="flex gap-4 items-start">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  placeholder="Platform Name (e.g., Facebook)"
+                  value={link.name}
+                  onChange={(e) =>
+                    handleSocialLinkChange(index, "name", e.target.value)
+                  }
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <div className="flex-1">
+                <input
+                  type="url"
+                  placeholder="URL"
+                  value={link.url}
+                  onChange={(e) =>
+                    handleSocialLinkChange(index, "url", e.target.value)
+                  }
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => handleRemoveSocialLink(index)}
+                className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                <FaTrash />
+              </button>
+            </div>
+          ))}
         </div>
 
         {/* Submit Button */}

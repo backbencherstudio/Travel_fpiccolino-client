@@ -27,8 +27,8 @@ const UpdateWhyUs = () => {
             logo: null,
             name: logo.name || "",
             description: logo.description || "",
-            existingLogo: logo.logo || null, // Store the original file path
-            originalPath: logo.logo || null, // Keep track of the original path
+            existingLogo: logo.logo || null,
+            originalPath: logo.logo || null,
           }));
 
           const filledLogos = logos.concat(
@@ -41,7 +41,14 @@ const UpdateWhyUs = () => {
             })
           );
 
-          setWhyUsData({ logos: filledLogos });
+          // Update the entire whyUsData object at once
+          setWhyUsData({
+            logos: filledLogos,
+            bannerImage: null,
+            bannerOriginalPath: response.data.bannerImage || null,
+            sideImage: null,
+            sideImageOriginalPath: response.data.sideImage || null,
+          });
 
           // Store existing logo paths for display
           const existingLogoUrls = response.data.logos
@@ -53,19 +60,11 @@ const UpdateWhyUs = () => {
           // Set banner data
           if (response.data.bannerImage) {
             setExistingBanner(`${base_url}/${response.data.bannerImage}`);
-            setWhyUsData((prev) => ({
-              ...prev,
-              bannerOriginalPath: response.data.bannerImage,
-            }));
           }
 
           // Set side image data
           if (response.data.sideImage) {
             setExistingSideImage(`${base_url}/${response.data.sideImage}`);
-            setWhyUsData((prev) => ({
-              ...prev,
-              sideImageOriginalPath: response.data.sideImage,
-            }));
           }
         }
       } catch (error) {
@@ -81,13 +80,14 @@ const UpdateWhyUs = () => {
     const file = e.target.files[0];
     if (file) {
       setWhyUsData((prev) => ({
+        ...prev,
         logos: prev.logos.map((item, i) =>
           i === index
             ? {
                 ...item,
                 logo: file,
-                existingLogo: null, // Clear existing logo reference
-                originalPath: item.originalPath, // Keep original path for deletion
+                existingLogo: null,
+                originalPath: item.originalPath,
               }
             : item
         ),
@@ -97,6 +97,7 @@ const UpdateWhyUs = () => {
 
   const handleInputChange = (index, field, value) => {
     setWhyUsData((prev) => ({
+      ...prev,
       logos: prev.logos.map((item, i) =>
         i === index ? { ...item, [field]: value } : item
       ),

@@ -94,7 +94,7 @@ const SearchBar = ({ countries, texts, isLoading }) => {
   };
   return (
     <div className="lg:h-[120px] -mt-[50px] mx-5 lg:mx-0">
-      <div className="max-w-[960px] mx-auto shadow-xl p-5 relative bg-white rounded-lg lg:rounded-full lg:h-[88px]">
+      <div className="max-w-[960px] mx-auto shadow-xl p-5 relative bg-white flex items-center justify-between rounded-full lg:h-[88px]">
         <div className="flex lg:flex-row w-full">
           <div className="relative group w-full lg:w-[80%]">
             <input
@@ -111,7 +111,7 @@ const SearchBar = ({ countries, texts, isLoading }) => {
             />
             {user?.role === "admin" && (
               <button
-                className="absolute right-16 top-1/2 -translate-y-1/2 text-gray-500 opacity-0 group-hover:opacity-100 hover:text-orange-400"
+                className="absolute lg:right-16 right-2 top-1/2 -translate-y-1/2 text-gray-500 opacity-0 group-hover:opacity-100 hover:text-orange-400"
                 onClick={() =>
                   handleEditClick(
                     "search.placeholder",
@@ -128,7 +128,7 @@ const SearchBar = ({ countries, texts, isLoading }) => {
         <div className=" group">
           <button
             onClick={() => handleNavigateDestination()}
-            className="primary_bg hover:opacity-85 text-white px-8 py-3 lg:top-5 lg:absolute right-5 rounded-full text-[18px] w-full lg:w-auto mt-5 lg:mt-0"
+            className="primary_bg hover:opacity-85 text-white px-8 ml-1 py-3 lg:top-5 lg:absolute right-5 rounded-full text-[18px] w-full lg:w-auto lg:mt-0"
           >
             <div className="flex gap-1.5 justify-center">
               <img src={search} alt="Search" />
