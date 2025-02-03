@@ -28,15 +28,15 @@ const FooterModal = ({ onClose }) => {
   const validateForm = () => {
     const newErrors = {};
     if (!name.trim()) {
-      newErrors.name = "Name is required.";
+      newErrors.name = "Nome è obbligatorio.";
     } else if (name.length < 2) {
-      newErrors.name = "Name must be at least 2 characters.";
+      newErrors.name = "Nome deve essere almeno 2 caratteri.";
     }
 
     if (!email.trim()) {
-      newErrors.email = "Email is required.";
+      newErrors.email = "E-mail è obbligatorio.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Please enter a valid email address.";
+      newErrors.email = "Inserisci un indirizzo email valido.";
     }
 
     setErrors(newErrors);
@@ -51,13 +51,13 @@ const FooterModal = ({ onClose }) => {
     dispatch(createNewsletter({ name, email }))
       .unwrap()
       .then(() => {
-        toast.success("Thanks, Email sent successfully");
+        toast.success("Grazie, Email inviata con successo");
         setEmail("");
         setName("");
         onClose();
       })
       .catch((err) => {
-        toast.error(err.message || "Something went wrong.");
+        toast.error(err.message || "Qualcosa è andato storto.");
       });
   };
 
@@ -82,14 +82,14 @@ const FooterModal = ({ onClose }) => {
         </div>
         <div className="grid lg:grid-cols-2 max-w-[800px] gap-5">
           <div className="m-5">
-            <h3 className="text-lg font-semibold">Need Help?</h3>
+            <h3 className="text-lg font-semibold">Hai bisogno di aiuto?</h3>
             <p className="text-gray-600">
-              If you need assistance with booking or have any questions, feel
-              free to reach out!
+              Se hai bisogno di aiuto con la prenotazione o hai qualsiasi
+              domanda, non esitare a contattarci!
             </p>
             <input
               type="text"
-              placeholder="Name"
+              placeholder="Nome"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className={`bg-gray-200 w-full p-2 rounded-lg my-1 mt-5 focus:border ${
@@ -101,7 +101,7 @@ const FooterModal = ({ onClose }) => {
             )}
             <input
               type="email"
-              placeholder="Email"
+              placeholder="E-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={`bg-gray-200 w-full p-2 rounded-lg my-1 focus:border ${
