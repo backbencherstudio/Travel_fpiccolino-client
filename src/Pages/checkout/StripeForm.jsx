@@ -13,6 +13,7 @@ import { createOrder } from "../../features/order/orderSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import EditableHeading from "../../Components/Common/EditableHeading";
+import { base_url } from "../../utils/base_path";
 
 const StripeForm = ({ checkoutNewData }) => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const StripeForm = ({ checkoutNewData }) => {
     }
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/order/stripePayment",
+        `${base_url}/order/stripePayment`,
         {
           paymentMethodId: paymentMethod.id,
           amount: parseInt(checkoutNewData?.toureAmount),
