@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add these styles for input fields */
+input,
+textarea,
+select {
+  @apply bg-white text-gray-900;
+}
+
+input::placeholder,
+textarea::placeholder {
+  @apply text-gray-400;
+}
+
+/* If you're using any specific input classes, you can also target them directly */
+.form-input,
+.input {
+  @apply bg-white text-gray-900  border-gray-300;
+}

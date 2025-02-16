@@ -85,7 +85,7 @@ const Flight = () => {
     <div>
       <div className="pb-20">
         <ParentComponent>
-          <div className="mt-20 flex">
+          <div className="pt-20 flex">
             <button
               onClick={() => navigate(`/tours/${packageDetails?._id}`)}
               className="flex items-center"

@@ -80,7 +80,7 @@ const Insurance = () => {
     <div>
       <div className="pb-20">
         <ParentComponent>
-          <div className="mt-20 flex">
+          <div className="pt-20 flex">
             <Link to={`/flight/${id}`} className="flex items-center">
               <GoChevronLeft className="text-xl" />
             </Link>
