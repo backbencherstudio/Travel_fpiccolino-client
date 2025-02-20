@@ -58,7 +58,12 @@ const Home = () => {
 
   return (
     <div>
-      {showFooterModal && <FooterModal onClose={handleCloseFooterModal} />}
+      {showFooterModal && (
+        <FooterModal
+          footerImg={footerSection[0].emailModalImg}
+          onClose={handleCloseFooterModal}
+        />
+      )}
 
       {heroSection && <HeroScetion heroContent={heroSection} />}
       {countrySection && (

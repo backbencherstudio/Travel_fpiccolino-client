@@ -13,8 +13,10 @@ const UpdateFooter = () => {
   const { homePageData } = useSelector((state) => state.pageData);
   const [logoImg, setLogoImg] = useState(null);
   const [bannerImg, setBannerImg] = useState(null); // New state for banner image
+  const [emailModalImg, setEmailModalImg] = useState(null); // New state
   const [existingLogoUrl, setExistingLogoUrl] = useState("");
   const [existingBannerUrl, setExistingBannerUrl] = useState(""); // New state for existing banner URL
+  const [existingEmailModalUrl, setExistingEmailModalUrl] = useState(""); // New state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     companyName: "",
@@ -67,6 +69,15 @@ const UpdateFooter = () => {
         );
       }
 
+      // Set existing email modal URL if it exists
+      if (footerData.emailModalImg) {
+        setExistingEmailModalUrl(
+          footerData.emailModalImg.startsWith("http")
+            ? footerData.emailModalImg
+            : `${base_url}/${footerData.emailModalImg}`
+        );
+      }
+
       // Set existing payment logos if they exist
       if (footerData.paymentLogos && Array.isArray(footerData.paymentLogos)) {
         setExistingPaymentLogos(
@@ -111,6 +122,15 @@ const UpdateFooter = () => {
     const file = e.target.files[0];
     if (file) {
       setBannerImg(file);
+    }
+  };
+
+  // Add handler for email modal image
+  const handleEmailModalUpload = (e) => {
+    e.stopPropagation();
+    const file = e.target.files[0];
+    if (file) {
+      setEmailModalImg(file);
     }
   };
 
@@ -182,6 +202,11 @@ const UpdateFooter = () => {
     // Append banner if exists
     if (bannerImg) {
       formDataToSend.append("bannerImg", bannerImg);
+    }
+
+    // Append email modal image if exists
+    if (emailModalImg) {
+      formDataToSend.append("emailModalImg", emailModalImg);
     }
 
     // Append payment logos
@@ -316,6 +341,20 @@ const UpdateFooter = () => {
               className="w-full p-2 border border-gray-300 rounded"
             />
           </div>
+          <div>
+            <label htmlFor="copyright" className="block font-medium mb-2">
+              Copyright Text
+            </label>
+            <input
+              type="text"
+              id="copyright"
+              name="copyright"
+              value={formData.copyright}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="© 2024 Your Company. All rights reserved."
+            />
+          </div>
         </div>
 
         {/* Copyright */}
@@ -352,18 +391,37 @@ const UpdateFooter = () => {
               </div>
             </div>
           </div>
-          <div>
-            <label htmlFor="copyright" className="block font-medium mb-2">
-              Copyright
-            </label>
-            <input
-              type="text"
-              id="copyright"
-              name="copyright"
-              value={formData.copyright}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
+          <div className="grid grid-cols-1 gap-4">
+            {/* Email Modal Image Upload */}
+            <div className="relative justify-evenly flex items-center gap-10 border p-3 rounded-lg border-orange-500 border-dashed">
+              <label htmlFor="emailModalImg" className="block font-bold mb-2">
+                Email Modal Image :
+              </label>
+              <input
+                type="file"
+                id="emailModalImg"
+                accept="image/*"
+                onChange={handleEmailModalUpload}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <div className="flex items-center justify-center bg-white text-white rounded-lg cursor-pointer">
+                {emailModalImg ? (
+                  <img
+                    src={URL.createObjectURL(emailModalImg)}
+                    alt="Email Modal Preview"
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                ) : existingEmailModalUrl ? (
+                  <img
+                    src={existingEmailModalUrl}
+                    alt="Existing Email Modal"
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <FaPlusSquare className="primary_text h-6 w-6" />
+                )}
+              </div>
+            </div>
           </div>
         </div>
 

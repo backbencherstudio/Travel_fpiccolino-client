@@ -26,7 +26,7 @@ const TureCard = ({ item, texts, handleEditClick }) => {
           <div className="absolute top-4 right-4">
             <div className="relative group">
               <h2 className="border border-[#E86731] text-[#E86731] bg-[#FDF0EA] px-4 py-2 rounded-full">
-                {texts["tour.all_inclusive"] || "All Inclusive"}
+                {texts[`tour.all_inclusive_${item._id}`] || "All Inclusive"}
               </h2>
               {user?.role === "admin" && (
                 <button
@@ -34,8 +34,8 @@ const TureCard = ({ item, texts, handleEditClick }) => {
                   onClick={(e) => {
                     e.preventDefault(); // Prevent link navigation
                     handleEditClick(
-                      "tour.all_inclusive",
-                      texts["tour.all_inclusive"] || "All Inclusive"
+                      `tour.all_inclusive_${item._id}`,
+                      texts[`tour.all_inclusive_${item._id}`] || "All Inclusive"
                     );
                   }}
                 >

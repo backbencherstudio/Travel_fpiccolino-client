@@ -50,7 +50,7 @@ const InsuranceForm = ({
 
   const handleDelete = (id) => {
     // Remove the insrnce with the given id from the insurance array
-    // console.log(id); 
+    // console.log(id);
 
     setInsurance(
       insurance.filter(
@@ -124,8 +124,8 @@ const InsuranceForm = ({
                     valueLabelDisplay="auto"
                     valueLabelFormat={(value) => `€${value}`}
                     color="warning"
-                    min={10}
-                    max={100}
+                    min={0}
+                    max={5000}
                     step={5}
                   />
                 </Grid>

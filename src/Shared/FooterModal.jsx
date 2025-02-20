@@ -6,8 +6,9 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewsletter } from "../features/newsLetter/newsLetterSlice";
 import EditableHeading from "../Components/Common/EditableHeading";
+import { base_url } from "../utils/base_path";
 
-const FooterModal = ({ onClose }) => {
+const FooterModal = ({ onClose, footerImg }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -133,8 +134,11 @@ const FooterModal = ({ onClose }) => {
               {loading ? "Invia..." : "Contattaci"}
             </button>
           </div>
-          <div className="primary_bg hidden lg:flex items-center">
-            <img src={img} alt="Footer Modal Illustration" />
+          <div className="primary_bg hidden lg:flex items-center justify-center">
+            <img
+              src={`${base_url}/${footerImg}`}
+              alt="Footer Modal Illustration"
+            />
           </div>
         </div>
       </div>

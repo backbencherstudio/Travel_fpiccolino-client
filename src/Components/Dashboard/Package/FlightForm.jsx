@@ -211,8 +211,8 @@ const FlightBookingForm = ({
                     valueLabelDisplay="auto"
                     valueLabelFormat={(value) => `€${value}`}
                     color="warning"
-                    min={100}
-                    max={5000}
+                    min={0}
+                    max={10000}
                     step={50}
                   />
                 </Grid>
