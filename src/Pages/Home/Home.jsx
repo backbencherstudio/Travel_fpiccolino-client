@@ -33,7 +33,11 @@ const Home = () => {
         if (footerRef.current) {
           const rect = footerRef.current.getBoundingClientRect();
           const isFooterVisible = rect.top <= window.innerHeight;
-          setShowFooterModal(isFooterVisible);
+          if (isFooterVisible) {
+            setShowFooterModal(true);
+            // Remove scroll listener once modal is shown
+            window.removeEventListener("scroll", handleScroll);
+          }
         }
       };
 
