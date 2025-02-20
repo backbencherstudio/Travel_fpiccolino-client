@@ -186,9 +186,26 @@ const BlurSliderSection = ({ country, texts }) => {
                   onClick={() => navigate(`/tours/country/${item._id}`)}
                   className="p-5 cursor-pointer rounded-lg bg-transparent shadow-md card_style items-center text-center content-center h-[420px] mx-5 lg:mx-0"
                 >
-                  <h3 className="lg:text-[36px] text-[28px] font-duera-expanded font-extrabold text-white">
-                    {item?.name}
-                  </h3>
+                  <div className="relative group">
+                    <h2 className="lg:text-[36px] text-[28px] font-duera-expanded font-extrabold text-white">
+                      {texts[`country.${item._id}`] || `${item?.name}`}
+                    </h2>
+                    {user?.role === "admin" && (
+                      <button
+                        className="absolute right-0 top-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 hover:text-orange-400"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault(); // Prevent link navigation
+                          handleEditClick(
+                            `country.${item._id}`,
+                            texts[`country.${item._id}`] || `${item?.name}`
+                          );
+                        }}
+                      >
+                        <FaEdit size={16} />
+                      </button>
+                    )}
+                  </div>
                   <img src={item.image} alt="" className="hidden" />
                 </div>
               </SwiperSlide>
