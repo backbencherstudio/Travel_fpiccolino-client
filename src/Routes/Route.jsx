@@ -44,7 +44,7 @@ import NewsLetter from "../Components/Dashboard/NewsLetter/NewsLetter";
 import UpdateFooter from "../Components/Dashboard/Footer/UpdateFooter";
 import UpdateApproach from "../Components/Dashboard/Approach/updateApproach";
 import UpdateFAQ from "../Components/Dashboard/FAQ/updateFAQ";
-import UpdateWhyUs from "../Components/Dashboard/WhyUs/UpdateWhyUs";
+import UpdateWhyUs from "../Components/Dashboard/whyUs/updateWhyUs";
 import UpdatePolicy from "../Components/Dashboard/Policy/updatePolicy";
 import UpdateAuthBanners from "../Components/Dashboard/auth/UpdateAuthBanners";
 import AllCountries from "../Pages/Tours/AllCountries";
