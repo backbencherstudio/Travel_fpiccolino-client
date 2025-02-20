@@ -15,7 +15,7 @@ import TourDetails from "../Pages/Tours/TourDetails";
 import Insurance from "../Pages/Insurance/Insurance";
 import Transfers from "../Pages/Transfers/Transfers";
 import PersonalDetails from "../Pages/PersonalDetails/PersonalDetails";
-import Faq from "../Pages/FAQ/FAQ";
+import Faq from "../Pages/FAQ/Faq";
 import DashboardLayout from "../Layout/DashboardLayout";
 import DashboardAnalysis from "../Components/Dashboard/Dashboard/DashboardAnalysis";
 import TourAnalysis from "../Components/Dashboard/Tour/TourAnalysis";
@@ -48,7 +48,6 @@ import UpdateWhyUs from "../Components/Dashboard/WhyUs/UpdateWhyUs";
 import UpdatePolicy from "../Components/Dashboard/Policy/updatePolicy";
 import UpdateAuthBanners from "../Components/Dashboard/auth/UpdateAuthBanners";
 import AllCountries from "../Pages/Tours/AllCountries";
-
 export const router = createBrowserRouter([
   {
     path: "/",
