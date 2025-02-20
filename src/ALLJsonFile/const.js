@@ -2,11 +2,6 @@ import natureImage from "../assets/natureImage.jpg";
 import natureImage2 from "../assets/natureImage2.jpg";
 
 import natureImage3 from "../assets/benifit.jpg";
-import image1 from "../assets/image1.jpg";
-import image2 from "../assets/image2.jpg";
-import image3 from "../assets/image3.jpg";
-import image4 from "../assets/image4.jpg";
-import image5 from "../assets/image5.jpg";
 import heroImage from "../assets/Images/about.jpg";
 
 export const reviews = [
@@ -135,13 +130,13 @@ export const blogs = [
     contents: [
       {
         subHeader: "The Perfect Packing List",
-        img: image1, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Packing can make or break your trip. Here's a guide to packing light and ensuring you have everything you need for a smooth journey.",
       },
       {
         subHeader: "Stay Safe While Traveling",
-        img: image2, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Safety should always be a priority when traveling. Learn tips for staying safe, from securing your belongings to choosing the safest travel routes.",
       },
@@ -171,7 +166,7 @@ export const blogs = [
       },
       {
         subHeader: "Explore the Rice Terraces",
-        img: image3, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Discover the stunning landscapes of Bali’s rice terraces in Ubud. Perfect for nature walks and photography.",
       },
@@ -183,13 +178,13 @@ export const blogs = [
   {
     id: 2,
     category: "Paradise Beaches",
-    headerImg: image4, // Random image from provided imports
+    headerImg: "", // Random image from provided imports
     header: "Discover the Most Beautiful Beaches Around the World",
     text: "From powder-soft sand to crystal-clear waters, paradise beaches await you. Here's a list of the world's most beautiful beaches you need to visit.",
     contents: [
       {
         subHeader: "Grace Bay, Turks and Caicos",
-        img: image5, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Grace Bay in Turks and Caicos boasts incredible turquoise waters and perfect sand. The beach is a tranquil paradise that offers both relaxation and adventure.",
       },
@@ -207,7 +202,7 @@ export const blogs = [
   {
     id: 3,
     category: "Travel Vibes",
-    headerImg: image2, // Random image from provided imports
+    headerImg: "", // Random image from provided imports
     header: "Dive into the Ultimate Travel Vibes with These Tips",
     text: "Whether you're looking for relaxation or adventure, travel vibes are essential for any great vacation. Here's how to make the most of your journey.",
     contents: [
@@ -219,7 +214,7 @@ export const blogs = [
       },
       {
         subHeader: "Capture the Moment",
-        img: image1, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "No matter where you are, take the time to capture moments that will stay with you forever. From candid street shots to epic landscapes.",
       },
@@ -237,7 +232,7 @@ export const blogs = [
     contents: [
       {
         subHeader: "Choose Your Destination Wisely",
-        img: image4, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Choosing the right destination can set the tone for your entire trip. Consider factors like climate, season, and budget before deciding.",
       },
@@ -255,13 +250,13 @@ export const blogs = [
   {
     id: 5,
     category: "Travel Tips",
-    headerImg: image3, // Random image from provided imports
+    headerImg: "", // Random image from provided imports
     header: "Avoid Common Travel Mistakes with These Tips",
     text: "Traveling can be stressful, but avoiding common mistakes can make your journey a lot smoother. Here's how to avoid those common travel blunders.",
     contents: [
       {
         subHeader: "Don't Overpack",
-        img: image2, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "One of the biggest mistakes travelers make is overpacking. Learn how to pack light and efficiently with these travel hacks.",
       },
@@ -285,13 +280,13 @@ export const blogs = [
     contents: [
       {
         subHeader: "Go on a Safari in Africa",
-        img: image5, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Embark on the adventure of a lifetime and experience Africa’s wild side with a safari in Kenya or Tanzania.",
       },
       {
         subHeader: "See the Northern Lights",
-        img: image1, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Head to Iceland or Norway to witness the awe-inspiring Northern Lights in all their glory.",
       },
@@ -309,13 +304,13 @@ export const blogs = [
     contents: [
       {
         subHeader: "Trekking the Inca Trail",
-        img: image3, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Embark on a journey through the Andes, hiking the Inca Trail to the ancient city of Machu Picchu. A true adventure for the brave at heart!",
       },
       {
         subHeader: "Skydiving Over Interlaken",
-        img: image2, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "For adrenaline junkies, skydiving over Interlaken in Switzerland offers a thrilling experience, with views of the Swiss Alps like no other.",
       },
@@ -333,7 +328,7 @@ export const blogs = [
     contents: [
       {
         subHeader: "Sushi in Japan",
-        img: image1, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Dive into Japan’s food culture with sushi, from traditional nigiri to creative modern rolls.",
       },
@@ -351,7 +346,7 @@ export const blogs = [
   {
     id: 9,
     category: "Solo Travel",
-    headerImg: image5, // Random image from provided imports
+    headerImg: "", // Random image from provided imports
     header: "How to Travel Solo and Love Every Minute of It",
     text: "Solo travel is empowering and liberating. Whether you’re a seasoned traveler or just beginning, here are tips to make your solo adventure unforgettable.",
     contents: [
@@ -381,13 +376,13 @@ export const blogs = [
     contents: [
       {
         subHeader: "Eco-Friendly Accommodations",
-        img: image2, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Stay at eco-friendly hotels and lodges that prioritize sustainability, offering low-impact options for travelers.",
       },
       {
         subHeader: "Pack Light to Reduce Waste",
-        img: image3, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Packing light not only helps with ease of travel, but it also reduces waste. Use sustainable packing materials and avoid disposable plastics.",
       },
@@ -399,13 +394,13 @@ export const blogs = [
   {
     id: 11,
     category: "Luxury Travel",
-    headerImg: image4, // Random image from provided imports
+    headerImg: "", // Random image from provided imports
     header: "The Best Luxury Resorts Around the World",
     text: "If you’re looking for the ultimate getaway, look no further than these luxurious resorts. Indulge in world-class amenities, fine dining, and stunning locations.",
     contents: [
       {
         subHeader: "Overwater Villas in the Maldives",
-        img: image1, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Stay in luxurious overwater villas in the Maldives, where clear blue waters surround you, and every luxury is at your fingertips.",
       },
@@ -423,7 +418,7 @@ export const blogs = [
   {
     id: 12,
     category: "Family Travel",
-    headerImg: image5, // Random image from provided imports
+    headerImg: "", // Random image from provided imports
     header: "How to Plan a Perfect Family Vacation",
     text: "Family vacations can be tricky, but with the right planning, you can create unforgettable memories. Here’s a guide to help you plan your next family getaway.",
     contents: [
@@ -447,13 +442,13 @@ export const blogs = [
   {
     id: 13,
     category: "Cultural Exploration",
-    headerImg: image2, // Random image from provided imports
+    headerImg: "", // Random image from provided imports
     header: "Top 5 Cultural Destinations You Should Explore",
     text: "Cultural exploration allows you to immerse yourself in the traditions, customs, and history of a place. These destinations offer rich cultural experiences you won’t want to miss.",
     contents: [
       {
         subHeader: "Explore the Temples of Kyoto",
-        img: image3, // Random image from provided imports
+        img: "", // Random image from provided imports
         subText:
           "Discover the beauty and tranquility of Kyoto’s ancient temples, where you can learn about Japan’s rich cultural heritage.",
       },
