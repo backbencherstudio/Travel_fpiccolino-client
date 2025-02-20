@@ -186,7 +186,7 @@ const BlurSliderSection = ({ country, texts }) => {
                   onClick={() => navigate(`/tours/country/${item._id}`)}
                   className="p-5 cursor-pointer rounded-lg bg-transparent shadow-md card_style items-center text-center content-center h-[420px] mx-5 lg:mx-0"
                 >
-                  <h3 className="lg:text-[48px] text-[28px] font-duera-expanded font-extrabold text-white">
+                  <h3 className="lg:text-[36px] text-[28px] font-duera-expanded font-extrabold text-white">
                     {item?.name}
                   </h3>
                   <img src={item.image} alt="" className="hidden" />

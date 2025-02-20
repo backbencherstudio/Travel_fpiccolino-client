@@ -239,14 +239,13 @@ const TourDetails = () => {
                     customTitleClass="text-[16px] text-[#1C1C1C] text-center ml-[10%]"
                   />
                   <span className="flex justify-center gap-10 mt-5">
-                    <h2 className="flex items-center font-semibold text-[24px] text-[#25CE50] ">
+                    <h2 className="flex items-center font-semibold text-[36px] text-[#25CE50] ">
                       {" "}
-                      <RiMoneyEuroCircleLine /> {packageDetails?.amount}
+                      €{packageDetails?.amount}
                     </h2>
-                    <h2 className="flex items-center font-semibold text-[24px] text-[#72777F] line-through ">
+                    <h2 className="flex items-center font-semibold text-[22px] text-red-400 line-through ">
                       {" "}
-                      <RiMoneyEuroCircleLine />{" "}
-                      {parseInt(packageDetails?.amount * 1.12)}
+                      €{parseInt(packageDetails?.amount * 1.12)}
                     </h2>
                   </span>
                 </div>

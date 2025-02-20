@@ -32,8 +32,7 @@ const Home = () => {
       const handleScroll = () => {
         if (footerRef.current) {
           const rect = footerRef.current.getBoundingClientRect();
-          const isFooterVisible =
-            rect.top >= 0 && rect.top <= window.innerHeight;
+          const isFooterVisible = rect.top <= window.innerHeight;
           setShowFooterModal(isFooterVisible);
         }
       };

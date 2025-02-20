@@ -1,6 +1,7 @@
 body {
   font-family: "Stapel", sans-serif;
   background-color: white !important;
+  color: #141d2a;
 }
 .primary_text {
   @apply text-[#E86731];
