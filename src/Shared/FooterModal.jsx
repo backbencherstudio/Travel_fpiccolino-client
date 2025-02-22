@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { CloseOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
-import img from "../assets/Images/cookie.png";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewsletter } from "../features/newsLetter/newsLetterSlice";

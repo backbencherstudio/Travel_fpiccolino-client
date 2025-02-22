@@ -8,8 +8,7 @@ import iconn4 from "../../assets/icone/icone4.png";
 import yes from "../../assets/icone/yes.png";
 import { useEffect, useState } from "react";
 import TestimonialCard from "../../Components/Cards/TestimonialCard";
-import { RiMoneyEuroCircleLine } from "react-icons/ri";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPackageDetails } from "../../features/pckage/packageSlice";
 import {
@@ -45,7 +44,6 @@ const TourDetails = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
-  const { texts } = useSelector((state) => state.texts);
   const { packageDetails } = useSelector((state) => state.package);
   const { packageReview } = useSelector((state) => state.review);
   useEffect(() => {

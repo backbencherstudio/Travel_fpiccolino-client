@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import ParentComponent from "../Shared/ParentComponent/ParentComponent";
-import stripe from "../assets/payment/stripe.svg";
-import visa from "../assets/payment/visa.svg";
-import paypal from "../assets/payment/paypal.svg";
-import epay from "../assets/payment/epay.svg";
 import call from "../assets/icons/call.svg";
 import mail from "../assets/icons/mail.svg";
-import klarna from "../assets/payment/download.png";
 import { base_url } from "../utils/base_path";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +21,6 @@ const Footer = () => {
     value: "",
     originalValue: "",
   });
-  const [hoverStates, setHoverStates] = useState({});
   const { user } = useSelector((state) => state.authorization);
   const dispatch = useDispatch();
   const { homePageData } = useSelector((state) => state.pageData);
@@ -39,14 +33,6 @@ const Footer = () => {
 
   const footerData = homePageData?.footer?.[0] || {};
   const contactInfo = footerData.contactInfo || {};
-
-  const handleTextHover = (key) => {
-    setHoverStates({ ...hoverStates, [key]: true });
-  };
-
-  const handleTextLeave = (key) => {
-    setHoverStates({ ...hoverStates, [key]: false });
-  };
 
   const handleEditClick = (key, value, id) => {
     setEditModal({
@@ -107,6 +93,7 @@ const Footer = () => {
       setEmail("");
       setIsAgreed(false);
     } catch (error) {
+      console.error("Subscription error:", error);
       setMessage("Subscription failed. Please try again.");
     }
   };
