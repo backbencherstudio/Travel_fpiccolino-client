@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import ParentComponent from "./ParentComponent/ParentComponent";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,16 +16,12 @@ const Navbar = () => {
   const [contactDropDown, setContactDropDown] = useState(false);
   const [languageDropDown, setLanguageDropDown] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isloginOpen, setLoginOpen] = useState(false);
   // const phoneNumber = "+393801585075";
   const message = "Hello, I have a question about your services.";
   const encodedMessage = encodeURIComponent(message);
   const { user, isAuthenticated } = useSelector((state) => state.authorization);
   const { homePageData } = useSelector((state) => state.pageData);
   const footerData = homePageData?.footer?.[0] || {};
-  const ProfileRef = useRef();
-  const menuRef = useRef();
-  const buttonRef = useRef();
   const { texts } = useSelector((state) => state.texts);
   const [isLoading, setIsLoading] = useState(true);
   const [hoverStates, setHoverStates] = useState({});
@@ -610,7 +606,6 @@ const Navbar = () => {
                   <div className="block lg:hidden">
                     <button
                       className="rounded p-2 text-white transition hover:text-gray-600/75"
-                      ref={buttonRef}
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                       <svg
@@ -655,7 +650,6 @@ const Navbar = () => {
 
               {/* Menu content */}
               <div
-                ref={menuRef}
                 className={`absolute bg-white top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
                   isMenuOpen ? "translate-y-0" : "-translate-y-full"
                 }`}
