@@ -411,18 +411,17 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 ">
-                          {tableType !== "country" &&
-                            tableType !== "newsLetter" && (
-                              <div
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`update/${item._id}`);
-                                }}
-                                className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
-                              >
-                                <FiEdit3 />
-                              </div>
-                            )}
+                          {tableType !== "newsLetter" && (
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`update/${item._id}`);
+                              }}
+                              className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
+                            >
+                              <FiEdit3 />
+                            </div>
+                          )}
                           <div
                             onClick={(e) => {
                               e.stopPropagation();

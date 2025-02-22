@@ -48,6 +48,7 @@ import UpdateWhyUs from "../Components/Dashboard/whyUs/updateWhyUs";
 import UpdatePolicy from "../Components/Dashboard/Policy/updatePolicy";
 import UpdateAuthBanners from "../Components/Dashboard/auth/UpdateAuthBanners";
 import AllCountries from "../Pages/Tours/AllCountries";
+import CountryDetails from "../Components/Dashboard/AddCountry/CountryDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -182,6 +183,10 @@ export const router = createBrowserRouter([
       {
         path: "country/create/new",
         element: <AddCountry />,
+      },
+      {
+        path: "country/update/:id",
+        element: <CountryDetails />,
       },
       {
         path: "addContent",

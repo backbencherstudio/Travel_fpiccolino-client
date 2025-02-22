@@ -18,11 +18,23 @@ export const createCountry = createAsyncThunk(
   }
 );
 export const getCountry = createAsyncThunk(
-  "package/get",
+  "country/getAll",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${base_url}/api/country`);
       return response.data; // Return countries data
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+export const getCountryById = createAsyncThunk(
+  "country/getById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${base_url}/api/country/${id}`);
+      return response.data;
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -41,6 +53,21 @@ export const deleteCountry = createAsyncThunk(
     }
   }
 );
+export const updateCountry = createAsyncThunk(
+  "country/update",
+  async (countryData, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${base_url}/api/country/${countryData._id}`,
+        countryData
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
 
 const countrySlice = createSlice({
   name: "country",
@@ -48,6 +75,9 @@ const countrySlice = createSlice({
     countries: [],
     loading: false,
     error: null,
+    country: null,
+    countryLoading: false,
+    countryError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -78,7 +108,20 @@ const countrySlice = createSlice({
         state.loading = false;
         state.error = action.payload?.message ?? null;
       });
-
+    builder
+      .addCase(getCountryById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCountryById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.country = action.payload;
+      })
+      .addCase(getCountryById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message ?? null;
+      });
     builder
       .addCase(deleteCountry.pending, (state) => {
         state.countryDeleteLoading = true;
