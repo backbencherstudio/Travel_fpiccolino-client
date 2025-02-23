@@ -51,7 +51,7 @@ const TureCard = ({ item, texts, handleEditClick }) => {
           <p className="text-[#72777F] text-sm font-semibold ">{`Durata : Notti ${tourDuration?.nights} - Giorni ${tourDuration?.days} `}</p>
           <p className="text-green-500 text-[28px] font-semibold ">
             €{price}{" "}
-            <s className="text-red-400 text-[16px] font-semibold ">
+            <s className="text-red-500 text-[16px] font-semibold ">
               €{parseInt(price * 1.12)}
             </s>
           </p>

@@ -157,8 +157,8 @@ const Insurance = () => {
                   {packageDetails?.tourName}
                 </h2>
                 <p>
-                  {checkout?.tureDuration?.days} Days /{" "}
-                  {checkout?.tureDuration?.nights} Nights
+                  {checkout?.tureDuration?.days} Giorni /{" "}
+                  {checkout?.tureDuration?.nights} Notti
                 </p>
                 <div className="border border-b-[#c8c8ce] mt-3"></div>
                 <div className="mt-4">

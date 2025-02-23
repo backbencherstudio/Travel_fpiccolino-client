@@ -151,7 +151,7 @@ const Flight = () => {
 
                   {packageDetails?.bookedFlights.length === 0 ? (
                     <div className="flex items-center justify-center">
-                      <h2 className="text-center text-xl font-semibold text-red-400 my-5 md:mt-20">
+                      <h2 className="text-center text-xl font-semibold text-red-500 my-5 md:mt-20">
                         Volo non disponibile
                       </h2>
                     </div>

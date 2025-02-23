@@ -241,7 +241,7 @@ const TourDetails = () => {
                       {" "}
                       €{packageDetails?.amount}
                     </h2>
-                    <h2 className="flex items-center font-semibold text-[22px] text-red-400 line-through ">
+                    <h2 className="flex items-center font-semibold text-[22px] text-red-500 line-through ">
                       {" "}
                       €{parseInt(packageDetails?.amount * 1.12)}
                     </h2>

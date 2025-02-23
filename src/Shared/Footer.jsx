@@ -200,7 +200,7 @@ const Footer = () => {
                 {footerData?.socialLinks?.map((item, index) => (
                   <p
                     key={index}
-                    className="flex gap-1 mt-3 text-xs italic text-blue-500 underline"
+                    className="flex gap-1 mt-3 text-xs italic primary_text underline"
                   >
                     <a
                       href={item.url}
@@ -327,7 +327,7 @@ const Footer = () => {
               </form>
 
               {message && (
-                <p className="text-sm text-red-400 mt-3">{message}</p>
+                <p className="text-sm text-red-500 mt-3">{message}</p>
               )}
             </div>
           </div>
