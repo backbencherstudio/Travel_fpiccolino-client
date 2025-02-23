@@ -132,7 +132,7 @@ const Tours = () => {
           )}
         </div>
         <div className="mt-20">
-          <Videos />
+          <Videos countryId={id} />
         </div>
       </ParentComponent>
       <div className="mt-20">

@@ -16,6 +16,7 @@ const UploadShorts = () => {
   const dispatch = useDispatch();
   const { countries } = useSelector((state) => state.country);
   const [selectedCountry, setSelectedCountry] = useState("All Countries");
+  const [showValidationMessage, setShowValidationMessage] = useState(false);
 
   useEffect(() => {
     dispatch(getCountry({ search: "", startDate: "", endDate: "" }));
@@ -36,11 +37,17 @@ const UploadShorts = () => {
 
   const onSubmit = (data) => {
     if (selectedCountry === "All Countries") {
-      return; // Prevent form submission if no country is selected
+      setShowValidationMessage(true);
+      return;
+    }
+    if (selectedCountry === "all") {
+      setShowValidationMessage(true);
+      return;
     }
     dispatch(createShorts(data)).then(() => {
       reset();
       dispatch(getShorts());
+      setShowValidationMessage(false);
     });
   };
 
@@ -104,10 +111,19 @@ const UploadShorts = () => {
                 value !== "All Countries" || "Please select a country",
             })}
             onChange={handleCountryChange}
+            renderValue={(selected) => {
+              const country = countries?.find((c) => c._id === selected);
+              return country
+                ? country.name
+                : selected === "all"
+                ? "All Countries"
+                : "Select a Country";
+            }}
           >
             <MenuItem value="All Countries" disabled>
               Select a Country
             </MenuItem>
+            <MenuItem value="all">All Countries</MenuItem>
             {countries?.map((country) => (
               <MenuItem
                 key={country._id}
@@ -129,11 +145,13 @@ const UploadShorts = () => {
               </MenuItem>
             ))}
           </Select>
-          {(errors.countryId || selectedCountry === "All Countries") && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.countryId?.message || "Please select a country"}
-            </p>
-          )}
+          {showValidationMessage &&
+            (selectedCountry === "All Countries" ||
+              selectedCountry === "all") && (
+              <p className="text-red-500 text-sm mt-1">
+                Please select a country
+              </p>
+            )}
         </div>
 
         {/* URL Input */}
@@ -185,7 +203,11 @@ const UploadShorts = () => {
             </thead>
             <tbody>
               {shorts &&
-                filteredShorts?.map((short, index) => (
+                (selectedCountry === "all" ||
+                selectedCountry === "All Countries"
+                  ? shorts
+                  : filteredShorts
+                )?.map((short, index) => (
                   <tr key={short?._id} className="hover:bg-[#fdf0ea]">
                     <td className="border border-gray-300 px-4 py-2 text-center">
                       {index + 1}
