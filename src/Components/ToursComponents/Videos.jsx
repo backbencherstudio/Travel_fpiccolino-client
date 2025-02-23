@@ -33,10 +33,30 @@ const Videos = ({ countryId }) => {
 
   // Function to extract video ID and create embed URL
   const getEmbedUrl = (shortUrl) => {
-    const videoIdMatch = shortUrl.match(/\/shorts\/([a-zA-Z0-9_-]+)\?/);
-    return videoIdMatch
-      ? `https://www.youtube.com/embed/${videoIdMatch[1]}`
-      : shortUrl;
+    // Handle YouTube shorts
+    const youtubeMatch = shortUrl.match(/\/shorts\/([a-zA-Z0-9_-]+)\?/);
+    if (youtubeMatch) {
+      return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+    }
+
+    // Handle TikTok URLs
+    const tiktokMatch = shortUrl.match(/\/video\/(\d+)/);
+    if (tiktokMatch) {
+      return `https://www.tiktok.com/embed/${tiktokMatch[1]}`;
+    }
+
+    return shortUrl;
+  };
+
+  // Function to determine video platform
+  const getVideoPlatform = (url) => {
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      return "youtube";
+    }
+    if (url.includes("tiktok.com")) {
+      return "tiktok";
+    }
+    return "unknown";
   };
 
   return (
@@ -51,10 +71,13 @@ const Videos = ({ countryId }) => {
       {displayShorts?.length > 0 ? (
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-10 mt-14">
           {displayShorts?.map((item) => {
+            const platform = getVideoPlatform(item.url);
             return (
               <div
                 key={item._id}
-                className="relative pb-[177%] sm:pb-[56.25%] rounded-2xl overflow-hidden h-[680px]"
+                className={`relative pb-[177%] sm:pb-[56.25%] rounded-2xl overflow-hidden h-[680px] ${
+                  platform === "tiktok" ? "tiktok-container" : ""
+                }`}
               >
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
@@ -62,7 +85,7 @@ const Videos = ({ countryId }) => {
                   frameBorder="0"
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
                   allowFullScreen
-                  title={`Short Video ${item._id}`}
+                  title={`Video ${item._id}`}
                 ></iframe>
               </div>
             );
