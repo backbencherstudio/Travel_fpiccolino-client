@@ -48,18 +48,17 @@ const BlurSliderSection = ({ country, texts }) => {
   const handleSlideChange = (swiper) => {
     const activeIndex = swiper.activeIndex;
     const totalSlides = swiper.slides.length;
+    const currentIndex = swiper.realIndex;
+    const activeSlide = data[currentIndex];
 
+    setCurrentBackgroundImage(activeSlide?.image);
+    setContentTitle(activeSlide?.contentTitle);
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
 
-    // Update background image to the active slide's image
-    const activeSlide = data[activeIndex % data.length];
-    setCurrentBackgroundImage(activeSlide?.image);
-    setContentTitle(activeSlide?.contentTitle);
-
     let progress = 0;
     if (screenSize === "desktop") {
-      progress = ((activeIndex + 1) / (totalSlides - 3)) * 100;
+      progress = ((activeIndex + 1) / (totalSlides - 2)) * 100;
     } else if (screenSize === "tablet") {
       progress = ((activeIndex + 1) / (totalSlides - 2)) * 100;
     } else {
@@ -156,6 +155,8 @@ const BlurSliderSection = ({ country, texts }) => {
         <div className="col-span-6 z-20">
           <Swiper
             className="gap-6"
+            // loop={true}
+            // loopFillGroupWithBlank={true}
             spaceBetween={30}
             slidesPerView={1}
             onSwiper={(swiper) => {
@@ -175,7 +176,7 @@ const BlurSliderSection = ({ country, texts }) => {
                 spaceBetween: 20,
               },
               1440: {
-                slidesPerView: 2.7,
+                slidesPerView: 3,
                 spaceBetween: 20,
               },
             }}
@@ -210,24 +211,34 @@ const BlurSliderSection = ({ country, texts }) => {
                 </div>
               </SwiperSlide>
             ))}
+
+
+            {window.innerWidth >= 768 && (
+              <>
+                <SwiperSlide key="dummy1">
+                  <div style={{ display: "none" }} />
+                </SwiperSlide>
+                <SwiperSlide key="dummy2">
+                  <div style={{ display: "none" }} />
+                </SwiperSlide>
+              </>
+            )}
           </Swiper>
         </div>
       </div>
       <div className="z-20 flex items-center mt-[30px] mx-3 lg:justify-center">
         <button
           onClick={() => swiperRef.current?.slidePrev()}
-          className={`p-2.5 m-1 ${
-            isBeginning ? "bg-white primary_text" : "primary_bg text-white "
-          } w-9 h-9 rounded-full transition-opacity z-20`}
+          className={`p-2.5 m-1 ${isBeginning ? "bg-white primary_text" : "primary_bg text-white "
+            } w-9 h-9 rounded-full transition-opacity z-20`}
           disabled={isBeginning}
         >
           <FaArrowLeft />
         </button>
         <button
           onClick={() => swiperRef.current?.slideNext()}
-          className={`p-2.5 z-20 m-1 ${
-            isEnd ? "bg-white primary_text" : "primary_bg text-white "
-          } rounded-full transition-opacity`}
+          className={`p-2.5 z-20 m-1 ${isEnd ? "bg-white primary_text" : "primary_bg text-white "
+            } rounded-full transition-opacity`}
           disabled={isEnd}
         >
           <FaArrowRight />
