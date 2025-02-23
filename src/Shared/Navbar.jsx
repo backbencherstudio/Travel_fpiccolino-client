@@ -9,6 +9,7 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { base_url } from "../utils/base_path";
 import { fetchTexts, updateText } from "../features/texts/textsSlice";
 import { toast } from "react-hot-toast";
+// import { FaWhatsapp } from "react-icons/fa6";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -162,7 +163,7 @@ const Navbar = () => {
       <header className="z-30 fixed w-full nav-style py-2 banner_style">
         <ParentComponent>
           <div className="">
-            <div className="flex lg:gap-6 h-16 items-center justify-between">
+            <div className="flex xl:gap-6 lg:gap-3 gap-6 h-16 items-center justify-between">
               <div className="md:flex md:items-center md:gap-12">
                 <Link className="block text-teal-600" to="/">
                   <img
@@ -175,14 +176,14 @@ const Navbar = () => {
 
               <div className="hidden lg:block">
                 <nav aria-label="Global">
-                  <ul className="flex items-center gap-6 primary_text">
+                  <ul className="flex items-center 2xl:gap-6 xl:gap-7 lg:gap-3 gap-6  primary_text lg:text-base xl:text-[18px]">
                     <li>
                       <div
                         className="relative group"
                         onMouseEnter={() => handleTextHover("nav.about")}
                         onMouseLeave={() => handleTextLeave("nav.about")}
                       >
-                        <div className="flex items-center pr-8">
+                        <div className="flex items-center 2xl:pr-8">
                           <NavLink
                             to="/about"
                             className={({ isActive }) =>
@@ -217,11 +218,11 @@ const Navbar = () => {
 
                     <li>
                       <div
-                        className="relative group"
+                        className="relative group "
                         onMouseEnter={() => handleTextHover("nav.tour")}
                         onMouseLeave={() => handleTextLeave("nav.tour")}
                       >
-                        <div className="flex items-center pr-8">
+                        <div className="flex items-center   2xl:pr-8">
                           <NavLink
                             to="/tours"
                             className={({ isActive }) =>
@@ -260,7 +261,7 @@ const Navbar = () => {
                         onMouseEnter={() => handleTextHover("nav.countries")}
                         onMouseLeave={() => handleTextLeave("nav.countries")}
                       >
-                        <div className="flex items-center pr-8">
+                        <div className="flex items-center 2xl:pr-8">
                           <NavLink
                             to="/countries"
                             className={({ isActive }) =>
@@ -300,7 +301,7 @@ const Navbar = () => {
                         onMouseEnter={() => handleTextHover("nav.blog")}
                         onMouseLeave={() => handleTextLeave("nav.blog")}
                       >
-                        <div className="flex items-center pr-8">
+                        <div className="flex items-center 2xl:pr-8">
                           <NavLink
                             to="/blog"
                             className={({ isActive }) =>
@@ -339,7 +340,7 @@ const Navbar = () => {
                         onMouseEnter={() => handleTextHover("nav.faq")}
                         onMouseLeave={() => handleTextLeave("nav.faq")}
                       >
-                        <div className="flex items-center pr-8">
+                        <div className="flex items-center 2xl:pr-8">
                           <NavLink
                             to="/faq"
                             className={({ isActive }) =>
@@ -378,7 +379,7 @@ const Navbar = () => {
                         onMouseEnter={() => handleTextHover("nav.contact")}
                         onMouseLeave={() => handleTextLeave("nav.contact")}
                       >
-                        <div className="flex items-center pr-8">
+                        <div className="flex items-center 2xl:pr-8">
                           <NavLink
                             to="/contact"
                             className={({ isActive }) =>
@@ -415,17 +416,18 @@ const Navbar = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex gap-3 xl:gap-[6px] items-center">
+                <div className="flex gap-3 lg:gap-[6px] items-center">
                   {/* Language Dropdown */}
                   <div className="relative inline-block text-left">
                     <button
                       className="inline-flex w-full justify-center gap-x-1.5 rounded-md text-[18px] primary_text mt-2"
                       onClick={handleDropdownToggle("language")}
                     >
-                      <div className="">
-                        <WhatsApp
-                          style={{ fontSize: "36px" }}
-                          className="text-white mb-1 hover:scale-105"
+                      <div className="md:flex items-ceter ">
+                        <FaWhatsapp
+                          // style={{ fontSize: "36px" }}
+                          // size="36px"
+                          className="text-white xl:mr-3 hover:scale-105 text-[30px] 2xl:text-[36px]"
                         />
                       </div>
                     </button>
@@ -550,7 +552,7 @@ const Navbar = () => {
                                   );
                                 }}
                               >
-                                <FaEdit size={16} />
+                                <FaEdit size={16}  />
                               </button>
                             )}
                           </div>
@@ -562,7 +564,7 @@ const Navbar = () => {
                     {!isAuthenticated && (
                       <div className="flex xl:gap-3">
                         <Link
-                          className="rounded-xl primary_text bg-transparent border  px-8 py-3 text-[18px] xl:text-sm hover:bg-[#63280141] font-medium mx-2 border-orange-600"
+                          className="rounded-xl primary_text bg-transparent border  2xl:px-8 px-8 py-3 lg:px-3 lg:py-[6px] 2xl:py-3 text-[18px] lg:text-sm hover:bg-[#63280141] font-medium 2xl:mx-2 lg:mx-0 mx-2  border-orange-600"
                           to="/login"
                         >
                           Login
@@ -570,7 +572,7 @@ const Navbar = () => {
 
                         <div className="hidden lg:flex items-center justify-center">
                           <Link
-                            className="rounded-xl text-[white] primary_bg  px-8 py-3 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2"
+                            className="rounded-xl text-[white] primary_bg  2xl:px-8 2xl:py-3 lg:px-3 lg:py-[6px] px-8 py-3 text-[18px] lg:text-sm  hover:opacity-85 font-medium mx-2"
                             to="/signup"
                           >
                             Sign Up
