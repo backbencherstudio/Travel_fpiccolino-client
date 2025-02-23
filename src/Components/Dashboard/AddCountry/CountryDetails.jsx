@@ -41,13 +41,9 @@ const CountryDetails = () => {
   const handleImageUpload = (e) => {
     e.stopPropagation();
     const files = Array.from(e.target.files);
-    if (updateImageIndex !== null) {
-      setImages((prevImages) =>
-        prevImages.map((img, i) => (i === updateImageIndex ? files[0] : img))
-      );
-      setUpdateImageIndex(null);
-    } else {
-      setImages((prevImages) => [...prevImages, ...files]);
+    if (files.length > 0) {
+      setImages([files[0]]); // Only keep the latest image
+      setUploadedImages([]); // Clear any previously uploaded images
     }
   };
 
@@ -55,39 +51,36 @@ const CountryDetails = () => {
     if (isUploaded) {
       setUploadedImages([]);
     } else {
-      setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+      setImages([]);
     }
-  };
-
-  const handleUpdateImage = (index, isUploaded = false) => {
-    if (isUploaded) {
-      toast.warning(
-        "Updating previously uploaded images is not supported directly."
-      );
-      return;
-    }
-    setUpdateImageIndex(index);
-    document.getElementById("imageUpdateInput").click();
   };
 
   const onSubmit = (data) => {
-    const allImages = [...uploadedImages, ...images];
-    if (allImages.length < 1) {
-      toast.warn("At least 1 image is required for the country.");
-      return;
-    }
-
-    const countryData = {
-      ...data,
-      image: allImages[0], // Use the first image as the main image
-    };
-
     if (isUpdate) {
-      dispatch(updateCountry({ countryId: id, data: countryData }))
+      // Create the data object
+      const countryData = {
+        name: data.name,
+        contentTitle: data.contentTitle,
+        contentDescription: data.contentDescription,
+      };
+
+      // If there's a new image, use it
+      if (images.length > 0) {
+        countryData.image = images[0]; // Use the first new image
+      }
+
+      dispatch(
+        updateCountry({
+          countryId: id,
+          data: countryData,
+        })
+      )
         .unwrap()
         .then(() => {
           toast.success("Country Updated Successfully");
           setIsUpdate(false);
+          // Refresh the country data
+          dispatch(getCountryById(id));
         })
         .catch((error) => {
           console.error("Failed to update country:", error);
@@ -146,43 +139,38 @@ const CountryDetails = () => {
                 Upload Image
               </h2>
 
-              {uploadedImages.map((img, index) => (
-                <div key={index} className="relative my-2">
+              {/* Show either uploaded image or new image */}
+              {uploadedImages.length > 0 ? (
+                <div className="relative my-2">
                   <img
-                    className="h-[200px] w-full object-cover rounded-lg cursor-pointer"
-                    src={img}
-                    alt={`Uploaded Preview ${index + 1}`}
-                    onClick={() => handleUpdateImage(index, true)}
+                    className="h-[200px] w-full object-cover rounded-lg"
+                    src={uploadedImages[0]}
+                    alt="Uploaded Preview"
                   />
                   <button
                     type="button"
                     className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                    onClick={() => handleDeleteImage(index, true)}
+                    onClick={() => handleDeleteImage(0, true)}
                   >
                     <DeleteOutlined />
                   </button>
                 </div>
-              ))}
-
-              {images.map((img, index) => (
-                <div key={index} className="relative my-2">
+              ) : images.length > 0 ? (
+                <div className="relative my-2">
                   <img
-                    className="h-[200px] w-full object-cover rounded-lg cursor-pointer"
-                    src={URL.createObjectURL(img)}
-                    alt={`Preview ${index + 1}`}
-                    onClick={() => handleUpdateImage(index)}
+                    className="h-[200px] w-full object-cover rounded-lg"
+                    src={URL.createObjectURL(images[0])}
+                    alt="Preview"
                   />
                   <button
                     type="button"
                     className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:opacity-90"
-                    onClick={() => handleDeleteImage(index)}
+                    onClick={() => handleDeleteImage(0)}
                   >
                     <DeleteOutlined />
                   </button>
                 </div>
-              ))}
-
-              {uploadedImages.length === 0 && images.length === 0 && (
+              ) : (
                 <div className="relative inline-block w-full">
                   <input
                     type="file"
@@ -195,14 +183,6 @@ const CountryDetails = () => {
                   </div>
                 </div>
               )}
-
-              <input
-                id="imageUpdateInput"
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
             </div>
           </div>
         </div>

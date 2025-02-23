@@ -55,11 +55,26 @@ export const deleteCountry = createAsyncThunk(
 );
 export const updateCountry = createAsyncThunk(
   "country/update",
-  async (countryData, { rejectWithValue }) => {
+  async ({ countryId, data }, { rejectWithValue }) => {
     try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("contentTitle", data.contentTitle);
+      formData.append("contentDescription", data.contentDescription);
+
+      // If there's a new image file, append it
+      if (data.image instanceof File) {
+        formData.append("image", data.image);
+      }
+
       const response = await axios.put(
-        `${base_url}/api/country/${countryData._id}`,
-        countryData
+        `${base_url}/api/country/${countryId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -78,6 +93,8 @@ const countrySlice = createSlice({
     country: null,
     countryLoading: false,
     countryError: null,
+    updateLoading: false,
+    updateError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -136,6 +153,26 @@ const countrySlice = createSlice({
       .addCase(deleteCountry.rejected, (state, action) => {
         state.countryDeleteLoading = false;
         state.countryDeleteLoadingError = action.payload;
+      });
+    builder
+      .addCase(updateCountry.pending, (state) => {
+        state.updateLoading = true;
+        state.updateError = null;
+      })
+      .addCase(updateCountry.fulfilled, (state, action) => {
+        state.updateLoading = false;
+        state.country = action.payload.country;
+        // Update the country in the countries array
+        const index = state.countries.findIndex(
+          (c) => c._id === action.payload.country._id
+        );
+        if (index !== -1) {
+          state.countries[index] = action.payload.country;
+        }
+      })
+      .addCase(updateCountry.rejected, (state, action) => {
+        state.updateLoading = false;
+        state.updateError = action.payload;
       });
   },
 });
