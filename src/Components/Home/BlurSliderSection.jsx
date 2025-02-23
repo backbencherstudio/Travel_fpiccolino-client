@@ -31,9 +31,12 @@ const BlurSliderSection = ({ country, texts }) => {
   useEffect(() => {
     const checkScreenSize = () => {
       const width = window.innerWidth;
-      if (width >= 1024) {
+      if (width >= 1440) {
         setScreenSize("desktop");
-      } else if (width >= 768) {
+      }else if(width >= 1024){
+        setScreenSize("laptop")
+      }
+       else if (width >= 768) {
         setScreenSize("tablet");
       } else {
         setScreenSize("mobile");
@@ -59,9 +62,12 @@ const BlurSliderSection = ({ country, texts }) => {
     let progress = 0;
     if (screenSize === "desktop") {
       progress = ((activeIndex + 1) / (totalSlides - 2)) * 100;
+    } else if (screenSize === "laptop") {
+      progress = ((activeIndex + 1) / (totalSlides - 1)) * 100;
     } else if (screenSize === "tablet") {
-      progress = ((activeIndex + 1) / (totalSlides - 2)) * 100;
-    } else {
+      progress = ((activeIndex + 1) / (totalSlides - 1)) * 100;
+    }
+    else {
       progress = ((activeIndex + 1) / totalSlides) * 100;
     }
     setProgressValue(progress);
@@ -96,6 +102,20 @@ const BlurSliderSection = ({ country, texts }) => {
       alert("Failed to update text. Please try again.");
     }
   };
+
+  //extra slider manage 
+  const [extraSlides, setExtraSlides] = useState(0);
+
+  useEffect(() => {
+    const updateSlides = () => {
+      const width = window.innerWidth;
+      setExtraSlides(width >= 1440 ? 2 : width >= 768 ? 1 : 0);
+    };
+
+    updateSlides(); // Initial check
+    window.addEventListener("resize", updateSlides);
+    return () => window.removeEventListener("resize", updateSlides);
+  }, []);
 
   return (
     <div
@@ -172,7 +192,7 @@ const BlurSliderSection = ({ country, texts }) => {
                 spaceBetween: 20,
               },
               1024: {
-                slidesPerView: 1.5,
+                slidesPerView: 2,
                 spaceBetween: 20,
               },
               1440: {
@@ -213,16 +233,12 @@ const BlurSliderSection = ({ country, texts }) => {
             ))}
 
 
-            {window.innerWidth >= 768 && (
-              <>
-                <SwiperSlide key="dummy1">
-                  <div style={{ display: "none" }} />
-                </SwiperSlide>
-                <SwiperSlide key="dummy2">
-                  <div style={{ display: "none" }} />
-                </SwiperSlide>
-              </>
-            )}
+            {[...Array(extraSlides)].map((_, index) => (
+              <SwiperSlide key={`extra-${index}`}>
+                <div style={{ display: "none" }} />
+              </SwiperSlide>
+            ))}
+
           </Swiper>
         </div>
       </div>
