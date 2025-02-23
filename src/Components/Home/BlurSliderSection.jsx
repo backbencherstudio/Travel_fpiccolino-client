@@ -212,7 +212,6 @@ const BlurSliderSection = ({ country, texts }) => {
               </SwiperSlide>
             ))}
 
-
             {window.innerWidth >= 768 && (
               <>
                 <SwiperSlide key="dummy1">
@@ -229,16 +228,18 @@ const BlurSliderSection = ({ country, texts }) => {
       <div className="z-20 flex items-center mt-[30px] mx-3 lg:justify-center">
         <button
           onClick={() => swiperRef.current?.slidePrev()}
-          className={`p-2.5 m-1 ${isBeginning ? "bg-white primary_text" : "primary_bg text-white "
-            } w-9 h-9 rounded-full transition-opacity z-20`}
+          className={`p-2.5 m-1 ${
+            isBeginning ? "bg-white primary_text" : "primary_bg text-white "
+          } w-9 h-9 rounded-full transition-opacity z-20`}
           disabled={isBeginning}
         >
           <FaArrowLeft />
         </button>
         <button
           onClick={() => swiperRef.current?.slideNext()}
-          className={`p-2.5 z-20 m-1 ${isEnd ? "bg-white primary_text" : "primary_bg text-white "
-            } rounded-full transition-opacity`}
+          className={`p-2.5 z-20 m-1 ${
+            isEnd ? "bg-white primary_text" : "primary_bg text-white "
+          } rounded-full transition-opacity`}
           disabled={isEnd}
         >
           <FaArrowRight />
