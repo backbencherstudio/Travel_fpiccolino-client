@@ -552,7 +552,7 @@ const Navbar = () => {
                                   );
                                 }}
                               >
-                                <FaEdit size={16}  />
+                                <FaEdit size={16} />
                               </button>
                             )}
                           </div>
@@ -571,7 +571,7 @@ const Navbar = () => {
                         </Link>
 
                         <div className="hidden lg:flex items-center justify-center">
-                          <Link   
+                          <Link
                             className="rounded-xl text-[white] primary_bg  2xl:px-8 2xl:py-3 lg:px-3 lg:py-[6px] px-8 py-3 text-[18px] lg:text-sm  hover:opacity-85 font-medium mx-2"
                             to="/signup"
                           >
@@ -720,14 +720,14 @@ const Navbar = () => {
                     ))}
                   </ul>
                   {!isAuthenticated ? (
-                    <div className="flex flex-col">
+                    <div className="grid gap-2 grid-cols-2">
                       <div className="relative group">
-                        <Link
-                          className="rounded-xl primary_text bg-transparent border px-8 py-4 text-[18px] xl:text-sm hover:bg-[#63280141] font-medium m-2 border-orange-600 text-center"
-                          to="/login"
+                        <button
+                          className="rounded-xl bg-white primary_text px-8 py-4 text-[18px] xl:text-sm hover:bg-orange-50  font-medium mx-2 text-center border border-orange-600 w-full mb-2"
+                          onClick={() => navigate("/login")}
                         >
                           {texts["nav.login"]}
-                        </Link>
+                        </button>
                         {user?.role === "admin" && (
                           <button
                             className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 group-hover:opacity-100 hover:text-orange-400"
@@ -745,14 +745,13 @@ const Navbar = () => {
                           </button>
                         )}
                       </div>
-
                       <div className="relative group">
-                        <Link
-                          className="rounded-xl text-[white] primary_bg px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium m-2 text-center"
-                          to="/signup"
+                        <button
+                          className="rounded-xl text-[white] primary_bg px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2 text-center w-full"
+                          onClick={() => navigate("/signup")}
                         >
                           {texts["nav.signup"]}
-                        </Link>
+                        </button>
                         {user?.role === "admin" && (
                           <button
                             className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 group-hover:opacity-100 hover:text-orange-400"
