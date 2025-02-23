@@ -53,7 +53,7 @@ const BlurSliderSection = ({ country, texts }) => {
     setIsEnd(swiper.isEnd);
 
     // Update background image to the active slide's image
-    const activeSlide = data[(activeIndex % data.length) + 2];
+    const activeSlide = data[activeIndex % data.length];
     setCurrentBackgroundImage(activeSlide?.image);
     setContentTitle(activeSlide?.contentTitle);
 
