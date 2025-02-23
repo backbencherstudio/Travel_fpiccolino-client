@@ -571,7 +571,7 @@ const Navbar = () => {
                         </Link>
 
                         <div className="hidden lg:flex items-center justify-center">
-                          <Link
+                          <Link   
                             className="rounded-xl text-[white] primary_bg  2xl:px-8 2xl:py-3 lg:px-3 lg:py-[6px] px-8 py-3 text-[18px] lg:text-sm  hover:opacity-85 font-medium mx-2"
                             to="/signup"
                           >
