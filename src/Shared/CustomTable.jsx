@@ -218,7 +218,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.duration && <TableCell>Duration</TableCell>}
-                {columns?.isHome && <TableCell>Is Home</TableCell>}
+                {columns?.isHome && <TableCell>Show on Home Page</TableCell>}
                 {columns?.date && <TableCell>CreatedAt</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
