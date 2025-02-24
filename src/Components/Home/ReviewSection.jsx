@@ -66,7 +66,7 @@ const ReviewSection = ({ reviews, texts }) => {
   };
 
   return (
-    <div className="bg-[#EFFBFB] mt-20 lg:p-20 p-5 ">
+    <div className="bg-[#fdf0ea] mt-20 lg:p-20 p-5 ">
       <ParentComponent>
         <div className="text-center ">
           <div>

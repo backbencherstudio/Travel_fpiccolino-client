@@ -53,7 +53,7 @@ const AdventureSection = ({ cardDetails, texts }) => {
   };
 
   return (
-    <div className="bg-[#EFFBFB] lg:p-20 p-5 ">
+    <div className="bg-[#fdf0ea] lg:p-20 p-5 ">
       <ParentComponent>
         <div className="text-center mb-14">
           <EditableHeading

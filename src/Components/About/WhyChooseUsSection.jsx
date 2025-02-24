@@ -93,7 +93,7 @@ const WhyChooseUsSection = ({ footer_3 }) => {
         </div>
       </ParentComponent>
 
-      <div className="mt-20 py-[60px] px-20 text-start bg-[#469697] grid lg:grid-cols-2">
+      <div className="mt-20 py-[60px] px-20 text-start bg-[#0d3250] grid lg:grid-cols-2">
         <div>
           <EditableHeading
             titleKey="why_choose_us_company_name"

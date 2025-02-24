@@ -48,11 +48,27 @@ const WondersSection = ({ countrySection, texts }) => {
   const filteredData = countrySection?.data
     ?.filter((item) => item.isHome)
     ?.sort((a, b) => a.homeOrder - b.homeOrder)
-    // Remove duplicates by homeOrder, keeping the first occurrence
-    ?.filter(
-      (item, index, self) =>
-        index === self.findIndex((t) => t.homeOrder === item.homeOrder)
-    );
+    // For duplicate homeOrders, randomly select one item
+    ?.reduce((acc, current) => {
+      const duplicates = countrySection.data.filter(
+        (item) => item.isHome && item.homeOrder === current.homeOrder
+      );
+
+      if (duplicates.length > 1) {
+        // Randomly select one item from duplicates if not already added
+        if (!acc.some((item) => item.homeOrder === current.homeOrder)) {
+          const randomItem =
+            duplicates[Math.floor(Math.random() * duplicates.length)];
+          acc.push(randomItem);
+        }
+      } else {
+        // If no duplicates, add the current item if not already added
+        if (!acc.some((item) => item.homeOrder === current.homeOrder)) {
+          acc.push(current);
+        }
+      }
+      return acc;
+    }, []);
   return (
     <div>
       <ParentComponent>
