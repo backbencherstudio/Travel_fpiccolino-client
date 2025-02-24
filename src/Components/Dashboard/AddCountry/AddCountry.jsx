@@ -23,6 +23,7 @@ const AddCountry = () => {
       formData.append("contentTitle", data.contentTitle);
       formData.append("contentDescription", data.contentDescription);
       formData.append("image", data.image[0]); // Adding image file
+      formData.append("isHome", data.isHome); // Add isHome field to FormData
 
       const response = await dispatch(createCountry(formData));
       toast.success(response?.payload?.message);
@@ -99,6 +100,19 @@ const AddCountry = () => {
             {...register("contentDescription")}
             className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
           />
+        </div>
+
+        {/* IsHome Field */}
+        <div className="flex items-center gap-2">
+          <input
+            id="isHome"
+            type="checkbox"
+            {...register("isHome")}
+            className="w-4 h-4"
+          />
+          <label htmlFor="isHome" className="text-gray-600">
+            Show on Home Page
+          </label>
         </div>
 
         {/* Image Upload Field */}

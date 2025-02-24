@@ -61,6 +61,7 @@ export const updateCountry = createAsyncThunk(
       formData.append("name", data.name);
       formData.append("contentTitle", data.contentTitle);
       formData.append("contentDescription", data.contentDescription);
+      formData.append("isHome", data.isHome);
 
       // If there's a new image file, append it
       if (data.image instanceof File) {

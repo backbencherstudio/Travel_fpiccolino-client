@@ -19,8 +19,6 @@ const CountryDetails = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [images, setImages] = useState([]);
-  const [updateImageIndex, setUpdateImageIndex] = useState(null);
-
   const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
@@ -35,6 +33,7 @@ const CountryDetails = () => {
       setValue("name", country.name);
       setValue("contentTitle", country.contentTitle);
       setValue("contentDescription", country.contentDescription);
+      setValue("isHome", country.isHome);
     }
   }, [country, setValue]);
 
@@ -62,6 +61,7 @@ const CountryDetails = () => {
         name: data.name,
         contentTitle: data.contentTitle,
         contentDescription: data.contentDescription,
+        isHome: data.isHome,
       };
 
       // If there's a new image, use it
@@ -130,6 +130,18 @@ const CountryDetails = () => {
                 placeholder="Write Description..."
                 className="border rounded-md min-h-[100px] w-full p-1 mt-1 text-[#333333]"
               />
+
+              <div className="flex items-center gap-2 mt-3">
+                <input
+                  type="checkbox"
+                  {...register("isHome")}
+                  className="w-4 h-4 accent-orange-500"
+                  id="isHome"
+                />
+                <label htmlFor="isHome" className="text-[16px]">
+                  Show on Home Page
+                </label>
+              </div>
             </div>
           </div>
 

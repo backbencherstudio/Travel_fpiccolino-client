@@ -13,6 +13,7 @@ const CountryList = () => {
   const [columns] = useState({
     countryName: true,
     title: true,
+    isHome: true,
     date: true,
     action: true,
   });

@@ -218,6 +218,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.traveler && <TableCell>Traveler</TableCell>}
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.duration && <TableCell>Duration</TableCell>}
+                {columns?.isHome && <TableCell>Is Home</TableCell>}
                 {columns?.date && <TableCell>CreatedAt</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
@@ -400,6 +401,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                         {item.tourDuration?.days} Days
                       </TableCell>
                     )}
+                    {columns?.isHome && (
+                      <TableCell>{item.isHome ? "Yes" : "No"}</TableCell>
+                    )}
                     {columns?.date && (
                       <TableCell>
                         {moment(item.createdAt).format("DD/MM/yyyy")}
@@ -408,6 +412,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.amount && <TableCell>{item.amount}</TableCell>}
                     {columns?.country && <TableCell>{item.country}</TableCell>}
                     {columns?.status && <TableCell>{item.status}</TableCell>}
+
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 ">

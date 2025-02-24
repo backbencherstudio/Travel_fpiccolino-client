@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import WonderCard from "./WonderCard";
-import { getSectionData } from "../../features/sectionTitle/sectionTitleSlice";
 import { updateText } from "../../features/texts/textsSlice";
 
 const WondersSection = ({ countrySection, texts }) => {
@@ -46,7 +45,11 @@ const WondersSection = ({ countrySection, texts }) => {
       alert("Failed to update text. Please try again.");
     }
   };
-
+  const filteredData = countrySection?.data?.filter((item) => item.isHome);
+  console.log("Filtered Data:", {
+    total: filteredData?.length,
+    items: filteredData,
+  });
   return (
     <div>
       <ParentComponent>
@@ -95,32 +98,59 @@ const WondersSection = ({ countrySection, texts }) => {
         </div>
 
         <div>
-          {countrySection?.data?.length > 1 && (
+          {filteredData?.length === 1 && (
+            <div className="w-full">
+              <WonderCard item={filteredData[0]} />
+            </div>
+          )}
+          {filteredData?.length > 1 && (
             <div className="grid grid-col-1 md:grid-cols-5 gap-6">
               <div className="md:col-span-3">
-                <WonderCard item={countrySection?.data[0]} />
+                <WonderCard item={filteredData[0]} />
               </div>
               <div className="md:col-span-2">
-                <WonderCard item={countrySection?.data[1]} />
+                <WonderCard item={filteredData[1]} />
               </div>
             </div>
           )}
-          {countrySection?.data?.length >= 5 && (
+          {filteredData?.length === 3 && (
+            <div className="w-full mt-6">
+              <WonderCard item={filteredData[2]} />
+            </div>
+          )}
+          {filteredData?.length === 4 && (
+            <div className="grid grid-col-1 md:grid-cols-5 gap-6 mt-6">
+              <div className="md:col-span-2">
+                <WonderCard item={filteredData[2]} />
+              </div>
+              <div className="md:col-span-3">
+                <WonderCard item={filteredData[3]} />
+              </div>
+            </div>
+          )}
+          {filteredData?.length > 4 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
-              {countrySection?.data?.slice(2, 5).map((item, index) => (
+              {filteredData?.slice(2, 5).map((item, index) => (
                 <div key={index}>
                   <WonderCard item={item} />
                 </div>
               ))}
             </div>
           )}
-          {countrySection?.data?.length >= 6 && (
+          {filteredData?.length === 6 && (
+            <div className="grid grid-col-1  gap-6 mt-6">
+              <div className="">
+                <WonderCard item={filteredData[5]} />
+              </div>
+            </div>
+          )}
+          {filteredData?.length > 6 && (
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
               <div className="md:col-span-2">
-                <WonderCard item={countrySection?.data[4]} />
+                <WonderCard item={filteredData[5]} />
               </div>
               <div className="md:col-span-3">
-                <WonderCard item={countrySection?.data[5]} />
+                <WonderCard item={filteredData[6]} />
               </div>
             </div>
           )}
