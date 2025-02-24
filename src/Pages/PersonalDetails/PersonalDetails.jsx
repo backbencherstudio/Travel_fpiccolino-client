@@ -101,7 +101,7 @@ const PersonalDetails = () => {
     <div>
       <div className="">
         <ParentComponent>
-          <div className="mt-20 flex">
+          <div className="pt-20 flex">
             <button
               onClick={() => removeSession()}
               className="flex items-center"
