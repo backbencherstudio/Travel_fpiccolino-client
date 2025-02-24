@@ -219,6 +219,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.destination && <TableCell>Destination</TableCell>}
                 {columns?.duration && <TableCell>Duration</TableCell>}
                 {columns?.isHome && <TableCell>Show on Home Page</TableCell>}
+                {columns?.homeOrder && <TableCell>Home Order</TableCell>}
                 {columns?.date && <TableCell>CreatedAt</TableCell>}
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
@@ -403,6 +404,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     )}
                     {columns?.isHome && (
                       <TableCell>{item.isHome ? "Yes" : "No"}</TableCell>
+                    )}
+                    {columns?.homeOrder && (
+                      <TableCell>{item.homeOrder}</TableCell>
                     )}
                     {columns?.date && (
                       <TableCell>

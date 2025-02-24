@@ -8,6 +8,8 @@ import CustomHeadingDashboard from "../../../Shared/CustomHeadingDashboard";
 const AddCountry = () => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null); // State for image preview
+  const [isHomeEnabled, setIsHomeEnabled] = useState(false); // Add this state
+
   const {
     register,
     handleSubmit,
@@ -24,6 +26,7 @@ const AddCountry = () => {
       formData.append("contentDescription", data.contentDescription);
       formData.append("image", data.image[0]); // Adding image file
       formData.append("isHome", data.isHome); // Add isHome field to FormData
+      formData.append("homeOrder", data.isHome ? data.homeOrder : 0); // Add order to FormData
 
       const response = await dispatch(createCountry(formData));
       toast.success(response?.payload?.message);
@@ -102,17 +105,44 @@ const AddCountry = () => {
           />
         </div>
 
-        {/* IsHome Field */}
-        <div className="flex items-center gap-2">
-          <input
-            id="isHome"
-            type="checkbox"
-            {...register("isHome")}
-            className="w-4 h-4"
-          />
-          <label htmlFor="isHome" className="text-gray-600">
-            Show on Home Page
-          </label>
+        {/* IsHome and Order Fields */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <input
+              id="isHome"
+              type="checkbox"
+              {...register("isHome")}
+              className="w-4 h-4"
+              onChange={(e) => setIsHomeEnabled(e.target.checked)}
+            />
+            <label htmlFor="isHome" className="text-gray-600">
+              Show on Home Page
+            </label>
+            {/* Home Order Field */}
+            <div className="flex">
+              <input
+                id="homeOrder"
+                placeholder="Order (1-7)"
+                type="number"
+                min="1"
+                max="7"
+                disabled={!isHomeEnabled}
+                {...register("homeOrder", {
+                  required: isHomeEnabled
+                    ? "Order is required when shown on home page"
+                    : false,
+                  min: { value: 1, message: "Minimum order is 1" },
+                  max: { value: 7, message: "Maximum order is 7" },
+                })}
+                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full min-w-[130px] max-w-[200px]"
+              />
+              {errors.homeOrder && (
+                <span className="text-sm text-red-500 m-1">
+                  {errors.homeOrder.message}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Image Upload Field */}

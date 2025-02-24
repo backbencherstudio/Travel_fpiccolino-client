@@ -14,6 +14,7 @@ const CountryList = () => {
     countryName: true,
     title: true,
     isHome: true,
+    homeOrder: true,
     date: true,
     action: true,
   });

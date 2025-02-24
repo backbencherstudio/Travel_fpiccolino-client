@@ -45,11 +45,14 @@ const WondersSection = ({ countrySection, texts }) => {
       alert("Failed to update text. Please try again.");
     }
   };
-  const filteredData = countrySection?.data?.filter((item) => item.isHome);
-  console.log("Filtered Data:", {
-    total: filteredData?.length,
-    items: filteredData,
-  });
+  const filteredData = countrySection?.data
+    ?.filter((item) => item.isHome)
+    ?.sort((a, b) => a.homeOrder - b.homeOrder)
+    // Remove duplicates by homeOrder, keeping the first occurrence
+    ?.filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t.homeOrder === item.homeOrder)
+    );
   return (
     <div>
       <ParentComponent>

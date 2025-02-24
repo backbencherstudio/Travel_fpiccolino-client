@@ -19,7 +19,18 @@ const CountryDetails = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [images, setImages] = useState([]);
-  const { register, handleSubmit, setValue } = useForm();
+  const [isHomeEnabled, setIsHomeEnabled] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  // Add this to watch both isHome and homeOrder values
+  const isHomeValue = watch("isHome");
+  const homeOrderValue = watch("homeOrder");
 
   useEffect(() => {
     if (id) {
@@ -34,6 +45,8 @@ const CountryDetails = () => {
       setValue("contentTitle", country.contentTitle);
       setValue("contentDescription", country.contentDescription);
       setValue("isHome", country.isHome);
+      setValue("homeOrder", country.homeOrder);
+      setIsHomeEnabled(country.isHome);
     }
   }, [country, setValue]);
 
@@ -55,6 +68,22 @@ const CountryDetails = () => {
   };
 
   const onSubmit = (data) => {
+    // Add validation check
+    if (!data.isHome && data.homeOrder > 0) {
+      toast.error("Home order should be 0 when not showing on home page");
+      return;
+    }
+
+    if (
+      data.isHome &&
+      (!data.homeOrder || data.homeOrder < 1 || data.homeOrder > 7)
+    ) {
+      toast.error(
+        "Please set a valid home order (1-7) when showing on home page"
+      );
+      return;
+    }
+
     if (isUpdate) {
       // Create the data object
       const countryData = {
@@ -62,6 +91,7 @@ const CountryDetails = () => {
         contentTitle: data.contentTitle,
         contentDescription: data.contentDescription,
         isHome: data.isHome,
+        homeOrder: data.isHome ? data.homeOrder : 0, // Add order handling
       };
 
       // If there's a new image, use it
@@ -131,16 +161,54 @@ const CountryDetails = () => {
                 className="border rounded-md min-h-[100px] w-full p-1 mt-1 text-[#333333]"
               />
 
-              <div className="flex items-center gap-2 mt-3">
-                <input
-                  type="checkbox"
-                  {...register("isHome")}
-                  className="w-4 h-4 accent-orange-500"
-                  id="isHome"
-                />
-                <label htmlFor="isHome" className="text-[16px]">
-                  Show on Home Page
-                </label>
+              <div className="space-y-4 mt-3">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    {...register("isHome")}
+                    className="w-4 h-4 accent-orange-500"
+                    id="isHome"
+                    onChange={(e) => {
+                      setIsHomeEnabled(e.target.checked);
+                      if (!e.target.checked) {
+                        setValue("homeOrder", 0); // Reset to 0 when unchecked
+                      }
+                    }}
+                  />
+                  <label htmlFor="isHome" className="text-[16px]">
+                    Show on Home Page
+                  </label>
+                  <div className="flex flex-col">
+                    <input
+                      type="number"
+                      id="homeOrder"
+                      placeholder="Order (1-7)"
+                      {...register("homeOrder", {
+                        validate: (value) => {
+                          if (
+                            isHomeValue &&
+                            (!value || value < 1 || value > 7)
+                          ) {
+                            return "Order must be between 1-7 when shown on home page";
+                          }
+                          if (!isHomeValue && value !== 0) {
+                            return "Order must be 0 when not shown on home page";
+                          }
+                          return true;
+                        },
+                      })}
+                      disabled={!isHomeValue}
+                      className="border rounded-md w-full min-w-[130px] max-w-[200px] p-1 mt-1 text-[#333333]"
+                      min="1"
+                      max="7"
+                    />
+                    {errors.homeOrder && (
+                      <span className="text-red-500 text-sm mt-1">
+                        {errors.homeOrder.message}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
