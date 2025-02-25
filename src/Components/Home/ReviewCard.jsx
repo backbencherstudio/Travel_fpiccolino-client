@@ -4,6 +4,7 @@ import star from "../../assets/icons/star.svg";
 import halfStar from "../../assets/icons/half-star.svg"; // Add half-star image for condition
 import { base_url } from "../../utils/base_path";
 import { FaUser } from "react-icons/fa";
+import EditableHeading from "../Common/EditableHeading";
 
 const ReviewCard = ({ item }) => {
   const {
@@ -57,10 +58,19 @@ const ReviewCard = ({ item }) => {
                 {renderStars(rating)}
               </div>
             </div>
-            <p className="text-[18px] text-right mb-10">
-              Trustcore {rating} {" | "}
+            <p className="text-[18px] text-right mb-10 flex justify-end items-center ">
+              <EditableHeading
+                titleKey="trustcore"
+                defaultTitle="Trustcore"
+                customTitleClass=""
+              />
+              {rating} {" | "}
               {totalReviews}
-              {"Recensioni"}
+              <EditableHeading
+                titleKey="reviews"
+                defaultTitle="Recensioni"
+                customTitleClass="ml-2 "
+              />{" "}
             </p>
             <div className="xl:p-[60px] p-5 bg-white rounded-2xl overflow-auto max-h-[500px]">
               <img src={comma} alt="" />
