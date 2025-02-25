@@ -425,7 +425,7 @@ const Navbar = () => {
                       className="inline-flex w-full justify-center gap-x-1.5 rounded-md text-[18px] primary_text mt-2"
                       
                     >
-                      <div className="flex items-ceter gap-4 lg:gap-2  xl:gap-0 mr-2 lg:mr-1 xl:mr-0">
+                      <div className="flex items-ceter gap-4 lg:gap-2  xl:gap-1 mr-2 lg:mr-1 xl:mr-0">
 
                         <a href="https://www.tiktok.com/@latuafugalowcost?_t=ZN-8u6RTNqM0Aw&_r=1">
                           <PiTiktokLogo
