@@ -421,32 +421,34 @@ const Navbar = () => {
                 <div className="flex gap-3 lg:gap-[6px] items-center">
                   {/* Language Dropdown */}
                   <div className="relative inline-block text-left">
-                    <button
-                      className="inline-flex w-full justify-center gap-x-1.5 rounded-md text-[18px] primary_text mt-2"
-                      
-                    >
+                    <button className="inline-flex w-full justify-center gap-x-1.5 rounded-md text-[18px] primary_text mt-2">
                       <div className="flex items-ceter gap-4 lg:gap-2  xl:gap-1 mr-2 lg:mr-1 xl:mr-0">
-
-                        <a href="https://www.tiktok.com/@latuafugalowcost?_t=ZN-8u6RTNqM0Aw&_r=1">
+                        <a
+                          target="_blank"
+                          href="https://www.tiktok.com/@latuafugalowcost?_t=ZN-8u6RTNqM0Aw&_r=1"
+                        >
                           <PiTiktokLogo
                             // style={{ fontSize: "36px" }}
                             // size="36px"
                             className="text-white xl:mr-3 hover:scale-105 text-2xl xl:text-[30px] 2xl:text-[36px]"
                           />
                         </a>
-                        <a href="https://www.instagram.com/latuafugalowcost_official">
+                        <a
+                          target="_blank"
+                          href="https://www.instagram.com/latuafugalowcost_official"
+                        >
                           <FaInstagram
                             // style={{ fontSize: "36px" }}
                             // size="36px"
                             className="text-white xl:mr-3 hover:scale-105 text-2xl xl:text-[30px] 2xl:text-[36px]"
                           />
                         </a>
-                        <FaWhatsapp onClick={handleDropdownToggle("language")}
+                        <FaWhatsapp
+                          onClick={handleDropdownToggle("language")}
                           // style={{ fontSize: "36px" }}
                           // size="36px"
                           className="text-white xl:mr-3 hover:scale-105 text-2xl xl:text-[30px] 2xl:text-[36px]"
                         />
-
                       </div>
                     </button>
                     {languageDropDown && (
@@ -656,20 +658,23 @@ const Navbar = () => {
             </div>
             {/* Mobile Menu with Modern Design */}
             <div
-              className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${isMenuOpen ? "visible" : "invisible"
-                }`}
+              className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${
+                isMenuOpen ? "visible" : "invisible"
+              }`}
             >
               {/* Semi-transparent overlay */}
               <div
-                className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${isMenuOpen ? "opacity-100" : "opacity-0"
-                  }`}
+                className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
+                  isMenuOpen ? "opacity-100" : "opacity-0"
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               />
 
               {/* Menu content */}
               <div
-                className={`absolute bg-white top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${isMenuOpen ? "translate-y-0" : "-translate-y-full"
-                  }`}
+                className={`absolute bg-white top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
+                  isMenuOpen ? "translate-y-0" : "-translate-y-full"
+                }`}
               >
                 <div className="flex items-center justify-between p-4 border-b">
                   <span className="text-lg font-bold text-gray-800">Menu</span>
