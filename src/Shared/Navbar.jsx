@@ -4,6 +4,8 @@ import ParentComponent from "./ParentComponent/ParentComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../features/auth/authSlice";
 import { FaRegUserCircle, FaWhatsapp, FaEdit, FaTimes } from "react-icons/fa";
+import { PiTiktokLogo } from "react-icons/pi";
+import { FaInstagram } from "react-icons/fa6";
 import { LogoutOutlined, WhatsApp } from "@mui/icons-material";
 import { MdOutlineDashboard } from "react-icons/md";
 import { base_url } from "../utils/base_path";
@@ -176,7 +178,7 @@ const Navbar = () => {
 
               <div className="hidden lg:block">
                 <nav aria-label="Global">
-                  <ul className="flex items-center 2xl:gap-6 xl:gap-7 lg:gap-3 gap-6  primary_text lg:text-base xl:text-[18px]">
+                  <ul className="flex items-center 2xl:gap-6 xl:gap-7 lg:gap-3 gap-6  primary_text lg:text-sm xl:text-[18px]">
                     <li>
                       <div
                         className="relative group"
@@ -421,14 +423,30 @@ const Navbar = () => {
                   <div className="relative inline-block text-left">
                     <button
                       className="inline-flex w-full justify-center gap-x-1.5 rounded-md text-[18px] primary_text mt-2"
-                      onClick={handleDropdownToggle("language")}
+                      
                     >
-                      <div className="md:flex items-ceter ">
-                        <FaWhatsapp
+                      <div className="flex items-ceter gap-4 lg:gap-2  xl:gap-0 mr-2 lg:mr-1 xl:mr-0">
+
+                        <a href="https://www.tiktok.com/@latuafugalowcost?_t=ZN-8u6RTNqM0Aw&_r=1">
+                          <PiTiktokLogo
+                            // style={{ fontSize: "36px" }}
+                            // size="36px"
+                            className="text-white xl:mr-3 hover:scale-105 text-2xl xl:text-[30px] 2xl:text-[36px]"
+                          />
+                        </a>
+                        <a href="https://www.instagram.com/latuafugalowcost_official">
+                          <FaInstagram
+                            // style={{ fontSize: "36px" }}
+                            // size="36px"
+                            className="text-white xl:mr-3 hover:scale-105 text-2xl xl:text-[30px] 2xl:text-[36px]"
+                          />
+                        </a>
+                        <FaWhatsapp onClick={handleDropdownToggle("language")}
                           // style={{ fontSize: "36px" }}
                           // size="36px"
-                          className="text-white xl:mr-3 hover:scale-105 text-[30px] 2xl:text-[36px]"
+                          className="text-white xl:mr-3 hover:scale-105 text-2xl xl:text-[30px] 2xl:text-[36px]"
                         />
+
                       </div>
                     </button>
                     {languageDropDown && (
@@ -562,7 +580,7 @@ const Navbar = () => {
                   </div>
                   <div className="hidden lg:block">
                     {!isAuthenticated && (
-                      <div className="flex xl:gap-3">
+                      <div className="flex ">
                         <Link
                           className="rounded-xl primary_text bg-transparent border  2xl:px-8 px-8 py-3 lg:px-3 lg:py-[6px] 2xl:py-3 text-[18px] lg:text-sm hover:bg-[#63280141] font-medium 2xl:mx-2 lg:mx-0 mx-2  border-orange-600"
                           to="/login"
@@ -612,7 +630,7 @@ const Navbar = () => {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="size-5"
+                        className="size-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -638,23 +656,20 @@ const Navbar = () => {
             </div>
             {/* Mobile Menu with Modern Design */}
             <div
-              className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${
-                isMenuOpen ? "visible" : "invisible"
-              }`}
+              className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${isMenuOpen ? "visible" : "invisible"
+                }`}
             >
               {/* Semi-transparent overlay */}
               <div
-                className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
-                  isMenuOpen ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${isMenuOpen ? "opacity-100" : "opacity-0"
+                  }`}
                 onClick={() => setIsMenuOpen(false)}
               />
 
               {/* Menu content */}
               <div
-                className={`absolute bg-white top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${
-                  isMenuOpen ? "translate-y-0" : "-translate-y-full"
-                }`}
+                className={`absolute bg-white top-0 left-0 w-full h-full shadow-lg transform transition-transform duration-300 ease-in-out ${isMenuOpen ? "translate-y-0" : "-translate-y-full"
+                  }`}
               >
                 <div className="flex items-center justify-between p-4 border-b">
                   <span className="text-lg font-bold text-gray-800">Menu</span>
