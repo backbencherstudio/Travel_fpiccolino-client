@@ -79,7 +79,7 @@ const Checkout = () => {
                         customTitleClass="text-sm"
                       />
                     </span>
-                    <span className="text-2xl text-white">${amount}</span>
+                    <span className="text-2xl text-white">€{amount}</span>
                   </div>
                   <div className="pt-4">
                     <p className="text-sm">
@@ -129,7 +129,7 @@ const Checkout = () => {
                         options={{
                           "client-id":
                             "AUHCLLlrN0fUteHTIYiBX7ZOoduVvF0mp4QSDUQOf_m2GohS_kVr6z8CbTJgOMnGNyMAiLsx_EWf8l5C",
-                          currency: "USD",
+                          currency: "EUR",
                           "disable-funding": "paylater",
                         }}
                       >

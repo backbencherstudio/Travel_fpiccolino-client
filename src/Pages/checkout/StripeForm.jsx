@@ -43,13 +43,10 @@ const StripeForm = ({ checkoutNewData }) => {
       return;
     }
     try {
-      const { data } = await axios.post(
-        `${base_url}/order/stripePayment`,
-        {
-          paymentMethodId: paymentMethod.id,
-          amount: parseInt(checkoutNewData?.toureAmount),
-        }
-      );
+      const { data } = await axios.post(`${base_url}/order/stripePayment`, {
+        paymentMethodId: paymentMethod.id,
+        amount: parseInt(checkoutNewData?.toureAmount),
+      });
       const orderData = {
         ...checkoutNewData,
         paymentId: data?.paymentIntent.id,
@@ -172,7 +169,7 @@ const StripeForm = ({ checkoutNewData }) => {
       >
         {loading
           ? "Processing..."
-          : `Pay Now : ${checkoutNewData?.toureAmount} $`}
+          : `Pay Now : ${checkoutNewData?.toureAmount} €`}
       </button>
 
       {error && (
