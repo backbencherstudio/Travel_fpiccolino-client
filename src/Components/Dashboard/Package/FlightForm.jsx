@@ -3,6 +3,7 @@ import { useState } from "react";
 import { TextField, Grid, Typography, Slider, Box, Modal } from "@mui/material";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import moment from "moment";
 
 import { DeleteOutlineOutlined } from "@mui/icons-material";
 
@@ -86,7 +87,27 @@ const FlightBookingForm = ({
     );
   };
 
+  const calculateDuration = (departureTime, arrivalTime) => {
+    let start = moment(departureTime, "HH:mm");
+    let end = moment(arrivalTime, "HH:mm");
+
+    // If end time is before start time, assume it's the next day
+    if (end.isBefore(start)) {
+      end.add(1, "days");
+    }
+
+    const duration = moment.duration(end.diff(start));
+    const hours = Math.floor(duration.asHours());
+    const minutes = duration.minutes();
+    return `${hours}h ${minutes}m`;
+  };
+
   const getSliderMarks = (flight) => {
+    const duration = calculateDuration(
+      flight.departureTime,
+      flight.arrivalTime
+    );
+
     const marks = [
       {
         value: 0,
@@ -94,7 +115,7 @@ const FlightBookingForm = ({
       },
       {
         value: 50,
-        label: flight.breakTime ? `Break: ${flight.breakTime}` : "No Break",
+        label: `Duration: ${duration}`,
       },
       {
         value: 100,
@@ -189,7 +210,7 @@ const FlightBookingForm = ({
                 </Grid>
 
                 {/* Break Time */}
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <TimePicker
                     label="Break Time"
                     value={formData.breakTime}
@@ -200,7 +221,7 @@ const FlightBookingForm = ({
                       <TextField {...params} fullWidth />
                     )}
                   />
-                </Grid>
+                </Grid> */}
 
                 {/* Price Range */}
                 <Grid item xs={12}>

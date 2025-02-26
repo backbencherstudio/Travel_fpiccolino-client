@@ -19,12 +19,11 @@ const Flight = () => {
   const params = useParams();
   const { packageDetails } = useSelector((state) => state.package);
   const { user } = useSelector((state) => state.authorization);
-  const [flightAmount, setFlightAmount] = useState(0);
-  const [totalFlightAmount, totalSetFlightAmount] = useState(0);
+  const [selectedFlights, setSelectedFlights] = useState([]);
+  const [totalFlightAmount, setTotalFlightAmount] = useState(0);
   const [toureAmount, setToureAmount] = useState(0);
   const [updateToureAmount, setUpdateToureAmount] = useState(0);
   const [person, setPerson] = useState("1");
-  const [highLight, setHighLight] = useState(null);
   const [addFlight, setAddFlight] = useState(false);
   const [totalToureCost, setTotalToureCoust] = useState(0);
 
@@ -36,15 +35,17 @@ const Flight = () => {
 
   useEffect(() => {
     if (packageDetails) {
-      setFlightAmount(parseInt(packageDetails?.bookedFlights[0]?.price) || 0);
       setToureAmount(parseInt(packageDetails?.amount) || 0);
-      setHighLight(packageDetails?.bookedFlights[0] || null);
     }
   }, [packageDetails]);
 
   useEffect(() => {
-    totalSetFlightAmount(parseInt(flightAmount) * parseInt(person));
-  }, [person, flightAmount]);
+    const total = selectedFlights.reduce(
+      (sum, flight) => sum + (parseInt(flight.price) || 0),
+      0
+    );
+    setTotalFlightAmount(total * parseInt(person));
+  }, [selectedFlights, person]);
 
   useEffect(() => {
     setUpdateToureAmount(parseInt(person) * parseInt(toureAmount));
@@ -56,7 +57,26 @@ const Flight = () => {
   }, [addFlight, totalFlightAmount, updateToureAmount]);
 
   const handleAddFlight = () => setAddFlight(true);
-  const handleRemoveFlight = () => setAddFlight(false);
+  const handleRemoveFlight = () => {
+    setAddFlight(false);
+    setSelectedFlights([]);
+  };
+
+  // Handle flight selection/deselection
+  const toggleFlightSelection = (flight) => {
+    setSelectedFlights((prev) => {
+      const isSelected = prev.some((f) => f._id === flight._id);
+      const newSelectedFlights = isSelected
+        ? prev.filter((f) => f._id !== flight._id)
+        : [...prev, flight];
+
+      if (newSelectedFlights.length === 0) {
+        setAddFlight(false);
+      }
+
+      return newSelectedFlights;
+    });
+  };
 
   console.log(user?._id);
 
@@ -66,7 +86,7 @@ const Flight = () => {
     packageId: packageDetails?._id,
     tourDate: packageDetails?.tourDate,
     toureAmount: totalToureCost,
-    flight: addFlight ? highLight : {},
+    flights: addFlight ? selectedFlights : [],
     flightPrice: addFlight ? totalFlightAmount : false,
     person,
     tureDuration: packageDetails?.tourDuration,
@@ -79,6 +99,22 @@ const Flight = () => {
   const addDataFun = () => {
     dispatch(createCheckout(toureData));
     navigate(`/insurance/${packageDetails?._id}`);
+  };
+
+  // Add this helper function at the top of your component
+  const calculateDuration = (departureTime, arrivalTime) => {
+    let start = moment(departureTime, "HH:mm");
+    let end = moment(arrivalTime, "HH:mm");
+
+    // If end time is before start time, assume it's the next day
+    if (end.isBefore(start)) {
+      end.add(1, "days");
+    }
+
+    const duration = moment.duration(end.diff(start));
+    const hours = Math.floor(duration.asHours());
+    const minutes = duration.minutes();
+    return `${hours}h ${minutes}m`;
   };
 
   return (
@@ -158,19 +194,32 @@ const Flight = () => {
                   ) : (
                     packageDetails?.bookedFlights?.map((item, i) => (
                       <div
-                        onClick={() => setFlightAmount(item?.price)}
-                        onMouseDown={() => setHighLight(item)}
+                        onClick={() => toggleFlightSelection(item)}
                         key={i}
                         className={`p-6 cursor-pointer ${
                           i === packageDetails?.bookedFlights?.length - 1
                             ? ""
                             : "border-b"
+                        } ${
+                          selectedFlights.some((f) => f._id === item._id)
+                            ? "bg-[#fdf0ea]"
+                            : ""
                         } duration-300`}
                       >
-                        <h2 className="text-center text-[14px] text-[#000000]">
-                          1 Fermare -{" "}
-                          {moment(item.breakTime, "HH:mm").format("hh:mm A")}
-                        </h2>
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="text-center text-[14px] font-medium text-[#000000]">
+                            {item.flightFrom}
+                          </h3>
+                          <h2 className="text-center text-[14px] text-[#000000]">
+                            {calculateDuration(
+                              item.departureTime,
+                              item.arrivalTime
+                            )}
+                          </h2>
+                          <h3 className="text-center text-[14px] font-medium text-[#000000]">
+                            {item.flightTo}
+                          </h3>
+                        </div>
                         <div>
                           <div className="flex items-center gap-2">
                             <h2>
@@ -183,12 +232,7 @@ const Flight = () => {
                               <div className="size-5 absolute left-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
                                 <div className="border border-black size-3 rounded-full"></div>
                               </div>
-                              <div
-                                className="size-5 absolute transform -translate-y-1/2 top-1/2 rounded-full bg-[#FDF0EA] flex justify-center items-center"
-                                style={{ left: "50%" }}
-                              >
-                                <div className="bg-[#d45e2d] size-3 rounded-full"></div>
-                              </div>
+
                               <div className="size-5 absolute right-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
                                 <div className="border border-black size-3 rounded-full"></div>
                               </div>
@@ -204,11 +248,9 @@ const Flight = () => {
                             <h2>{item.arrivalAirport}</h2>
                           </div>
                         </div>
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-between items-center">
                           <span
-                            className={`flex border items-center px-4 rounded ${
-                              highLight?._id === item?._id && "bg-[#a72b6f1a]"
-                            } duration-300`}
+                            className={`flex border items-center px-4 rounded duration-300`}
                           >
                             <img
                               className="size-10 p-1 border-r pr-3 mr-3"
@@ -217,9 +259,12 @@ const Flight = () => {
                             />
                             <h2 className="uppercase font-semibold">
                               {item?.price}
-                              <span className="italic"> $=</span>
+                              <span className="italic"> €=</span>
                             </h2>
                           </span>
+                          {selectedFlights.some((f) => f._id === item._id) && (
+                            <span className="text-green-600">✓ Selected</span>
+                          )}
                         </div>
                       </div>
                     ))
@@ -243,8 +288,12 @@ const Flight = () => {
                   </div>
                   <button
                     onClick={handleAddFlight}
-                    className="bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded pl-8"
-                    disabled={packageDetails?.bookedFlights.length === 0}
+                    className={`bg-[#E867311A] text-[#E86731] font-semibold w-full mb-5 py-3 rounded pl-8 ${
+                      selectedFlights.length === 0
+                        ? "bg-gray-300 cursor-not-allowed font-normal text-gray-500"
+                        : ""
+                    }`}
+                    disabled={selectedFlights.length === 0}
                   >
                     <EditableHeading
                       titleKey="flight.add"
@@ -286,24 +335,24 @@ const Flight = () => {
                       {person}
                     </h2>
                   </span>
-                  {addFlight && (
-                    <span className="flex items-start justify-between mb-3">
-                      <h2 className="flex items-center">
-                        <EditableHeading
-                          titleKey="flight.flight"
-                          defaultTitle="Importo del volo"
-                          customTitleClass="text-md"
-                        />
-                        <TiDeleteOutline
-                          className="text-red-600  cursor-pointer  ml-3 text-xl hover:scale-110"
-                          onClick={handleRemoveFlight}
-                        />
-                      </h2>
-                      <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                        € {totalFlightAmount}
-                      </h2>
-                    </span>
-                  )}
+                  {addFlight &&
+                    selectedFlights.map((flight, index) => (
+                      <span
+                        key={index}
+                        className="flex items-start justify-between mb-3"
+                      >
+                        <h2 className="flex items-center">
+                          Flight {index + 1}
+                          <TiDeleteOutline
+                            className="text-red-600 cursor-pointer ml-3 text-xl hover:scale-110"
+                            onClick={() => toggleFlightSelection(flight)}
+                          />
+                        </h2>
+                        <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                          € {parseInt(flight.price) * parseInt(person)}
+                        </h2>
+                      </span>
+                    ))}
                   <span className="flex items-start justify-between mb-3 border-t pt-2 ">
                     <EditableHeading
                       titleKey="flight.total"
@@ -321,13 +370,13 @@ const Flight = () => {
                     <button
                       className={`text-center block w-full rounded mt-4`}
                       onClick={() => addDataFun()}
-                      disabled={!addFlight}
+                      disabled={!addFlight || selectedFlights.length === 0}
                     >
                       <EditableHeading
                         titleKey="buttons.continue2"
                         defaultTitle="Continua con il volo"
                         customTitleClass={` ${
-                          addFlight
+                          addFlight && selectedFlights.length > 0
                             ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
                             : "bg-gray-300 cursor-not-allowed text-gray-500"
                         } py-2 rounded `}
@@ -339,13 +388,13 @@ const Flight = () => {
                     <button
                       className={`text-center block w-full py-2 rounded mt-4`}
                       onClick={() => addDataFun()}
-                      disabled={addFlight}
+                      disabled={addFlight || selectedFlights.length > 0}
                     >
                       <EditableHeading
                         titleKey="buttons.continue3"
                         defaultTitle="Continua senza volo"
                         customTitleClass={` ${
-                          !addFlight
+                          !addFlight && selectedFlights.length === 0
                             ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
                             : "bg-gray-300 cursor-not-allowed text-gray-500"
                         }  py-2 rounded `}

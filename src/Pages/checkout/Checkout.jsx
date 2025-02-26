@@ -48,7 +48,7 @@ const Checkout = () => {
   return (
     <div>
       <ParentComponent>
-        <div className="mt-20 flex items-center">
+        <div className="pt-20 flex items-center">
           <Link to={`/personalDetails`} className="flex items-center">
             <GoChevronLeft className="text-xl" />
           </Link>{" "}
