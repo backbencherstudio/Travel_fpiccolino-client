@@ -20,7 +20,7 @@ import { getPackageDetails } from "../../features/pckage/packageSlice";
 import EditableHeading from "../../Components/Common/EditableHeading";
 
 const Insurance = () => {
-  const [isSelectInsurance, setInsurance] = useState({});
+  const [selectedInsurances, setSelectedInsurances] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const { id } = useParams();
   const { checkout } = useSelector((state) => state.checkout);
@@ -39,22 +39,23 @@ const Insurance = () => {
 
   useEffect(() => {
     if (checkout?.toureAmount) {
-      setTotalAmount(parseInt(checkout?.toureAmount));
+      const insuranceTotal = selectedInsurances.reduce(
+        (sum, insurance) => sum + parseInt(insurance.price || 0),
+        0
+      );
+      setTotalAmount(parseInt(checkout?.toureAmount) + insuranceTotal);
     }
-  }, [checkout]);
+  }, [checkout?.toureAmount, selectedInsurances]);
 
   const handleSelectInsurance = (insurance) => {
-    if (isSelectInsurance?._id === insurance._id) {
-      setInsurance({});
-      setTotalAmount((prevTotal) => prevTotal - parseInt(insurance.price));
-    } else {
-      const insurancePrice = parseInt(insurance.price || 0);
-      const prevInsurancePrice = parseInt(isSelectInsurance?.price || 0);
-      setInsurance(insurance);
-      setTotalAmount(
-        (prevTotal) => prevTotal - prevInsurancePrice + insurancePrice
-      );
-    }
+    setSelectedInsurances((prev) => {
+      const isSelected = prev.some((ins) => ins._id === insurance._id);
+      if (isSelected) {
+        return prev.filter((ins) => ins._id !== insurance._id);
+      } else {
+        return [...prev, insurance];
+      }
+    });
   };
 
   console.log(checkout);
@@ -64,7 +65,7 @@ const Insurance = () => {
 
   const toureData = {
     ...data,
-    insurance: isSelectInsurance ? isSelectInsurance : {},
+    insurance: selectedInsurances,
     toureAmount: totalAmount,
   };
   console.log(toureData);
@@ -125,7 +126,7 @@ const Insurance = () => {
                     key={item?._id}
                     onClick={() => handleSelectInsurance(item)}
                     className={`border ${
-                      isSelectInsurance?._id === item._id
+                      selectedInsurances.some((ins) => ins._id === item._id)
                         ? "border-transparent bg-[#E867311A]"
                         : "border-[#E86731]"
                     } hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer`}
@@ -137,13 +138,15 @@ const Insurance = () => {
                           ? `${item.description.substring(0, 200)}...`
                           : item.description}
                       </p>
-                      {/* <button className="underline text-[#E86731]">
-                        Read more
-                      </button> */}
                     </div>
-                    <h2 className="w-[15%] md:w-[8%] text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded">
-                      +€ {item?.price}
-                    </h2>
+                    <div className="w-[15%] md:w-[8%] flex items-center gap-2">
+                      <h2 className="text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded">
+                        +€ {item?.price}
+                      </h2>
+                      {selectedInsurances.some(
+                        (ins) => ins._id === item._id
+                      ) && <span className="text-green-600">✓</span>}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -198,23 +201,34 @@ const Insurance = () => {
                     </span>
                   )}
 
-                  {isSelectInsurance?.price && (
-                    <span className="flex items-start justify-between mb-3">
-                      <h2 className="flex items-center relative">
-                        <TiDeleteOutline
-                          className="text-red-600 absolute cursor-pointer -right-10 top-0 text-xl"
-                          onClick={() => handleSelectInsurance({})}
-                        />
-                        <EditableHeading
-                          titleKey="insurance.insurance"
-                          defaultTitle="Assicurazione"
-                          customTitleClass="text-md"
-                        />
-                      </h2>
-                      <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                        € = {isSelectInsurance?.price}
-                      </h2>
-                    </span>
+                  {selectedInsurances.length > 0 && (
+                    <>
+                      {selectedInsurances.map((insurance, index) => (
+                        <span
+                          key={index}
+                          className="flex items-start justify-between mb-3"
+                        >
+                          <h2 className="flex items-center relative">
+                            <TiDeleteOutline
+                              className="text-red-600 cursor-pointer ml-3 text-xl hover:scale-110"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSelectInsurance(insurance);
+                              }}
+                            />
+                            <EditableHeading
+                              titleKey="insurance.insurance"
+                              defaultTitle={`Assicurazione ${index + 1}`}
+                              customTitleClass="text-md"
+                            />
+                            <span>{index + 1}</span>
+                          </h2>
+                          <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                            € = {insurance?.price}
+                          </h2>
+                        </span>
+                      ))}
+                    </>
                   )}
 
                   <span className="flex items-start justify-between mb-3 border-t pt-2">
