@@ -81,6 +81,7 @@ const Navbar = () => {
     navigate("/");
     setIsMenuOpen(false);
     setContactDropDown(false);
+    window.location.reload();
   };
   const handleClick = () => {
     window.open(
