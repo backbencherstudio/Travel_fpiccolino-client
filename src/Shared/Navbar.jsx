@@ -6,7 +6,7 @@ import { logOut } from "../features/auth/authSlice";
 import { FaRegUserCircle, FaWhatsapp, FaEdit, FaTimes } from "react-icons/fa";
 import { PiTiktokLogo } from "react-icons/pi";
 import { FaInstagram } from "react-icons/fa6";
-import { LogoutOutlined, WhatsApp } from "@mui/icons-material";
+import { LogoutOutlined } from "@mui/icons-material";
 import { MdOutlineDashboard } from "react-icons/md";
 import { base_url } from "../utils/base_path";
 import { fetchTexts, updateText } from "../features/texts/textsSlice";
