@@ -1,0 +1,103 @@
+import { useEffect, useState } from "react";
+import moment from "moment";
+import EditableHeading from "./EditableHeading";
+import { useParams } from "react-router-dom";
+
+const FlipCard = ({ value, label }) => {
+  const params = useParams();
+  // Ensure two digits
+  const displayValue = value.toString().padStart(2, "0");
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="flex">
+        {displayValue.split("").map((digit, index) => (
+          <div key={index} className="relative mx-[1px]">
+            <div className="w-4 h-6  rounded-sm flex items-center justify-center">
+              <span className="primary_text text-lg font-mono">{digit}</span>
+            </div>
+            {/* Add horizontal line in middle */}
+            <div
+              className={`absolute top-1/2 w-full h-[1px] bg-gray-100 ${
+                params.id && "hidden"
+              }`}
+            ></div>
+          </div>
+        ))}
+      </div>
+      <span className="text-xs mt-1 text-gray-500">{label}</span>
+    </div>
+  );
+};
+
+const CountdownTimer = ({ tourDate, texts }) => {
+  const params = useParams();
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const tourDateTime = moment(tourDate).utc();
+      const now = moment();
+      const difference = tourDateTime.diff(now);
+
+      if (difference > 0) {
+        const duration = moment.duration(difference);
+        setTimeLeft({
+          days: Math.floor(duration.asDays()),
+          hours: duration.hours(),
+          minutes: duration.minutes(),
+          seconds: duration.seconds(),
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, [tourDate]);
+
+  if (
+    timeLeft.days === 0 &&
+    timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 &&
+    timeLeft.seconds === 0
+  ) {
+    return (
+      <div className="text-center my-2">
+        {params.id ? (
+          <EditableHeading
+            titleKey="tourdetails.time_passed"
+            defaultTitle="Data del tour è passata"
+            customTitleClass="text-sm text-red-500"
+          />
+        ) : (
+          <span className="text-sm text-red-500">
+            {texts["tourdetails.time_passed"] || "Data del tour è passata"}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-2 rounded-lg">
+      <div className="flex justify-center items-center gap-3">
+        <FlipCard value={timeLeft.days} label="Days" />
+        <FlipCard value={timeLeft.hours} label="Hours" />
+        <div className="primary_text font-bold mb-5">:</div>
+        <FlipCard value={timeLeft.minutes} label="Minutes" />
+        <div className="primary_text font-bold mb-5">:</div>
+        <FlipCard value={timeLeft.seconds} label="Seconds" />
+      </div>
+    </div>
+  );
+};
+
+export default CountdownTimer;

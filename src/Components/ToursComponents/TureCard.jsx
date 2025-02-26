@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FaEdit } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import CountdownTimer from "../Common/CountdownTimer";
 
 const TureCard = ({ item, texts, handleEditClick }) => {
   const { user } = useSelector((state) => state.authorization);
@@ -10,6 +11,7 @@ const TureCard = ({ item, texts, handleEditClick }) => {
     tourDuration,
     amount: price,
     bookedFlights,
+    tourDate,
   } = item;
 
   return (
@@ -55,6 +57,7 @@ const TureCard = ({ item, texts, handleEditClick }) => {
               €{parseInt(price * 1.12)}
             </s>
           </p>
+          {tourDate && <CountdownTimer tourDate={tourDate} texts={texts} />}
         </div>
       </div>
     </div>

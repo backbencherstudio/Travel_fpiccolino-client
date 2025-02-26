@@ -39,6 +39,7 @@ import {
   getReviewByPackage,
 } from "../../features/review/reviewSlice";
 import EditableHeading from "../../Components/Common/EditableHeading";
+import CountdownTimer from "../../Components/Common/CountdownTimer";
 
 const TourDetails = () => {
   const dispatch = useDispatch();
@@ -128,7 +129,7 @@ const TourDetails = () => {
   return (
     <div className="text-black">
       <HeroScetion heroContent={heroContent} />
-      <div className="bg-[#EFFBFB]">
+      <div className="bg-[#fdf0ea]">
         <ParentComponent>
           <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
             <div className="col-span-12 lg:col-span-8">
@@ -137,10 +138,10 @@ const TourDetails = () => {
                 defaultTitle="PER CHI GUARDA SEMPRE ALL'ORIZZONTE"
                 customTitleClass="uppercase font-bold text-[40px]  md:w-full text-start"
               />
-              <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
+              <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
                 {tags?.map((item, index) => (
                   <div key={item?._id}>
-                    <div className="flex bg-[#E867311A] px-4 py-2 items-center gap-2 rounded-full ">
+                    <div className="flex bg-[#ffffff] px-4 py-2 items-center gap-2 rounded-full ">
                       <img
                         className="size-8 object-cover rounded-lg"
                         src={
@@ -246,6 +247,16 @@ const TourDetails = () => {
                       €{parseInt(packageDetails?.amount * 1.12)}
                     </h2>
                   </span>
+                  {packageDetails?.tourDate && (
+                    <div className="mt-3">
+                      <EditableHeading
+                        titleKey="tourdetails.time_remaining"
+                        defaultTitle="Time Remaining Until Tour"
+                        customTitleClass="text-xs text-gray-600 mb-1 text-center"
+                      />
+                      <CountdownTimer tourDate={packageDetails.tourDate} />
+                    </div>
+                  )}
                 </div>
                 <div>
                   <h2 className="text-center border rounded-lg px-8 py-4 mb-4 text-[#141D2A]">
@@ -337,7 +348,7 @@ const TourDetails = () => {
 
         {/* ==========================================  Testimonial ================================= */}
 
-        <div className="bg-[#EFFBFB] py-20">
+        <div className="bg-[#fdf0ea] py-20">
           <EditableHeading
             titleKey="testimonial.title"
             subtitleKey="testimonial.description"
