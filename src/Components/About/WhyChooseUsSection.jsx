@@ -93,46 +93,32 @@ const WhyChooseUsSection = ({ footer_3 }) => {
         </div>
       </ParentComponent>
 
-      <div className="mt-20 py-[60px] px-20 text-start bg-[#0d3250] grid lg:grid-cols-2">
-        <div>
+      <div className="mt-20 py-[60px] px-20 text-start bg-[#0d3250] flex lg:flex-row flex-col items-center">
+        <div className="lg:w-[100%]">
           <EditableHeading
             titleKey="why_choose_us_company_name"
             defaultTitle="Il Nostro Partner di Fiducia nel Viaggio"
-            customTitleClass="font-extrabold text-[32px] text-white text-center lg:text-start max-w-[450px]"
+            customTitleClass="font-extrabold text-[24px] md:text-[32px] text-white text-center lg:text-start max-w-[450px]"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          <EditableHeading
-            titleKey="why_choose_us_company1"
-            defaultTitle="Maven"
-            customTitleClass="font-extrabold text-[30px] md:text-[52px] italic text-center text-white"
-          />
-          <EditableHeading
-            titleKey="why_choose_us_company2"
-            defaultTitle="intuit"
-            customTitleClass="font-semibold text-[30px] md:text-[52px] text-center text-white"
-          />
-          <EditableHeading
-            titleKey="why_choose_us_company3"
-            defaultTitle="memSQL"
-            customTitleClass="text-[30px] md:text-[52px] text-center text-white"
-          />
-          <EditableHeading
-            titleKey="why_choose_us_company4"
-            defaultTitle="maze"
-            customTitleClass="text-[30px] md:text-[52px] text-center text-white"
-          />
-          <EditableHeading
-            titleKey="why_choose_us_company5"
-            defaultTitle="venmo"
-            customTitleClass="text-[30px] md:text-[52px] font-extrabold italic text-center text-white"
-          />
-          <EditableHeading
-            titleKey="why_choose_us_company6"
-            defaultTitle="tapcart"
-            customTitleClass="text-[32px] font-[300] text-center text-white mt-5"
-          />
+        <div className="grid grid-cols-2 md:grid-cols-3  gap-5 lg:mt-0 mt-5 w-full">
+          {whyUsData.companies?.map((company, index) => (
+            <div key={index} className="text-center flex flex-col items-center">
+              <img
+                src={
+                  company.companyLogo
+                    ? `${base_url}/${company.companyLogo}`
+                    : natureImage2
+                }
+                alt=""
+                className="w-28 h-28 object-cover rounded-lg"
+              />
+              <h1 className="text-white text-[24px] font-semibold">
+                {company.companyName}
+              </h1>
+            </div>
+          ))}
         </div>
       </div>
     </div>
