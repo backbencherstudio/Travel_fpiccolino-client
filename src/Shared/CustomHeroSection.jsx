@@ -3,14 +3,22 @@
 import EditableHeading from "../Components/Common/EditableHeading";
 import { base_url } from "../utils/base_path";
 import ParentComponent from "./ParentComponent/ParentComponent";
-const CustomHeroSection = ({ pageName, image }) => {
+const CustomHeroSection = ({ pageName, image, country = false }) => {
+  console.log(image);
   return (
     <div>
       <div className="h-[600px] w-full relative ">
-        {image && (
+        {image && !country && (
           <img
             className="w-full h-full object-cover "
             src={`${base_url}/${image}`}
+            alt=""
+          />
+        )}
+        {image && country && (
+          <img
+            className="w-full h-full object-cover "
+            src={`${image}`}
             alt=""
           />
         )}

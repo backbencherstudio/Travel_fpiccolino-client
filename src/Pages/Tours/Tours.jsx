@@ -81,11 +81,21 @@ const Tours = () => {
   const packags = id
     ? country_wise_TourPageData?.package
     : all_inclusive_TourPageData?.package;
-
+  console.log(heroContent);
   return (
     <div className="">
       {banners?.tourBanner && (
-        <CustomHeroSection pageName="tour" image={banners?.tourBanner} />
+        <div>
+          {id ? (
+            <CustomHeroSection
+              pageName={`${id}country`}
+              country={true}
+              image={country_wise_TourPageData?.hero?.heroImage}
+            />
+          ) : (
+            <CustomHeroSection pageName="tour" image={banners?.tourBanner} />
+          )}
+        </div>
       )}
 
       <ParentComponent styles="my-20">
