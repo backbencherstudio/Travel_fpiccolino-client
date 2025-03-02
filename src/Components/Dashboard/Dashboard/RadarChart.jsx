@@ -15,18 +15,26 @@ const RadarChart = ({ data }) => {
     0
   );
 
-  // Calculate the total tours count (completed + pending)
   const totalTours = totalCompleted + totalPending + totalOngoing;
+
+  // Calculate percentages
+  const pendingPercentage = ((totalPending / totalTours) * 100).toFixed(1);
+  const ongoingPercentage = ((totalOngoing / totalTours) * 100).toFixed(1);
+  const completedPercentage = ((totalCompleted / totalTours) * 100).toFixed(1);
 
   const chartData = {
     series: [
       {
-        name: "Completed",
-        data: data?.radarData?.completed, // Using prop data for Completed
-      },
-      {
         name: "Pending",
         data: data?.radarData?.pending, // Using prop data for Pending
+      },
+      {
+        name: "Ongoing",
+        data: data?.radarData?.ongoing, // Using prop data for Ongoing
+      },
+      {
+        name: "Completed",
+        data: data?.radarData?.completed, // Using prop data for Completed
       },
     ],
     options: {
@@ -35,7 +43,7 @@ const RadarChart = ({ data }) => {
         type: "radar",
         dropShadow: {
           enabled: true,
-          blur: 1,
+          blur: 60,
           left: 1,
           top: 1,
         },
@@ -58,12 +66,12 @@ const RadarChart = ({ data }) => {
       },
       yaxis: {
         max: totalTours,
-        stepSize: 20,
+        // stepSize: 80,
       },
       xaxis: {
         categories: data?.radarData?.destination, // Using prop categories for x-axis
       },
-      colors: ["#62d3d4", "#e86731"], // Custom colors for Completed and Pending
+      colors: ["#e86731", "#1993e1", "#088c4a"], // Custom colors for Completed and Pending
       legend: {
         position: "top",
         horizontalAlign: "center",
@@ -85,11 +93,14 @@ const RadarChart = ({ data }) => {
         height={320}
       />
       <div className="flex justify-around">
-        <h1 className="text-[#62d3d4] font-semibold">
-          Completed : {parseInt(data?.completedPercentage)}%
+        <h1 className="text-[#e86731] font-semibold">
+          Pending : {pendingPercentage}%
         </h1>
-        <h1 className="primary_text font-semibold">
-          Pending : {parseInt(data?.pendingPercentage)}%
+        <h1 className="text-[#1993e1] font-semibold">
+          Ongoing : {ongoingPercentage}%
+        </h1>
+        <h1 className="text-[#088c4a] font-semibold">
+          Completed : {completedPercentage}%
         </h1>
       </div>
     </div>
