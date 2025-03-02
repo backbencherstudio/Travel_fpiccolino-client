@@ -121,34 +121,46 @@ const Insurance = () => {
                     customTitleClass="text-[18px] font-normal"
                   />
                 </p>
-                {packageDetails?.insurance?.map((item) => (
-                  <div
-                    key={item?._id}
-                    onClick={() => handleSelectInsurance(item)}
-                    className={`border ${
-                      selectedInsurances.some((ins) => ins._id === item._id)
-                        ? "border-transparent bg-[#E867311A]"
-                        : "border-[#E86731]"
-                    } hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer`}
-                  >
-                    <div className="md:w-[90%]">
-                      <h2 className="text-[#E86731]">{item.insuranceName}</h2>
-                      <p className="text-[#141D2A]">
-                        {item.description?.length > 200
-                          ? `${item.description.substring(0, 200)}...`
-                          : item.description}
-                      </p>
-                    </div>
-                    <div className="w-[15%] md:w-[8%] flex items-center gap-2">
-                      <h2 className="text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded">
-                        +€ {item?.price}
-                      </h2>
-                      {selectedInsurances.some(
-                        (ins) => ins._id === item._id
-                      ) && <span className="text-green-600">✓</span>}
-                    </div>
+                {packageDetails?.insurance?.length === 0 ? (
+                  <div className="mt-5 p-6 text-center border border-[#E86731] rounded-lg">
+                    <p className="text-[#72777F] text-lg">
+                      <EditableHeading
+                        titleKey="insurance.noInsurance"
+                        defaultTitle="Nessuna assicurazione disponibile per questo pacchetto"
+                        customTitleClass="text-lg font-normal"
+                      />
+                    </p>
                   </div>
-                ))}
+                ) : (
+                  packageDetails?.insurance?.map((item) => (
+                    <div
+                      key={item?._id}
+                      onClick={() => handleSelectInsurance(item)}
+                      className={`border ${
+                        selectedInsurances.some((ins) => ins._id === item._id)
+                          ? "border-transparent bg-[#E867311A]"
+                          : "border-[#E86731]"
+                      } hover:border-transparent rounded-lg mt-5 p-6 flex flex-col md:flex-row items-center hover:bg-[#E867311A] duration-300 cursor-pointer`}
+                    >
+                      <div className="md:w-[90%]">
+                        <h2 className="text-[#E86731]">{item.insuranceName}</h2>
+                        <p className="text-[#141D2A]">
+                          {item.description?.length > 200
+                            ? `${item.description.substring(0, 200)}...`
+                            : item.description}
+                        </p>
+                      </div>
+                      <div className="w-[15%] md:w-[8%] flex items-center gap-2">
+                        <h2 className="text-center bg-[#E867311A] py-2 text-[#E86731] font-[500] rounded">
+                          +€ {item?.price}
+                        </h2>
+                        {selectedInsurances.some(
+                          (ins) => ins._id === item._id
+                        ) && <span className="text-green-600">✓</span>}
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 
