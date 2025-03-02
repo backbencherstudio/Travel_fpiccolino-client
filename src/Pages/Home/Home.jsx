@@ -1,9 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomePageData } from "../../features/pageData/pageDataSlice";
-import { fetchTexts } from "../../features/texts/textsSlice";
-import axios from "axios";
-import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
+import { fetchBanner, fetchTexts } from "../../features/texts/textsSlice";
 import SearchBar from "../../Components/Home/SearchBar";
 import AdventureSection from "../../Components/Home/AdventureSection";
 import BlurSliderSection from "../../Components/Home/BlurSliderSection";
@@ -15,17 +13,19 @@ import ReviewSection from "../../Components/Home/ReviewSection";
 import JourneySection from "../../Components/Home/JourneySection";
 // import CookiePolicyModal from "../../Shared/CookiePolicyModal";
 import FooterModal from "../../Shared/FooterModal";
+import CustomHeroSection from "../../Shared/CustomHeroSection";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { homePageData } = useSelector((state) => state.pageData);
-  const { texts, isLoading } = useSelector((state) => state.texts);
+  const { texts, isLoading, banners } = useSelector((state) => state.texts);
   const [showFooterModal, setShowFooterModal] = useState(false);
   const footerRef = useRef(null);
 
   useEffect(() => {
     dispatch(getHomePageData());
     dispatch(fetchTexts());
+    dispatch(fetchBanner());
 
     const footerModalDismissed = localStorage.getItem("footerModalDismissed");
     if (!footerModalDismissed) {
@@ -51,7 +51,7 @@ const Home = () => {
     localStorage.setItem("footerModalDismissed", "true");
   };
 
-  const heroSection = homePageData?.hero;
+  // const heroSection = homePageData?.hero;
   const cardDetails = homePageData?.package;
   const countrySection = homePageData?.countryWithImage;
   const titleWithoutContent = homePageData?.titleWithoutContent;
@@ -69,7 +69,9 @@ const Home = () => {
         />
       )}
 
-      {heroSection && <HeroScetion heroContent={heroSection} />}
+      {banners?.homeBanner && (
+        <CustomHeroSection pageName="home" image={banners?.homeBanner} />
+      )}
       {countrySection && (
         <SearchBar
           countries={countrySection}

@@ -1,36 +1,32 @@
-import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
-import heroImage from "../../assets/Images/about.jpg";
 import ApproachSection from "../../Components/Home/ApproachSection";
 import JourneySection from "../../Components/Home/JourneySection";
 import CenterBannerSection from "../../Components/About/CenterBannerSection";
 import BottomBannerSection from "../../Shared/BottomBannerSection";
-import BenifitsSliderSection from "../../Components/About/BenifitsSliderSection";
 import WhyChooseUsSection from "../../Components/About/WhyChooseUsSection";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAboutPageData } from "../../features/pageData/pageDataSlice";
+import CustomHeroSection from "../../Shared/CustomHeroSection";
 
 const About = () => {
   const dispatch = useDispatch();
   const { aboutPageData } = useSelector((state) => state.pageData);
+  const { banners } = useSelector((state) => state.texts);
   useEffect(() => {
     dispatch(getAboutPageData());
   }, []);
   const texts = useSelector((state) => state.texts);
   const heroSection = aboutPageData?.hero;
-  // ============================================ Hero section
-  const heroContent = {
-    image: heroSection?.image,
-    titleOne: heroSection?.titleOne,
-    descriptionOne: heroSection?.descriptionOne,
-  };
+
   const aboutWithoutContent = aboutPageData?.aboutWithoutContent;
   const footer_3 = aboutPageData?.footer_3;
   console.log(aboutPageData);
 
   return (
     <div>
-      {aboutPageData?.hero && <HeroScetion heroContent={heroContent} />}
+      {banners?.aboutBanner && (
+        <CustomHeroSection pageName="about" image={banners?.aboutBanner} />
+      )}
       {aboutWithoutContent && (
         <ApproachSection
           aboutWithoutContent={aboutWithoutContent}

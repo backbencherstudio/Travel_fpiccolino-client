@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getFaqPageData } from "../../features/pageData/pageDataSlice";
 import axios from "axios";
 import { base_url } from "../../utils/base_path";
+import CustomHeroSection from "../../Shared/CustomHeroSection";
 
 const Faq = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Faq = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   // const { headers } = useSelector((state) => state.header);
   const { faqPageData } = useSelector((state) => state.pageData);
+  const { banners } = useSelector((state) => state.texts);
 
   // Italian translations for categories
   const categoryTranslations = {
@@ -58,7 +60,9 @@ const Faq = () => {
 
   return (
     <div>
-      <HeroScetion heroContent={heroContent} />
+      {banners?.faqBanner && (
+        <CustomHeroSection pageName="faq" image={banners?.faqBanner} />
+      )}
 
       <div className="bg-[#EFFBFB] py-20">
         <ParentComponent>

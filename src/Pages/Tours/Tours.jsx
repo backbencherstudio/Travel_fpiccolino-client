@@ -16,11 +16,12 @@ import {
 import { PiShieldWarningThin } from "react-icons/pi";
 import { FaEdit } from "react-icons/fa";
 import EditableHeading from "../../Components/Common/EditableHeading";
+import CustomHeroSection from "../../Shared/CustomHeroSection";
 
 const Tours = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { texts } = useSelector((state) => state.texts);
+  const { texts, banners } = useSelector((state) => state.texts);
   const { user } = useSelector((state) => state.authorization);
   const { all_inclusive_TourPageData, country_wise_TourPageData } = useSelector(
     (state) => state.pageData
@@ -83,7 +84,9 @@ const Tours = () => {
 
   return (
     <div className="">
-      {heroContent && <HeroScetion heroContent={heroContent} />}
+      {banners?.tourBanner && (
+        <CustomHeroSection pageName="tour" image={banners?.tourBanner} />
+      )}
 
       <ParentComponent styles="my-20">
         {id ? (

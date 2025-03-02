@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useDispatch, useSelector } from "react-redux";
-import blogDetailsImage from "../../assets/Images/blogDetails.jpg";
 import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { useEffect, useState } from "react";
@@ -9,13 +8,13 @@ import { getPolicyPageData } from "../../features/pageData/pageDataSlice";
 import axios from "axios";
 import { base_url } from "../../utils/base_path";
 import EditableHeading from "../../Components/Common/EditableHeading";
+import CustomHeroSection from "../../Shared/CustomHeroSection";
 
 const Policy = () => {
   const dispatch = useDispatch();
   const { headers } = useSelector((state) => state.header);
-  const { policyPageLoading, policyPageError, policyPageData } = useSelector(
-    (state) => state.pageData
-  );
+  const { policyPageData } = useSelector((state) => state.pageData);
+  const { banners } = useSelector((state) => state.texts);
   const [policyData, setPolicyData] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -79,12 +78,14 @@ const Policy = () => {
     return;
   }
 
-  const heroContent = policyPageData?.hero;
+  // const heroContent = policyPageData?.hero;
   console.log(policyPageData?.hero);
 
   return (
     <div>
-      <HeroScetion heroContent={heroContent} />
+      {banners?.policyBanner && (
+        <CustomHeroSection pageName="policy" image={banners?.policyBanner} />
+      )}
       <div className="bg-[#FFFFFF] py-20">
         <ParentComponent>
           <div className="grid grid-cols-12 lg:gap-5 xl:gap-20 grid-cols-reverse">

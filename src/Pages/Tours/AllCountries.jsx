@@ -14,11 +14,12 @@ import {
 } from "../../features/pageData/pageDataSlice";
 import { PiShieldWarningThin } from "react-icons/pi";
 import EditableHeading from "../../Components/Common/EditableHeading";
+import CustomHeroSection from "../../Shared/CustomHeroSection";
 
 const AllCountries = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { texts } = useSelector((state) => state.texts);
+  const { texts, banners } = useSelector((state) => state.texts);
   const { all_inclusive_TourPageData, country_wise_TourPageData } = useSelector(
     (state) => state.pageData
   );
@@ -95,7 +96,9 @@ const AllCountries = () => {
 
   return (
     <div className="">
-      {heroContent && <HeroScetion heroContent={heroContent} />}
+      {banners?.countryBanner && (
+        <CustomHeroSection pageName="tour" image={banners?.countryBanner} />
+      )}
 
       <ParentComponent styles="my-20">
         <EditableHeading

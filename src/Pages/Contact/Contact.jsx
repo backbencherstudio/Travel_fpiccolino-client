@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../../features/contact/contactSlice";
-import HeroScetion from "../../Shared/HeroComponent/HeroScetion";
 import { getCiontectPageData } from "../../features/pageData/pageDataSlice";
 import EditableHeading from "../../Components/Common/EditableHeading";
+import CustomHeroSection from "../../Shared/CustomHeroSection";
 const Contact = () => {
   const {
     register,
@@ -18,7 +18,6 @@ const Contact = () => {
   } = useForm();
   const [selectedOption, setSelectedOption] = useState("phone");
   const dispatch = useDispatch();
-
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -33,7 +32,7 @@ const Contact = () => {
 
   // const { headers } = useSelector((state) => state.header);
   const { contactPage, homePageData } = useSelector((state) => state.pageData);
-  const { texts } = useSelector((state) => state.texts);
+  const { texts, banners } = useSelector((state) => state.texts);
   useEffect(() => {
     // dispatch(getHeader());
     dispatch(getCiontectPageData());
@@ -56,7 +55,9 @@ const Contact = () => {
   return (
     <div>
       {/* <BannerSection /> */}
-      <HeroScetion heroContent={heroContent} />
+      {banners?.contactBanner && (
+        <CustomHeroSection pageName="contact" image={banners?.contactBanner} />
+      )}
       <ParentComponent>
         <div className="mt-20 grid md:grid-cols-2 max-w-[1440px] mx-auto gap-10">
           <div>

@@ -37,10 +37,24 @@ export const updateText = createAsyncThunk(
   }
 );
 
+// Fetch banner
+export const fetchBanner = createAsyncThunk(
+  "texts/fetchBanner",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(`${base_url}/api/auth-banners`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const textsSlice = createSlice({
   name: "texts",
   initialState: {
     texts: {},
+    banners: null,
     isLoading: false,
     error: null,
   },
@@ -64,6 +78,10 @@ const textsSlice = createSlice({
       .addCase(updateText.fulfilled, (state, action) => {
         state.texts[action.payload.key] = action.payload.value;
         state.texts[`${action.payload.key}_id`] = action.payload.id;
+      })
+      // Fetch banner
+      .addCase(fetchBanner.fulfilled, (state, action) => {
+        state.banners = action.payload;
       });
   },
 });
