@@ -26,7 +26,7 @@ const Home = () => {
     dispatch(getHomePageData());
     dispatch(fetchTexts());
     dispatch(fetchBanner());
-
+    localStorage.setItem("tab", "Dashboard");
     const footerModalDismissed = localStorage.getItem("footerModalDismissed");
     if (!footerModalDismissed) {
       const handleScroll = () => {

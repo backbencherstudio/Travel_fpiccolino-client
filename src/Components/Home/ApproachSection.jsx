@@ -3,26 +3,15 @@ import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
 import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { updateText } from "../../features/texts/textsSlice";
-import axios from "axios";
 import { base_url } from "../../utils/base_path";
+import { fetchApproachData } from "../../features/approach/approachSlice";
 
 const ApproachSection = ({ texts, aboutWithoutContent }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authorization);
-  const [approachData, setApproachData] = useState([]);
+  const { logos: approachData } = useSelector((state) => state.approach);
   useEffect(() => {
-    const fetchApproachData = async () => {
-      try {
-        const response = await axios.get(`${base_url}/api/approach`);
-        if (response.data && response.data.logos) {
-          setApproachData(response.data.logos);
-        }
-      } catch (error) {
-        console.error("Error fetching approach data:", error);
-      }
-    };
-
-    fetchApproachData();
+    dispatch(fetchApproachData());
   }, []);
   const [editModal, setEditModal] = useState({
     show: false,

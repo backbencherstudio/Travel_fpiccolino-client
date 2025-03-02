@@ -97,7 +97,7 @@ const AllCountries = () => {
   return (
     <div className="">
       {banners?.countryBanner && (
-        <CustomHeroSection pageName="tour" image={banners?.countryBanner} />
+        <CustomHeroSection pageName="Country" image={banners?.countryBanner} />
       )}
 
       <ParentComponent styles="my-20">

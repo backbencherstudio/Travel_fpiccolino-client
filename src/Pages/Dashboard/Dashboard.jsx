@@ -10,7 +10,6 @@ import { IoMdContacts } from "react-icons/io";
 
 import { BiBookContent } from "react-icons/bi";
 import { TiWorldOutline } from "react-icons/ti";
-import { SiGnuprivacyguard } from "react-icons/si";
 import { FiYoutube } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
@@ -243,9 +242,11 @@ const Dashboard = () => {
               }`}
             >
               <button
-                onClick={() => handleNavigation("Header", "header")}
+                onClick={() =>
+                  handleNavigation("updateBanners", "updateBanners")
+                }
                 className={`flex items-center space-x-2 p-2 rounded ${
-                  selectedTab === "Header"
+                  selectedTab === "updateBanners"
                     ? "bg-[#fdf0ea] primary_text font-semibold"
                     : "hover:bg-zinc-300"
                 }`}
@@ -335,19 +336,6 @@ const Dashboard = () => {
               >
                 <MdOutlinePolicy />
                 <span>Update Policy</span>
-              </button>
-              <button
-                onClick={() =>
-                  handleNavigation("updateAuthBanners", "updateAuthBanners")
-                }
-                className={`flex items-center space-x-2 p-2 rounded ${
-                  selectedTab === "updateAuthBanners"
-                    ? "bg-[#fdf0ea] primary_text font-semibold"
-                    : "hover:bg-zinc-300"
-                }`}
-              >
-                <SiGnuprivacyguard />
-                <span>Update Auth Banners</span>
               </button>
             </div>
           </div>

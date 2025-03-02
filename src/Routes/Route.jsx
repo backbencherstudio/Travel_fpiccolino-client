@@ -217,7 +217,7 @@ export const router = createBrowserRouter([
         element: <UpdatePolicy />,
       },
       {
-        path: "updateAuthBanners",
+        path: "updateBanners",
         element: <UpdateAuthBanners />,
       },
     ],

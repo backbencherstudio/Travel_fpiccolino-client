@@ -15,7 +15,7 @@ import checkoutReducer from "../features/checkout/checkoutSlice";
 import orderReducer from "../features/order/orderSlice";
 import newsLetterReducer from "../features/newsLetter/newsLetterSlice";
 import textsReducer from "../features/texts/textsSlice";
-
+import approachReducer from "../features/approach/approachSlice";
 export const store = configureStore({
   reducer: {
     authorization: authReducer,
@@ -34,6 +34,7 @@ export const store = configureStore({
     order: orderReducer,
     newsletter: newsLetterReducer,
     texts: textsReducer,
+    approach: approachReducer,
   },
 });
 
