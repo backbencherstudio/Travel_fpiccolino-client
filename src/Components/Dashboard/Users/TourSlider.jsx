@@ -13,8 +13,10 @@ import {
 import { useDispatch } from "react-redux";
 import { createReview } from "../../../features/review/reviewSlice";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const TourSlider = ({ userData, title, id, userType }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -118,7 +120,12 @@ const TourSlider = ({ userData, title, id, userType }) => {
         >
           {userData?.map((item) => (
             <div key={item._id}>
-              <SwiperSlide>
+              <SwiperSlide
+                className="cursor-pointer"
+                onClick={() => {
+                  navigate(`/tours/${item?.packageData?._id}`);
+                }}
+              >
                 <img
                   src={
                     item?.packageData?.images[0] || "default-placeholder.jpg"
