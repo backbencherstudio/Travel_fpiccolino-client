@@ -71,17 +71,9 @@ const CountdownTimer = ({ tourDate, texts }) => {
   ) {
     return (
       <div className="text-center my-2">
-        {params.id ? (
-          <EditableHeading
-            titleKey="tourdetails.time_passed"
-            defaultTitle="Data del tour è passata"
-            customTitleClass="text-sm text-red-500"
-          />
-        ) : (
-          <span className="text-sm text-red-500">
-            {texts["tourdetails.time_passed"] || "Data del tour è passata"}
-          </span>
-        )}
+        <span className="">
+          {/* {texts["tourdetails.time_passed"] || "Data del tour è passata"} */}
+        </span>
       </div>
     );
   }
@@ -89,12 +81,12 @@ const CountdownTimer = ({ tourDate, texts }) => {
   return (
     <div className="p-2 rounded-lg">
       <div className="flex justify-center items-center gap-3">
-        <FlipCard value={timeLeft.days} label="Days" />
-        <FlipCard value={timeLeft.hours} label="Hours" />
+        <FlipCard value={timeLeft.days} label="Giorni" />
+        <FlipCard value={timeLeft.hours} label="Ore" />
         <div className="primary_text font-bold mb-5">:</div>
-        <FlipCard value={timeLeft.minutes} label="Minutes" />
+        <FlipCard value={timeLeft.minutes} label="Minuti" />
         <div className="primary_text font-bold mb-5">:</div>
-        <FlipCard value={timeLeft.seconds} label="Seconds" />
+        <FlipCard value={timeLeft.seconds} label="Secondi" />
       </div>
     </div>
   );

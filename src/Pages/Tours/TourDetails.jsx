@@ -129,7 +129,7 @@ const TourDetails = () => {
   return (
     <div className="text-black">
       <HeroScetion heroContent={heroContent} />
-      <div className="bg-[#fdf0ea]">
+      <div className="bg-[#ffffff]">
         <ParentComponent>
           <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
             <div className="col-span-12 lg:col-span-8">
@@ -242,18 +242,25 @@ const TourDetails = () => {
                       {" "}
                       €{packageDetails?.amount}
                     </h2>
-                    <h2 className="flex items-center font-semibold text-[22px] text-red-500 line-through ">
+                    <h2 className=" flex items-center ">
                       {" "}
-                      €{parseInt(packageDetails?.amount * 1.12)}
+                      <span className="text-red-500 line-through font-semibold text-[22px] ">
+                        €
+                      </span>
+                      <EditableHeading
+                        titleKey={`tourdetails.price_${packageDetails?._id}`}
+                        defaultTitle={`${packageDetails?.amount * 1.12}`}
+                        customTitleClass="flex items-center font-semibold text-[22px] text-red-500 line-through"
+                      />
                     </h2>
                   </span>
                   {packageDetails?.tourDate && (
                     <div className="mt-3">
-                      <EditableHeading
+                      {/* <EditableHeading
                         titleKey="tourdetails.time_remaining"
                         defaultTitle="Time Remaining Until Tour"
                         customTitleClass="text-xs text-gray-600 mb-1 text-center"
-                      />
+                      /> */}
                       <CountdownTimer tourDate={packageDetails.tourDate} />
                     </div>
                   )}
@@ -291,7 +298,7 @@ const TourDetails = () => {
 
         {/* ====================================================  Hotail Section ============================= */}
         {packageDetails?.hotelImages?.length > 0 && (
-          <div className="bg-[#FFFFFF]">
+          <div className="bg-[#fdf0ea]">
             <ParentComponent>
               <div className="grid grid-cols-12 py-20 lg:gap-4 xl:gap-14 relative ">
                 <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
@@ -348,7 +355,7 @@ const TourDetails = () => {
 
         {/* ==========================================  Testimonial ================================= */}
 
-        <div className="bg-[#fdf0ea] py-20">
+        <div className="bg-[#ffffff] py-20">
           <EditableHeading
             titleKey="testimonial.title"
             subtitleKey="testimonial.description"
