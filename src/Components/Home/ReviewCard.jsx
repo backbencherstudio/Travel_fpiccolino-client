@@ -16,6 +16,7 @@ const ReviewCard = ({ item }) => {
     totalReviews,
     pakageImg,
     country,
+    _id,
   } = item;
 
   // Helper function to render stars dynamically
@@ -74,12 +75,23 @@ const ReviewCard = ({ item }) => {
             </p>
             <div className="xl:p-[60px] p-5 bg-white rounded-2xl overflow-auto max-h-[500px]">
               <img src={comma} alt="" />
-              <p className="text-[18px] w-full">{comment}</p>
+              <p className="text-[18px] w-full mt-5 ">{comment}</p>
               <div className="mt-5 mb-8">
-                <h1 className="text-[24px]  font-semibold flex items-center gap-2 primary_text">
-                  <FaUser /> {name}
+                <h1 className="flex items-center gap-2">
+                  <FaUser className="primary_text text-[24px]" />{" "}
+                  <EditableHeading
+                    titleKey={`reviewer-${_id}`}
+                    defaultTitle={name}
+                    customTitleClass="primary_text text-[24px]  font-semibold "
+                  />
                 </h1>
-                <p className="text-[#72777F] text-[18px]">{country}</p>
+                <p className="">
+                  <EditableHeading
+                    titleKey={`country-${_id}`}
+                    defaultTitle={country}
+                    customTitleClass="text-[#72777F] text-[18px]"
+                  />
+                </p>
               </div>
             </div>
           </div>
