@@ -60,6 +60,25 @@ export const getReviewByPackage = createAsyncThunk(
   }
 );
 
+// Thunk for deleting a review
+export const deleteReview = createAsyncThunk(
+  "review/delete",
+  async (id, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.delete(
+        base_url + "/api/review/deleteReview/" + id
+      );
+      // Refetch reviews after successful deletion
+      await dispatch(getReview());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Failed to delete review."
+      );
+    }
+  }
+);
+
 // Review Slice
 const reviewSlice = createSlice({
   name: "review",
@@ -125,6 +144,20 @@ const reviewSlice = createSlice({
       .addCase(getReviewByPackage.rejected, (state, action) => {
         state.packageReviewLoading = false;
         state.packageReviewError = action.payload;
+      });
+
+    builder
+      // Handle deleteReview actions
+      .addCase(deleteReview.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteReview.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(deleteReview.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

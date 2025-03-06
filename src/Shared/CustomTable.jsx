@@ -33,6 +33,8 @@ import { getOrders } from "../features/order/orderSlice";
 import { deleteCountry } from "../features/country/countrySlice";
 import { deleteNewsletter } from "../features/newsLetter/newsLetterSlice";
 import ReviewModal from "../Components/Dashboard/Users/ReviewModal";
+import { CiImageOn } from "react-icons/ci";
+import { deleteReview } from "../features/review/reviewSlice";
 
 const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,8 +53,6 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [packageId, setPackageId] = useState("");
-  const [orderId, setOrderId] = useState("");
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -88,6 +88,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
           await dispatch(deleteCountry(deleteId));
         } else if (tableType === "newsLetter") {
           await dispatch(deleteNewsletter(deleteId));
+        } else if (tableType === "review") {
+          console.log("deleteId", deleteId);
+          await dispatch(deleteReview(deleteId));
         } else {
           console.log("Invalid table type:", tableType);
         }
@@ -215,6 +218,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.username && <TableCell>User Name</TableCell>}
                 {columns?.blogName && <TableCell>Blog Name</TableCell>}
                 {columns?.countryName && <TableCell>Country</TableCell>}
+                {columns?.packageImg && <TableCell>Package Image</TableCell>}
                 {columns?.Name && <TableCell>Name</TableCell>}
                 {columns?.orderUser && <TableCell>User</TableCell>}
                 {columns?.title && <TableCell>Title</TableCell>}
@@ -236,6 +240,8 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                 {columns?.amount && <TableCell>Amount</TableCell>}
                 {columns?.country && <TableCell>Country</TableCell>}
                 {columns?.status && <TableCell>Status</TableCell>}
+                {columns?.rating && <TableCell>Rating</TableCell>}
+                {columns?.comment && <TableCell>Review Comment</TableCell>}
                 {columns?.action && <TableCell>Action</TableCell>}
                 {columns?.firstName && <TableCell>First Name</TableCell>}
                 {columns?.lastName && <TableCell>Last Name</TableCell>}
@@ -354,6 +360,30 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                         </div>
                       </TableCell>
                     )}
+                    {columns?.packageImg && (
+                      <TableCell
+                        style={{ width: "400px", textWrap: "break-word" }}
+                      >
+                        <div className="flex items-center gap-3">
+                          {item?.pakageImg &&
+                          item?.pakageImg !== "undefined" ? (
+                            <img
+                              className="rounded-lg object-cover"
+                              src={`${base_url}${item?.pakageImg}`}
+                              alt=""
+                              style={{ width: "200px" }}
+                              onError={(e) => {
+                                e.target.onerror = null; // Prevent infinite loop
+                                e.target.style.display = "none";
+                                e.target.nextSibling.style.display = "block";
+                              }}
+                            />
+                          ) : (
+                            <CiImageOn className="text-4xl text-gray-400" />
+                          )}
+                        </div>
+                      </TableCell>
+                    )}
                     {columns?.title && (
                       <TableCell>{item.contentTitle}</TableCell>
                     )}
@@ -428,7 +458,13 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                     {columns?.amount && <TableCell>{item.amount}</TableCell>}
                     {columns?.country && <TableCell>{item.country}</TableCell>}
                     {columns?.status && <TableCell>{item.status}</TableCell>}
-
+                    {columns?.rating && <TableCell>{item?.rating}</TableCell>}
+                    {columns?.comment && (
+                      <TableCell>
+                        {" "}
+                        <div className="text-wrap">{item?.comment}</div>
+                      </TableCell>
+                    )}
                     {columns?.action && (
                       <TableCell>
                         <div className="flex gap-5 cursor-pointer">
@@ -444,17 +480,18 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                               <MdOutlinePreview />
                             </div>
                           )}
-                          {tableType !== "newsLetter" && (
-                            <div
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`update/${item._id}`);
-                              }}
-                              className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
-                            >
-                              <FiEdit3 />
-                            </div>
-                          )}
+                          {tableType !== "newsLetter" &&
+                            tableType !== "review" && (
+                              <div
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(`update/${item._id}`);
+                                }}
+                                className="text-[#1a9835] border border-[#1a9835] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#1a983528]"
+                              >
+                                <FiEdit3 />
+                              </div>
+                            )}
                           <div
                             onClick={(e) => {
                               e.stopPropagation();

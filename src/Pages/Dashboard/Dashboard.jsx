@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../features/auth/authSlice";
 import { RiLayoutBottom2Line, RiNewsLine } from "react-icons/ri";
 import { QuestionMark, Settings } from "@mui/icons-material";
-import { MdOutlinePolicy } from "react-icons/md";
+import { MdOutlinePolicy, MdOutlinePreview } from "react-icons/md";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -195,6 +195,17 @@ const Dashboard = () => {
           >
             <TiWorldOutline className="text-[20px]" />
             <span>Countries</span>
+          </button>
+          <button
+            onClick={() => handleNavigation("reviews", "reviews")}
+            className={`flex items-center space-x-2 p-2 rounded ${
+              selectedTab === "reviews"
+                ? "bg-[#fdf0ea] primary_text font-semibold"
+                : "hover:bg-zinc-300"
+            }`}
+          >
+            <MdOutlinePreview className="text-[20px]" />
+            <span> Reviews</span>
           </button>
           <div>
             <button
