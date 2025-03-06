@@ -249,7 +249,9 @@ const TourDetails = () => {
                       </span>
                       <EditableHeading
                         titleKey={`tourdetails.price_${packageDetails?._id}`}
-                        defaultTitle={`${packageDetails?.amount * 1.12}`}
+                        defaultTitle={`${parseInt(
+                          packageDetails?.amount * 1.12
+                        )}`}
                         customTitleClass="flex items-center font-semibold text-[22px] text-red-500 line-through"
                       />
                     </h2>

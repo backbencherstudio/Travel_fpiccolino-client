@@ -54,7 +54,8 @@ const TureCard = ({ item, texts, handleEditClick }) => {
           <p className="text-green-500 text-[28px] font-semibold ">
             €{price}{" "}
             <s className="text-red-500 text-[16px] font-semibold ">
-              €{parseInt(price * 1.12)}
+              €
+              {texts[`tourdetails.price_${item._id}`] || parseInt(price * 1.12)}
             </s>
           </p>
           {tourDate && <CountdownTimer tourDate={tourDate} texts={texts} />}
