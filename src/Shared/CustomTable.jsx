@@ -18,11 +18,11 @@ import {
 import { FaRegUserCircle, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FiEdit3 } from "react-icons/fi";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdOutlinePreview } from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import CustomDashboardButton from "./CustomDashboardButton";
 import { base_url } from "../utils/base_path";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteBlog, getBlog } from "../features/blog/blogSlice";
 import moment from "moment";
 
@@ -32,12 +32,14 @@ import { getUser } from "../features/users/userSlice";
 import { getOrders } from "../features/order/orderSlice";
 import { deleteCountry } from "../features/country/countrySlice";
 import { deleteNewsletter } from "../features/newsLetter/newsLetterSlice";
+import ReviewModal from "../Components/Dashboard/Users/ReviewModal";
 
 const CustomTable = ({ tableType = "", title, data, columns }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [dateFilter, setDateFilter] = useState("all");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.authorization);
 
   // Pagination states
   const [page, setPage] = useState(0);
@@ -46,6 +48,10 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
   // Delete modal state
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [deleteId, setDeleteId] = useState(null); // Store the id of the blog to delete
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [packageId, setPackageId] = useState("");
+  const [orderId, setOrderId] = useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -134,6 +140,12 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
   };
   return (
     <div>
+      <ReviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        packageId={packageId}
+        userId={user?._id}
+      />
       <Paper>
         <div className="flex mt-8 p-5 justify-between flex-wrap">
           <h1 className="font-semibold text-[24px]">{title}</h1>
@@ -419,7 +431,19 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
 
                     {columns?.action && (
                       <TableCell>
-                        <div className="flex gap-5 ">
+                        <div className="flex gap-5 cursor-pointer">
+                          {tableType === "package" && (
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsModalOpen(true);
+                                setPackageId(item?._id);
+                              }}
+                              className="text-[#e86731] border border-[#e86731] rounded-full h-10 w-10 text-[24px] text-center flex justify-center items-center hover:bg-[#e867311e]"
+                            >
+                              <MdOutlinePreview />
+                            </div>
+                          )}
                           {tableType !== "newsLetter" && (
                             <div
                               onClick={(e) => {

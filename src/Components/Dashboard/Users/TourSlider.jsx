@@ -1,54 +1,17 @@
 import { useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Modal,
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Rating,
-  Stack,
-} from "@mui/material";
-import { useDispatch } from "react-redux";
-import { createReview } from "../../../features/review/reviewSlice";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import ReviewModal from "./ReviewModal";
 
 const TourSlider = ({ userData, title, id, userType }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [review, setReview] = useState("");
-  const [rating, setRating] = useState(5);
   const [packageId, setPackageId] = useState("");
   const [orderId, setOrderId] = useState("");
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setReview("");
-    setRating(2); // Reset rating to default value
-  };
-
-  const handleReviewSubmit = () => {
-    const reviewData = {
-      userId: id,
-      packageId,
-      comment: review,
-      rating,
-    };
-
-    dispatch(createReview({ reviewData, orderId }));
-    toast.success("Review Added Successfully");
-    closeModal();
-  };
 
   // Italian translations for tour status
   const tourStatusTranslations = {
@@ -138,8 +101,9 @@ const TourSlider = ({ userData, title, id, userType }) => {
                 </p>
                 {userType === "user" && title === "Completed Tours" && (
                   <button
-                    onClick={() => {
-                      openModal();
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsModalOpen(true);
                       setPackageId(item?.packageData?._id);
                       setOrderId(item?.orderId);
                     }}
@@ -178,67 +142,12 @@ const TourSlider = ({ userData, title, id, userType }) => {
         </div>
       </div>
 
-      {/* MUI Review Modal */}
-      <Modal
-        open={isModalOpen}
-        onClose={closeModal}
-        aria-labelledby="add-review-modal"
-        aria-describedby="review-form"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "white",
-            borderRadius: 2,
-            boxShadow: 24,
-            p: 3,
-          }}
-        >
-          <Typography id="add-review-modal" variant="h6" component="h2" mb={2}>
-            Aggiungi la tua recensione
-          </Typography>
-
-          <Stack spacing={1}>
-            <Typography variant="body2" mb={1}>
-              Valutazione (1-5)
-            </Typography>
-            <Rating
-              name="simple-controlled"
-              value={rating}
-              onChange={(_, newRating) => setRating(newRating)}
-            />
-          </Stack>
-
-          <TextField
-            id="review"
-            label="La tua recensione"
-            multiline
-            rows={4}
-            variant="outlined"
-            fullWidth
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-            sx={{ my: 2 }}
-          />
-
-          <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button onClick={closeModal} variant="outlined" color="error">
-              Cancellare
-            </Button>
-            <Button
-              onClick={handleReviewSubmit}
-              variant="contained"
-              color="warning"
-            >
-              Invia
-            </Button>
-          </Stack>
-        </Box>
-      </Modal>
+      <ReviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        packageId={packageId}
+        userId={id}
+      />
     </div>
   );
 };

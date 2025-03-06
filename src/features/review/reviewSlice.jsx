@@ -6,8 +6,8 @@ axios.defaults.withCredentials = true;
 
 // Centralized API Routes
 const API_ROUTES = {
-  CREATE_REVIEW: (userId, orderId) =>
-    `${base_url}/api/review/createReview/${userId}/${orderId}`,
+  CREATE_REVIEW: (userId, packageId) =>
+    `${base_url}/api/review/createReview/${userId}/${packageId}`,
   GET_REVIEWS: `${base_url}/api/review/getReviewall`,
   GET_PACKAGE_REVIEWS: (id) => `${base_url}/api/review/getReviewByPakage/${id}`,
 };
@@ -15,10 +15,10 @@ const API_ROUTES = {
 // Thunk for creating a review
 export const createReview = createAsyncThunk(
   "review/create",
-  async ({ reviewData, orderId }, { rejectWithValue }) => {
+  async ({ reviewData }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        API_ROUTES.CREATE_REVIEW(reviewData?.userId, orderId),
+        API_ROUTES.CREATE_REVIEW(reviewData?.userId, reviewData?.packageId),
         reviewData
       );
       return response.data;
