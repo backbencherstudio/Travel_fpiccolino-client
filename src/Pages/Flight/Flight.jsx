@@ -194,78 +194,181 @@ const Flight = () => {
                   ) : (
                     packageDetails?.bookedFlights?.map((item, i) => (
                       <div
-                        onClick={() => toggleFlightSelection(item)}
-                        key={i}
-                        className={`p-6 cursor-pointer ${
-                          i === packageDetails?.bookedFlights?.length - 1
-                            ? ""
-                            : "border-b"
-                        } ${
-                          selectedFlights.some((f) => f._id === item._id)
-                            ? "bg-[#fdf0ea]"
+                        key={item._id}
+                        className={`border border-orange-500 rounded-lg ${
+                          packageDetails.bookedFlights.length === 2 && i === 0
+                            ? "mb-5"
+                            : i !== 0 &&
+                              i !== packageDetails.bookedFlights.length - 1
+                            ? "my-5"
                             : ""
-                        } duration-300`}
+                        }`}
                       >
-                        <div className="flex items-center justify-between gap-2">
-                          <h3 className="text-center text-[14px] font-medium text-[#000000]">
-                            {item.flightFrom}
-                          </h3>
-                          <h2 className="text-center text-[14px] text-[#000000]">
-                            {calculateDuration(
-                              item.departureTime,
-                              item.arrivalTime
-                            )}
-                          </h2>
-                          <h3 className="text-center text-[14px] font-medium text-[#000000]">
-                            {item.flightTo}
-                          </h3>
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h2>
-                              {moment(item.departureTime, "HH:mm").format(
-                                "hh:mm A"
+                        <div
+                          onClick={() => toggleFlightSelection(item)}
+                          className={`p-6 cursor-pointer ${
+                            i === packageDetails?.bookedFlights?.length - 1
+                              ? ""
+                              : "border-b"
+                          } ${
+                            selectedFlights.some((f) => f._id === item._id)
+                              ? "bg-[#fdf0ea]"
+                              : ""
+                          } duration-300`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="text-center text-[14px] font-medium text-[#000000]">
+                              {item.flightFrom}
+                            </h3>
+                            <h2 className="text-center text-[14px] text-[#000000]">
+                              {calculateDuration(
+                                item.departureTime,
+                                item.arrivalTime
                               )}
                             </h2>
+                            <h3 className="text-center text-[14px] font-medium text-[#000000]">
+                              {item.flightTo}
+                            </h3>
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h2>
+                                {moment(item.departureTime, "HH:mm").format(
+                                  "hh:mm A"
+                                )}
+                              </h2>
 
-                            <div className="bg-gray-200 relative flex justify-between h-[5px] w-full">
-                              <div className="size-5 absolute left-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
-                                <div className="border border-black size-3 rounded-full"></div>
+                              <div className="bg-gray-200 relative flex justify-between h-[5px] w-full">
+                                <div className="size-5 absolute left-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
+                                  <div className="border border-black size-3 rounded-full"></div>
+                                </div>
+
+                                <div className="size-5 absolute right-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
+                                  <div className="border border-black size-3 rounded-full"></div>
+                                </div>
                               </div>
+                              <h2>
+                                {moment(item.arrivalTime, "HH:mm").format(
+                                  "hh:mm A"
+                                )}
+                              </h2>
+                            </div>
+                            <div className="flex items-start justify-between gap-2 md:gap-0">
+                              <h2>{item.departureAirport}</h2>
+                              <h2>{item.arrivalAirport}</h2>
+                            </div>
+                          </div>
+                          <div className="flex justify-center items-center">
+                            <span
+                              className={`flex border items-center px-4 rounded duration-300`}
+                            >
+                              <img
+                                className="size-10 p-1 border-r pr-3 mr-3"
+                                src={flightIcon}
+                                alt="Flight Icon"
+                              />
+                              <h2 className="uppercase font-semibold">
+                                {item?.price}
+                                <span className="italic"> €=</span>
+                              </h2>
+                            </span>
+                          </div>
+                        </div>
+                        {item?.flightType === "multiple" && (
+                          <div
+                            onClick={() => toggleFlightSelection(item)}
+                            className={`p-6 cursor-pointer ${
+                              i === packageDetails?.bookedFlights?.length - 1
+                                ? ""
+                                : "border-b"
+                            } ${
+                              selectedFlights.some((f) => f._id === item._id)
+                                ? "bg-[#fdf0ea]"
+                                : ""
+                            } duration-300`}
+                          >
+                            <div className="flex items-center justify-between gap-2">
+                              <h3 className="text-center text-[14px] font-medium text-[#000000]">
+                                {item.flightFrom2}
+                              </h3>
+                              <h2 className="text-center text-[14px] text-[#000000]">
+                                {calculateDuration(
+                                  item.departureTime2,
+                                  item.arrivalTime2
+                                )}
+                              </h2>
+                              <h3 className="text-center text-[14px] font-medium text-[#000000]">
+                                {item.flightTo2}
+                              </h3>
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <h2>
+                                  {moment(item.departureTime2, "HH:mm").format(
+                                    "hh:mm A"
+                                  )}
+                                </h2>
 
-                              <div className="size-5 absolute right-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
-                                <div className="border border-black size-3 rounded-full"></div>
+                                <div className="bg-gray-200 relative flex justify-between h-[5px] w-full">
+                                  <div className="size-5 absolute left-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
+                                    <div className="border border-black size-3 rounded-full"></div>
+                                  </div>
+
+                                  <div className="size-5 absolute right-0 transform -translate-y-1/2 top-1/2 rounded-full bg-gray-300 flex justify-center items-center">
+                                    <div className="border border-black size-3 rounded-full"></div>
+                                  </div>
+                                </div>
+                                <h2>
+                                  {moment(item.arrivalTime2, "HH:mm").format(
+                                    "hh:mm A"
+                                  )}
+                                </h2>
+                              </div>
+                              <div className="flex items-start justify-between gap-2 md:gap-0">
+                                <h2>{item.departureAirport2}</h2>
+                                <h2>{item.arrivalAirport2}</h2>
                               </div>
                             </div>
-                            <h2>
-                              {moment(item.arrivalTime, "HH:mm").format(
-                                "hh:mm A"
-                              )}
-                            </h2>
+                            <h1 className="text-orange-500 font-medium text-center">
+                              {(() => {
+                                // Extract hours and minutes from duration1
+                                const [hours1, minutes1] = item.duration1
+                                  .split("h ")
+                                  .map((part) =>
+                                    parseInt(part.replace("m", ""))
+                                  );
+
+                                // Extract hours and minutes from duration2
+                                const [hours2, minutes2] = item.duration2
+                                  .split("h ")
+                                  .map((part) =>
+                                    parseInt(part.replace("m", ""))
+                                  );
+
+                                // Calculate total minutes
+                                const totalMinutes =
+                                  (hours1 + hours2) * 60 + minutes1 + minutes2;
+
+                                // Convert back to hours and minutes
+                                const totalHours = Math.floor(
+                                  totalMinutes / 60
+                                );
+                                const remainingMinutes = totalMinutes % 60;
+
+                                return (
+                                  <div className="flex items-center justify-center gap-2">
+                                    <EditableHeading
+                                      titleKey="flight.totaltime"
+                                      defaultTitle="Tempo totale del viaggio"
+                                      customTitleClass="text-md"
+                                    />
+                                    - {totalHours}h {remainingMinutes}m
+                                  </div>
+                                );
+                              })()}
+                            </h1>
                           </div>
-                          <div className="flex items-start justify-between gap-2 md:gap-0">
-                            <h2>{item.departureAirport}</h2>
-                            <h2>{item.arrivalAirport}</h2>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span
-                            className={`flex border items-center px-4 rounded duration-300`}
-                          >
-                            <img
-                              className="size-10 p-1 border-r pr-3 mr-3"
-                              src={flightIcon}
-                              alt="Flight Icon"
-                            />
-                            <h2 className="uppercase font-semibold">
-                              {item?.price}
-                              <span className="italic"> €=</span>
-                            </h2>
-                          </span>
-                          {selectedFlights.some((f) => f._id === item._id) && (
-                            <span className="text-green-600">✓ Selected</span>
-                          )}
-                        </div>
+                        )}
                       </div>
                     ))
                   )}

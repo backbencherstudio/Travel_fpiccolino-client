@@ -40,12 +40,13 @@ const Insurance = () => {
   useEffect(() => {
     if (checkout?.toureAmount) {
       const insuranceTotal = selectedInsurances.reduce(
-        (sum, insurance) => sum + parseInt(insurance.price || 0),
+        (sum, insurance) =>
+          sum + parseInt(insurance.price || 0) * checkout.person,
         0
       );
       setTotalAmount(parseInt(checkout?.toureAmount) + insuranceTotal);
     }
-  }, [checkout?.toureAmount, selectedInsurances]);
+  }, [checkout?.toureAmount, selectedInsurances, checkout.person]);
 
   const handleSelectInsurance = (insurance) => {
     setSelectedInsurances((prev) => {
@@ -236,7 +237,7 @@ const Insurance = () => {
                             <span>{index + 1}</span>
                           </h2>
                           <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                            € = {insurance?.price}
+                            € = {insurance?.price * checkout.person}
                           </h2>
                         </span>
                       ))}
