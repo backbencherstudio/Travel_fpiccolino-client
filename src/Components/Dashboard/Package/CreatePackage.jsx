@@ -150,7 +150,7 @@ const CreatePackage = () => {
       }
     }
   };
-  console.log(isCreate);
+  console.log(bookedFlights);
 
   const handleImageUpload = (e) => {
     e.stopPropagation();

@@ -14,12 +14,17 @@ const FlightBookingForm = ({
   bookedFlights,
 }) => {
   const [formData, setFormData] = useState({
+    flightType: "single",
     flightFrom: "",
     flightTo: "",
     departureTime: null,
     arrivalTime: null,
-    breakTime: null,
-    flightClass: "",
+    duration1: { hours: 2, minutes: 0 },
+    flightFrom2: "",
+    flightTo2: "",
+    departureTime2: null,
+    arrivalTime2: null,
+    duration2: { hours: 2, minutes: 0 },
     price: 500,
   });
 
@@ -45,6 +50,16 @@ const FlightBookingForm = ({
     });
   };
 
+  const handleDurationChange = (type, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [type]: value,
+      },
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -57,7 +72,14 @@ const FlightBookingForm = ({
       arrivalTime: formData.arrivalTime
         ? formData.arrivalTime.format("HH:mm")
         : null,
-      breakTime: formData.breakTime ? formData.breakTime.format("HH:mm") : null,
+      departureTime2: formData.departureTime2
+        ? formData.departureTime2.format("HH:mm")
+        : null,
+      arrivalTime2: formData.arrivalTime2
+        ? formData.arrivalTime2.format("HH:mm")
+        : null,
+      duration1: `${formData.duration1.hours}h ${formData.duration1.minutes}m`,
+      duration2: `${formData.duration2.hours}h ${formData.duration2.minutes}m`,
     };
 
     // Add the current flight data to the bookedFlights state
@@ -67,12 +89,17 @@ const FlightBookingForm = ({
     ]);
     // Reset form after submission
     setFormData({
+      flightType: "single",
       flightFrom: "",
       flightTo: "",
       departureTime: null,
       arrivalTime: null,
-      breakTime: null,
-      flightClass: "",
+      flightFrom2: "",
+      flightTo2: "",
+      departureTime2: null,
+      arrivalTime2: null,
+      duration1: { hours: 2, minutes: 0 },
+      duration2: { hours: 2, minutes: 0 },
       price: 500,
     });
     setOpenModal(false);
@@ -149,82 +176,363 @@ const FlightBookingForm = ({
               p: 4,
               borderRadius: 2,
               width: "90%",
-              maxWidth: "500px",
+              maxWidth: formData.flightType === "multiple" ? "900px" : "500px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              "&::-webkit-scrollbar": {
+                width: "8px",
+              },
+              "&::-webkit-scrollbar-track": {
+                background: "#f1f1f1",
+                borderRadius: "4px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                background: "#e86731",
+                borderRadius: "4px",
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                background: "#d45a2a",
+              },
             }}
           >
             <Typography variant="h5" gutterBottom>
               Flight Booking Form
             </Typography>
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
-                {/* Flight From */}
+            <form onSubmit={handleSubmit} className="overflow-y-auto">
+              <Grid container spacing={2} sx={{ pb: 2 }}>
+                {/* Flight Type Selection */}
                 <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Flight From"
-                    name="flightFrom"
-                    value={formData.flightFrom}
-                    onChange={handleChange}
-                    variant="outlined"
-                  />
+                  <Typography variant="subtitle1" gutterBottom>
+                    Flight Type
+                  </Typography>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        className="accent-orange-500"
+                        name="flightType"
+                        value="single"
+                        checked={formData.flightType === "single"}
+                        onChange={handleChange}
+                      />
+                      Single Flight
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="flightType"
+                        className="accent-orange-500"
+                        value="multiple"
+                        checked={formData.flightType === "multiple"}
+                        onChange={handleChange}
+                      />
+                      Multiple Flights
+                    </label>
+                  </div>
                 </Grid>
 
-                {/* Flight To */}
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Flight To"
-                    name="flightTo"
-                    value={formData.flightTo}
-                    onChange={handleChange}
-                    variant="outlined"
-                  />
-                </Grid>
+                {/* Create two columns for multiple flights */}
+                {formData.flightType === "multiple" ? (
+                  <>
+                    {/* First Flight Column */}
+                    <Grid item xs={12} md={6} sx={{ pr: { md: 2 } }}>
+                      <Typography variant="subtitle1" gutterBottom>
+                        First Flight
+                      </Typography>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label="Flight From"
+                            name="flightFrom"
+                            value={formData.flightFrom}
+                            onChange={handleChange}
+                            variant="outlined"
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label="Flight To"
+                            name="flightTo"
+                            value={formData.flightTo}
+                            onChange={handleChange}
+                            variant="outlined"
+                          />
+                        </Grid>
 
-                {/* Departure Time */}
-                <Grid item xs={12} sm={6}>
-                  <TimePicker
-                    label="Departure Time"
-                    value={formData.departureTime}
-                    onChange={(newValue) =>
-                      handleTimeChange("departureTime", newValue)
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />
-                </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TimePicker
+                            label="Departure Time"
+                            value={formData.departureTime}
+                            onChange={(newValue) =>
+                              handleTimeChange("departureTime", newValue)
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TimePicker
+                            label="Arrival Time"
+                            value={formData.arrivalTime}
+                            onChange={(newValue) =>
+                              handleTimeChange("arrivalTime", newValue)
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} marginLeft={2}>
+                          <Typography variant="subtitle2" gutterBottom>
+                            Flight Duration
+                          </Typography>
+                          <div className=" grid grid-cols-2 gap-4">
+                            <div>
+                              <Typography variant="body2" color="textSecondary">
+                                Hours: {formData.duration1.hours}
+                              </Typography>
+                              <Slider
+                                value={formData.duration1.hours}
+                                onChange={(_, value) =>
+                                  handleDurationChange(
+                                    "hours",
+                                    "duration1",
+                                    value
+                                  )
+                                }
+                                min={0}
+                                max={24}
+                                step={1}
+                                color="warning"
+                                valueLabelDisplay="auto"
+                                valueLabelFormat={(value) => `${value}h`}
+                              />
+                            </div>
+                            <div>
+                              <Typography variant="body2" color="textSecondary">
+                                Minutes: {formData.duration1.minutes}
+                              </Typography>
+                              <Slider
+                                value={formData.duration1.minutes}
+                                onChange={(_, value) =>
+                                  handleDurationChange(
+                                    "minutes",
+                                    "duration1",
+                                    value
+                                  )
+                                }
+                                min={0}
+                                max={59}
+                                step={5}
+                                color="warning"
+                                valueLabelDisplay="auto"
+                                valueLabelFormat={(value) => `${value}m`}
+                              />
+                            </div>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
 
-                {/* Arrival Time */}
-                <Grid item xs={12} sm={6}>
-                  <TimePicker
-                    label="Arrival Time"
-                    value={formData.arrivalTime}
-                    onChange={(newValue) =>
-                      handleTimeChange("arrivalTime", newValue)
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />
-                </Grid>
+                    {/* Second Flight Column */}
+                    <Grid item xs={12} md={6} sx={{ pl: { md: 2 } }}>
+                      <Typography variant="subtitle1" gutterBottom>
+                        Second Flight
+                      </Typography>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label="Flight From"
+                            name="flightFrom2"
+                            value={formData.flightFrom2}
+                            onChange={handleChange}
+                            variant="outlined"
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            fullWidth
+                            label="Flight To"
+                            name="flightTo2"
+                            value={formData.flightTo2}
+                            onChange={handleChange}
+                            variant="outlined"
+                          />
+                        </Grid>
 
-                {/* Break Time */}
-                {/* <Grid item xs={12}>
-                  <TimePicker
-                    label="Break Time"
-                    value={formData.breakTime}
-                    onChange={(newValue) =>
-                      handleTimeChange("breakTime", newValue)
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />
-                </Grid> */}
+                        <Grid item xs={12} sm={6}>
+                          <TimePicker
+                            label="Departure Time"
+                            value={formData.departureTime2}
+                            onChange={(newValue) =>
+                              handleTimeChange("departureTime2", newValue)
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TimePicker
+                            label="Arrival Time"
+                            value={formData.arrivalTime2}
+                            onChange={(newValue) =>
+                              handleTimeChange("arrivalTime2", newValue)
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} marginRight={2}>
+                          <Typography variant="subtitle2" gutterBottom>
+                            Flight Duration
+                          </Typography>
+                          <div className=" grid grid-cols-2 gap-4">
+                            <div>
+                              <Typography variant="body2" color="textSecondary">
+                                Hours: {formData.duration2.hours}
+                              </Typography>
+                              <Slider
+                                value={formData.duration2.hours}
+                                onChange={(_, value) =>
+                                  handleDurationChange(
+                                    "hours",
+                                    "duration2",
+                                    value
+                                  )
+                                }
+                                min={0}
+                                max={24}
+                                step={1}
+                                color="warning"
+                                valueLabelDisplay="auto"
+                                valueLabelFormat={(value) => `${value}h`}
+                              />
+                            </div>
+                            <div>
+                              <Typography variant="body2" color="textSecondary">
+                                Minutes: {formData.duration2.minutes}
+                              </Typography>
+                              <Slider
+                                value={formData.duration2.minutes}
+                                onChange={(_, value) =>
+                                  handleDurationChange(
+                                    "minutes",
+                                    "duration2",
+                                    value
+                                  )
+                                }
+                                min={0}
+                                max={59}
+                                step={5}
+                                color="warning"
+                                valueLabelDisplay="auto"
+                                valueLabelFormat={(value) => `${value}m`}
+                              />
+                            </div>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </>
+                ) : (
+                  <>
+                    {/* First Flight Fields */}
+                    <Grid item xs={12}>
+                      <Typography variant="subtitle1" gutterBottom>
+                        First Flight
+                      </Typography>
+                    </Grid>
+
+                    {/* Flight From */}
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Flight From"
+                        name="flightFrom"
+                        value={formData.flightFrom}
+                        onChange={handleChange}
+                        variant="outlined"
+                      />
+                    </Grid>
+
+                    {/* Flight To */}
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Flight To"
+                        name="flightTo"
+                        value={formData.flightTo}
+                        onChange={handleChange}
+                        variant="outlined"
+                      />
+                    </Grid>
+
+                    {/* Departure Time */}
+                    <Grid item xs={12} sm={6}>
+                      <TimePicker
+                        label="Departure Time"
+                        value={formData.departureTime}
+                        onChange={(newValue) =>
+                          handleTimeChange("departureTime", newValue)
+                        }
+                      />
+                    </Grid>
+
+                    {/* Arrival Time */}
+                    <Grid item xs={12} sm={6}>
+                      <TimePicker
+                        label="Arrival Time"
+                        value={formData.arrivalTime}
+                        onChange={(newValue) =>
+                          handleTimeChange("arrivalTime", newValue)
+                        }
+                      />
+                    </Grid>
+                    {/* Duration for first flight */}
+                    <Grid item xs={12} marginInline={2}>
+                      <Typography variant="subtitle1" gutterBottom>
+                        Flight Duration
+                      </Typography>
+                      <div className=" grid grid-cols-2 gap-4">
+                        <div>
+                          <Typography variant="body2" color="textSecondary">
+                            Hours: {formData.duration1.hours}
+                          </Typography>
+                          <Slider
+                            value={formData.duration1.hours}
+                            onChange={(_, value) =>
+                              handleDurationChange("hours", "duration1", value)
+                            }
+                            min={0}
+                            max={24}
+                            step={1}
+                            color="warning"
+                            valueLabelDisplay="auto"
+                            valueLabelFormat={(value) => `${value}h`}
+                          />
+                        </div>
+                        <div>
+                          <Typography variant="body2" color="textSecondary">
+                            Minutes: {formData.duration1.minutes}
+                          </Typography>
+                          <Slider
+                            value={formData.duration1.minutes}
+                            onChange={(_, value) =>
+                              handleDurationChange(
+                                "minutes",
+                                "duration1",
+                                value
+                              )
+                            }
+                            min={0}
+                            max={59}
+                            step={5}
+                            color="warning"
+                            valueLabelDisplay="auto"
+                            valueLabelFormat={(value) => `${value}m`}
+                          />
+                        </div>
+                      </div>
+                    </Grid>
+                  </>
+                )}
 
                 {/* Price Range */}
-                <Grid item xs={12}>
+                <Grid item xs={12} marginInline={2}>
                   <Typography gutterBottom>Price Per Person</Typography>
                   <Slider
                     value={formData.price}
@@ -259,26 +567,31 @@ const FlightBookingForm = ({
               <Box
                 key={flight.id}
                 sx={{
-                  border: "1px solid #ddd",
+                  border: "1px solid orange",
                   padding: "16px",
                   marginY: "16px",
                   paddingInline: "24px",
                   marginBottom: "16px",
                   borderRadius: "8px",
                   boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
-                  overflow: "wrap", // Prevent content overflow
+                  overflow: "wrap",
                 }}
               >
                 <Typography
                   variant="subtitle1"
                   color="textSecondary"
-                  className="flex justify-between"
+                  className="flex justify-between items-center"
                 >
-                  <div>
-                    Price Per Person:{" "}
-                    <span className="primary_text">€{flight.price}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-600">Flight Type:</span>
+                    <span className="primary_text capitalize">
+                      {flight.flightType}
+                    </span>
+                    <span className="ml-4">
+                      Price:{" "}
+                      <span className="primary_text">€{flight.price}</span>
+                    </span>
                   </div>
-
                   <DeleteOutlineOutlined
                     onClick={() =>
                       handleDelete(flight._id ? flight._id : flight.id)
@@ -286,33 +599,84 @@ const FlightBookingForm = ({
                     className="text-red-500 cursor-pointer"
                   />
                 </Typography>
-                <div className="flex justify-between mt-5">
-                  <p className="font-semibold text-[20px]">
-                    {flight.flightFrom}
-                  </p>
-                  <p className="font-semibold text-[20px]">{flight.flightTo}</p>
-                </div>
 
-                <Slider
-                  defaultValue={50}
-                  valueLabelDisplay="auto"
-                  marks={getSliderMarks(flight)}
-                  min={0}
-                  max={100}
-                  step={null}
-                  disabled
-                  sx={{
-                    "& .MuiSlider-thumb": {
-                      backgroundColor: "#e86731",
-                    },
-                    "& .MuiSlider-markLabel": {
-                      fontSize: ".75rem",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    },
-                  }}
-                />
+                <div className="mt-4 space-y-6">
+                  {/* First Flight */}
+                  <div>
+                    {flight.flightType === "multiple" && (
+                      <Typography
+                        variant="subtitle2"
+                        className="text-gray-500 mb-2 font-medium"
+                      >
+                        First Flight
+                      </Typography>
+                    )}
+                    <div className="bg-[#fdf0ea] p-3 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-gray-500 text-sm">From</p>
+                          <p className="font-semibold">{flight.flightFrom}</p>
+                          <p className="text-sm text-gray-600">
+                            {flight.departureTime}
+                          </p>
+                        </div>
+                        <div className="flex-1 border-t-2 border-dashed mx-4 border-orange-200"></div>
+                        <div>
+                          <p className="text-gray-500 text-sm">To</p>
+                          <p className="font-semibold">{flight.flightTo}</p>
+                          <p className="text-sm text-gray-600">
+                            {flight.arrivalTime}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex-1 flex flex-col items-center">
+                        <div className="border-t-2 border-dashed w-full border-orange-200"></div>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Duration: {flight.duration1}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Second Flight for multiple flights */}
+                  {flight.flightType === "multiple" && (
+                    <div>
+                      <Typography
+                        variant="subtitle2"
+                        className="text-gray-500 mb-2 font-medium"
+                      >
+                        Second Flight
+                      </Typography>
+                      <div className="bg-[#fdf0ea] p-3 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="text-gray-500 text-sm">From</p>
+                            <p className="font-semibold">
+                              {flight.flightFrom2}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              {flight.departureTime2}
+                            </p>
+                          </div>
+                          <div className="flex-1 border-t-2 border-dashed mx-4 border-orange-200"></div>
+                          <div>
+                            <p className="text-gray-500 text-sm">To</p>
+                            <p className="font-semibold">{flight.flightTo2}</p>
+                            <p className="text-sm text-gray-600">
+                              {flight.arrivalTime2}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex-1 flex flex-col items-center">
+                          <div className="border-t-2 border-dashed w-full border-orange-200"></div>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Duration: {flight.duration2}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </Box>
             ))}
           </Box>
