@@ -40,6 +40,7 @@ import {
 } from "../../features/review/reviewSlice";
 import EditableHeading from "../../Components/Common/EditableHeading";
 import CountdownTimer from "../../Components/Common/CountdownTimer";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
 const TourDetails = () => {
   const dispatch = useDispatch();
@@ -125,7 +126,10 @@ const TourDetails = () => {
   ];
 
   const [imagePath, setImagePath] = useState(packageDetails?.hotelImages[0]);
+  
 
+  const [isOpen, setIsOpen] = useState(false);
+  
   return (
     <div className="text-black">
       <HeroScetion heroContent={heroContent} />
@@ -143,7 +147,7 @@ const TourDetails = () => {
                   <div key={item?._id}>
                     <div className="flex bg-[#ffffff] px-4 py-2 items-center gap-2 rounded-full ">
                       <img
-                        className="size-8 object-cover rounded-lg"
+                        className="size-10 object-cover rounded-lg"
                         src={
                           packageDetails?.images[index]
                             ? `${base_url}${packageDetails?.images[index]}`
@@ -162,69 +166,71 @@ const TourDetails = () => {
                   <p className="mb-4">{packageDetails?.tourDescription}</p>
                 </div>
                 {/* ==============================================  Accordion ==============================================    */}
-                <div className="text-[#1C1C1C]">
-                  <div className="collapse collapse-arrow bg-[#FFFFFF] mb-10">
-                    <input type="radio" name="my-accordion-2" defaultChecked />
-                    <div className="collapse-title text-xl font-medium flex items-center">
-                      <img className="mr-2" src={yes} alt="" />
-                      <h2 className="text-[20px] font-semibold ">
-                        Cosa è incluso
-                      </h2>
-                    </div>
-                    <div className="collapse-content">
-                      <div className="grid lg:grid-cols-2">
-                        <div>
-                          {packageDetails?.includeItems?.map((item) => {
-                            const IconComponent = iconMap[item.name];
-                            return (
-                              <div
-                                key={item.include}
-                                className="flex items-center mb-5"
-                              >
-                                {IconComponent && (
-                                  <IconComponent className="text-xl mr-3 primary_text" />
-                                )}
-                                <h2>{item.text}</h2>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              
 
-                  <div className="collapse collapse-arrow bg-[#FFFFFF]">
-                    <input type="radio" name="my-accordion-2" />
 
-                    <div className="collapse-title text-xl font-medium flex items-center">
-                      <RxCross2 className="mr-2 primary_text" />
-                      <h2 className="text-[20px] font-semibold ">
-                        Cosa non è incluso
-                      </h2>
-                    </div>
 
-                    <div className="collapse-content">
-                      <div className="grid lg:grid-cols-2">
-                        <div>
-                          {packageDetails?.notIncludeItems?.map((item) => {
-                            const IconComponent = iconMap[item.name];
-                            return (
-                              <div
-                                key={item.include}
-                                className="flex items-center mb-5"
-                              >
-                                {IconComponent && (
-                                  <IconComponent className="text-xl mr-3 primary_text" />
-                                )}
-                                <h2>{item.text}</h2>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <div className="bg-[#FFFFFF] p-5 rounded-lg shadow">
+    {/* Dropdown Header */}
+    <div 
+      className="flex justify-between items-center cursor-pointer" 
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <h2 className="text-xl font-semibold flex items-center">
+        <img className="mr-2" src={yes} alt="" />
+        Cosa è incluso & Cosa non è incluso
+      </h2>
+      {isOpen ? <MdKeyboardArrowUp size={24} /> : <MdKeyboardArrowDown size={24} />}
+    </div>
+
+    {/* Dropdown Content */}
+    {isOpen && (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 text-[#1C1C1C]">
+        {/* Cosa è incluso */}
+        <div className="p-5 border-r">
+          <h2 className="text-lg font-semibold flex items-center mb-4">
+            <img className="mr-2" src={yes} alt="" />
+            Cosa è incluso
+          </h2>
+          {packageDetails?.includeItems?.map((item) => {
+            const IconComponent = iconMap[item.name];
+            return (
+              <div key={item.include} className="flex items-center mb-3">
+                {IconComponent && <IconComponent className="text-xl mr-3 primary_text" />}
+                <h2>{item.text}</h2>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Cosa non è incluso */}
+        <div className="p-5">
+          <h2 className="text-lg font-semibold flex items-center mb-4">
+            <RxCross2 className="mr-2 primary_text" />
+            Cosa non è incluso
+          </h2>
+          {packageDetails?.notIncludeItems?.map((item) => {
+            const IconComponent = iconMap[item.name];
+            return (
+              <div key={item.include} className="flex items-center mb-3">
+                {IconComponent && <IconComponent className="text-xl mr-3 primary_text" />}
+                <h2>{item.text}</h2>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )}
+  </div>
+
+
+
+
+
+
+
+
+
               </div>
             </div>
 
@@ -392,4 +398,80 @@ const TourDetails = () => {
   );
 };
 
+
+
+const imageDetalse = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  return (
+    <div className="text-black">
+      <HeroScetion heroContent={heroContent} />
+      <div className="bg-[#ffffff]">
+        <ParentComponent>
+          <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
+            <div className="col-span-12 lg:col-span-8">
+              <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
+                {tags?.map((item, index) => (
+                  <div key={index}>
+                    <div className="flex bg-[#ffffff] px-4 py-2 items-center gap-2 rounded-full ">
+                      <img
+                        className="size-8 object-cover rounded-lg cursor-pointer"
+                        src={
+                          packageDetails?.images[index]
+                            ? `${base_url}${packageDetails?.images[index]}`
+                            : `${base_url}${packageDetails?.images[0]}`
+                        }
+                        alt="Package Preview"
+                        onClick={() =>
+                          handleImageClick(
+                            packageDetails?.images[index] || packageDetails?.images[0]
+                          )
+                        }
+                      />
+                      {item?.tag}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </ParentComponent>
+
+        {/* MODAL FOR SHOWING LARGE IMAGE */}
+        <Modal
+          isOpen={!!selectedImage}
+          onRequestClose={closeModal}
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70"
+        >
+          <div className="relative bg-white p-4 rounded-lg max-w-3xl w-full">
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 bg-gray-200 p-2 rounded-full text-black hover:bg-gray-300"
+            >
+              ✕
+            </button>
+            <img
+              src={`${base_url}${selectedImage}`}
+              alt="Selected Preview"
+              className="w-full h-auto rounded-lg"
+            />
+          </div>
+        </Modal>
+      </div>
+    </div>
+  );
+};
+
+
+
 export default TourDetails;
+
+
