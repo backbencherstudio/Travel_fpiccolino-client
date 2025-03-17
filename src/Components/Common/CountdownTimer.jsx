@@ -13,15 +13,17 @@ const FlipCard = ({ value, label }) => {
       <div className="flex">
         {displayValue.split("").map((digit, index) => (
           <div key={index} className="relative mx-[1px]">
-            <div className="w-4 h-6  rounded-sm flex items-center justify-center">
-              <span className="primary_text text-lg font-mono">{digit}</span>
+            <div className="w-5 text-center h-7  rounded-sm flex items-center justify-center">
+              <div className="text-[#d4ddff] bg-[#1456fe] font-semibold rounded-[3px] text-lg h-full w-full">
+                {digit}
+              </div>
             </div>
             {/* Add horizontal line in middle */}
-            <div
+            {/* <div
               className={`absolute top-1/2 w-full h-[1px] bg-gray-100 ${
                 params.id && "hidden"
               }`}
-            ></div>
+            ></div> */}
           </div>
         ))}
       </div>
@@ -83,9 +85,9 @@ const CountdownTimer = ({ tourDate, texts }) => {
       <div className="flex justify-center items-center gap-3">
         <FlipCard value={timeLeft.days} label="Giorni" />
         <FlipCard value={timeLeft.hours} label="Ore" />
-        <div className="primary_text font-bold mb-5">:</div>
+        {/* <div className="primary_text font-bold mb-5">:</div> */}
         <FlipCard value={timeLeft.minutes} label="Minuti" />
-        <div className="primary_text font-bold mb-5">:</div>
+        {/* <div className="primary_text bg-blue-500 font-bold mb-5">:</div> */}
         <FlipCard value={timeLeft.seconds} label="Secondi" />
       </div>
     </div>

@@ -55,7 +55,7 @@ const TourDetails = () => {
   }, []);
 
   const heroContent = {
-    blogDetailsTitle: `${packageDetails?.tourDuration.nights} Nights / ${packageDetails?.tourDuration.days} Days`,
+    blogDetailsTitle: `${packageDetails?.tourDuration.nights} Notti  / ${packageDetails?.tourDuration.days} Giorni`,
     image: `${base_url}${packageDetails?.images[0]}`,
     titleOne: packageDetails?.tourName,
   };
@@ -126,21 +126,21 @@ const TourDetails = () => {
   ];
 
   const [imagePath, setImagePath] = useState(packageDetails?.hotelImages[0]);
-  
 
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [isOpen2, setIsOpen2] = useState(false);
+
   return (
     <div className="text-black">
       <HeroScetion heroContent={heroContent} />
-      <div className="bg-[#ffffff]">
+      <div className="bg-[#fefeff]">
         <ParentComponent>
-          <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
+          <div className="grid grid-cols-12 pt-20 lg:gap-3 xl:gap-10 ">
             <div className="col-span-12 lg:col-span-8">
               <EditableHeading
                 titleKey="tourdetails.title"
                 defaultTitle="PER CHI GUARDA SEMPRE ALL'ORIZZONTE"
-                customTitleClass="uppercase font-bold text-[40px]  md:w-full text-start"
+                customTitleClass="uppercase font-bold text-[30px] lg:text-[40px]  md:w-full text-start"
               />
               <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
                 {tags?.map((item, index) => (
@@ -162,81 +162,15 @@ const TourDetails = () => {
               </div>
               <div>
                 {/* ================================================  Blog Hero Content ==================================== */}
-                <div className="mt-16 mb-20 text-[#72777F]">
+                <div className="mt-16 mb-20 text-[#72777F] lg:min-h-[200px]">
                   <p className="mb-4">{packageDetails?.tourDescription}</p>
                 </div>
-                {/* ==============================================  Accordion ==============================================    */}
-              
-
-
-
-                <div className="bg-[#FFFFFF] p-5 rounded-lg shadow">
-    {/* Dropdown Header */}
-    <div 
-      className="flex justify-between items-center cursor-pointer" 
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <h2 className="text-xl font-semibold flex items-center">
-        <img className="mr-2" src={yes} alt="" />
-        Cosa è incluso & Cosa non è incluso
-      </h2>
-      {isOpen ? <MdKeyboardArrowUp size={24} /> : <MdKeyboardArrowDown size={24} />}
-    </div>
-
-    {/* Dropdown Content */}
-    {isOpen && (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 text-[#1C1C1C]">
-        {/* Cosa è incluso */}
-        <div className="p-5 border-r">
-          <h2 className="text-lg font-semibold flex items-center mb-4">
-            <img className="mr-2" src={yes} alt="" />
-            Cosa è incluso
-          </h2>
-          {packageDetails?.includeItems?.map((item) => {
-            const IconComponent = iconMap[item.name];
-            return (
-              <div key={item.include} className="flex items-center mb-3">
-                {IconComponent && <IconComponent className="text-xl mr-3 primary_text" />}
-                <h2>{item.text}</h2>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Cosa non è incluso */}
-        <div className="p-5">
-          <h2 className="text-lg font-semibold flex items-center mb-4">
-            <RxCross2 className="mr-2 primary_text" />
-            Cosa non è incluso
-          </h2>
-          {packageDetails?.notIncludeItems?.map((item) => {
-            const IconComponent = iconMap[item.name];
-            return (
-              <div key={item.include} className="flex items-center mb-3">
-                {IconComponent && <IconComponent className="text-xl mr-3 primary_text" />}
-                <h2>{item.text}</h2>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    )}
-  </div>
-
-
-
-
-
-
-
-
-
               </div>
             </div>
 
             <div className=" col-span-12 lg:col-span-4 mt-10  ">
               {/* ==============================================  Hero Section Right Side Bar ===================================== */}
-              <div className="bg-[#FFFFFF] p-10 rounded-lg mb-16 ">
+              <div className="bg-[#FFFFFF] shadow-md rounded-3xl p-10 mb-16 border">
                 <div className="mb-10">
                   <EditableHeading
                     titleKey="tourdetails.price"
@@ -302,11 +236,160 @@ const TourDetails = () => {
               </div>
             </div>
           </div>
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-12 lg:col-span-8">
+              <div className="bg-[#FFFFFF] p-5 rounded-3xl shadow border ">
+                {/* Dropdown Header */}
+                <div
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  <h2 className="text-xl font-semibold flex items-center">
+                    <img className="mr-2" src={yes} alt="" />
+                    Cosa è incluso & Cosa non è incluso
+                  </h2>
+                  {isOpen ? (
+                    <MdKeyboardArrowUp size={24} />
+                  ) : (
+                    <MdKeyboardArrowDown size={24} />
+                  )}
+                </div>
+
+                {/* Dropdown Content */}
+                {isOpen && (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 text-[#1C1C1C]">
+                    {/* Cosa è incluso */}
+                    <div className="p-5 border-r">
+                      <h2 className="text-lg font-semibold flex items-center mb-4">
+                        <img className="mr-2" src={yes} alt="" />
+                        Cosa è incluso
+                      </h2>
+                      {packageDetails?.includeItems?.map((item) => {
+                        const IconComponent = iconMap[item.name];
+                        return (
+                          <div
+                            key={item.include}
+                            className="flex items-center mb-3"
+                          >
+                            {IconComponent && (
+                              <IconComponent className="text-xl mr-3 primary_text" />
+                            )}
+                            <h2>{item.text}</h2>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Cosa non è incluso */}
+                    <div className="p-5">
+                      <h2 className="text-lg font-semibold flex items-center mb-4">
+                        <RxCross2 className="mr-2 primary_text" />
+                        Cosa non è incluso
+                      </h2>
+                      {packageDetails?.notIncludeItems?.map((item) => {
+                        const IconComponent = iconMap[item.name];
+                        return (
+                          <div
+                            key={item.include}
+                            className="flex items-center mb-3"
+                          >
+                            {IconComponent && (
+                              <IconComponent className="text-xl mr-3 primary_text" />
+                            )}
+                            <h2>{item.text}</h2>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="bg-[#FFFFFF] p-5 rounded-3xl shadow border mt-5">
+                {/* Dropdown Header */}
+                <div
+                  className="flex justify-between items-center cursor-pointer"
+                  onClick={() => setIsOpen2(!isOpen2)}
+                >
+                  <h2 className="text-xl font-semibold flex items-center">
+                    <img className="mr-2" src={yes} alt="" />
+                    Cose da sapere
+                  </h2>
+                  {isOpen2 ? (
+                    <MdKeyboardArrowUp size={24} />
+                  ) : (
+                    <MdKeyboardArrowDown size={24} />
+                  )}
+                </div>
+
+                {/* Dropdown Content */}
+                {isOpen2 && (
+                  <div className=" gap-6 mt-4 text-[#1C1C1C]">
+                    <EditableHeading
+                      titleKey="toknow.title"
+                      defaultTitle="Prima di prenotare ricorda di controllare eventuali aggiornamenti su Viaggiare Sicuri."
+                      customTitleClass="text-[16px]"
+                    />
+                    <div className="mt-5">
+                      <EditableHeading
+                        titleKey="toknow.option1"
+                        defaultTitle="Passaporto"
+                        customTitleClass="text-[16px] font-medium"
+                      />
+                      <EditableHeading
+                        titleKey="toknow.option1.desc"
+                        defaultTitle="Passapo6 mesi di validità residua +2 pagine bianche.
+
+rto"
+                        customTitleClass="text-[16px]"
+                      />
+                    </div>
+                    <div className="mt-3">
+                      <EditableHeading
+                        titleKey="toknow.option2"
+                        defaultTitle="Visto"
+                        customTitleClass="text-[16px] font-medium"
+                      />
+                      <EditableHeading
+                        titleKey="toknow.option2.desc"
+                        defaultTitle="Non serve per soggiorni fino a 30 giorni ma è richiesto il biglietto aereo di uscita dal paese..
+
+rto"
+                        customTitleClass="text-[16px]"
+                      />
+                    </div>
+                    <div className="mt-3">
+                      <EditableHeading
+                        titleKey="toknow.option3"
+                        defaultTitle="Domande Frequenti"
+                        customTitleClass="text-[16px] font-medium"
+                      />
+                      <EditableHeading
+                        titleKey="toknow.option3.desc"
+                        defaultTitle="Dai un occhiata alle nostre FAQ..
+
+rto"
+                        customTitleClass="text-[16px]"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="col-span-12 lg:col-span-4">
+              <div className=" px-5 ">
+                <EditableHeading
+                  titleKey="paymentBellow.title"
+                  defaultTitle="Aggiungi il volo A/R con 450€."
+                  customTitleClass="text-[16px] bg-[#edecfa] p-5 rounded-3xl text-[#6155d1] font-medium"
+                />
+              </div>
+            </div>
+          </div>
         </ParentComponent>
 
         {/* ====================================================  Hotail Section ============================= */}
         {packageDetails?.hotelImages?.length > 0 && (
-          <div className="bg-[#fdf0ea]">
+          <div className="bg-[#fdf0ea] mt-10">
             <ParentComponent>
               <div className="grid grid-cols-12 py-20 lg:gap-4 xl:gap-14 relative ">
                 <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
@@ -398,8 +481,6 @@ const TourDetails = () => {
   );
 };
 
-
-
 const imageDetalse = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -432,7 +513,8 @@ const imageDetalse = () => {
                         alt="Package Preview"
                         onClick={() =>
                           handleImageClick(
-                            packageDetails?.images[index] || packageDetails?.images[0]
+                            packageDetails?.images[index] ||
+                              packageDetails?.images[0]
                           )
                         }
                       />
@@ -470,8 +552,4 @@ const imageDetalse = () => {
   );
 };
 
-
-
 export default TourDetails;
-
-
