@@ -443,7 +443,7 @@ rto"
                 <div className="border  p-5 rounded-3xl bg-[#fdf0eb] ">
                   <EditableHeading
                     titleKey="paymentBellow.title"
-                    defaultTitle="Aggiungi il volo A/R con 450€."
+                    defaultTitle="✈️ Aggiungi il volo A/R con 450€."
                     customTitleClass="text-[16px]  primary_text pb-3 font-medium border-b border-dashed border-[#e86731]"
                   />
                   <EditableHeading
