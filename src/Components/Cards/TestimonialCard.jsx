@@ -6,9 +6,10 @@ import { FaStar } from "react-icons/fa";
 import Rating from "react-rating";
 import { base_url } from "../../utils/base_path";
 import moment from "moment";
+import EditableHeading from "../Common/EditableHeading";
 
 const TestimonialCard = ({ item }) => {
-  const { createdAt, rating, title, comment } = item.review;
+  const { createdAt, rating, title, comment, _id } = item.review;
   const { name, userImg } = item.user;
   return (
     <div
@@ -16,7 +17,7 @@ const TestimonialCard = ({ item }) => {
         scrollbarWidth: "none",
         msOverflowStyle: "none",
       }}
-      className="bg-[#FFFFFF] p-6 rounded-xl h-[280px] overflow-auto relative"
+      className=" p-6 h-[280px] overflow-auto relative shadow-lg rounded-3xl border"
     >
       <div className="flex items-center">
         {userImg && (
@@ -27,7 +28,11 @@ const TestimonialCard = ({ item }) => {
           />
         )}
         <span>
-          <h2 className="text-[#161824] font-semibold text-[18px]">{name}</h2>
+          <EditableHeading
+            titleKey={`reviewer-${_id}`}
+            defaultTitle={name}
+            customTitleClass="primary_text text-[24px]  font-semibold "
+          />
           <p className="text-[#454650]">
             {moment(createdAt).format("MMM DD, YYYY")}
           </p>

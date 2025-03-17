@@ -140,19 +140,15 @@ const TourDetails = () => {
               <EditableHeading
                 titleKey="tourdetails.title"
                 defaultTitle="PER CHI GUARDA SEMPRE ALL'ORIZZONTE"
-                customTitleClass="uppercase font-bold text-[30px] lg:text-[40px]  md:w-full text-start"
+                customTitleClass="uppercase font-bold text-[28px] lg:text-[36px]  md:w-full text-start primary_text"
               />
-              <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
+              <div className="flex flex-wrap mt-4">
                 {tags?.map((item, index) => (
                   <div key={item?._id}>
                     <div className="flex bg-[#ffffff] px-4 py-2 items-center gap-2 rounded-full ">
                       <img
-                        className="size-10 object-cover rounded-lg"
-                        src={
-                          packageDetails?.images[index]
-                            ? `${base_url}${packageDetails?.images[index]}`
-                            : `${base_url}${packageDetails?.images[0]}`
-                        }
+                        className=" object-cover rounded-lg"
+                        src={item?.icon}
                         alt="Package Preview"
                       />
                       {item?.tag}
@@ -236,8 +232,8 @@ const TourDetails = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-12 lg:col-span-8">
+          <div className="grid grid-cols-12  gap-4">
+            <div className="col-span-12 lg:col-span-8 mt-5 order-last lg:order-first">
               <div className="bg-[#FFFFFF] p-5 rounded-3xl shadow border ">
                 {/* Dropdown Header */}
                 <div
@@ -376,12 +372,19 @@ rto"
               </div>
             </div>
             <div className="col-span-12 lg:col-span-4">
-              <div className=" px-5 ">
-                <EditableHeading
-                  titleKey="paymentBellow.title"
-                  defaultTitle="Aggiungi il volo A/R con 450€."
-                  customTitleClass="text-[16px] bg-[#edecfa] p-5 rounded-3xl text-[#6155d1] font-medium"
-                />
+              <div className=" lg:px-5 ">
+                <div className="border  p-5 rounded-3xl bg-[#fdf0eb] ">
+                  <EditableHeading
+                    titleKey="paymentBellow.title"
+                    defaultTitle="Aggiungi il volo A/R con 450€."
+                    customTitleClass="text-[16px]  primary_text pb-3 font-medium border-b border-dashed border-[#e86731]"
+                  />
+                  <EditableHeading
+                    titleKey="paymentBellow.description"
+                    defaultTitle="Potrai acquistare il volo con noi direttamente in fase di prenotazione a soli 450€ scegliendo l’aeroporto di Milano. Il Vantaggio? Zero sbatti: ci occupiamo di tutto noi, anche in caso di modifiche da parte della compagnia aerea."
+                    customTitleClass="text-[16px]  primary_text pt-3"
+                  />
+                </div>
               </div>
             </div>
           </div>
