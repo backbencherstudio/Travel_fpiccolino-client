@@ -6,7 +6,7 @@ import iconn2 from "../../assets/icone/icone2.png";
 import iconn3 from "../../assets/icone/icone3.png";
 import iconn4 from "../../assets/icone/icone4.png";
 import yes from "../../assets/icone/yes.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import TestimonialCard from "../../Components/Cards/TestimonialCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,6 +47,67 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import ImageGallery from "./ImageGallery";
+
+const MobileFixedBottom = ({ packageDetails, navigate }) => {
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < lastScrollY.current || currentScrollY < 100) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current) {
+        setIsVisible(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div
+      className={`fixed bottom-0 left-0 right-0 bg-white border-t shadow-upper z-40 lg:hidden transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "translate-y-full"
+      }`}
+    >
+      <div className="flex items-center justify-between p-4 max-w-md mx-auto">
+        <div className="flex flex-col">
+          <span className="text-sm text-gray-600">Prezzo totale</span>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl font-bold text-[#25CE50]">
+              €{packageDetails?.amount}
+            </span>
+            <span className="text-lg text-red-500 line-through">
+              €{parseInt(packageDetails?.amount * 1.12)}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <span>{packageDetails?.tourDuration?.nights} Notti</span>
+            <span>•</span>
+            <span>
+              {moment(packageDetails?.tourDate).utc().format("DD/MM/YYYY")}
+            </span>
+          </div>
+        </div>
+        <button
+          onClick={() => navigate(`/flight/${packageDetails?._id}`)}
+          className="bg-[#E86731] text-white px-6 py-3 rounded-xl font-medium shadow-lg active:scale-95 transition-all"
+        >
+          <span className="whitespace-nowrap">Continua</span>
+        </button>
+      </div>
+
+      {/* Optional: Add a subtle backdrop gradient */}
+      <div className="fixed-bottom-backdrop" />
+    </div>
+  );
+};
 
 const TourDetails = () => {
   const dispatch = useDispatch();
@@ -133,7 +194,7 @@ const TourDetails = () => {
 
   const [imagePath, setImagePath] = useState(packageDetails?.hotelImages[0]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isOpen2, setIsOpen2] = useState(false);
 
   return (
@@ -172,12 +233,12 @@ const TourDetails = () => {
 
             <div className=" col-span-12 lg:col-span-4 mt-10  ">
               {/* ==============================================  Hero Section Right Side Bar ===================================== */}
-              <div className="bg-[#FFFFFF] shadow-md rounded-3xl p-10 mb-16 border">
+              <div className="bg-[#FFFFFF] shadow-md rounded-3xl p-10 mb-16 border hidden lg:block">
                 <div className="mb-10">
                   <EditableHeading
                     titleKey="tourdetails.price"
                     defaultTitle="Prezzo del pacchetto"
-                    customTitleClass="text-[16px] text-[#1C1C1C] text-center ml-[10%]"
+                    customTitleClass="text-[20px] font-semibold primary_text text-center ml-[5%] "
                   />
                   <span className="flex justify-center gap-10 mt-5">
                     <h2 className="flex items-center font-semibold text-[36px] text-[#25CE50] ">
@@ -238,7 +299,7 @@ const TourDetails = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-12  gap-4">
+          <div className="grid grid-cols-12 mb-10 gap-4">
             <div className="col-span-12 lg:col-span-8 mt-5 order-last lg:order-first">
               <div className="bg-[#FFFFFF] p-5 rounded-3xl shadow border ">
                 {/* Dropdown Header */}
@@ -261,7 +322,7 @@ const TourDetails = () => {
                 {isOpen && (
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 text-[#1C1C1C]">
                     {/* Cosa è incluso */}
-                    <div className="p-5 border-r">
+                    <div className="p-5 lg:border-r border-b lg:border-b-0">
                       <h2 className="text-lg font-semibold flex items-center mb-4">
                         <img className="mr-2" src={yes} alt="" />
                         Cosa è incluso
@@ -439,7 +500,7 @@ rto"
                   </div>
                 </div>
 
-                <div className=" col-span-12 lg:col-span-5 h-[400px] lg:h-[720px] w-[100%]  ">
+                <div className=" col-span-12 lg:col-span-5 h-[300px] lg:h-[600px] w-[100%]  ">
                   <img
                     className="h-full w-[100%] rounded-xl object-cover "
                     src={`${base_url}${
@@ -513,73 +574,82 @@ rto"
           </ParentComponent>
         </div>
       </div>
+
+      {/* Add padding at the bottom to prevent content from being hidden behind fixed section */}
+      <div className="pb-24 lg:pb-0">
+        {/* Add the fixed bottom section */}
+        <MobileFixedBottom
+          packageDetails={packageDetails}
+          navigate={navigate}
+        />
+      </div>
     </div>
   );
 };
-const ImageGallery = ({ images }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+// const ImageGallery = ({ images }) => {
+//   const [selectedImage, setSelectedImage] = useState(null);
 
-  return (
-    <div className="bg-[#fff] py-16">
-      <ParentComponent>
-        <div className="text-center mb-12">
-          <EditableHeading
-            titleKey="gallery.title"
-            defaultTitle="ESPLORA LA TUA DESTINAZIONE"
-            customTitleClass="uppercase font-bold text-[32px] primary_text mb-4"
-          />
-          <EditableHeading
-            titleKey="gallery.subtitle"
-            defaultTitle="Scopri la bellezza attraverso i nostri scatti"
-            customTitleClass="text-[#72777F] text-lg"
-          />
-        </div>
+//   return (
+//     <div className="bg-[#fff] py-16">
+//       <ParentComponent>
+//         <div className="text-center mb-12">
+//           <EditableHeading
+//             titleKey="gallery.title"
+//             defaultTitle="ESPLORA LA TUA DESTINAZIONE"
+//             customTitleClass="uppercase font-bold text-[32px] primary_text mb-4"
+//           />
+//           <EditableHeading
+//             titleKey="gallery.subtitle"
+//             defaultTitle="Scopri la bellezza attraverso i nostri scatti"
+//             customTitleClass="text-[#72777F] text-lg"
+//           />
+//         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* Large featured image */}
-          <div className="col-span-2 row-span-2">
-            <img
-              src={`${base_url}${images[0]}`}
-              alt="Featured"
-              className="w-full h-full object-cover rounded-xl cursor-pointer hover:opacity-90 transition duration-300"
-              onClick={() => setSelectedImage(images[0])}
-            />
-          </div>
+//         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+//           {/* Large featured image */}
+//           <div className="col-span-2 row-span-2">
+//             <img
+//               src={`${base_url}${images[0]}`}
+//               alt="Featured"
+//               className="w-full h-full object-cover rounded-xl cursor-pointer hover:opacity-90 transition duration-300"
+//               onClick={() => setSelectedImage(images[0])}
+//             />
+//           </div>
 
-          {/* Smaller images */}
-          {images.slice(1).map((image, index) => (
-            <div key={index} className="overflow-hidden rounded-xl">
-              <img
-                src={`${base_url}${image}`}
-                alt={`Gallery ${index + 1}`}
-                className="w-full h-64 object-cover cursor-pointer hover:scale-110 transition duration-300"
-                onClick={() => setSelectedImage(image)}
-              />
-            </div>
-          ))}
-        </div>
-      </ParentComponent>
+//           {/* Smaller images */}
+//           {images.slice(1).map((image, index) => (
+//             <div key={index} className="overflow-hidden rounded-xl">
+//               <img
+//                 src={`${base_url}${image}`}
+//                 alt={`Gallery ${index + 1}`}
+//                 className="w-full h-64 object-cover cursor-pointer hover:scale-110 transition duration-300"
+//                 onClick={() => setSelectedImage(image)}
+//               />
+//             </div>
+//           ))}
+//         </div>
+//       </ParentComponent>
 
-      {/* Modal for full-size image view */}
-      {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-7xl w-full">
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
-            >
-              <IoClose size={32} />
-            </button>
-            <img
-              src={`${base_url}${selectedImage}`}
-              alt="Selected"
-              className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
-            />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+//       {/* Modal for full-size image view */}
+//       {selectedImage && (
+//         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+//           <div className="relative max-w-7xl w-full">
+//             <button
+//               onClick={() => setSelectedImage(null)}
+//               className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+//             >
+//               <IoClose size={32} />
+//             </button>
+//             <img
+//               src={`${base_url}${selectedImage}`}
+//               alt="Selected"
+//               className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
+//             />
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
 export default TourDetails;
