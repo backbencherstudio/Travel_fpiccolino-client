@@ -19,6 +19,7 @@ import {
   MdOutlineMapsHomeWork,
 } from "react-icons/md";
 import {
+  IoClose,
   IoCloudDoneOutline,
   IoFastFoodOutline,
   IoGameControllerOutline,
@@ -41,6 +42,11 @@ import {
 import EditableHeading from "../../Components/Common/EditableHeading";
 import CountdownTimer from "../../Components/Common/CountdownTimer";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const TourDetails = () => {
   const dispatch = useDispatch();
@@ -381,7 +387,7 @@ rto"
                   />
                   <EditableHeading
                     titleKey="paymentBellow.description"
-                    defaultTitle="Potrai acquistare il volo con noi direttamente in fase di prenotazione a soli 450€ scegliendo l’aeroporto di Milano. Il Vantaggio? Zero sbatti: ci occupiamo di tutto noi, anche in caso di modifiche da parte della compagnia aerea."
+                    defaultTitle="Potrai acquistare il volo con noi direttamente in fase di prenotazione a soli 450€ scegliendo l'aeroporto di Milano. Il Vantaggio? Zero sbatti: ci occupiamo di tutto noi, anche in caso di modifiche da parte della compagnia aerea."
                     customTitleClass="text-[16px]  primary_text pt-3"
                   />
                 </div>
@@ -392,7 +398,7 @@ rto"
 
         {/* ====================================================  Hotail Section ============================= */}
         {packageDetails?.hotelImages?.length > 0 && (
-          <div className="bg-[#fdf0ea] mt-10">
+          <div className="bg-[#f5f6fa] mt-10">
             <ParentComponent>
               <div className="grid grid-cols-12 py-20 lg:gap-4 xl:gap-14 relative ">
                 <div className=" col-span-12 lg:col-span-7 flex flex-col justify-between">
@@ -446,10 +452,12 @@ rto"
             </ParentComponent>
           </div>
         )}
-
+        {packageDetails?.images?.length > 0 && (
+          <ImageGallery images={packageDetails?.images} />
+        )}
         {/* ==========================================  Testimonial ================================= */}
 
-        <div className="bg-[#ffffff] py-20">
+        <div className="bg-[#f5f6fa] py-20">
           <EditableHeading
             titleKey="testimonial.title"
             subtitleKey="testimonial.description"
@@ -459,12 +467,37 @@ rto"
 
           <ParentComponent>
             {packageReview && packageReview.length > 0 ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 my-12">
-                {packageReview.map((item) => (
-                  <div key={item._id}>
-                    <TestimonialCard item={item} />
-                  </div>
-                ))}
+              <div className="md:m-10">
+                <Swiper
+                  modules={[Autoplay, Pagination, Navigation]}
+                  spaceBetween={30}
+                  slidesPerView={1}
+                  autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                  }}
+                  breakpoints={{
+                    320: {
+                      slidesPerView: 1.5,
+                    },
+                    640: {
+                      slidesPerView: 2.5,
+                    },
+                    1024: {
+                      slidesPerView: 3.5,
+                    },
+                    1280: {
+                      slidesPerView: 4.5,
+                    },
+                  }}
+                  className="testimonial-swiper py-10"
+                >
+                  {packageReview.map((item) => (
+                    <SwiperSlide key={item._id}>
+                      <TestimonialCard item={item} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
               </div>
             ) : (
               <div className="text-center text-gray-600 my-5 py-20 border-dashed border">
@@ -483,74 +516,68 @@ rto"
     </div>
   );
 };
-
-const imageDetalse = () => {
+const ImageGallery = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-  };
-
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
-
   return (
-    <div className="text-black">
-      <HeroScetion heroContent={heroContent} />
-      <div className="bg-[#ffffff]">
-        <ParentComponent>
-          <div className="grid grid-cols-12 py-20 lg:gap-3 xl:gap-10 ">
-            <div className="col-span-12 lg:col-span-8">
-              <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mt-4 ">
-                {tags?.map((item, index) => (
-                  <div key={index}>
-                    <div className="flex bg-[#ffffff] px-4 py-2 items-center gap-2 rounded-full ">
-                      <img
-                        className="size-8 object-cover rounded-lg cursor-pointer"
-                        src={
-                          packageDetails?.images[index]
-                            ? `${base_url}${packageDetails?.images[index]}`
-                            : `${base_url}${packageDetails?.images[0]}`
-                        }
-                        alt="Package Preview"
-                        onClick={() =>
-                          handleImageClick(
-                            packageDetails?.images[index] ||
-                              packageDetails?.images[0]
-                          )
-                        }
-                      />
-                      {item?.tag}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </ParentComponent>
+    <div className="bg-[#fff] py-16">
+      <ParentComponent>
+        <div className="text-center mb-12">
+          <EditableHeading
+            titleKey="gallery.title"
+            defaultTitle="ESPLORA LA TUA DESTINAZIONE"
+            customTitleClass="uppercase font-bold text-[32px] primary_text mb-4"
+          />
+          <EditableHeading
+            titleKey="gallery.subtitle"
+            defaultTitle="Scopri la bellezza attraverso i nostri scatti"
+            customTitleClass="text-[#72777F] text-lg"
+          />
+        </div>
 
-        {/* MODAL FOR SHOWING LARGE IMAGE */}
-        <Modal
-          isOpen={!!selectedImage}
-          onRequestClose={closeModal}
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70"
-        >
-          <div className="relative bg-white p-4 rounded-lg max-w-3xl w-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {/* Large featured image */}
+          <div className="col-span-2 row-span-2">
+            <img
+              src={`${base_url}${images[0]}`}
+              alt="Featured"
+              className="w-full h-full object-cover rounded-xl cursor-pointer hover:opacity-90 transition duration-300"
+              onClick={() => setSelectedImage(images[0])}
+            />
+          </div>
+
+          {/* Smaller images */}
+          {images.slice(1).map((image, index) => (
+            <div key={index} className="overflow-hidden rounded-xl">
+              <img
+                src={`${base_url}${image}`}
+                alt={`Gallery ${index + 1}`}
+                className="w-full h-64 object-cover cursor-pointer hover:scale-110 transition duration-300"
+                onClick={() => setSelectedImage(image)}
+              />
+            </div>
+          ))}
+        </div>
+      </ParentComponent>
+
+      {/* Modal for full-size image view */}
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-7xl w-full">
             <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 bg-gray-200 p-2 rounded-full text-black hover:bg-gray-300"
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
             >
-              ✕
+              <IoClose size={32} />
             </button>
             <img
               src={`${base_url}${selectedImage}`}
-              alt="Selected Preview"
-              className="w-full h-auto rounded-lg"
+              alt="Selected"
+              className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
             />
           </div>
-        </Modal>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

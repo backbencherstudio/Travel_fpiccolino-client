@@ -17,7 +17,7 @@ const TestimonialCard = ({ item }) => {
         scrollbarWidth: "none",
         msOverflowStyle: "none",
       }}
-      className=" p-6 h-[280px] overflow-auto relative shadow-lg rounded-3xl border"
+      className=" p-6 h-[270px] overflow-auto relative shadow-lg rounded-3xl border bg-white"
     >
       <div className="flex items-center">
         {userImg && (
