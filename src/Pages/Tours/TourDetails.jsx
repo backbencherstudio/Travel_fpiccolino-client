@@ -467,7 +467,7 @@ rto"
                     <EditableHeading
                       titleKey="accommodation.title"
                       defaultTitle="DOVE ALLOGGERAI"
-                      customTitleClass="uppercase font-bold text-[32px]  md:w-full text-start"
+                      customTitleClass="uppercase font-bold text-[32px]  md:w-full text-start primary_text"
                     />
                     <h2 className="text-[20px] mt-10 font-semibold ">
                       {packageDetails?.hotelName}
