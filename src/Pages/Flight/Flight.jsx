@@ -216,6 +216,14 @@ const Flight = () => {
                               : ""
                           } duration-300`}
                         >
+                          <div className="text-xs font-medium mb-2 flex items-center primary_text">
+                            {/* <EditableHeading
+                              titleKey="flight.flightdate"
+                              defaultTitle="Data del volo"
+                              customTitleClass="text-md primary_text "
+                            /> */}
+                            {moment(item.flightDate).format("DD/MM/YYYY")}
+                          </div>
                           <div className="flex items-center justify-between gap-2">
                             <h3 className="text-center text-[14px] font-medium text-[#000000]">
                               {item.flightFrom}

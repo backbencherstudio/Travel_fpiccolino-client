@@ -1,19 +1,27 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Grid, Typography, Slider, Box, Modal } from "@mui/material";
-import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  LocalizationProvider,
+  TimePicker,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import moment from "moment";
+import dayjs from "dayjs";
 
 import { DeleteOutlineOutlined } from "@mui/icons-material";
+import { Controller, useForm } from "react-hook-form";
 
 const FlightBookingForm = ({
   openModal,
   setOpenModal,
   setBookedFlights,
   bookedFlights,
+  editData,
 }) => {
   const [formData, setFormData] = useState({
+    flightDate: null,
     flightType: "single",
     flightFrom: "",
     flightTo: "",
@@ -27,7 +35,7 @@ const FlightBookingForm = ({
     duration2: { hours: 2, minutes: 0 },
     price: 500,
   });
-
+  const { control } = useForm();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -63,9 +71,23 @@ const FlightBookingForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // Add the current flight data to the bookedFlights state
+
+    // Validate date
+    if (!formData.flightDate) {
+      alert("Please select a flight date");
+      return;
+    }
+
+    if (dayjs(formData.flightDate).isBefore(dayjs(), "day")) {
+      alert("Cannot select a past date");
+      return;
+    }
+
     const formattedFormData = {
       ...formData,
+      flightDate: formData.flightDate
+        ? formData.flightDate.format("YYYY-MM-DD")
+        : null,
       departureTime: formData.departureTime
         ? formData.departureTime.format("HH:mm")
         : null,
@@ -82,23 +104,29 @@ const FlightBookingForm = ({
       duration2: `${formData.duration2.hours}h ${formData.duration2.minutes}m`,
     };
 
-    // Add the current flight data to the bookedFlights state
+    console.log("Formatted form data:", formattedFormData); // Debug
+
     setBookedFlights([
       ...bookedFlights,
-      { ...formattedFormData, id: bookedFlights.length + 1 },
+      {
+        ...formattedFormData,
+        id: bookedFlights.length + 1,
+      },
     ]);
-    // Reset form after submission
+
+    // Reset form
     setFormData({
+      flightDate: null,
       flightType: "single",
       flightFrom: "",
       flightTo: "",
       departureTime: null,
       arrivalTime: null,
+      duration1: { hours: 2, minutes: 0 },
       flightFrom2: "",
       flightTo2: "",
       departureTime2: null,
       arrivalTime2: null,
-      duration1: { hours: 2, minutes: 0 },
       duration2: { hours: 2, minutes: 0 },
       price: 500,
     });
@@ -152,6 +180,39 @@ const FlightBookingForm = ({
     return marks;
   };
 
+  useEffect(() => {
+    if (editData) {
+      setFormData({
+        ...editData,
+        flightDate: editData.flightDate ? moment(editData.flightDate) : null,
+        departureTime: editData.departureTime
+          ? moment(editData.departureTime, "HH:mm")
+          : null,
+        arrivalTime: editData.arrivalTime
+          ? moment(editData.arrivalTime, "HH:mm")
+          : null,
+        departureTime2: editData.departureTime2
+          ? moment(editData.departureTime2, "HH:mm")
+          : null,
+        arrivalTime2: editData.arrivalTime2
+          ? moment(editData.arrivalTime2, "HH:mm")
+          : null,
+        duration1: editData.duration1
+          ? {
+              hours: parseInt(editData.duration1.split("h")[0]),
+              minutes: parseInt(editData.duration1.split("h")[1].split("m")[0]),
+            }
+          : { hours: 2, minutes: 0 },
+        duration2: editData.duration2
+          ? {
+              hours: parseInt(editData.duration2.split("h")[0]),
+              minutes: parseInt(editData.duration2.split("h")[1].split("m")[0]),
+            }
+          : { hours: 2, minutes: 0 },
+      });
+    }
+  }, [editData]);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div
@@ -200,6 +261,40 @@ const FlightBookingForm = ({
             </Typography>
             <form onSubmit={handleSubmit} className="overflow-y-auto">
               <Grid container spacing={2} sx={{ pb: 2 }}>
+                {/* First Flight Date */}
+                <Grid item xs={12}>
+                  <div>
+                    <p className="text-[16px] mb-2">Flight Date</p>
+                    <DatePicker
+                      value={formData.flightDate}
+                      onChange={(newValue) => {
+                        console.log("Selected date:", newValue);
+                        setFormData((prev) => ({
+                          ...prev,
+                          flightDate: newValue,
+                        }));
+                      }}
+                      label="Flight Date"
+                      minDate={dayjs()}
+                      disablePast={true}
+                      slotProps={{
+                        textField: {
+                          size: "small",
+                          fullWidth: true,
+                          format: "DD/MM/YYYY",
+                          error:
+                            formData.flightDate &&
+                            dayjs(formData.flightDate).isBefore(dayjs(), "day"),
+                          helperText:
+                            formData.flightDate &&
+                            dayjs(formData.flightDate).isBefore(dayjs(), "day")
+                              ? "Cannot select a past date"
+                              : "",
+                        },
+                      }}
+                    />
+                  </div>
+                </Grid>
                 {/* Flight Type Selection */}
                 <Grid item xs={12}>
                   <Typography variant="subtitle1" gutterBottom>
@@ -565,7 +660,7 @@ const FlightBookingForm = ({
           <Box mt={1}>
             {bookedFlights.map((flight) => (
               <Box
-                key={flight.id}
+                key={flight.id || flight._id}
                 sx={{
                   border: "1px solid orange",
                   padding: "16px",
@@ -590,6 +685,14 @@ const FlightBookingForm = ({
                     <span className="ml-4">
                       Price:{" "}
                       <span className="primary_text">€{flight.price}</span>
+                    </span>
+                    <span className="ml-4">
+                      Flight Date:{" "}
+                      <span className="primary_text">
+                        {flight.flightDate
+                          ? moment(flight.flightDate).format("DD/MM/YYYY")
+                          : "Not specified"}
+                      </span>
                     </span>
                   </div>
                   <DeleteOutlineOutlined
