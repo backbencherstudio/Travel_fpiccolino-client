@@ -238,40 +238,38 @@ const TourDetails = () => {
                   <EditableHeading
                     titleKey="tourdetails.price"
                     defaultTitle="Prezzo del pacchetto"
-                    customTitleClass="text-[20px] font-semibold primary_text text-center ml-[5%] "
+                    customTitleClass="text-[20px] text-gray-700 font-medium text-center ml-[5%] "
                   />
-                  <span className="flex justify-center gap-10 mt-5">
-                    <h2 className="flex items-center font-semibold text-[36px] text-[#25CE50] ">
+                  <span className="flex justify-center gap-5 mt-3">
+                    <h2 className="flex items-center font-semibold text-[36px] text-[#eb565c] ">
                       {" "}
-                      €{packageDetails?.amount}
+                      {packageDetails?.amount} €
                     </h2>
                     <h2 className=" flex items-center ">
                       {" "}
-                      <span className="text-red-500 line-through font-semibold text-[22px] ">
-                        €
-                      </span>
                       <EditableHeading
                         titleKey={`tourdetails.price_${packageDetails?._id}`}
                         defaultTitle={`${parseInt(
                           packageDetails?.amount * 1.12
                         )}`}
-                        customTitleClass="flex items-center font-semibold text-[22px] text-red-500 line-through"
+                        customTitleClass="flex items-center font-bold text-[28px] text-[#818181] line-through"
                       />
+                      {/* <span className="text-[#818181] line-through font-semibold text-[22px] "></span> */}
                     </h2>
                   </span>
-                  {packageDetails?.tourDate && (
-                    <div className="mt-3">
-                      {/* <EditableHeading
-                        titleKey="tourdetails.time_remaining"
-                        defaultTitle="Time Remaining Until Tour"
-                        customTitleClass="text-xs text-gray-600 mb-1 text-center"
-                      /> */}
-                      <CountdownTimer tourDate={packageDetails.tourDate} />
-                    </div>
-                  )}
+
+                  <h2 className=" flex justify-center">
+                    {" "}
+                    <EditableHeading
+                      titleKey={`tourdetails.titlebelowprice`}
+                      defaultTitle={`O 3 rate da 100€ senza interessi`}
+                      customTitleClass="flex items-center text-[18px] text-[#818181] font-medium"
+                    />
+                    {/* <span className="text-[#818181] line-through font-semibold text-[22px] "></span> */}
+                  </h2>
                 </div>
                 <div>
-                  <h2 className="text-center border rounded-lg px-8 py-4 mb-4 text-[#141D2A]">
+                  <h2 className="text-center border rounded-xl font-normal px-8 py-4 mb-4 text-[#121a24]">
                     {moment(packageDetails?.tourDate)
                       .utc()
                       .format("DD/MM/YYYY")}{" "}
@@ -285,7 +283,7 @@ const TourDetails = () => {
                   </h2> */}
                   <div className="group relative inline-block w-full">
                     <button
-                      className="text-center block border rounded-lg bg-[#E86731] px-8 py-4 mb-4 w-full"
+                      className="text-center block border rounded-xl bg-[#E86731] px-8 py-4 mb-4 w-full"
                       onClick={() => navigate(`/flight/${packageDetails?._id}`)}
                     >
                       <EditableHeading

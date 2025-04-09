@@ -10,7 +10,6 @@ import FlightBookingForm from "./FlightForm";
 import { Controller, useForm } from "react-hook-form";
 import InsuranceForm from "./InsuranceForm";
 import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
-import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import { useParams } from "react-router-dom";
@@ -79,6 +78,7 @@ const UpdatePackage = () => {
         setValue("destination", result?.destination);
         setValue("amount", result?.amount);
         setValue("tourDate", dayjs(result?.tourDate));
+        setValue("offerEndsIn", dayjs(result?.offerEndsIn));
         setValue("tourDuration.nights", result?.tourDuration?.nights);
         setValue("tourDuration.days", result?.tourDuration?.days);
         setValue("hotelName", result?.hotelName);
@@ -275,28 +275,52 @@ const UpdatePackage = () => {
               />
 
               <div className="grid xl:grid-cols-2 mt-3">
-                <div>
-                  <p className="text-[16px] mb-2">Tour Date</p>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Controller
-                      name="tourDate"
-                      control={control}
-                      defaultValue={dayjs(packageDetails?.tourDate)}
-                      render={({ field }) => (
-                        <DatePicker
-                          {...field}
-                          label="Tour Date"
-                          value={field.value || dayjs(packageDetails?.tourDate)}
-                          object
-                          onChange={(date) => field.onChange(date)}
-                          slotProps={{ textField: { size: "small" } }}
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
+                <div className="flex gap-4">
+                  <div>
+                    <p className="text-[16px] mb-2">Offer Ends In</p>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Controller
+                        name="offerEndsIn"
+                        control={control}
+                        defaultValue={dayjs(packageDetails?.offerEndsIn)}
+                        render={({ field }) => (
+                          <DatePicker
+                            {...field}
+                            label="Offer Ends In"
+                            value={
+                              field.value || dayjs(packageDetails?.offerEndsIn)
+                            }
+                            slotProps={{ textField: { size: "small" } }}
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </div>
+                  <div>
+                    <p className="text-[16px] mb-2">Tour Date</p>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Controller
+                        name="tourDate"
+                        control={control}
+                        defaultValue={dayjs(packageDetails?.tourDate)}
+                        render={({ field }) => (
+                          <DatePicker
+                            {...field}
+                            label="Tour Date"
+                            value={
+                              field.value || dayjs(packageDetails?.tourDate)
+                            }
+                            object
+                            onChange={(date) => field.onChange(date)}
+                            slotProps={{ textField: { size: "small" } }}
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </div>
                 </div>
 
-                <div className="xl:mt-0 mt-3 ">
+                <div className="xl:mt-0 mt-3 ml-3">
                   <p className="text-[16px]">Tour Duration</p>
                   <div className="flex gap-5 mt-2">
                     <p className="text-[16px] mb-2">Nights:</p>

@@ -11,7 +11,7 @@ const TureCard = ({ item, texts, handleEditClick }) => {
     tourDuration,
     amount: price,
     bookedFlights,
-    tourDate,
+    offerEndsIn,
   } = item;
 
   return (
@@ -58,7 +58,9 @@ const TureCard = ({ item, texts, handleEditClick }) => {
               {texts[`tourdetails.price_${item._id}`] || parseInt(price * 1.12)}
             </s>
           </p>
-          {tourDate && <CountdownTimer tourDate={tourDate} texts={texts} />}
+          {offerEndsIn && (
+            <CountdownTimer tourDate={offerEndsIn} texts={texts} />
+          )}
         </div>
       </div>
     </div>

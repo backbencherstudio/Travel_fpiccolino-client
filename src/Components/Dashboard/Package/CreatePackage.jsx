@@ -10,7 +10,6 @@ import FlightBookingForm from "./FlightForm";
 import { Controller, useForm } from "react-hook-form";
 import InsuranceForm from "./InsuranceForm";
 import CustomDashboardButton from "../../../Shared/CustomDashboardButton";
-import SelectCategory from "./SelectCategory";
 import { DeleteOutlined } from "@mui/icons-material";
 import { FaPlusSquare } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -101,10 +100,6 @@ const CreatePackage = () => {
       toast.warn("Please select a country.");
       return;
     }
-    // if (!category) {
-    //   toast.warn("Package category is required.");
-    //   return;
-    // }
 
     const packageData = {
       ...data,
@@ -119,13 +114,12 @@ const CreatePackage = () => {
       hotelName,
       hotelAbout,
       hotelImages,
+      offerEndsIn: data.offerEndsIn,
     };
-    console.log(packageData);
 
     if (isCreate) {
       try {
         const response = await dispatch(createPackage(packageData));
-        console.log("responce", response);
         if (!response?.error) {
           reset();
           setBookedFlights([]);
@@ -138,8 +132,7 @@ const CreatePackage = () => {
           setCategory("");
           toast.success(response?.payload.message);
           setIsCreate(false);
-          window.location.reload();
-          navigate("/dashboard/packages");
+          // navigate("/dashboard/packages");
         } else {
           toast.error(`${response?.payload?.error._message}`);
           setIsCreate(false);
@@ -150,7 +143,6 @@ const CreatePackage = () => {
       }
     }
   };
-  console.log(bookedFlights);
 
   const handleImageUpload = (e) => {
     e.stopPropagation();
@@ -246,21 +238,39 @@ const CreatePackage = () => {
               />
 
               <div className="grid grid-cols-2 gap-10 mt-3">
-                <div>
-                  <p className="text-[16px] mb-2">Tour Date</p>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Controller
-                      name="tourDate"
-                      control={control}
-                      render={({ field }) => (
-                        <DatePicker
-                          {...field}
-                          label="Tour Date"
-                          slotProps={{ textField: { size: "small" } }}
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
+                <div className="flex gap-4">
+                  <div>
+                    <p className="text-[16px] mb-2">Offer Ends In</p>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Controller
+                        name="offerEndsIn"
+                        control={control}
+                        render={({ field }) => (
+                          <DatePicker
+                            {...field}
+                            label="Offer Ends In"
+                            slotProps={{ textField: { size: "small" } }}
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </div>
+                  <div>
+                    <p className="text-[16px] mb-2">Tour Date</p>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Controller
+                        name="tourDate"
+                        control={control}
+                        render={({ field }) => (
+                          <DatePicker
+                            {...field}
+                            label="Tour Date"
+                            slotProps={{ textField: { size: "small" } }}
+                          />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </div>
                 </div>
 
                 <div>

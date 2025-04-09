@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
-import EditableHeading from "./EditableHeading";
 import { useParams } from "react-router-dom";
 
 const FlipCard = ({ value, label }) => {
-  const params = useParams();
   // Ensure two digits
   const displayValue = value.toString().padStart(2, "0");
 
@@ -13,10 +11,8 @@ const FlipCard = ({ value, label }) => {
       <div className="flex">
         {displayValue.split("").map((digit, index) => (
           <div key={index} className="relative mx-[1px]">
-            <div className="w-5 text-center h-7  rounded-sm flex items-center justify-center">
-              <div className="text-[#d4ddff] bg-[#1456fe] font-semibold rounded-[3px] text-lg h-full w-full">
-                {digit}
-              </div>
+            <div className=" text-center h-7  rounded-sm flex items-center justify-center">
+              <div className="primary_text font-medium h-full">{digit}</div>
             </div>
             {/* Add horizontal line in middle */}
             {/* <div
@@ -27,13 +23,12 @@ const FlipCard = ({ value, label }) => {
           </div>
         ))}
       </div>
-      <span className="text-xs mt-1 text-gray-500">{label}</span>
+      <span className="text-xs text-gray-500">{label}</span>
     </div>
   );
 };
 
 const CountdownTimer = ({ tourDate, texts }) => {
-  const params = useParams();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
