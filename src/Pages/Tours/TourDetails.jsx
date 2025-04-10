@@ -269,13 +269,23 @@ const TourDetails = () => {
                   </h2>
                 </div>
                 <div>
-                  <h2 className="text-center border rounded-xl font-normal px-8 py-4 mb-4 text-[#121a24]">
+                  <h2 className="text-center border rounded-xl font-medium px-8 py-4 mb-4 text-[#212b36]">
                     {moment(packageDetails?.tourDate)
                       .utc()
-                      .format("DD/MM/YYYY")}{" "}
-                    <br />
-                    {packageDetails?.tourDuration?.nights} Notti &{" "}
-                    {packageDetails?.tourDuration?.days} Giorni
+                      .add(packageDetails?.tourDuration?.days, "days")
+                      .format("DD MMM")}{" "}
+                    -{" "}
+                    {moment(packageDetails?.tourDate)
+                      .utc()
+                      .add(
+                        packageDetails?.tourDuration?.days +
+                          packageDetails?.tourDuration?.nights,
+                        "days"
+                      )
+                      .format("DD MMM")}
+                    <span className="ml-2">
+                      {`(${packageDetails?.tourDuration?.nights}  Notti)`}
+                    </span>
                   </h2>
 
                   {/* <h2 className="text-center border bg-[#E867311A] text-[#FF5B00] rounded-lg px-8 py-4 mb-4">
