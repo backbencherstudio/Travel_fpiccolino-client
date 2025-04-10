@@ -240,11 +240,7 @@ const TourDetails = () => {
                     defaultTitle="Prezzo del pacchetto"
                     customTitleClass="text-[20px] text-gray-700 font-medium text-center ml-[5%] "
                   />
-                  <span className="flex justify-center gap-5 mt-3">
-                    <h2 className="flex items-center font-semibold text-[36px] text-[#eb565c] ">
-                      {" "}
-                      {packageDetails?.amount} €
-                    </h2>
+                  <span className="flex justify-center gap-3 mt-3">
                     <h2 className=" flex items-center ">
                       {" "}
                       <EditableHeading
@@ -255,6 +251,10 @@ const TourDetails = () => {
                         customTitleClass="flex items-center font-bold text-[28px] text-[#818181] line-through"
                       />
                       {/* <span className="text-[#818181] line-through font-semibold text-[22px] "></span> */}
+                    </h2>
+                    <h2 className="flex items-center font-semibold text-[36px] text-[#eb565c] ">
+                      {" "}
+                      {packageDetails?.amount} €
                     </h2>
                   </span>
 
