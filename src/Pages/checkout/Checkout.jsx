@@ -119,7 +119,7 @@ const Checkout = () => {
                     </button>
                   </div>
 
-                  <div className="h-96 overflow-y-auto">
+                  <div className="max-h-[70vh] overflow-y-auto">
                     {paymentMethod === "stripe" ? (
                       <Elements stripe={stripePromise}>
                         <StripeForm checkoutNewData={checkoutNewData} />

@@ -14,8 +14,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import EditableHeading from "../../Components/Common/EditableHeading";
 import { base_url } from "../../utils/base_path";
+import { IoIosCard } from "react-icons/io";
+import klarna from "../../assets/payment/klarna.jpeg";
 
 const StripeForm = ({ checkoutNewData }) => {
+  const [isCard, setIsCard] = useState(true);
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
@@ -23,6 +26,7 @@ const StripeForm = ({ checkoutNewData }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
@@ -118,7 +122,49 @@ const StripeForm = ({ checkoutNewData }) => {
           required
         />
       </div>
-
+      <div className="grid grid-cols-2 gap-3 mb-2">
+        <button
+          onClick={() => setIsCard(true)}
+          className={`border text-start p-1 px-2 rounded-lg text-sm ${
+            isCard ? "border-orange-500" : ""
+          }`}
+        >
+          <IoIosCard size={20} />
+          <p>Card</p>
+        </button>
+        <button
+          onClick={() => setIsCard(false)}
+          className={`border text-start p-1 px-2 rounded-lg text-sm ${
+            isCard ? "" : "border-orange-500"
+          }`}
+        >
+          <img src={klarna} width={20} height={20} alt="" />
+          <p>Klarna</p>
+        </button>
+      </div>
+      {!isCard && (
+        <div className="mb-2">
+          <label
+            className="block text-lg font-semibold mb-2 text-gray-700"
+            htmlFor="name"
+          >
+            <EditableHeading
+              titleKey="checkout.name"
+              defaultTitle="Name"
+              customTitleClass="text-lg font-semibold mb-2 text-gray-700"
+            />
+          </label>
+          <input
+            type="name"
+            id="name"
+            className="w-full p-3 border rounded-lg focus:ring-blue-500 focus:outline-none"
+            placeholder="inserisci la tua nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+      )}
       <div className="mb-2">
         <label className="block text-lg font-semibold mb-2 text-gray-700">
           <EditableHeading
