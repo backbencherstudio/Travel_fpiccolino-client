@@ -73,12 +73,14 @@ const UpdatePackage = () => {
         setUploadedHotelImages(result?.hotelImages || []);
         setSelectedCountry(result?.country);
         setCategory(result?.category);
+        
+        // Fix: Properly set the date values using dayjs
         setValue("tourName", result?.tourName);
         setValue("tourDescription", result?.tourDescription);
         setValue("destination", result?.destination);
         setValue("amount", result?.amount);
-        setValue("tourDate", dayjs(result?.tourDate));
-        setValue("offerEndsIn", dayjs(result?.offerEndsIn));
+        setValue("offerEndsIn", result?.offerEndsIn ? dayjs(result?.offerEndsIn) : null);
+        setValue("tourDate", result?.tourDate ? dayjs(result?.tourDate) : null);
         setValue("tourDuration.nights", result?.tourDuration?.nights);
         setValue("tourDuration.days", result?.tourDuration?.days);
         setValue("hotelName", result?.hotelName);
@@ -91,7 +93,7 @@ const UpdatePackage = () => {
     };
 
     fetchData();
-  }, [params.id]);
+  }, [params.id, setValue]);
   const onSubmit = (data) => {
     const allImages = [...uploadedImages, ...images];
     const allHotelImages = [...uploadedHotelImages, ...hotelImages];
@@ -135,7 +137,11 @@ const UpdatePackage = () => {
       images: allImages,
       hotelImages: allHotelImages,
       ...data,
+      // Fix: Format dates properly before sending to the server
+      offerEndsIn: data.offerEndsIn ? data.offerEndsIn.format('YYYY-MM-DD') : null,
+      tourDate: data.tourDate ? data.tourDate.format('YYYY-MM-DD') : null,
     };
+
     if (isUpdate) {
       dispatch(updatePackage({ packageId: params.id, data: packageData }))
         .unwrap()
