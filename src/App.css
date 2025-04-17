@@ -1,9 +1,6 @@
-@font-face {
-  font-family: "Stapel";
-  src: url("../public/assets/fonts/stapel/Stapel-Light.ttf") format("truetype");
-}
 body {
-  font-family: "Stapel";
+  font-family: "Stapel", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background-color: white !important;
   color: #141d2a;
 }
@@ -66,4 +63,32 @@ body {
 }
 .ql-editor h6 {
   font-size: 0.67em;
+}
+@font-face {
+  font-family: "Stapel";
+  src: url("/assets/fonts/stapel/Stapel-Light.woff2") format("woff2"),
+    url("/assets/fonts/stapel/Stapel-Light.woff") format("woff"),
+    url("/assets/fonts/stapel/Stapel-Light.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Stapel";
+  src: url("/assets/fonts/stapel/Stapel-Medium.woff2") format("woff2"),
+    url("/assets/fonts/stapel/Stapel-Medium.woff") format("woff"),
+    url("/assets/fonts/stapel/Stapel-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stapel";
+  src: url("/assets/fonts/stapel/Stapel-Bold.woff2") format("woff2"),
+    url("/assets/fonts/stapel/Stapel-Bold.woff") format("woff"),
+    url("/assets/fonts/stapel/Stapel-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
