@@ -50,6 +50,7 @@ const StripeForm = ({ checkoutNewData }) => {
       const { data } = await axios.post(`${base_url}/order/stripePayment`, {
         paymentMethodId: paymentMethod.id,
         amount: parseInt(checkoutNewData?.toureAmount),
+        email
       });
       const orderData = {
         ...checkoutNewData,

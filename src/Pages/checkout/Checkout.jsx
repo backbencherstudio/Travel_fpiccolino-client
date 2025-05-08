@@ -9,7 +9,7 @@ import { createOrder } from "../../features/order/orderSlice";
 import Footer from "../../Shared/Footer";
 import { GoChevronLeft } from "react-icons/go";
 import ParentComponent from "../../Shared/ParentComponent/ParentComponent";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EditableHeading from "../../Components/Common/EditableHeading";
 
 const stripePromise = loadStripe(
@@ -20,6 +20,11 @@ const Checkout = () => {
   const { checkoutNewData } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState("stripe");
+
+
+  const condroUser =  JSON.parse(localStorage.getItem("user"))
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     dispatch(getCheckoutNewData());
@@ -33,11 +38,18 @@ const Checkout = () => {
     const orderData = {
       ...checkoutNewData,
       paymentId: data.id,
+      email : condroUser.email,
+      // name : condroUser.name
     };
 
     if (orderData) {
       const res = await dispatch(createOrder(orderData));
-      console.log(res);
+      console.log(47, res);
+      
+      if (res) {
+        alert("Payment successful!");
+        navigate("/");
+      }
     }
   };
 
@@ -99,21 +111,19 @@ const Checkout = () => {
                   <div className="flex space-x-4 mb-6">
                     <button
                       onClick={() => handlePaymentMethodChange("stripe")}
-                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${
-                        paymentMethod === "stripe"
+                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${paymentMethod === "stripe"
                           ? "bg-orange-600 text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      }`}
+                        }`}
                     >
                       Carta di credito
                     </button>
                     <button
                       onClick={() => handlePaymentMethodChange("paypal")}
-                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${
-                        paymentMethod === "paypal"
+                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${paymentMethod === "paypal"
                           ? "bg-orange-600 text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      }`}
+                        }`}
                     >
                       PayPal
                     </button>
@@ -161,7 +171,7 @@ const Checkout = () => {
                               getPaypalSuccessDataFun(details);
                               alert(
                                 "Pagamento approvato: " +
-                                  details.payer.name.given_name
+                                details.payer.name.given_name
                               );
                             });
                           }}
