@@ -138,7 +138,7 @@ const Checkout = () => {
                       <PayPalScriptProvider
                         options={{
                           "client-id":
-                            "AUHCLLlrN0fUteHTIYiBX7ZOoduVvF0mp4QSDUQOf_m2GohS_kVr6z8CbTJgOMnGNyMAiLsx_EWf8l5C",
+                            "AdecvjVGBMD_ZJKohm832NPjtsban2kujw3BGQDIox4Ub2bUVDUON7T0NjnhsntKYCj_P5Vlj7YxA7-A",
                           currency: "EUR",
                           "disable-funding": "paylater",
                         }}
