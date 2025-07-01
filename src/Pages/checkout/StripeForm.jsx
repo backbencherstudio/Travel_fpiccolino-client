@@ -56,16 +56,19 @@ const StripeForm = ({ checkoutNewData }) => {
         ...checkoutNewData,
         paymentId: data?.paymentIntent.id,
       };
+       console.log( 59, "orderData: ", orderData)
+
       if (orderData) {
+       
         const res = await dispatch(createOrder(orderData));
         console.log(res);
       }
 
-      if (data.success) {
-        setSuccess(true);
-        alert("Payment successful!");
-        navigate("/");
-      }
+      // if (data.success) {
+      //   setSuccess(true);
+      //   alert("Payment successful!");
+      //   navigate("/");
+      // }
     } catch (err) {
       setError("Payment failed.");
     }
