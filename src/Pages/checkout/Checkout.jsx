@@ -13,8 +13,13 @@ import { Link, useNavigate } from "react-router-dom";
 import EditableHeading from "../../Components/Common/EditableHeading";
 
 const stripePromise = loadStripe(
-  "pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha"
+  "pk_live_51REuOcE7oWaofeXXM2P5Jgt21Cwoc0zzBklopnjIf4aiJorOaHJqRNNhNuC1LAq2ATXkJzF92fH4bEGXvF6pswmh005BRAR9T7"
 );
+// const stripePromise = loadStripe(
+//   "pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha"
+// );
+
+
 
 
 // const stripePromise = loadStripe(
@@ -45,7 +50,6 @@ const Checkout = () => {
       ...checkoutNewData,
       paymentId: data.id,
       email : condroUser.email,
-      // name : condroUser.name
     };
 
     if (orderData) {
