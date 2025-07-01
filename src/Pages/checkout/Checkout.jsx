@@ -20,6 +20,7 @@ const stripePromise = loadStripe(
 // );
 
 
+
 const Checkout = () => {
   const { checkoutNewData } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
@@ -43,7 +44,6 @@ const Checkout = () => {
       ...checkoutNewData,
       paymentId: data.id,
       email : condroUser.email,
-      // name : condroUser.name
     };
 
     if (orderData) {
