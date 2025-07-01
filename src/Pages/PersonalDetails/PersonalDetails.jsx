@@ -97,6 +97,9 @@ const PersonalDetails = () => {
     navigate(`/flight/${checkout?.toureId}`);
   };
 
+  console.log("================================");
+  // console.log("checkout?.insurance", checkout?.insurance[0]?.price)
+
   return (
     <div>
       <div className="">
@@ -443,11 +446,12 @@ const PersonalDetails = () => {
                       </h2>
                     </span>
                   )}
-                  {checkout?.insurance?.price && (
+
+                  {checkout?.insurance[0]?.price && Number(checkout?.insurance[0]?.price) > 0 && (
                     <span className="flex items-start justify-between mb-3">
                       <h2 className="flex items-center">Insurance</h2>
                       <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                        € {checkout?.insurance?.price}
+                        € {checkout?.insurance[0]?.price}
                       </h2>
                     </span>
                   )}

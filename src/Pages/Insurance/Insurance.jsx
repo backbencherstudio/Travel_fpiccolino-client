@@ -77,6 +77,8 @@ const Insurance = () => {
     dispatch(createCheckout({ ...toureData }));
     navigate(`/personalDetails`);
   };
+  // console.log("==============================================")
+  // console.log("Selected Insurances:", checkout?.insurance?.price);
 
   return (
     <div>
@@ -213,6 +215,21 @@ const Insurance = () => {
                       </h2>
                     </span>
                   )}
+
+                  {/* {checkout?.insurance?.price && (
+                    <span className="flex items-start justify-between mb-3">
+                      <h2 className="flex items-center">
+                        <EditableHeading
+                          titleKey="insurance.flight"
+                          defaultTitle="Importo del volo"
+                          customTitleClass="text-md"
+                        />
+                      </h2>
+                      <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                        € = {checkout?.insurance?.price}
+                      </h2>
+                    </span>
+                  )} */}
 
                   {selectedInsurances.length > 0 && (
                     <>
