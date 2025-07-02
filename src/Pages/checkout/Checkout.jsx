@@ -13,29 +13,16 @@ import { Link, useNavigate } from "react-router-dom";
 import EditableHeading from "../../Components/Common/EditableHeading";
 
 const stripePromise = loadStripe(
-  "pk_live_51REuOcE7oWaofeXXM2P5Jgt21Cwoc0zzBklopnjIf4aiJorOaHJqRNNhNuC1LAq2ATXkJzF92fH4bEGXvF6pswmh005BRAR9T7"
+  "pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha"
 );
-// const stripePromise = loadStripe(
-//   "pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha"
-// );
-
-
-
-
-// const stripePromise = loadStripe(
-//   "pk_live_51REuOcE7oWaofeXXM2P5Jgt21Cwoc0zzBklopnjIf4aiJorOaHJqRNNhNuC1LAq2ATXkJzF92fH4bEGXvF6pswmh005BRAR9T7"
-// );
-
 
 const Checkout = () => {
   const { checkoutNewData } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState("stripe");
-
-
-  const condroUser =  JSON.parse(localStorage.getItem("user"))
-  const navigate = useNavigate()
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const condroUser = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getCheckoutNewData());
@@ -49,17 +36,15 @@ const Checkout = () => {
     const orderData = {
       ...checkoutNewData,
       paymentId: data.id,
-      email : condroUser.email,
+      email: condroUser.email,
     };
 
-    if (orderData) {
-      const res = await dispatch(createOrder(orderData));
-      console.log(47, res);
-      
-      if (res) {
-        alert("Payment successful!");
-        navigate("/");
-      }
+    setShowSuccessModal(true);
+
+    try {
+      await dispatch(createOrder(orderData));
+    } catch (error) {
+      console.error("Order creation failed:", error);
     }
   };
 
@@ -121,19 +106,21 @@ const Checkout = () => {
                   <div className="flex space-x-4 mb-6">
                     <button
                       onClick={() => handlePaymentMethodChange("stripe")}
-                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${paymentMethod === "stripe"
+                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${
+                        paymentMethod === "stripe"
                           ? "bg-orange-600 text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
+                      }`}
                     >
                       Carta di credito
                     </button>
                     <button
                       onClick={() => handlePaymentMethodChange("paypal")}
-                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${paymentMethod === "paypal"
+                      className={`flex-1 py-2 px-4 rounded-lg transition-all duration-200 ${
+                        paymentMethod === "paypal"
                           ? "bg-orange-600 text-white"
                           : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
+                      }`}
                     >
                       PayPal
                     </button>
@@ -148,8 +135,8 @@ const Checkout = () => {
                       <PayPalScriptProvider
                         options={{
                           "client-id":
-                            "AdecvjVGBMD_ZJKohm832NPjtsban2kujw3BGQDIox4Ub2bUVDUON7T0NjnhsntKYCj_P5Vlj7YxA7-A",
-                          currency: "EUR",
+                            "AeMnBMlrboT2yZ77Ny1Zuwm-UnhJeeMzvE1D1ana1ZetUAzPfo7C-Px41iR4FijH5SN1FHEYrGokg3G2",
+                          currency: "USD",
                           "disable-funding": "paylater",
                         }}
                       >
@@ -179,10 +166,6 @@ const Checkout = () => {
                           onApprove={(data, actions) => {
                             return actions.order.capture().then((details) => {
                               getPaypalSuccessDataFun(details);
-                              alert(
-                                "Pagamento approvato: " +
-                                details.payer.name.given_name
-                              );
                             });
                           }}
                           onError={(err) => {
@@ -198,6 +181,60 @@ const Checkout = () => {
             </div>
           </div>
         </div>
+
+        {/* Success Modal */}
+        {showSuccessModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999]">
+            <div className="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+              <div className="text-center">
+                <div className="flex justify-center mb-4">
+                  <svg
+                    className="h-16 w-16 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <img
+                    src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg"
+                    alt="PayPal"
+                    className="h-16 ml-4"
+                  />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mt-4">
+                  Payment Successful!
+                </h3>
+                <div className="mt-4">
+                  <p className="text-gray-600">
+                    Thank you for your PayPal payment of €{amount}.
+                  </p>
+                  <p className="text-gray-600 mt-2">
+                    Your booking confirmation has been sent to{" "}
+                    {condroUser?.email}.
+                  </p>
+                </div>
+                <div className="mt-8">
+                  <button
+                    onClick={() => {
+                      setShowSuccessModal(false);
+                      navigate("/");
+                    }}
+                    className="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                  >
+                    Back to Home
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </ParentComponent>
       <Footer />
     </div>
@@ -205,3 +242,14 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+// const stripePromise = loadStripe(
+//   "pk_live_51REuOcE7oWaofeXXM2P5Jgt21Cwoc0zzBklopnjIf4aiJorOaHJqRNNhNuC1LAq2ATXkJzF92fH4bEGXvF6pswmh005BRAR9T7"
+// );
+// const stripePromise = loadStripe(
+//   "pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha"
+// );
+
+// const stripePromise = loadStripe(
+//   "pk_live_51REuOcE7oWaofeXXM2P5Jgt21Cwoc0zzBklopnjIf4aiJorOaHJqRNNhNuC1LAq2ATXkJzF92fH4bEGXvF6pswmh005BRAR9T7"
+// );

@@ -27,7 +27,15 @@ const StripeForm = ({ checkoutNewData }) => {
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const dispatch = useDispatch();
+
+  const showError = (message) => {
+    setError(message);
+    setTimeout(() => {
+      setError("");
+    }, 10000); // 10 seconds
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,25 +58,23 @@ const StripeForm = ({ checkoutNewData }) => {
       const { data } = await axios.post(`${base_url}/order/stripePayment`, {
         paymentMethodId: paymentMethod.id,
         amount: parseInt(checkoutNewData?.toureAmount),
-        email
+        email,
       });
       const orderData = {
         ...checkoutNewData,
         paymentId: data?.paymentIntent.id,
       };
-       console.log( 59, "orderData: ", orderData)
+      console.log(59, "orderData: ", orderData);
 
       if (orderData) {
-       
         const res = await dispatch(createOrder(orderData));
         console.log(res);
       }
 
-      // if (data.success) {
-      //   setSuccess(true);
-      //   alert("Payment successful!");
-      //   navigate("/");
-      // }
+      if (data.success) {
+        setSuccess(true);
+        setShowSuccessModal(true);
+      }
     } catch (err) {
       setError("Payment failed.");
     }
@@ -223,11 +229,61 @@ const StripeForm = ({ checkoutNewData }) => {
       </button>
 
       {error && (
-        <div className="mt-4 text-red-500 font-medium text-center">{error}</div>
+        <div className="mt-8 text-gray-700 font-medium text-center flex justify-between items-center p-3 bg-red-100 border  rounded-lg shadow-md">
+          <span className="flex-1">
+            Please ensure your card number is entered correctly.
+          </span>
+          <button
+            onClick={() => setError("")}
+            className="ml-4 text-red-600 text-2xl p-2   hover:bg-red-100 focus:outline-none transform scale-150 transition-all duration-200"
+          >
+            &times;
+          </button>
+        </div>
       )}
-      {success && (
-        <div className="mt-4 text-green-500 font-medium text-center">
-          Payment Successful!
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+            <div className="text-center">
+              <svg
+                className="mx-auto h-16 w-16 text-green-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <h3 className="text-2xl font-bold text-gray-900 mt-4">
+                Payment Successful!
+              </h3>
+              <div className="mt-4">
+                <p className="text-gray-600">
+                  Thank you for your payment of {checkoutNewData?.toureAmount} €.
+                </p>
+                <p className="text-gray-600 mt-2">
+                  Your booking confirmation has been sent to {email}.
+                </p>
+              </div>
+              <div className="mt-8">
+                <button
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    navigate("/");
+                  }}
+                  className="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                >
+                  Back to Home
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </form>

@@ -446,12 +446,26 @@ const PersonalDetails = () => {
                       </h2>
                     </span>
                   )}
-
-                  {checkout?.insurance[0]?.price && Number(checkout?.insurance[0]?.price) > 0 && (
+                  {/*                   {checkout?.insurance?.price && (
                     <span className="flex items-start justify-between mb-3">
                       <h2 className="flex items-center">Insurance</h2>
                       <h2 className="text-[#000000] text-[18px] font-semibold text-center">
                         € {checkout?.insurance[0]?.price}
+                      </h2>
+                    </span>
+                  )} */}
+
+                  {checkout?.insurance?.length > 0 && (
+                    <span className="flex items-start justify-between mb-3">
+                      <h2 className="flex items-center">Insurance</h2>
+                      <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                        €{" "}
+                        {checkout.insurance
+                          .filter((item) => Number(item.price) > 0)
+                          .reduce(
+                            (total, item) => total + Number(item.price),
+                            0
+                          )}{" "}
                       </h2>
                     </span>
                   )}
