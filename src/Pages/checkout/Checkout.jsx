@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import EditableHeading from "../../Components/Common/EditableHeading";
 
 const stripePromise = loadStripe(
-  "pk_test_51QFpATLEvlBZD5dJaha6mJPocvY5x6EoeWDg3DVjMIFdAwRzxN6sNlimMO6xW3hk3a7STUMQtVi6vb2NWu1Vc46c000l8Y7yha"
+  "pk_live_51REuOcE7oWaofeXXM2P5Jgt21Cwoc0zzBklopnjIf4aiJorOaHJqRNNhNuC1LAq2ATXkJzF92fH4bEGXvF6pswmh005BRAR9T7"
 );
 
 const Checkout = () => {
@@ -135,8 +135,8 @@ const Checkout = () => {
                       <PayPalScriptProvider
                         options={{
                           "client-id":
-                            "AeMnBMlrboT2yZ77Ny1Zuwm-UnhJeeMzvE1D1ana1ZetUAzPfo7C-Px41iR4FijH5SN1FHEYrGokg3G2",
-                          currency: "USD",
+                            "AdecvjVGBMD_ZJKohm832NPjtsban2kujw3BGQDIox4Ub2bUVDUON7T0NjnhsntKYCj_P5Vlj7YxA7-A",
+                          currency: "EUR",
                           "disable-funding": "paylater",
                         }}
                       >
