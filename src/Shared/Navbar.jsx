@@ -588,7 +588,7 @@ const Navbar = () => {
                           className="rounded-xl primary_text bg-transparent border  2xl:px-8 px-8 py-3 lg:px-3 lg:py-[6px] 2xl:py-3 text-[18px] lg:text-sm hover:bg-[#63280141] font-medium 2xl:mx-2 lg:mx-0 mx-2  border-orange-600"
                           to="/login"
                         >
-                          Login
+                          Accesso
                         </Link>
 
                         <div className="hidden lg:flex items-center justify-center">
@@ -596,7 +596,7 @@ const Navbar = () => {
                             className="rounded-xl text-[white] primary_bg  2xl:px-8 2xl:py-3 lg:px-3 lg:py-[6px] px-8 py-3 text-[18px] lg:text-sm  hover:opacity-85 font-medium mx-2"
                             to="/signup"
                           >
-                            Sign Up
+                            Registrazione
                           </Link>
                         </div>
                       </div>
