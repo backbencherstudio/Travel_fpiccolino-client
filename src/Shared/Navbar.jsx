@@ -4,7 +4,7 @@ import ParentComponent from "./ParentComponent/ParentComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../features/auth/authSlice";
 import { FaRegUserCircle, FaWhatsapp, FaEdit, FaTimes } from "react-icons/fa";
-import { PiTiktokLogo } from "react-icons/pi";
+import { PiTiktokLogo, PiVanLight } from "react-icons/pi";
 import { FaInstagram } from "react-icons/fa6";
 import { LogoutOutlined } from "@mui/icons-material";
 import { MdOutlineDashboard } from "react-icons/md";
@@ -76,13 +76,19 @@ const Navbar = () => {
     }
   };
 
+  
   const handleLogOut = () => {
     dispatch(logOut());
-    navigate("/");
+    localStorage.clear();
+    sessionStorage.clear();
+
     setIsMenuOpen(false);
     setContactDropDown(false);
+    navigate("/");
     window.location.reload();
   };
+
+
   const handleClick = () => {
     window.open(
       `https://wa.me/${footerData?.contactInfo?.phone}?text=${encodedMessage}`,
