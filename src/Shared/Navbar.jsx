@@ -78,11 +78,16 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     dispatch(logOut());
-    navigate("/");
+    localStorage.clear();
+    sessionStorage.clear();
+
     setIsMenuOpen(false);
     setContactDropDown(false);
+    navigate("/");
     window.location.reload();
   };
+
+  
   const handleClick = () => {
     window.open(
       `https://wa.me/${footerData?.contactInfo?.phone}?text=${encodedMessage}`,
