@@ -88,11 +88,7 @@ const Navbar = () => {
     window.location.reload();
   };
 
-<<<<<<< HEAD
-
-=======
   
->>>>>>> ebca915bca84db2d61e5643ab09817c1e6fb579f
   const handleClick = () => {
     window.open(
       `https://wa.me/${footerData?.contactInfo?.phone}?text=${encodedMessage}`,
