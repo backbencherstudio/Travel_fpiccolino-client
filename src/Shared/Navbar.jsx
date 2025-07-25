@@ -753,7 +753,7 @@ const Navbar = () => {
                           className="rounded-xl bg-white primary_text px-8 py-4 text-[18px] xl:text-sm hover:bg-orange-50  font-medium mx-2 text-center border border-orange-600 w-full mb-2"
                           onClick={() => navigate("/login")}
                         >
-                          {texts["nav.login"]}
+                          Accesso
                         </button>
                         {user?.role === "admin" && (
                           <button
@@ -777,7 +777,7 @@ const Navbar = () => {
                           className="rounded-xl text-[white] primary_bg px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2 text-center w-full"
                           onClick={() => navigate("/signup")}
                         >
-                          {texts["nav.signup"]}
+                          Registrazionesss
                         </button>
                         {user?.role === "admin" && (
                           <button
