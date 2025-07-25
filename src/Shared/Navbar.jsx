@@ -76,7 +76,7 @@ const Navbar = () => {
     }
   };
 
-  
+
   const handleLogOut = () => {
     dispatch(logOut());
     localStorage.clear();
@@ -892,3 +892,41 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 
+// # Redis connection settings
+// REDIS_PORT=6379
+
+// REDIS_URL=redis://localhost:6379
+
+// # Your application specific environment variables
+// PORT=8000
+// # NODE_ENV=development
+// NODE_ENV=production
+// SESSION_SECRET=e&wre8PM
+
+// # Add any other required variables here
+// node_mailer_user=tqmhosain@gmail.com
+
+// WEBTOKEN_SECRET_KEY=dbIYer4
+
+// # Stripe API keys
+// STRIPE_SECRET_KEY=sk_test_51QFpATLEvlBZD5dJjsneUWfIN2W2ok3yfxHN7qyLB2TRPYn0bs0UCzWytfZgZwrpcboY5GXMyen4BwCPthGLCrRX001T5gDgLK
+// # STRIPE_SECRET_KEY=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
+// STRIPE_WEBHOOK_SECRET=whsec_51386ee38834231ad2e42d1a1d5abbae979d5ba9022cc977efd701c13b56dd5a
+
+// # 2rTe0LXxYPETeko0Z1T2f2aZZoQ_4DZvB2KJGxirWgDCKvAGc
