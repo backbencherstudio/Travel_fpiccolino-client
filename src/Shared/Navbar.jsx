@@ -777,7 +777,7 @@ const Navbar = () => {
                           className="rounded-xl text-[white] primary_bg px-8 py-4 text-[18px] xl:text-sm hover:opacity-85 font-medium mx-2 text-center w-full"
                           onClick={() => navigate("/signup")}
                         >
-                          Registrazionesss
+                          Registrazione
                         </button>
                         {user?.role === "admin" && (
                           <button
