@@ -27,6 +27,14 @@ const Insurance = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { packageDetails } = useSelector((state) => state.package);
+  
+  const basePackageAmount =
+    checkout?.totalPackageAmount ??
+    (packageDetails?.amount
+      ? parseInt(packageDetails.amount) * parseInt(checkout?.person || 1)
+      : 0);
+  
+  console.log("packege",checkout)
   useEffect(() => {
     if (params.id) {
       dispatch(getPackageDetails(params.id));
@@ -38,15 +46,17 @@ const Insurance = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (checkout?.toureAmount) {
-      const insuranceTotal = selectedInsurances.reduce(
-        (sum, insurance) =>
-          sum + parseInt(insurance.price || 0) * checkout.person,
-        0
-      );
-      setTotalAmount(parseInt(checkout?.toureAmount) + insuranceTotal);
-    }
-  }, [checkout?.toureAmount, selectedInsurances, checkout.person]);
+    const personCount = parseInt(checkout?.person || 1);
+    const insuranceTotal = selectedInsurances.reduce(
+      (sum, insurance) => sum + parseInt(insurance.price || 0) * personCount,
+      0
+    );
+    const base =
+      checkout?.toureAmount != null
+        ? parseInt(checkout.toureAmount)
+        : parseInt(basePackageAmount || 0);
+    setTotalAmount((base || 0) + insuranceTotal);
+  }, [checkout?.toureAmount, selectedInsurances, checkout?.person, basePackageAmount]);
 
   const handleSelectInsurance = (insurance) => {
     setSelectedInsurances((prev) => {
@@ -181,11 +191,12 @@ const Insurance = () => {
                 <div className="border border-b-[#c8c8ce] mt-3"></div>
                 <div className="mt-4">
                   <span className="flex items-start justify-between mb-3">
+                    
                     {moment(checkout?.tourDate)
                       .utc()
                       .format("DD/MM/YYYY HH:mm")}
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      € = {checkout?.totalPackageAmount}
+                      € = {basePackageAmount}
                     </h2>
                   </span>
                   <span className="flex items-start justify-between mb-3">
@@ -197,7 +208,7 @@ const Insurance = () => {
                       />
                     </h2>
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      {checkout?.person}
+                      {checkout?.person || 0}
                     </h2>
                   </span>
 

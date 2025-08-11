@@ -68,7 +68,7 @@ export const getCheckoutNewData = createAsyncThunk(
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState: {
-    checkout: [], // Main checkout data
+    checkout: {}, // Main checkout data as an object
     loading: false, // Regular data loading
     error: null, // Regular data error
 
@@ -86,7 +86,11 @@ const checkoutSlice = createSlice({
       })
       .addCase(createCheckout.fulfilled, (state, action) => {
         state.loading = false;
-        state.checkout.push(action.payload);
+        const payload = action.payload;
+        const normalized = Array.isArray(payload)
+          ? payload[payload.length - 1] || {}
+          : payload?.checkout || payload?.data || payload || {};
+        state.checkout = normalized;
       })
       .addCase(createCheckout.rejected, (state, action) => {
         state.loading = false;
@@ -98,7 +102,11 @@ const checkoutSlice = createSlice({
       })
       .addCase(getCheckout.fulfilled, (state, action) => {
         state.loading = false;
-        state.checkout = action.payload;
+        const payload = action.payload;
+        const normalized = Array.isArray(payload)
+          ? payload[payload.length - 1] || {}
+          : payload?.checkout || payload?.data || payload || {};
+        state.checkout = normalized;
       })
       .addCase(getCheckout.rejected, (state, action) => {
         state.loading = false;
