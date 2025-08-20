@@ -1,1 +1,1 @@
-export const base_url = "https://fpicilino-backend.signalsmind.com";
+export const base_url = "http://localhost:5000";

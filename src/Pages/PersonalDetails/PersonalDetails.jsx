@@ -93,10 +93,15 @@ const PersonalDetails = () => {
     const userUpdateData = {
       ...data,
       ...checkout,
-      person: Math.max(Number(checkout?.person) || 1, 1)
+      person: Math.max(Number(checkout?.person) || 1, 1),
+      totalPackageAmount: Number(checkout?.totalPackageAmount) || 0,
+      flightPrice: Number(checkout?.flightPrice) || 0,
+      toureAmount: Number(checkout?.toureAmount) || 0,
+      insurance: checkout?.insurance || []
     };
     console.log("Submitting user update data:", userUpdateData);
     console.log("Person field in submission:", userUpdateData.person);
+    console.log("Total amount in submission:", userUpdateData.toureAmount);
     dispatch(createCheckoutWithNewData({ ...userUpdateData }));
     navigate("/checkout");
   };
@@ -432,14 +437,14 @@ const PersonalDetails = () => {
                 </p>
                 <div className="border border-b-[#c8c8ce] mt-3"></div>
                 <div className="mt-4">
-                  <span className="flex items-start justify-between mb-3">
-                    {moment(checkout?.tourDate)
-                      .utc()
-                      .format("DD/MM/YYYY HH:mm")}
-                    <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      € {Number(checkout?.totalPackageAmount) || 0}
-                    </h2>
-                  </span>
+                                     <span className="flex items-start justify-between mb-3">
+                     {moment(checkout?.tourDate)
+                       .utc()
+                       .format("DD/MM/YYYY HH:mm")}
+                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                       € {Number(checkout?.totalPackageAmount) || Number(checkout?.toureAmount) || 0}
+                     </h2>
+                   </span>
                   <span className="flex items-start justify-between mb-3">
                     <h2>Passengers</h2>
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
@@ -503,12 +508,45 @@ const PersonalDetails = () => {
                     </span>
                   )}
 
-                  <span className="flex items-start justify-between mb-3 border-t pt-2">
-                    <h2>Total</h2>
-                    <h2 className="text-[20px] font-semibold">
-                      € {Number(checkout?.toureAmount) || 0}
-                    </h2>
-                  </span>
+                                     <span className="flex items-start justify-between mb-3 border-t pt-2">
+                     <h2>Total</h2>
+                     <h2 className="text-[20px] font-semibold">
+                       € {(() => {
+                         const packageAmount = Number(checkout?.totalPackageAmount) || 0;
+                         const flightAmount = Number(checkout?.flightPrice) || 0;
+                         const insuranceAmount = (() => {
+                           try {
+                             if (!checkout?.insurance || !Array.isArray(checkout.insurance)) {
+                               return 0;
+                             }
+                             
+                             const insuranceTotal = checkout.insurance
+                               .filter((item) => {
+                                 const price = Number(item?.price);
+                                 return price > 0 && !isNaN(price);
+                               })
+                               .reduce(
+                                 (total, item) => {
+                                   const itemPrice = Number(item.price) || 0;
+                                   const personCount = Math.max(Number(checkout?.person) || 1, 1);
+                                   const itemTotal = itemPrice * personCount;
+                                   return total + itemTotal;
+                                 },
+                                 0
+                               );
+                             return insuranceTotal || 0;
+                           } catch (error) {
+                             console.error("Error calculating insurance total:", error);
+                             return 0;
+                           }
+                         })();
+                         
+                         const total = packageAmount + flightAmount + insuranceAmount;
+                         console.log("Final total calculation:", { packageAmount, flightAmount, insuranceAmount, total });
+                         return total;
+                       })()}
+                     </h2>
+                   </span>
                   <span className="pb-5 block">
                     <h2 className="flex items-center">
                       <FaHeart />{" "}

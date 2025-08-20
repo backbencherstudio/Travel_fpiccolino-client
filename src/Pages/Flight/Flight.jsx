@@ -89,11 +89,11 @@ const Flight = () => {
     tourDate: packageDetails?.tourDate,
     toureAmount: totalToureCost,
     flights: addFlight ? selectedFlights : [],
-    flightPrice: addFlight ? totalFlightAmount : false,
+    flightPrice: addFlight ? totalFlightAmount : 0,
     person: Math.max(Number(person) || 1, 1),
     tureDuration: packageDetails?.tourDuration,
     totalPackageAmount: updateToureAmount,
-    insurance: packageDetails?.insurance,
+    insurance: packageDetails?.insurance || [],
   };
 
   const navigate = useNavigate();

@@ -32,7 +32,7 @@ const Insurance = () => {
     checkout?.totalPackageAmount ??
     (packageDetails?.amount
       ? parseInt(packageDetails.amount) * Math.max(parseInt(checkout?.person) || 1, 1)
-      : 0);
+      : 0) + (Number(checkout?.flightPrice) || 0);
   
   console.log("Package details:", packageDetails);
   console.log("Checkout data:", checkout);
@@ -51,6 +51,7 @@ const Insurance = () => {
   useEffect(() => {
     const personCount = Math.max(parseInt(checkout?.person) || 1, 1);
     console.log("Insurance calculation - person count:", personCount);
+    
     const insuranceTotal = selectedInsurances.reduce(
       (sum, insurance) => {
         const insurancePrice = parseInt(insurance.price || 0);
@@ -60,14 +61,23 @@ const Insurance = () => {
       },
       0
     );
-    const base =
-      checkout?.toureAmount != null
-        ? parseInt(checkout.toureAmount)
-        : parseInt(basePackageAmount || 0);
+    
+    // Calculate base amount properly
+    let base = 0;
+    if (checkout?.toureAmount != null && checkout.toureAmount > 0) {
+      base = parseInt(checkout.toureAmount);
+    } else if (checkout?.totalPackageAmount != null && checkout.totalPackageAmount > 0) {
+      base = parseInt(checkout.totalPackageAmount);
+    } else if (checkout?.flightPrice != null && checkout.flightPrice > 0) {
+      base = parseInt(checkout.flightPrice);
+    } else {
+      base = parseInt(basePackageAmount || 0);
+    }
+    
     const total = (base || 0) + insuranceTotal;
-    console.log("Total amount calculation:", { base, insuranceTotal, total });
+    console.log("Total amount calculation:", { base, insuranceTotal, total, personCount });
     setTotalAmount(total);
-  }, [checkout?.toureAmount, selectedInsurances, checkout?.person, basePackageAmount]);
+  }, [checkout?.toureAmount, checkout?.totalPackageAmount, checkout?.flightPrice, selectedInsurances, checkout?.person, basePackageAmount]);
 
   const handleSelectInsurance = (insurance) => {
     setSelectedInsurances((prev) => {
@@ -88,7 +98,22 @@ const Insurance = () => {
   const toureData = {
     ...data,
     insurance: selectedInsurances,
-    toureAmount: totalAmount,
+    toureAmount: (() => {
+      const packageAmount = Number(data?.totalPackageAmount) || 0;
+      const flightAmount = Number(data?.flightPrice) || 0;
+      const insuranceTotal = selectedInsurances.reduce(
+        (sum, insurance) => {
+          const insurancePrice = parseInt(insurance.price || 0);
+          const personCount = Math.max(parseInt(data?.person) || 1, 1);
+          return sum + (insurancePrice * personCount);
+        },
+        0
+      );
+      return packageAmount + flightAmount + insuranceTotal;
+    })(),
+    person: Math.max(Number(data?.person) || 1, 1),
+    totalPackageAmount: Number(data?.totalPackageAmount) || 0,
+    flightPrice: Number(data?.flightPrice) || 0,
   };
   console.log("Insurance page - tour data being saved:", toureData);
   console.log("Person field in tour data:", toureData.person);
@@ -207,9 +232,13 @@ const Insurance = () => {
                     {moment(checkout?.tourDate)
                       .utc()
                       .format("DD/MM/YYYY HH:mm")}
-                    <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      € = {Number(basePackageAmount) || 0}
-                    </h2>
+                                         <h2 className="text-[#000000] text-[18px] font-semibold text-center">
+                       € = {(() => {
+                         const packageAmount = Number(checkout?.totalPackageAmount) || 0;
+                         const flightAmount = Number(checkout?.flightPrice) || 0;
+                         return packageAmount + flightAmount;
+                       })()}
+                     </h2>
                   </span>
                   <span className="flex items-start justify-between mb-3">
                     <h2>
@@ -292,9 +321,23 @@ const Insurance = () => {
                         customTitleClass="text-md"
                       />
                     </h2>
-                    <h2 className="text-[20px] font-semibold">
-                      € = {Number(totalAmount) || 0}
-                    </h2>
+                                         <h2 className="text-[20px] font-semibold">
+                       € = {(() => {
+                         const packageAmount = Number(checkout?.totalPackageAmount) || 0;
+                         const flightAmount = Number(checkout?.flightPrice) || 0;
+                         const insuranceTotal = selectedInsurances.reduce(
+                           (sum, insurance) => {
+                             const insurancePrice = parseInt(insurance.price || 0);
+                             const personCount = Math.max(parseInt(checkout?.person) || 1, 1);
+                             return sum + (insurancePrice * personCount);
+                           },
+                           0
+                         );
+                         const total = packageAmount + flightAmount + insuranceTotal;
+                         console.log("Insurance page total:", { packageAmount, flightAmount, insuranceTotal, total });
+                         return total;
+                       })()}
+                     </h2>
                   </span>
 
                   <span className="pb-5 block">
