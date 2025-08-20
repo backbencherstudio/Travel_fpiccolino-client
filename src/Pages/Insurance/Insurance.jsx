@@ -31,10 +31,13 @@ const Insurance = () => {
   const basePackageAmount =
     checkout?.totalPackageAmount ??
     (packageDetails?.amount
-      ? parseInt(packageDetails.amount) * parseInt(checkout?.person || 1)
+      ? parseInt(packageDetails.amount) * Math.max(parseInt(checkout?.person) || 1, 1)
       : 0);
   
-  console.log("packege",checkout)
+  console.log("Package details:", packageDetails);
+  console.log("Checkout data:", checkout);
+  console.log("Base package amount:", basePackageAmount);
+  console.log("Person count for calculation:", Math.max(parseInt(checkout?.person) || 1, 1));
   useEffect(() => {
     if (params.id) {
       dispatch(getPackageDetails(params.id));
@@ -46,16 +49,24 @@ const Insurance = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const personCount = parseInt(checkout?.person || 1);
+    const personCount = Math.max(parseInt(checkout?.person) || 1, 1);
+    console.log("Insurance calculation - person count:", personCount);
     const insuranceTotal = selectedInsurances.reduce(
-      (sum, insurance) => sum + parseInt(insurance.price || 0) * personCount,
+      (sum, insurance) => {
+        const insurancePrice = parseInt(insurance.price || 0);
+        const insuranceCost = insurancePrice * personCount;
+        console.log(`Insurance: ${insurance.insuranceName}, price: ${insurancePrice}, total: ${insuranceCost}`);
+        return sum + insuranceCost;
+      },
       0
     );
     const base =
       checkout?.toureAmount != null
         ? parseInt(checkout.toureAmount)
         : parseInt(basePackageAmount || 0);
-    setTotalAmount((base || 0) + insuranceTotal);
+    const total = (base || 0) + insuranceTotal;
+    console.log("Total amount calculation:", { base, insuranceTotal, total });
+    setTotalAmount(total);
   }, [checkout?.toureAmount, selectedInsurances, checkout?.person, basePackageAmount]);
 
   const handleSelectInsurance = (insurance) => {
@@ -79,7 +90,8 @@ const Insurance = () => {
     insurance: selectedInsurances,
     toureAmount: totalAmount,
   };
-  console.log(toureData);
+  console.log("Insurance page - tour data being saved:", toureData);
+  console.log("Person field in tour data:", toureData.person);
 
   const navigate = useNavigate();
 
@@ -196,7 +208,7 @@ const Insurance = () => {
                       .utc()
                       .format("DD/MM/YYYY HH:mm")}
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      € = {basePackageAmount}
+                      € = {Number(basePackageAmount) || 0}
                     </h2>
                   </span>
                   <span className="flex items-start justify-between mb-3">
@@ -208,7 +220,7 @@ const Insurance = () => {
                       />
                     </h2>
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      {checkout?.person || 0}
+                      {Math.max(Number(checkout?.person) || 1, 1)}
                     </h2>
                   </span>
 
@@ -222,7 +234,7 @@ const Insurance = () => {
                         />
                       </h2>
                       <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                        € = {checkout?.flightPrice}
+                        € = {Number(checkout?.flightPrice) || 0}
                       </h2>
                     </span>
                   )}
@@ -265,7 +277,7 @@ const Insurance = () => {
                             <span>{index + 1}</span>
                           </h2>
                           <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                            € = {insurance?.price * checkout.person}
+                            € = {insurance?.price * Math.max(Number(checkout?.person) || 1, 1)}
                           </h2>
                         </span>
                       ))}
@@ -281,7 +293,7 @@ const Insurance = () => {
                       />
                     </h2>
                     <h2 className="text-[20px] font-semibold">
-                      € = {totalAmount}
+                      € = {Number(totalAmount) || 0}
                     </h2>
                   </span>
 

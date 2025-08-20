@@ -87,10 +87,9 @@ const checkoutSlice = createSlice({
       .addCase(createCheckout.fulfilled, (state, action) => {
         state.loading = false;
         const payload = action.payload;
-        const normalized = Array.isArray(payload)
-          ? payload[payload.length - 1] || {}
-          : payload?.checkout || payload?.data || payload || {};
-        state.checkout = normalized;
+        console.log("CreateCheckout payload:", payload);
+        console.log("Person field in payload:", payload?.person);
+        state.checkout = payload || {};
       })
       .addCase(createCheckout.rejected, (state, action) => {
         state.loading = false;
@@ -103,10 +102,9 @@ const checkoutSlice = createSlice({
       .addCase(getCheckout.fulfilled, (state, action) => {
         state.loading = false;
         const payload = action.payload;
-        const normalized = Array.isArray(payload)
-          ? payload[payload.length - 1] || {}
-          : payload?.checkout || payload?.data || payload || {};
-        state.checkout = normalized;
+        console.log("GetCheckout payload:", payload);
+        console.log("Person field in payload:", payload?.person);
+        state.checkout = payload || {};
       })
       .addCase(getCheckout.rejected, (state, action) => {
         state.loading = false;
@@ -121,7 +119,15 @@ const checkoutSlice = createSlice({
       })
       .addCase(createCheckoutWithNewData.fulfilled, (state, action) => {
         state.loadingNewData = false;
-        state.checkoutNewData.push(action.payload);
+        const payload = action.payload;
+        console.log("CreateCheckoutWithNewData payload:", payload);
+        console.log("Person field in payload:", payload?.person);
+        // Handle the response properly
+        if (payload && typeof payload === 'object') {
+          state.checkoutNewData = [payload];
+        } else {
+          state.checkoutNewData = [];
+        }
       })
       .addCase(createCheckoutWithNewData.rejected, (state, action) => {
         state.loadingNewData = false;
@@ -133,7 +139,17 @@ const checkoutSlice = createSlice({
       })
       .addCase(getCheckoutNewData.fulfilled, (state, action) => {
         state.loadingNewData = false;
-        state.checkoutNewData = action.payload; // Replace entire array with new data
+        const payload = action.payload;
+        console.log("GetCheckoutNewData payload:", payload);
+        console.log("Person field in payload:", payload?.person);
+        // Handle both array and object responses
+        if (Array.isArray(payload)) {
+          state.checkoutNewData = payload;
+        } else if (payload && typeof payload === 'object') {
+          state.checkoutNewData = [payload];
+        } else {
+          state.checkoutNewData = [];
+        }
       })
       .addCase(getCheckoutNewData.rejected, (state, action) => {
         state.loadingNewData = false;

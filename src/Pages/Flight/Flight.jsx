@@ -78,7 +78,9 @@ const Flight = () => {
     });
   };
 
-  console.log(user?._id);
+  console.log("User ID:", user?._id);
+  console.log("Person value:", person);
+  console.log("Person type:", typeof person);
 
   // order/addToCard
   const toureData = {
@@ -88,7 +90,7 @@ const Flight = () => {
     toureAmount: totalToureCost,
     flights: addFlight ? selectedFlights : [],
     flightPrice: addFlight ? totalFlightAmount : false,
-    person,
+    person: Math.max(Number(person) || 1, 1),
     tureDuration: packageDetails?.tourDuration,
     totalPackageAmount: updateToureAmount,
     insurance: packageDetails?.insurance,
@@ -97,6 +99,8 @@ const Flight = () => {
   const navigate = useNavigate();
 
   const addDataFun = () => {
+    console.log("Sending tour data:", toureData);
+    console.log("Person field in tour data:", toureData.person);
     dispatch(createCheckout(toureData));
     navigate(`/insurance/${packageDetails?._id}`);
   };

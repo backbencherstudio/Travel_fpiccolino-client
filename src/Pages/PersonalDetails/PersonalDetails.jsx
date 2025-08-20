@@ -56,7 +56,8 @@ const PersonalDetails = () => {
   };
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const travelers = parseInt(checkout?.person, 10) || 1;
+  const travelers = Math.max(parseInt(checkout?.person, 10) || 1, 1);
+  console.log("Travelers calculation:", travelers);
 
   const {
     control,
@@ -81,13 +82,21 @@ const PersonalDetails = () => {
     name: "travelers",
   });
 
-  console.log(checkout);
+  console.log("Checkout data:", checkout);
+  console.log("Person field:", checkout?.person);
+  console.log("Person type:", typeof checkout?.person);
+  console.log("Person as number:", Number(checkout?.person));
+  console.log("Insurance data:", checkout?.insurance);
+  console.log("Insurance length:", checkout?.insurance?.length);
 
   const onSubmit = (data) => {
     const userUpdateData = {
       ...data,
       ...checkout,
+      person: Math.max(Number(checkout?.person) || 1, 1)
     };
+    console.log("Submitting user update data:", userUpdateData);
+    console.log("Person field in submission:", userUpdateData.person);
     dispatch(createCheckoutWithNewData({ ...userUpdateData }));
     navigate("/checkout");
   };
@@ -428,13 +437,13 @@ const PersonalDetails = () => {
                       .utc()
                       .format("DD/MM/YYYY HH:mm")}
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      € {checkout?.totalPackageAmount}
+                      € {Number(checkout?.totalPackageAmount) || 0}
                     </h2>
                   </span>
                   <span className="flex items-start justify-between mb-3">
                     <h2>Passengers</h2>
                     <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                      {checkout?.person}
+                      {Math.max(Number(checkout?.person) || 1, 1)}
                     </h2>
                   </span>
 
@@ -442,7 +451,7 @@ const PersonalDetails = () => {
                     <span className="flex items-start justify-between mb-3">
                       <h2 className="flex items-center">Flight Amount</h2>
                       <h2 className="text-[#000000] text-[18px] font-semibold text-center">
-                        € {checkout?.flightPrice}
+                        € {Number(checkout?.flightPrice) || 0}
                       </h2>
                     </span>
                   )}
@@ -460,12 +469,36 @@ const PersonalDetails = () => {
                       <h2 className="flex items-center">Insurance</h2>
                       <h2 className="text-[#000000] text-[18px] font-semibold text-center">
                         €{" "}
-                        {checkout.insurance
-                          .filter((item) => Number(item.price) > 0)
-                          .reduce(
-                            (total, item) => total + Number(item.price),
-                            0
-                          )}{" "}
+                        {(() => {
+                          try {
+                            if (!checkout?.insurance || !Array.isArray(checkout.insurance)) {
+                              console.log("Insurance data is not an array:", checkout?.insurance);
+                              return 0;
+                            }
+                            
+                            const insuranceTotal = checkout.insurance
+                              .filter((item) => {
+                                const price = Number(item?.price);
+                                return price > 0 && !isNaN(price);
+                              })
+                              .reduce(
+                                (total, item) => {
+                                  const itemPrice = Number(item.price) || 0;
+                                  const personCount = Math.max(Number(checkout?.person) || 1, 1);
+                                  console.log(`Person from checkout: ${checkout?.person}, converted: ${personCount}`);
+                                  console.log(`Insurance item: ${item.insuranceName}, price: ${itemPrice}, persons: ${personCount}`);
+                                  const itemTotal = itemPrice * personCount;
+                                  console.log(`Insurance calculation: price=${itemPrice}, persons=${personCount}, total=${itemTotal}`);
+                                  return total + itemTotal;
+                                },
+                                0
+                              );
+                            return insuranceTotal || 0;
+                          } catch (error) {
+                            console.error("Error calculating insurance total:", error);
+                            return 0;
+                          }
+                        })()}{" "}
                       </h2>
                     </span>
                   )}
@@ -473,7 +506,7 @@ const PersonalDetails = () => {
                   <span className="flex items-start justify-between mb-3 border-t pt-2">
                     <h2>Total</h2>
                     <h2 className="text-[20px] font-semibold">
-                      € {checkout?.toureAmount}
+                      € {Number(checkout?.toureAmount) || 0}
                     </h2>
                   </span>
                   <span className="pb-5 block">
