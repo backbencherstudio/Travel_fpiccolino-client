@@ -109,7 +109,9 @@ const Insurance = () => {
         },
         0
       );
-      return packageAmount + flightAmount + insuranceTotal;
+      const finalTotal = packageAmount + flightAmount + insuranceTotal;
+      console.log("Insurance page - Final total calculation:", { packageAmount, flightAmount, insuranceTotal, finalTotal });
+      return finalTotal;
     })(),
     person: Math.max(Number(data?.person) || 1, 1),
     totalPackageAmount: Number(data?.totalPackageAmount) || 0,

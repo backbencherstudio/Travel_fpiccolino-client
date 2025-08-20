@@ -57,7 +57,7 @@ const StripeForm = ({ checkoutNewData }) => {
     try {
       const { data } = await axios.post(`${base_url}/order/stripePayment`, {
         paymentMethodId: paymentMethod.id,
-        amount: parseInt(checkoutNewData?.toureAmount),
+        amount: parseInt(checkoutNewData?.toureAmount || 0),
         email,
       });
       const orderData = {
@@ -225,7 +225,7 @@ const StripeForm = ({ checkoutNewData }) => {
       >
         {loading
           ? "Processing..."
-          : `Pay Now : ${checkoutNewData?.toureAmount} €`}
+          : `Pay Now : ${checkoutNewData?.toureAmount || 0} €`}
       </button>
 
       {error && (
@@ -265,7 +265,7 @@ const StripeForm = ({ checkoutNewData }) => {
               </h3>
               <div className="mt-4">
                 <p className="text-gray-600">
-                  Thank you for your payment of {checkoutNewData?.toureAmount} €.
+                  Thank you for your payment of {checkoutNewData?.toureAmount || 0} €.
                 </p>
                 <p className="text-gray-600 mt-2">
                   Your booking confirmation has been sent to {email}.

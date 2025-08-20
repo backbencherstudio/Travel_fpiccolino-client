@@ -32,9 +32,18 @@ const Checkout = () => {
     setPaymentMethod(method);
   };
 
+  // Get the first item from checkoutNewData array or use empty object
+  const checkoutData = Array.isArray(checkoutNewData) && checkoutNewData.length > 0 
+    ? checkoutNewData[0] 
+    : checkoutNewData || {};
+    
+  const amount = checkoutData?.toureAmount
+    ? parseFloat(checkoutData?.toureAmount).toFixed(2)
+    : "0.00";
+
   const getPaypalSuccessDataFun = async (data) => {
     const orderData = {
-      ...checkoutNewData,
+      ...checkoutData,
       paymentId: data.id,
       email: condroUser.email,
     };
@@ -47,10 +56,6 @@ const Checkout = () => {
       console.error("Order creation failed:", error);
     }
   };
-
-  const amount = checkoutNewData?.toureAmount
-    ? parseFloat(checkoutNewData?.toureAmount).toFixed(2)
-    : "0.00";
 
   return (
     <div>
@@ -129,7 +134,7 @@ const Checkout = () => {
                   <div className="max-h-[70vh] overflow-y-auto">
                     {paymentMethod === "stripe" ? (
                       <Elements stripe={stripePromise}>
-                        <StripeForm checkoutNewData={checkoutNewData} />
+                        <StripeForm checkoutNewData={checkoutData} />
                       </Elements>
                     ) : (
                       <PayPalScriptProvider

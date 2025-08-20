@@ -90,18 +90,51 @@ const PersonalDetails = () => {
   console.log("Insurance length:", checkout?.insurance?.length);
 
   const onSubmit = (data) => {
+    // Calculate the final total amount
+    const packageAmount = Number(checkout?.totalPackageAmount) || 0;
+    const flightAmount = Number(checkout?.flightPrice) || 0;
+    const insuranceAmount = (() => {
+      try {
+        if (!checkout?.insurance || !Array.isArray(checkout.insurance)) {
+          return 0;
+        }
+        
+        const insuranceTotal = checkout.insurance
+          .filter((item) => {
+            const price = Number(item?.price);
+            return price > 0 && !isNaN(price);
+          })
+          .reduce(
+            (total, item) => {
+              const itemPrice = Number(item.price) || 0;
+              const personCount = Math.max(Number(checkout?.person) || 1, 1);
+              const itemTotal = itemPrice * personCount;
+              return total + itemTotal;
+            },
+            0
+          );
+        return insuranceTotal || 0;
+      } catch (error) {
+        console.error("Error calculating insurance total:", error);
+        return 0;
+      }
+    })();
+    
+    const finalTotal = packageAmount + flightAmount + insuranceAmount;
+    
     const userUpdateData = {
       ...data,
       ...checkout,
       person: Math.max(Number(checkout?.person) || 1, 1),
       totalPackageAmount: Number(checkout?.totalPackageAmount) || 0,
       flightPrice: Number(checkout?.flightPrice) || 0,
-      toureAmount: Number(checkout?.toureAmount) || 0,
+      toureAmount: finalTotal,
       insurance: checkout?.insurance || []
     };
     console.log("Submitting user update data:", userUpdateData);
     console.log("Person field in submission:", userUpdateData.person);
-    console.log("Total amount in submission:", userUpdateData.toureAmount);
+    console.log("Final total amount in submission:", userUpdateData.toureAmount);
+    console.log("Calculation breakdown:", { packageAmount, flightAmount, insuranceAmount, finalTotal });
     dispatch(createCheckoutWithNewData({ ...userUpdateData }));
     navigate("/checkout");
   };
