@@ -98,10 +98,14 @@ const Flight = () => {
 
   const navigate = useNavigate();
 
-  const addDataFun = () => {
+  const addDataFun = async () => {
     console.log("Sending tour data:", toureData);
     console.log("Person field in tour data:", toureData.person);
-    dispatch(createCheckout(toureData));
+    const resultAction = await dispatch(createCheckout(toureData));
+    const checkoutId = resultAction?.payload?.checkoutId;
+    if (checkoutId) {
+      localStorage.setItem("checkoutId", checkoutId);
+    }
     navigate(`/insurance/${packageDetails?._id}`);
   };
 

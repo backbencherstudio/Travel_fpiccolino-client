@@ -25,7 +25,10 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getCheckoutNewData());
+    const id = localStorage.getItem("checkoutId");
+    if (id) {
+      dispatch(getCheckoutNewData(id));
+    }
   }, [dispatch]);
 
   const handlePaymentMethodChange = (method) => {
