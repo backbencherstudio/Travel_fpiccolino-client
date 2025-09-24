@@ -97,16 +97,22 @@ const Flight = () => {
   };
 
   const navigate = useNavigate();
+  const [isForwardLoading, setIsForwardLoading] = useState(false);
 
   const addDataFun = async () => {
     console.log("Sending tour data:", toureData);
     console.log("Person field in tour data:", toureData.person);
-    const resultAction = await dispatch(createCheckout(toureData));
-    const checkoutId = resultAction?.payload?.checkoutId;
-    if (checkoutId) {
-      localStorage.setItem("checkoutId", checkoutId);
+    setIsForwardLoading(true);
+    try {
+      const resultAction = await dispatch(createCheckout(toureData));
+      const checkoutId = resultAction?.payload?.checkoutId;
+      if (checkoutId) {
+        localStorage.setItem("checkoutId", checkoutId);
+      }
+      navigate(`/insurance/${packageDetails?._id}`);
+    } finally {
+      setIsForwardLoading(false);
     }
-    navigate(`/insurance/${packageDetails?._id}`);
   };
 
   // Add this helper function at the top of your component
@@ -481,35 +487,57 @@ const Flight = () => {
                     <button
                       className={`text-center block w-full rounded mt-4`}
                       onClick={() => addDataFun()}
-                      disabled={!addFlight || selectedFlights.length === 0}
+                      disabled={isForwardLoading || !addFlight || selectedFlights.length === 0}
+                      aria-busy={isForwardLoading}
                     >
-                      <EditableHeading
-                        titleKey="buttons.continue2"
-                        defaultTitle="Continua con il volo"
-                        customTitleClass={` ${
-                          addFlight && selectedFlights.length > 0
-                            ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
-                            : "bg-gray-300 cursor-not-allowed text-gray-500"
-                        } py-2 rounded `}
-                      />
+                      <div className={`flex items-center justify-center gap-2 py-2 rounded ${
+                        isForwardLoading
+                          ? "bg-gray-400 text-white"
+                          : addFlight && selectedFlights.length > 0
+                          ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
+                          : "bg-gray-300 cursor-not-allowed text-gray-500"
+                      }`}>
+                        {isForwardLoading && (
+                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                          </svg>
+                        )}
+                        <EditableHeading
+                          titleKey="buttons.continue2"
+                          defaultTitle={isForwardLoading ? "Caricamento..." : "Continua con il volo"}
+                          customTitleClass="text-md"
+                        />
+                      </div>
                     </button>
                   </div>
 
                   <div className="group relative inline-block w-full">
                     <button
-                      className={`text-center block w-full py-2 rounded mt-4`}
+                      className={`text-center block w-full rounded mt-4`}
                       onClick={() => addDataFun()}
-                      disabled={addFlight || selectedFlights.length > 0}
+                      disabled={isForwardLoading || addFlight || selectedFlights.length > 0}
+                      aria-busy={isForwardLoading}
                     >
-                      <EditableHeading
-                        titleKey="buttons.continue3"
-                        defaultTitle="Continua senza volo"
-                        customTitleClass={` ${
-                          !addFlight && selectedFlights.length === 0
-                            ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
-                            : "bg-gray-300 cursor-not-allowed text-gray-500"
-                        }  py-2 rounded `}
-                      />
+                      <div className={`flex items-center justify-center gap-2 py-2 rounded ${
+                        isForwardLoading
+                          ? "bg-gray-400 text-white"
+                          : !addFlight && selectedFlights.length === 0
+                          ? "bg-[#E86731] text-[#FFFFFF] hover:opacity-90"
+                          : "bg-gray-300 cursor-not-allowed text-gray-500"
+                      }`}>
+                        {isForwardLoading && (
+                          <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                          </svg>
+                        )}
+                        <EditableHeading
+                          titleKey="buttons.continue3"
+                          defaultTitle={isForwardLoading ? "Caricamento..." : "Continua senza volo"}
+                          customTitleClass="text-md"
+                        />
+                      </div>
                     </button>
                   </div>
                 </div>
