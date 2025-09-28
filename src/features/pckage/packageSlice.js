@@ -195,8 +195,8 @@ export const deleteShorts = createAsyncThunk(
 const initialState = {
   packageCreateLoading: false,
   packageCreateError: null,
-  packag: [], // This holds the list of packages
-  packagGetLoading: false,
+  packages: [], // This holds the list of packages
+  packageGetLoading: false,
   packageGetError: null,
   packageDetails: null,
   packageDetailsLoading: false,
@@ -221,7 +221,7 @@ const packageSlice = createSlice({
       .addCase(createPackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = null;
-        state.packag = action.payload; // Fixed typo "packag" to "package"
+        state.packages = [...state.packages, action.payload.package];
       })
       .addCase(createPackage.rejected, (state, action) => {
         state.packageCreateLoading = false;
@@ -236,7 +236,7 @@ const packageSlice = createSlice({
       .addCase(getPackage.fulfilled, (state, action) => {
         state.packageGetLoading = false;
         state.packageGetError = null;
-        state.packag = action.payload.packages; // Update the package list
+        state.packages = action.payload.packages; // Update the package list
       })
       .addCase(getPackage.rejected, (state, action) => {
         state.packageGetLoading = false;
@@ -262,12 +262,12 @@ const packageSlice = createSlice({
       // Delete Package
       .addCase(deletePackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
-        if (Array.isArray(state.package)) {
-          state.packag = state.package.filter(
+        if (Array.isArray(state.packages)) {
+          state.packages = state.packages.filter(
             (pkg) => pkg._id !== action.payload
           );
         } else {
-          console.error("package is not an array:", state.package);
+          console.error("packages is not an array:", state.packages);
         }
       })
 
@@ -279,13 +279,13 @@ const packageSlice = createSlice({
       .addCase(updatePackage.fulfilled, (state, action) => {
         state.packageCreateLoading = false;
         state.packageCreateError = null;
-        const updatedPackage = action.payload;
-        if (Array.isArray(state.package)) {
-          const index = state.package.findIndex(
+        const updatedPackage = action.payload.package;
+        if (Array.isArray(state.packages)) {
+          const index = state.packages.findIndex(
             (pkg) => pkg._id === updatedPackage._id
           );
           if (index !== -1) {
-            state.packag[index] = updatedPackage;
+            state.packages[index] = updatedPackage;
           }
         }
       })

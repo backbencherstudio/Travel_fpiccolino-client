@@ -21,7 +21,7 @@ const DashboardAnalysis = () => {
   const dispatch = useDispatch();
   const [chartType, setChartType] = useState("Order");
   const [timeInterval, setTimeInterval] = useState("weekly");
-  const { packag } = useSelector((state) => state.package);
+  const { packages } = useSelector((state) => state.package);
   const { totalData, radarData, chartData } = useSelector(
     (state) => state.dashboard
   );
@@ -125,7 +125,7 @@ const DashboardAnalysis = () => {
       <CustomTable
         title={"Tour Package List"}
         tableType="dashboard"
-        data={packag}
+        data={packages}
         columns={columns}
       />
     </div>

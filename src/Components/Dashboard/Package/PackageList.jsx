@@ -6,7 +6,7 @@ import { getPackage } from "../../../features/pckage/packageSlice";
 
 const PackageList = () => {
   const dispatch = useDispatch();
-  const { packag } = useSelector((state) => state.package);
+  const { packages } = useSelector((state) => state.package);
   useEffect(() => {
     dispatch(getPackage({ search: "", startDate: "", endDate: "" }));
   }, []);
@@ -18,7 +18,7 @@ const PackageList = () => {
     country: true,
     action: true,
   });
-  console.log(packag);
+  console.log(packages);
 
   return (
     <div>
@@ -27,7 +27,7 @@ const PackageList = () => {
         tableType={"package"}
         title={"Package List"}
         columns={columns}
-        data={packag}
+        data={packages}
       />
     </div>
   );
