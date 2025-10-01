@@ -119,7 +119,9 @@ export const logOut = createAsyncThunk(
   "users/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${base_url}/users/logout`);
+      const response = await axios.post(`${base_url}/users/logout`, undefined, {
+        withCredentials: true,
+      });
 
       // Clear the user data from localStorage on logout
       localStorage.removeItem("user");
@@ -343,6 +345,7 @@ const authSlice = createSlice({
       .addCase(logOut.pending, (state) => {})
       .addCase(logOut.fulfilled, (state) => {
         state.isAuthenticated = false;
+        state.user = {};
       })
       .addCase(logOut.rejected, (state) => {});
 
