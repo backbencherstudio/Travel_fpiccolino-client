@@ -148,6 +148,7 @@ const Checkout = () => {
                           "disable-funding": "paylater",
                         }}
                       >
+                      
                         <PayPalButtons
                           style={{
                             layout: "vertical",
