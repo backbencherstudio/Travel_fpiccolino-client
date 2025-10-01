@@ -16,6 +16,10 @@ const stripePromise = loadStripe(
   "pk_live_51REuOcE7oWaofeXXM2P5Jgt21Cwoc0zzBklopnjIf4aiJorOaHJqRNNhNuC1LAq2ATXkJzF92fH4bEGXvF6pswmh005BRAR9T7"
 );
 
+// const stripePromise = loadStripe(
+//   "pk_test_51QuTWKClJBhr3sfisvZF8NprucrbSftJa16ma4XVStJG04nQ5i4tNL00XkBbfC0UFzY8AvnFhzt8wTk1CbXj57o500ncgA4fQl"
+// );
+
 const Checkout = () => {
   const { checkoutNewData } = useSelector((state) => state.checkout);
   const dispatch = useDispatch();
@@ -148,7 +152,7 @@ const Checkout = () => {
                           "disable-funding": "paylater",
                         }}
                       >
-                      
+
                         <PayPalButtons
                           style={{
                             layout: "vertical",

@@ -40,43 +40,43 @@ const StripeForm = ({ checkoutNewData }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-
-    const cardElement = elements.getElement(CardNumberElement);
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-      billing_details: {
-        email,
-      },
-    });
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-      return;
-    }
     try {
+      // 1) Create PaymentIntent on server and get clientSecret
       const { data } = await axios.post(`${base_url}/order/stripePayment`, {
-        paymentMethodId: paymentMethod.id,
-        amount: parseInt(checkoutNewData?.toureAmount || 0),
+        amount: Number(checkoutNewData?.toureAmount || 0),
         email,
       });
-      const orderData = {
-        ...checkoutNewData,
-        paymentId: data?.paymentIntent.id,
-      };
-      console.log(59, "orderData: ", orderData);
-
-      if (orderData) {
-        const res = await dispatch(createOrder(orderData));
-        console.log(res);
+      if (!data?.clientSecret) {
+        throw new Error("Failed to initialize payment");
       }
 
-      if (data.success) {
+      // 2) Confirm card payment on client (handles 3DS/SCA)
+      const result = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardNumberElement),
+          billing_details: { email },
+        },
+      });
+
+      if (result.error) {
+        showError(result.error.message || "Payment failed.");
+        setLoading(false);
+        return;
+      }
+
+      if (result.paymentIntent?.status === "succeeded") {
+        const orderData = {
+          ...checkoutNewData,
+          paymentId: result.paymentIntent.id,
+        };
+        await dispatch(createOrder(orderData));
         setSuccess(true);
         setShowSuccessModal(true);
+      } else {
+        showError("Payment was not successful.");
       }
     } catch (err) {
-      setError("Payment failed.");
+      showError(err?.response?.data?.error || err.message || "Payment failed.");
     }
     setLoading(false);
   };
