@@ -68,6 +68,7 @@ const StripeForm = ({ checkoutNewData }) => {
         const orderData = {
           ...checkoutNewData,
           paymentId: result.paymentIntent.id,
+          email, // ensure backend can email guests
         };
         await dispatch(createOrder(orderData));
         setSuccess(true);

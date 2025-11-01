@@ -53,6 +53,9 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [packageId, setPackageId] = useState("");
+  // Details dialog for dashboard/package rows
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const [detailsItem, setDetailsItem] = useState(null);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -62,8 +65,16 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
     setPage(0);
   };
 
-  const handleRowClick = (id) =>
-    tableType === "user" || tableType === "blog" ? navigate(`${id}`) : null;
+  const handleRowClick = (id, item) => {
+    if (tableType === "user" || tableType === "blog") {
+      return navigate(`${id}`);
+    }
+    if (tableType === "dashboard" || tableType === "order") {
+      setDetailsItem(item);
+      setOpenDetailsDialog(true);
+    }
+    return null;
+  };
 
   const handleCreatePackage = () => navigate("create/new");
 
@@ -259,7 +270,7 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
                       "cursor-pointer hover:bg-[#fdf0ea]"
                     }`}
                     key={item?.bookingId}
-                    onClick={() => handleRowClick(item._id)}
+                    onClick={() => handleRowClick(item._id, item)}
                   >
                     {columns?.bookingId && (
                       <TableCell>{item.bookingId}</TableCell>
@@ -528,6 +539,333 @@ const CustomTable = ({ tableType = "", title, data, columns }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      {/* Details Dialog for dashboard rows */}
+      <Dialog open={openDetailsDialog} onClose={() => setOpenDetailsDialog(false)} maxWidth="lg" fullWidth>
+        <DialogTitle style={{ fontSize: "20px", fontWeight: 600, paddingBottom: "16px" }}>
+          {tableType === "order" ? "Order Details" : "Package Details"}
+        </DialogTitle>
+        <DialogContent dividers style={{ padding: "20px" }}>
+          {detailsItem && (
+            <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
+              {tableType === "order" ? (
+                <>
+                  {/* Summary Card - Most Important Info */}
+                  <div className="mb-6 p-5 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl border-2 border-orange-200">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <div className="text-xs text-gray-600 mb-1">Customer</div>
+                        <div className="font-bold text-lg text-gray-900">
+                          {detailsItem?.userId?.firstName && detailsItem?.userId?.lastName 
+                            ? `${detailsItem.userId.firstName} ${detailsItem.userId.lastName}` 
+                            : (detailsItem?.userId?.name || "Guest")}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          {detailsItem?.userId?.email || detailsItem?.email || "No email"}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-600 mb-1">Order Total</div>
+                        <div className="font-bold text-2xl text-orange-600">€{detailsItem?.toureAmount}</div>
+                        <div className="text-xs text-gray-600 mt-1">
+                          {detailsItem?.person} {detailsItem?.person === 1 ? "person" : "persons"}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-600 mb-1">Tour Date</div>
+                        <div className="font-semibold text-lg text-gray-900">
+                          {detailsItem?.tourDate ? moment(detailsItem.tourDate).format("DD MMM YYYY") : "Not set"}
+                        </div>
+                        <div className="text-xs text-gray-600 mt-1">
+                          Order: {detailsItem?.createdAt ? moment(detailsItem.createdAt).format("DD MMM YYYY") : "-"}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Customer Information */}
+                  <div className="p-5 bg-white rounded-lg border border-gray-200 mb-4 shadow-sm">
+                    <h3 className="font-semibold text-base mb-4 text-gray-800 border-b pb-2">Customer Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-3">
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Full Name</div>
+                          <div className="text-sm font-medium">{detailsItem?.userId?.firstName && detailsItem?.userId?.lastName ? `${detailsItem.userId.firstName} ${detailsItem.userId.lastName}` : (detailsItem?.userId?.name || "Guest")}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Email Address</div>
+                          <div className="text-sm">{detailsItem?.userId?.email || detailsItem?.email || "Not provided"}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Phone Number</div>
+                          <div className="text-sm">{detailsItem?.userId?.phone || "Not provided"}</div>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        {detailsItem?.userId?.address && (
+                          <div>
+                            <div className="text-xs text-gray-500 mb-1">Address</div>
+                            <div className="text-sm">{detailsItem.userId.address}</div>
+                          </div>
+                        )}
+                        {(detailsItem?.userId?.city || detailsItem?.userId?.country) && (
+                          <div>
+                            <div className="text-xs text-gray-500 mb-1">Location</div>
+                            <div className="text-sm">
+                              {detailsItem?.userId?.city && detailsItem?.userId?.country 
+                                ? `${detailsItem.userId.city}, ${detailsItem.userId.country}`
+                                : (detailsItem?.userId?.city || detailsItem?.userId?.country || "Not provided")}
+                            </div>
+                          </div>
+                        )}
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">User ID</div>
+                          <div className="text-xs font-mono text-gray-600">{detailsItem?.userId?._id || "Guest User"}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Order Information */}
+                  <div className="p-5 bg-white rounded-lg border border-gray-200 mb-4 shadow-sm">
+                    <h3 className="font-semibold text-base mb-4 text-gray-800 border-b pb-2">Order Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-3">
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Order ID</div>
+                          <div className="text-xs font-mono text-gray-700 break-all">{detailsItem?._id}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Payment ID</div>
+                          <div className="text-xs font-mono text-gray-700 break-all">{detailsItem?.paymentId}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Number of Persons</div>
+                          <div className="text-sm font-medium">{detailsItem?.person}</div>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Package Amount</div>
+                          <div className="text-sm font-semibold">€{detailsItem?.totalPackageAmount}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Flight Price</div>
+                          <div className="text-sm font-semibold">€{detailsItem?.flightPrice || 0}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Order Date & Time</div>
+                          <div className="text-sm">{detailsItem?.createdAt ? moment(detailsItem.createdAt).format("DD MMM YYYY, HH:mm") : "-"}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Package Information */}
+                  {detailsItem?.packageId && (
+                    <div className="p-5 bg-white rounded-lg border border-gray-200 mb-4 shadow-sm">
+                      <h3 className="font-semibold text-base mb-4 text-gray-800 border-b pb-2">Package Information</h3>
+                      {detailsItem.packageId.images && detailsItem.packageId.images[0] && (
+                        <div className="mb-4">
+                          <img src={detailsItem.packageId.images[0]} alt="Package" className="w-full max-w-md h-48 object-cover rounded-lg" />
+                        </div>
+                      )}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div className="space-y-3">
+                          <div>
+                            <div className="text-xs text-gray-500 mb-1">Package Name</div>
+                            <div className="text-sm font-semibold">{detailsItem.packageId.tourName || detailsItem.packageId.destination}</div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-gray-500 mb-1">Destination</div>
+                            <div className="text-sm">{detailsItem.packageId.destination}</div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-gray-500 mb-1">Country</div>
+                            <div className="text-sm">{detailsItem.packageId.country}</div>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div>
+                            <div className="text-xs text-gray-500 mb-1">Duration</div>
+                            <div className="text-sm font-medium">{detailsItem.packageId.tourDuration?.nights || 0} Nights & {detailsItem.packageId.tourDuration?.days || 0} Days</div>
+                          </div>
+                          {detailsItem.packageId.hotelName && (
+                            <div>
+                              <div className="text-xs text-gray-500 mb-1">Hotel Name</div>
+                              <div className="text-sm">{detailsItem.packageId.hotelName}</div>
+                            </div>
+                          )}
+                          {detailsItem.packageId.amount && (
+                            <div>
+                              <div className="text-xs text-gray-500 mb-1">Package Price</div>
+                              <div className="text-sm font-semibold text-green-600">€{detailsItem.packageId.amount}</div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {detailsItem.packageId.tourDescription && (
+                        <div className="mb-3">
+                          <div className="text-xs text-gray-500 mb-1">Description</div>
+                          <p className="text-sm text-gray-700 leading-relaxed" style={{ whiteSpace: "pre-wrap" }}>{detailsItem.packageId.tourDescription}</p>
+                        </div>
+                      )}
+                      {detailsItem.packageId.hotelAbout && (
+                        <div>
+                          <div className="text-xs text-gray-500 mb-1">Hotel Information</div>
+                          <p className="text-sm text-gray-700 leading-relaxed" style={{ whiteSpace: "pre-wrap" }}>{detailsItem.packageId.hotelAbout}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Travelers */}
+                  {Array.isArray(detailsItem?.travelers) && detailsItem.travelers.length > 0 && (
+                    <div className="p-5 bg-white rounded-lg border border-gray-200 mb-4 shadow-sm">
+                      <h3 className="font-semibold text-base mb-4 text-gray-800 border-b pb-2">Travelers ({detailsItem.travelers.length})</h3>
+                      <div className="space-y-3">
+                        {detailsItem.travelers.map((t, idx) => (
+                          <div key={idx} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              <div className="space-y-2">
+                                <div>
+                                  <div className="text-xs text-gray-500 mb-1">Full Name</div>
+                                  <div className="text-sm font-medium">{t.fullName || t.name} {t.lastName ? ` ${t.lastName}` : ""}</div>
+                                </div>
+                                {t.email && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Email</div>
+                                    <div className="text-sm">{t.email}</div>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                {t.phone && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Phone</div>
+                                    <div className="text-sm">{t.phone}</div>
+                                  </div>
+                                )}
+                                {t.gender && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Gender</div>
+                                    <div className="text-sm capitalize">{t.gender}</div>
+                                  </div>
+                                )}
+                                {t.date && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Date of Birth</div>
+                                    <div className="text-sm">{moment(t.date).format("DD MMM YYYY")}</div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Flights */}
+                  {Array.isArray(detailsItem?.flight) && detailsItem.flight.length > 0 && (
+                    <div className="p-5 bg-white rounded-lg border border-gray-200 mb-4 shadow-sm">
+                      <h3 className="font-semibold text-base mb-4 text-gray-800 border-b pb-2">Flight Details</h3>
+                      <div className="space-y-3">
+                        {detailsItem.flight.map((f, idx) => (
+                          <div key={idx} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              <div className="space-y-2">
+                                <div>
+                                  <div className="text-xs text-gray-500 mb-1">Route</div>
+                                  <div className="text-sm font-semibold">{f.flightFrom} → {f.flightTo}</div>
+                                </div>
+                                {f.departureTime && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Departure Time</div>
+                                    <div className="text-sm">{f.departureTime}</div>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="space-y-2">
+                                {f.arrivalTime && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Arrival Time</div>
+                                    <div className="text-sm">{f.arrivalTime}</div>
+                                  </div>
+                                )}
+                                {f.price && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Price</div>
+                                    <div className="text-sm font-semibold text-green-600">€{f.price}</div>
+                                  </div>
+                                )}
+                                {f.flightClass && (
+                                  <div>
+                                    <div className="text-xs text-gray-500 mb-1">Class</div>
+                                    <div className="text-sm capitalize">{f.flightClass}</div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Insurance */}
+                  {Array.isArray(detailsItem?.insurance) && detailsItem.insurance.filter(i => Number(i?.price) > 0).length > 0 && (
+                    <div className="p-5 bg-white rounded-lg border border-gray-200 mb-4 shadow-sm">
+                      <h3 className="font-semibold text-base mb-4 text-gray-800 border-b pb-2">Insurance</h3>
+                      <div className="space-y-3">
+                        {detailsItem.insurance.filter(i => Number(i?.price) > 0).map((ins, idx) => (
+                          <div key={idx} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1">
+                                <div className="text-sm font-semibold mb-1">{ins.insuranceName}</div>
+                                {ins.description && (
+                                  <div className="text-xs text-gray-600">{ins.description}</div>
+                                )}
+                              </div>
+                              <div className="text-sm font-bold text-green-600 ml-4">€{ins.price}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-3">
+                    {detailsItem?.images?.[0] && (
+                      <img src={detailsItem.images[0]} alt="pkg" style={{ width: 90, height: 60, objectFit: "cover", borderRadius: 6 }} />
+                    )}
+                    <div>
+                      <div className="font-semibold">{detailsItem?.destination}</div>
+                      <div className="text-sm text-gray-600">{detailsItem?.country}</div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><strong>Duration:</strong> {detailsItem?.tourDuration?.nights} Nights & {detailsItem?.tourDuration?.days} Days</div>
+                    <div><strong>Amount:</strong> {detailsItem?.amount}</div>
+                    <div><strong>Created At:</strong> {moment(detailsItem?.createdAt).format("DD/MM/yyyy")}</div>
+                    <div><strong>Package ID:</strong> {detailsItem?._id}</div>
+                  </div>
+                  {detailsItem?.hotelAbout && (
+                    <div>
+                      <strong>About Hotel:</strong>
+                      <p className="text-sm text-gray-700 mt-1" style={{ whiteSpace: "pre-wrap" }}>{detailsItem.hotelAbout}</p>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDetailsDialog(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle>
           Delete {tableType.charAt(0).toUpperCase() + tableType.slice(1)}

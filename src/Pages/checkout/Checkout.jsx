@@ -52,7 +52,8 @@ const Checkout = () => {
     const orderData = {
       ...checkoutData,
       paymentId: data.id,
-      email: condroUser.email,
+      // Prefer logged-in user's email; otherwise use PayPal payer email
+      email: (condroUser && condroUser.email) || (data && data.payer && data.payer.email_address),
     };
 
     setShowSuccessModal(true);
